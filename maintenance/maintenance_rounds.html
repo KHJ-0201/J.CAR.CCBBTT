@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>자동차 정비기능사 회차 선택</title>
+<link rel="stylesheet" href="maintenance_rounds.css">
+</head>
+<body>
+<h1>자동차 정비기능사 필기 - 회차 선택</h1>
+
+<div class="round-container">
+    <div class="round-card" onclick="goToMaintenance('maintenance.html')">전체 회차 랜덤 60문제</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance1.html')">1회차</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance2.html')">2회차</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance3.html')">3회차</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance4.html')">4회차</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance5.html')">5회차</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance6.html')">6회차</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance7.html')">7회차</div>
+    <div class="round-card" onclick="goToMaintenance('maintenance8.html')">8회차</div>
+</div>
+
+<script>
+function goToMaintenance(path){
+    window.location.href = path;
+}
+</script>
+</body>
+</html>
