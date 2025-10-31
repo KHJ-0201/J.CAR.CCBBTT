@@ -6,12 +6,6 @@ let allQuestions = [
         options: ["페인트", "페인트2", "페인트3", "페인트4"],
         answer: 1,
         explain: "페인트"
-    },
-    {
-        question: "문관은?",
-        options: ["바보", "멍청이", "해삼", "빤쯔"],
-        answer: 3,
-        explain: "문관 = 빤쯔"
     }
 ];
 
