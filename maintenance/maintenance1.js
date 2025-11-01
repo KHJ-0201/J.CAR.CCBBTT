@@ -11,7 +11,7 @@ let allQuestions = [
         question: "라디에이터 코어 막힘율을 구하는 공식은? (수정 필요/문제에 사진 들어가야함)", //수정필요 (문제에 사진 들어가야함)
         options: ["4", "1", "3","2"],
         answer: 2,
-        explain: window.open('https://blog.naver.com/PostView.naver?blogId=ddsp0201&Redirect=View&logNo=223471252658&categoryNo=11&isAfterWrite=true&isMrblogPost=false&isHappyBeanLeverage=true&contentLength=3096')
+        explain: window.open('**https://blog.naver.com/PostView.naver?blogId=ddsp0201&Redirect=View&logNo=223471252658&categoryNo=11&isAfterWrite=true&isMrblogPost=false&isHappyBeanLeverage=true&contentLength=3096','_blank')
     },
     {
         question: "브레이크 계통에 공기가 혼입되었을 때 공기빼기 작업방법으로 틀린 것은?",
