@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-let allQuestions = [
+export const maintenance1Questions = [
     {
         question: "다음 파형 분석에 대한 설명으로 틀린 것은? (수정 필요/문제에 사진 들어가야함)", //수정필요 (문제에 파형 사진 들어가야함)
         options: ["4", "1", "3","2"],
@@ -369,7 +369,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...allQuestions]).slice(0, 60);
+  let questions = shuffleArray([...maintenance1Questions]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {

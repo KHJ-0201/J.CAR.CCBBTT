@@ -1,4 +1,9 @@
-// -----------------------------
+import { maintenance1Questions } from './maintenance1.js';
+import { maintenance2Questions } from './maintenance2.js';
+
+// 두 배열 합치기
+let allQuestions = [...maintenance1Questions, ...maintenance2Questions];
+/*// -----------------------------
 // 문제 배열
 let allQuestions = [
     {
@@ -49,7 +54,7 @@ let allQuestions = [
         answer: 1,
         explain: "베이퍼라이저는 액상 LPG압력을 낮추어 기체상태로 변환시켜(액상 LPG를 기체 LPG로 기화) LPG 압력을 일정하게 조절하는 작용을 한다."
     }
-];
+];*/
 // 문제/보기 랜덤 섞기
 function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
