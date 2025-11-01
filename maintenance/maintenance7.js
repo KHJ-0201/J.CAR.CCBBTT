@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-let allQuestions = [
+export const questions7 = [
     {
         question: "가솔린 엔진의 흡기다기관 누설 점검 시 사용하는 계측기는?",
         options: ["다이얼 게이지", "진공 게이지", "텔레스코핑 게이지", "압축압력 게이지"],
@@ -57,7 +57,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...allQuestions]).slice(0, 60);
+  let questions = shuffleArray([...questions7]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {
