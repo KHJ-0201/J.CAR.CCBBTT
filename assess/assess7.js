@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-let allQuestions = [
+export const assess7Questions = [
     {
         question: "진단평가?",
         options: ["진단평가", "진단평가2", "진단평가3", "진단평가4"],
@@ -15,7 +15,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...allQuestions]).slice(0, 60);
+  let questions = shuffleArray([...assess7Questions]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {

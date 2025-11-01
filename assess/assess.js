@@ -1,5 +1,16 @@
+import { assess1Questions } from './assess1.js';
+import { assess2Questions } from './assess2.js';
+import { assess3Questions } from './assess3.js';
+import { assess4Questions } from './assess4.js';
+import { assess5Questions } from './assess5.js';
+import { assess6Questions } from './assess6.js';
+import { assess7Questions } from './assess7.js';
+import { assess8Questions } from './assess8.js';
+
+// 두 배열 합치기
+let allQuestions = [...assess1Questions, ...assess2Questions, ...assess3Questions, ...assess4Questions, ...assess5Questions, ...assess6Questions, ...assess7Questions, ...assess8Questions];
 // -----------------------------
-// 문제 배열
+/*// 문제 배열
 let allQuestions = [
     {
         question: "진단평가?",
@@ -7,7 +18,7 @@ let allQuestions = [
         answer: 1,
         explain: "진단평가"
     }
-];
+];*/
 
 // 문제/보기 랜덤 섞기
 function shuffleArray(array) {

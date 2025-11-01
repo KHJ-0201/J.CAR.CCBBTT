@@ -1,5 +1,16 @@
+import { body1Questions } from './body1.js';
+import { body2Questions } from './body2.js';
+import { body3Questions } from './body3.js';
+import { body4Questions } from './body4.js';
+import { body5Questions } from './body5.js';
+import { body6Questions } from './body6.js';
+import { body7Questions } from './body7.js';
+import { body8Questions } from './body8.js';
+
+// 두 배열 합치기
+let allQuestions = [...body1Questions, ...body2Questions, ...body3Questions, ...body4Questions, ...body5Questions, ...body6Questions, ...body7Questions, ...body8Questions];
 // -----------------------------
-// 문제 배열
+/*// 문제 배열
 let allQuestions = [
     {
         question: "차체수리?",
@@ -7,7 +18,7 @@ let allQuestions = [
         answer: 1,
         explain: "차체수리"
     }
-];
+];*/
 
 // 문제/보기 랜덤 섞기
 function shuffleArray(array) {

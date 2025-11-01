@@ -1,5 +1,16 @@
+import { paint1Questions } from './paint1.js';
+import { paint2Questions } from './paint2.js';
+import { paint3Questions } from './paint3.js';
+import { paint4Questions } from './paint4.js';
+import { paint5Questions } from './paint5.js';
+import { paint6Questions } from './paint6.js';
+import { paint7Questions } from './paint7.js';
+import { paint8Questions } from './paint8.js';
+
+// 두 배열 합치기
+let allQuestions = [...paint1Questions, ...paint2Questions, ...paint3Questions, ...paint4Questions, ...paint5Questions, ...paint6Questions, ...paint7Questions, ...paint8Questions];
 // -----------------------------
-// 문제 배열
+/*// 문제 배열
 let allQuestions = [
     {
         question: "페인트?",
@@ -7,7 +18,7 @@ let allQuestions = [
         answer: 1,
         explain: "페인트"
     }
-];
+];*/
 
 // 문제/보기 랜덤 섞기
 function shuffleArray(array) {

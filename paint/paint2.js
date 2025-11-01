@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-let allQuestions = [
+export const paint2Questions = [
     {
         question: "페인트?",
         options: ["페인트", "페인트2", "페인트3", "페인트4"],
@@ -15,7 +15,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...allQuestions]).slice(0, 60);
+  let questions = shuffleArray([...paint2Questions]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {

@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-let allQuestions = [
+export const body8Questions = [
     {
         question: "차체수리?",
         options: ["차체수리", "차체수리2", "차체수리3", "차체수리4"],
@@ -15,7 +15,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...allQuestions]).slice(0, 60);
+  let questions = shuffleArray([...body8Questions]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {
