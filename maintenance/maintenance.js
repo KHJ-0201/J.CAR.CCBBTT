@@ -6,8 +6,21 @@ import { maintenance5Questions } from './maintenance5.js';
 import { maintenance6Questions } from './maintenance6.js';
 import { maintenance7Questions } from './maintenance7.js';
 
+
 // 두 배열 합치기
-let allQuestions = [...maintenance1Questions, ...maintenance2Questions, ...maintenance3Questions, ...maintenance4Questions, ...maintenance5Questions, ...maintenance6Questions, ...maintenance7Questions];
+let combinedQuestions = [...maintenance1Questions, ...maintenance2Questions, ...maintenance3Questions, ...maintenance4Questions, ...maintenance5Questions, ...maintenance6Questions, ...maintenance7Questions];
+
+// question 기준으로 중복 제거
+let uniqueQuestionsMap = new Map();
+
+combinedQuestions.forEach(q => {
+    if (!uniqueQuestionsMap.has(q.question)) {
+        uniqueQuestionsMap.set(q.question, q);
+    }
+});
+
+// 중복 제거 후 배열로 변환
+let allQuestions = Array.from(uniqueQuestionsMap.values());
 /*// -----------------------------
 // 문제 배열
 let allQuestions = [

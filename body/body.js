@@ -8,7 +8,19 @@ import { body7Questions } from './body7.js';
 import { body8Questions } from './body8.js';
 
 // 두 배열 합치기
-let allQuestions = [...body1Questions, ...body2Questions, ...body3Questions, ...body4Questions, ...body5Questions, ...body6Questions, ...body7Questions, ...body8Questions];
+let combinedQuestions = [...body1Questions, ...body2Questions, ...body3Questions, ...body4Questions, ...body5Questions, ...body6Questions, ...body7Questions, ...body8Questions];
+
+// question 기준으로 중복 제거
+let uniqueQuestionsMap = new Map();
+
+combinedQuestions.forEach(q => {
+    if (!uniqueQuestionsMap.has(q.question)) {
+        uniqueQuestionsMap.set(q.question, q);
+    }
+});
+
+// 중복 제거 후 배열로 변환
+let allQuestions = Array.from(uniqueQuestionsMap.values());
 // -----------------------------
 /*// 문제 배열
 let allQuestions = [

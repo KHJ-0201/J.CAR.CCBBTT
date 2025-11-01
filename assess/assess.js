@@ -8,7 +8,19 @@ import { assess7Questions } from './assess7.js';
 import { assess8Questions } from './assess8.js';
 
 // 두 배열 합치기
-let allQuestions = [...assess1Questions, ...assess2Questions, ...assess3Questions, ...assess4Questions, ...assess5Questions, ...assess6Questions, ...assess7Questions, ...assess8Questions];
+let combinedQuestions = [...assess1Questions, ...assess2Questions, ...assess3Questions, ...assess4Questions, ...assess5Questions, ...assess6Questions, ...assess7Questions, ...assess8Questions];
+
+// question 기준으로 중복 제거
+let uniqueQuestionsMap = new Map();
+
+combinedQuestions.forEach(q => {
+    if (!uniqueQuestionsMap.has(q.question)) {
+        uniqueQuestionsMap.set(q.question, q);
+    }
+});
+
+// 중복 제거 후 배열로 변환
+let allQuestions = Array.from(uniqueQuestionsMap.values());
 // -----------------------------
 /*// 문제 배열
 let allQuestions = [

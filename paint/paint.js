@@ -8,7 +8,19 @@ import { paint7Questions } from './paint7.js';
 import { paint8Questions } from './paint8.js';
 
 // 두 배열 합치기
-let allQuestions = [...paint1Questions, ...paint2Questions, ...paint3Questions, ...paint4Questions, ...paint5Questions, ...paint6Questions, ...paint7Questions, ...paint8Questions];
+let combinedQuestions = [...paint1Questions, ...paint2Questions, ...paint3Questions, ...paint4Questions, ...paint5Questions, ...paint6Questions, ...paint7Questions, ...paint8Questions];
+
+// question 기준으로 중복 제거
+let uniqueQuestionsMap = new Map();
+
+combinedQuestions.forEach(q => {
+    if (!uniqueQuestionsMap.has(q.question)) {
+        uniqueQuestionsMap.set(q.question, q);
+    }
+});
+
+// 중복 제거 후 배열로 변환
+let allQuestions = Array.from(uniqueQuestionsMap.values());
 // -----------------------------
 /*// 문제 배열
 let allQuestions = [
