@@ -153,64 +153,40 @@ function shuffleArray(array) {
   }
   
   // -----------------------------
- // 문제점 해결 후 제출 및 채점
- function submitQuiz() {
+  // 제출 및 채점
+  function submitQuiz() {
     clearInterval(timerInterval);
     document.getElementById("timer").textContent = "";
- 
+  
     let score = 0;
     questions.forEach((q, i) => {
-        const questionDiv = document.getElementsByClassName("question")[i];
-        const explainDiv = questionDiv.querySelector(".explain");
-        const radios = questionDiv.querySelectorAll('input[type="radio"]');
-
-        // 1. 라디오 버튼 비활성화 (먼저 해주는 것이 좋음)
-        radios.forEach((r) => (r.disabled = true));
-
-        // 2. 정오답 판별 및 배경색 적용
-        
-        if (answers[i] == q.answer) {
-            // 정답을 선택한 경우: 초록색 적용
-            score++;
-            // 부모 요소를 안전하게 찾기 위해 .closest('label') 사용
-            const label = radios[q.answer].closest('label'); 
-            label.style.backgroundColor = "#b6fcb6";
-            label.style.padding = "8px 10px"; // 시각적 개선
-            label.style.borderRadius = "5px"; // 시각적 개선
-            
-        } else if (answers[i] >= 0) {
-            // 오답을 선택한 경우: 빨간색 적용
-            // 부모 요소를 안전하게 찾기 위해 .closest('label') 사용
-            const label = radios[answers[i]].closest('label');
-            label.style.backgroundColor = "#fcb6b6";
-            label.style.padding = "8px 10px"; // 시각적 개선
-            label.style.borderRadius = "5px"; // 시각적 개선
-        }
- 
-        // 3. 해설 표시
-        // 인라인 스타일로 가독성 확보
-        explainDiv.innerHTML = `
-            <div style="margin-top: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f7f7f7;">
-                <p style="font-weight: bold; color: green; margin-bottom: 5px;">정답: ${q.options[q.answer]}</p>
-                <p style="white-space: pre-wrap; margin-top: 0; padding-top: 5px; border-top: 1px dashed #eee;">${q.explain}</p>
-            </div>
-        `;
+      const questionDiv = document.getElementsByClassName("question")[i];
+      const explainDiv = questionDiv.querySelector(".explain");
+      const radios = questionDiv.querySelectorAll('input[type="radio"]');
+  
+      if (answers[i] == q.answer) {
+        score++;
+        radios[q.answer].parentElement.style.backgroundColor = "#b6fcb6";
+      } else if (answers[i] >= 0) {
+        radios[answers[i]].parentElement.style.backgroundColor = "#fcb6b6";
+      }
+  
+      explainDiv.innerHTML = `<p>정답: ${q.options[q.answer]}</p><p>${q.explain}</p>`;
+      radios.forEach((r) => (r.disabled = true));
     });
- 
-    // ... (스코어 표시 및 버튼 제거 로직은 그대로 유지)
-    
+  
     // 상단 배너에 점수 표시
     const status = document.getElementById("status");
     status.classList.add("center");
     status.innerHTML = `<span id="scoreDisplay">총점: ${score}/${questions.length}</span>`;
- 
+  
     // 제출 버튼 제거
     document.getElementById("submitBtn").style.display = "none";
- 
+  
     // 결과창 표시
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = `<h2>총점: ${score}/${questions.length}</h2>`;
- }
+  }
   
   // -----------------------------
   // 타이머
