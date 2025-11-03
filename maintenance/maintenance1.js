@@ -3,14 +3,14 @@
 export const maintenance1Questions = [
     {
         question: "다음 파형 분석에 대한 설명으로 틀린 것은?",
-        imagePath: "./codeQuestion/maintenance1_CH.jpg",
+        imagePath: "./CodeQuestion/maintenance1_CH.jpg",
         options: ["4", "1", "3","2"],
         answer: 0,
         explain: "(정답)은 배터리 전원을 OFF시켰을 때 서지전압(피크전압)이다."
     },
     {
         question: "라디에이터 코어 막힘율을 구하는 공식은?",
-        imagePath: "./codeQuestion/maintenance1_core.jpg",
+        imagePath: "./CodeQuestion/maintenance1_core.jpg",
         options: ["4", "1", "3","2"],
         answer: 2,
         explain: "<a href='https://blog.naver.com/PostView.naver?blogId=ddsp0201&Redirect=View&logNo=223471252658&categoryNo=11&isAfterWrite=true&isMrblogPost=false&isHappyBeanLeverage=true&contentLength=3096' target='_blank'>문제 해설</a>"
