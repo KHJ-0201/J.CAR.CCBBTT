@@ -341,14 +341,14 @@ function shuffleArray(array) {
     // 상단 배너에 점수 표시
     const status = document.getElementById("status");
     status.classList.add("center");
-    status.innerHTML = `<span id="scoreDisplay">총점: ${score}/${questions.length}</span>`;
+    status.innerHTML = `<span id="scoreDisplay">자동차냉·난방장치정비 1회차 총점: ${score}/${questions.length}</span>`;
   
     // 제출 버튼 제거
     document.getElementById("submitBtn").style.display = "none";
   
     // 결과창 표시
     const resultDiv = document.getElementById("result");
-    resultDiv.innerHTML = `<h2>총점: ${score}/${questions.length}</h2>`;
+    resultDiv.innerHTML = `<h2>자동차냉·난방장치정비 1회차 총점: ${score}/${questions.length}</h2>`;
   }
   
   // -----------------------------
