@@ -319,6 +319,20 @@ function shuffleArray(array) {
   // -----------------------------
   // 제출 및 채점
   function submitQuiz() {
+    // 1. 안 푼 문제 개수 확인
+    const unansweredCount = answers.filter((a) => a < 0).length;
+
+    // 2. 안 푼 문제가 있고, 사용자가 제출을 취소하는 경우
+    if (unansweredCount > 0) {
+        const confirmSubmit = confirm(
+            `아직 ${unansweredCount}개의 문제를 풀지 않았습니다.\n계속 제출하시겠습니까? (취소 시 문제풀이 계속)`
+        );
+        if (!confirmSubmit) {
+            // 제출 취소
+            return; 
+        }
+    }
+    
     clearInterval(timerInterval);
     document.getElementById("timer").textContent = "";
   
