@@ -10,13 +10,8 @@ import { maintenance7Questions } from './maintenance7.js';
 // 배열 합치기
 let combinedQuestions =
   [...maintenance1Questions,
-  ...maintenance2Questions,
-  ...maintenance3Questions,
-  ...maintenance4Questions,
-  ...maintenance5Questions,
-  ...maintenance6Questions, 
-  ...maintenance7Questions];
-/*
+  ...maintenance2Questions];
+
 // question 기준으로 중복 제거
 let uniqueQuestionsMap = new Map();
 
@@ -28,7 +23,7 @@ combinedQuestions.forEach(q => {
 
 // 중복 제거 후 배열로 변환
 let allQuestions = Array.from(uniqueQuestionsMap.values());
-*/
+
 /*// -----------------------------
 // 문제 배열
 let allQuestions = [
