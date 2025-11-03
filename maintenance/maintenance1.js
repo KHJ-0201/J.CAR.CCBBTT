@@ -403,6 +403,16 @@ function shuffleArray(array) {
       const div = document.createElement("div");
       div.className = "question";
       div.innerHTML = `<strong>${i + 1}. ${q.question}</strong>`;
+
+      // 1. imagePath 속성이 있는지 확인
+        if (q.imagePath) {
+            // 2. 이미지 태그를 만들어서 문제 텍스트 아래에 추가
+            div.innerHTML += `<img 
+                src="${q.imagePath}" 
+                alt="문제 그림" 
+                style="max-width: 90%; height: auto; margin: 15px 0;"
+            >`;
+        }
   
       const optsDiv = document.createElement("div");
       optsDiv.className = "options";
