@@ -410,7 +410,7 @@ function shuffleArray(array) {
             div.innerHTML += `<img 
                 src="${q.imagePath}" 
                 alt="문제 그림" 
-                style="max-width: 90%; height: auto; margin: 15px 0;"
+                style="max-width: 120%; height: auto; margin: 15px 0;"
             >`;
         }
   
