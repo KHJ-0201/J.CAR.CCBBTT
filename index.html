@@ -4,15 +4,37 @@
 <meta charset="UTF-8">
 <title>CBT 시험 선택</title>
 <link rel="stylesheet" href="index.css">
+
+<style>
+body {
+    visibility: hidden; 
+}
+</style>
+
 </head>
 <body>
-<h1>CBT 시험 선택</h1>
-<div class="exam-container">
-    <div class="exam-card" onclick="window.location.href='maintenance/maintenance_rounds.html'">자동차 정비기능사 필기</div>
-    <div class="exam-card" onclick="window.location.href='paint/paint_rounds.html'">자동차 보수도장기능사 필기</div>
-    <div class="exam-card" onclick="window.location.href='body/body_rounds.html'">자동차 차체수리기능사 필기</div>
-    <div class="exam-card" onclick="window.location.href='assess/assess_rounds.html'">자동차 진단평가사 필기</div>
-    <div class="exam-card" onclick="window.location.href='industry/industry_op.html'">과정형평가 산업기사 필기</div>
+
+<div id="passwordModal" class="modal">
+  <div class="modal-content">
+    <h2>🔒 비밀번호를 입력하세요 (4자리)</h2>
+    <input type="password" id="passwordInput" class="password-input" maxlength="4" placeholder="••••">
+    <button id="submitButton" class="submit-button">접속</button>
+    <p id="errorMessage" class="error-message">비밀번호가 틀렸습니다. 다시 시도해주세요.</p>
+  </div>
 </div>
+
+<div id="pageContent"> 
+    <h1>CBT 시험 선택</h1>
+    <div class="exam-container">
+        <div class="exam-card" onclick="window.location.href='maintenance/maintenance_rounds.html'">자동차 정비기능사 필기</div>
+        <div class="exam-card" onclick="window.location.href='paint/paint_rounds.html'">자동차 보수도장기능사 필기</div>
+        <div class="exam-card" onclick="window.location.href='body/body_rounds.html'">자동차 차체수리기능사 필기</div>
+        <div class="exam-card" onclick="window.location.href='assess/assess_rounds.html'">자동차 진단평가사 필기</div>
+        <div class="exam-card" onclick="window.location.href='industry/industry_op.html'">과정형평가 산업기사 필기</div>
+    </div>
+</div>
+
+<script src="index.js"></script>
+
 </body>
 </html>

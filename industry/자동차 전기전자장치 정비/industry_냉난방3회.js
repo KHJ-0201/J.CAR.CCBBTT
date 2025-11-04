@@ -318,6 +318,26 @@ function shuffleArray(array) {
   // -----------------------------
   // 제출 및 채점
   function submitQuiz() {
+    // 1. 안 푼 문제 인덱스 확인
+    const firstUnansweredIndex = answers.findIndex((a) => a < 0);
+    const unansweredCount = answers.filter((a) => a < 0).length;
+
+    // 2. 안 푼 문제가 있고, 사용자가 제출을 취소하는 경우
+    if (unansweredCount > 0) {
+        const confirmSubmit = confirm(
+            `아직 ${unansweredCount}개의 문제를 풀지 않았습니다.\n계속 제출하시겠습니까? (취소 시 문제풀이 계속 및 첫 안 푼 문제로 이동)`
+        );
+        
+        if (!confirmSubmit) {
+            // 제출 취소 시: 첫 안 푼 문제로 스크롤
+            if (firstUnansweredIndex !== -1) {
+                const questionDiv = document.getElementsByClassName("question")[firstUnansweredIndex];
+                questionDiv.scrollIntoView({ behavior: 'smooth', block: 'center' }); // 부드럽게 스크롤
+            }
+            return; // 채점 로직 실행 중지
+        }
+    }
+    
     clearInterval(timerInterval);
     document.getElementById("timer").textContent = "";
   

@@ -35,3 +35,66 @@ h1 {
     background-color: #45a049;
     transform: scale(1.05);
 }
+
+/* 🚨 블러 효과 CSS */
+.blur {
+    filter: blur(5px); 
+    pointer-events: none; 
+    transition: filter 0.3s ease-in-out; 
+}
+
+/* 팝업 모달 스타일 */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 300px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.password-input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 5px; 
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    display: none;
+}
