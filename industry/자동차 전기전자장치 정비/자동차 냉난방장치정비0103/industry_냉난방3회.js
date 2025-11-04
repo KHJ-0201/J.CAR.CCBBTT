@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-export const industry3Questions = [
+export const industry010303 = [
     {
         question: "용량 고정형 압축기(Fixed Displacement Compressor)의 ON/OFF 구동을 제어하여 시스템 과냉(Over-cooling)을 방지하는 주된 센서 또는 스위치는 무엇입니까?",
         options: ["고압 압력 스위치", "저압 압력 스위치", "증발기 온도 센서(Evaporator Temperature Sensor)", "일사량 센서(Solar Sensor)"],
@@ -249,7 +249,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...industry3Questions]).slice(0, 60);
+  let questions = shuffleArray([...industry010303]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {

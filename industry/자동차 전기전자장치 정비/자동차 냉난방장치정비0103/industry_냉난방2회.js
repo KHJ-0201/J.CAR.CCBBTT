@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-export const industry2Questions = [
+export const industry010302 = [
     {
         question: "히트 펌프(Heat Pump) 시스템을 사용하는 전기자동차에서, 난방 효율을 저하시키는 주요 원인으로, 외기 온도가 낮을 때 열교환기에서 발생하는 현상은 무엇입습니까?",
         options: ["응축기 내부 압력이 지나치게 낮아진다.", "냉매가 액체 상태로 압축기에 유입된다.", "외부 열교환기(증발기 역할)에 서리가 형성되어 열 흡수를 방해한다.", "실내 응축기에서 냉매가 과열된다."],
@@ -250,7 +250,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...industry2Questions]).slice(0, 60);
+  let questions = shuffleArray([...industry010302]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {

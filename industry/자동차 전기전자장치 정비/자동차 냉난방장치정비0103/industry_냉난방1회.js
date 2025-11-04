@@ -1,6 +1,6 @@
 // -----------------------------
 // 문제 배열
-export const industry1Questions = [
+export const industry010301 = [
     {
         question: "냉매 순환 시스템에서 액체 냉매 내에 포함된 수분을 흡수하여 시스템의 부식을 방지하고, 이물질을 걸러주는 역할을 하는 부품은 무엇입니까?",
         options: ["팽창 밸브(Expansion Valve)", "응축기(Condenser)", "수액기(Receiver Drier)", "압축기(Compressor)"],
@@ -249,7 +249,7 @@ function shuffleArray(array) {
   }
   
   // ✅ 문제 순서 랜덤 + 60문제 제한
-  let questions = shuffleArray([...industry1Questions]).slice(0, 60);
+  let questions = shuffleArray([...industry010301]).slice(0, 60);
   
   // ✅ 보기 순서도 랜덤화
   questions.forEach((q) => {
