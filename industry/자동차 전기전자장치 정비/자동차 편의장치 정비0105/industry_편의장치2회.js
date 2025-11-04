@@ -338,7 +338,7 @@ function shuffleArray(array) {
             return; // 채점 로직 실행 중지
         }
     }
-
+    
     clearInterval(timerInterval);
     document.getElementById("timer").textContent = "";
   

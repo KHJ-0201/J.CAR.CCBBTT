@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>하이브리드자동차특화시스템정비 회차 선택</title>
+<link rel="stylesheet" href="industry_rounds.css">
+</head>
+<body>    
+
+<h1>하이브리드자동차특화시스템정비 - 회차 선택</h1>
+
+
+<div class="round-container">
+    <div class="round-card" onclick="goToMaintenance('industry_하이브리드전체.html')">전체 회차 랜덤 60문제</div>
+    <div class="round-card" onclick="goToMaintenance('industry_하이브리드1회.html')">하이브리드자동차특화시스템정비 1회차</div>
+    <div class="round-card" onclick="goToMaintenance('industry_하이브리드2회.html')">하이브리드자동차특화시스템정비 2회차</div>
+    <div class="round-card" onclick="goToMaintenance('industry_하이브리드3회.html')">하이브리드자동차특화시스템정비 3회차</div>
+</div>
+
+<script>
+function goToMaintenance(path){
+    window.location.href = path;
+}
+</script>
+</body>
+</html>

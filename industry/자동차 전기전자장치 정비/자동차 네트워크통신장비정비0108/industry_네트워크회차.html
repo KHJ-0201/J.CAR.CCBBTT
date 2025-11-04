@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>자동차네트워크통신장비정비 회차 선택</title>
+<link rel="stylesheet" href="industry_rounds.css">
+</head>
+<body>    
+
+<h1>자동차네트워크통신장비정비 - 회차 선택</h1>
+
+
+<div class="round-container">
+    <div class="round-card" onclick="goToMaintenance('industry_네트워크전체.html')">전체 회차 랜덤 60문제</div>
+    <div class="round-card" onclick="goToMaintenance('industry_네트워크1회.html')">자동차네트워크통신장비정비 1회차</div>
+    <div class="round-card" onclick="goToMaintenance('industry_네트워크2회.html')">자동차네트워크통신장비정비 2회차</div>
+    <div class="round-card" onclick="goToMaintenance('industry_네트워크3회.html')">자동차네트워크통신장비정비 3회차</div>
+</div>
+
+<script>
+function goToMaintenance(path){
+    window.location.href = path;
+}
+</script>
+</body>
+</html>
