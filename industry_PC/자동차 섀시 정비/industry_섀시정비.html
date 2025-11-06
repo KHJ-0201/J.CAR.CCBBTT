@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <title>자동차 섀시 정비 - 과목 선택</title>
-<link rel="stylesheet" href="industry_rounds.css">
+<link rel="stylesheet" href="../../회차.css">
 </head>
 <body>    
 
 <h1>자동차 섀시 정비 - 과목 선택</h1>
 
+<div class="random-wrapper">
+    <div class="round-card random-card" onclick="goToMaintenance('industry_총랜덤.html')">전체 회차 랜덤 60문제</div>
+</div>
 
 <div class="round-container">
-    <div class="round-card" onclick="goToMaintenance('industry_냉난방전체.html')">전체 랜덤</div>
     <div class="round-card" onclick="goToMaintenance('0303자동변속기정비/industry_자동변속회차.html')">자동변속기 정비</div>
     <div class="round-card" onclick="goToMaintenance('0308유압식현가장치정비/industry_유압식현가회차.html')">유압식 현가장치 정비</div>
     <div class="round-card" onclick="goToMaintenance('0309전자제어현가장치정비/industry_전자제어현가회차.html')">전자제어 현가장치 정비</div>
