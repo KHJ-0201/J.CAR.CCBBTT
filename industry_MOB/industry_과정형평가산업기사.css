@@ -1,61 +1,61 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin: 20px;
+    margin: 0;
+    padding: 0;
 }
 
-/* 1. 전체 랜덤 버튼 컨테이너 스타일 (맨 위 단독 배치) */
-.random-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+h1 {
+    margin-top: 50px;
+    /* 모바일에서는 h1 마진을 조금 줄여줍니다 */
+    margin-top: 30px; 
+    font-size: 1.5em; /* 글꼴 크기도 줄입니다 */
 }
 
-/* 2. 회차 버튼 컨테이너 스타일 (✅ 세로 1열 나열로 수정) */
 .round-container {
     display: flex;
-    /* 세로 나열로 변경 */
+    justify-content: center;
+    /* 핵심 수정: 무조건 세로 1열로 배치 */
     flex-direction: column; 
-    /* 세로 나열 시 중앙 정렬 */
+    /* 세로로 쌓인 아이템들을 수평 중앙에 정렬 */
     align-items: center; 
-    
-    /* 기존 가로 배치 관련 속성 제거 */
-    /* flex-wrap: wrap;  <-- 제거 */
-    /* max-width: 1180px; <-- 제거 (세로 나열은 너비 제한 필요 없음) */
-    
+    margin-top: 30px; /* h1과 동일하게 마진을 줄입니다 */
     gap: 20px;
-    margin: 0 auto;
 }
 
-/* 3. 모든 버튼 공통 스타일 (크기는 380px으로 유지) */
 .round-card {
-    /* ✅ 가장 긴 버튼에 맞춰 너비 고정 (380px 유지) */
-    width: 380px; 
-    max-width: 380px;
-    
-    /* 기본 배경색 */
-    background-color: #4CAF50; 
+    /* 모바일 최적화된 너비와 높이를 기본값으로 사용 */
+    width: 90%; 
+    max-width: 400px; /* 너무 넓은 화면에서도 보기 좋게 최대 너비 제한 */
+    height: 80px; 
+    background-color: #4CAF50;
     color: white;
-    
-    /* 패딩 및 글꼴 크기 유지 */
-    padding: 30px 15px; 
-    font-size: 18px;
-    
-    /* 텍스트 중앙 정렬 및 수직 중앙 정렬 */
-    text-align: center;
-    display: flex; 
+    font-size: 16px; /* 글꼴 크기 조정 */
+    display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-
-    border-radius: 10px;
     cursor: pointer;
+    border-radius: 10px;
     transition: 0.3s;
 }
 
-/* 4. 기본 버튼 스타일 (초록색) */
+/* PC에서는 hover 효과를 그대로 유지합니다. */
 .round-card:hover {
     background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* 📱 모바일 최적화 스타일 (추가적인 조정만 남김) */
+/*
+   주요 레이아웃(flex-direction: column)이 이미 기본 스타일에 적용되었기 때문에,
+   이 미디어 쿼리 블록은 모바일에서 필요 없는 효과(hover)를 제거하는 용도로만 사용됩니다.
+*/
+@media (max-width: 600px) {
+    /* 모바일에서는 불필요한 깜빡임을 막기 위해 hover 효과를 제거/단순화 */
+    .round-card:hover {
+        transform: none;
+        background-color: #4CAF50; /* 원래 색상 유지 */
+    }
 }
 
 /* 5. "전체 랜덤" 버튼만 빨간색으로 변경 */
