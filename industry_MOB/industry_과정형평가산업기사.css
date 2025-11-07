@@ -4,47 +4,66 @@ body {
     margin: 20px;
 }
 
-h1 {
-    /* 모바일 환경을 고려하여 마진 조정 */
-    margin-top: 30px;
-    font-size: 1.5em; 
-}
-
-/* round-container: 1열 배치 유지 */
-.round-container {
+/* 1. 전체 랜덤 버튼 컨테이너 스타일 (맨 위 단독 배치) */
+.random-wrapper {
     display: flex;
     justify-content: center;
-    flex-direction: column; 
-    align-items: center; 
-    gap: 20px;
-    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
-/* round-card: 반응형 너비(90%) 유지 + 크기 확대 */
+/* 2. 회차 버튼 컨테이너 스타일 (✅ 세로 1열 나열로 수정) */
+.round-container {
+    display: flex;
+    /* 세로 나열로 변경 */
+    flex-direction: column; 
+    /* 세로 나열 시 중앙 정렬 */
+    align-items: center; 
+    
+    /* 기존 가로 배치 관련 속성 제거 */
+    /* flex-wrap: wrap;  <-- 제거 */
+    /* max-width: 1180px; <-- 제거 (세로 나열은 너비 제한 필요 없음) */
+    
+    gap: 20px;
+    margin: 0 auto;
+}
+
+/* 3. 모든 버튼 공통 스타일 (크기는 380px으로 유지) */
 .round-card {
-    background-color: #4CAF50;
+    /* ✅ 가장 긴 버튼에 맞춰 너비 고정 (380px 유지) */
+    width: 380px; 
+    max-width: 380px;
+    
+    /* 기본 배경색 */
+    background-color: #4CAF50; 
     color: white;
     
-    /* ✅ 모바일에 최적화된 반응형 너비 (90%) 유지 */
-    width: 90%; 
-    max-width: 450px; /* 너무 커지는 것 방지 */
+    /* 패딩 및 글꼴 크기 유지 */
+    padding: 30px 15px; 
+    font-size: 18px;
     
-    /* 🚀 첫 화면처럼 버튼 크기를 키우기 위한 핵심 수정 */
-    padding: 30px 15px; /* <--- 패딩을 크게 확대하여 버튼 높이 증가 */
-    font-size: 20px; /* <--- 글꼴 크기를 크게 확대 */
-    /* ------------------------------------------------ */
-
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    
+    /* 텍스트 중앙 정렬 및 수직 중앙 정렬 */
     text-align: center;
     display: flex; 
     align-items: center;
     justify-content: center;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
+/* 4. 기본 버튼 스타일 (초록색) */
 .round-card:hover {
     background-color: #45a049;
+}
+
+/* 5. "전체 랜덤" 버튼만 빨간색으로 변경 */
+.random-card {
+    background-color: #f44336;
+}
+
+/* 6. "전체 랜덤" 버튼 색상 변경 */
+.random-card:hover {
+    background-color: #d32f2f;
 }

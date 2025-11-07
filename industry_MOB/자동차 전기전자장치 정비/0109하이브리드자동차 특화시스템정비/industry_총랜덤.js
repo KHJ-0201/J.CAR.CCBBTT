@@ -136,6 +136,11 @@ function submitQuiz() {
     document.getElementById("timer").textContent = "";
  
     let score = 0;
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
     questions.forEach((q, i) => {
       const questionDiv = document.getElementsByClassName("question")[i];
       const explainDiv = questionDiv.querySelector(".explain");
