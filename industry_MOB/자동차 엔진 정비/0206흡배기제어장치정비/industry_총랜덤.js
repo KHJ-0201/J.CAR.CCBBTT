@@ -1,8 +1,8 @@
-import { industry020601 } from './industry_흡배기문제.js';
-import { industry020602 } from './industry_흡배기문제.js';
-import { industry020603 } from './industry_흡배기문제.js';
-import { industry020604 } from './industry_흡배기문제.js';
-import { industry020605 } from './industry_흡배기문제.js';
+import { industry020601 } from './industry_흡배기제어장치문제.js';
+import { industry020602 } from './industry_흡배기제어장치문제.js';
+import { industry020603 } from './industry_흡배기제어장치문제.js';
+import { industry020604 } from './industry_흡배기제어장치문제.js';
+import { industry020605 } from './industry_흡배기제어장치문제.js';
 
 const ALL_QUESTIONS = [
     ...industry020601,

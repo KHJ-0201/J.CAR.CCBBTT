@@ -1,4 +1,4 @@
-import { industry020602 } from './industry_흡배기문제.js';
+import { industry020602 } from './industry_흡배기제어장치문제.js';
 
 const ALL_QUESTIONS = [...industry020602];
 

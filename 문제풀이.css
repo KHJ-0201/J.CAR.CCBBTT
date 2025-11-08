@@ -79,6 +79,7 @@ h1 {
     padding-top: 5px; 
 }
 
+
 /* 문제 텍스트 (번호 위치) */
 .q-title {
     display: block;
@@ -167,3 +168,4 @@ h1 {
     text-align: center;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
+

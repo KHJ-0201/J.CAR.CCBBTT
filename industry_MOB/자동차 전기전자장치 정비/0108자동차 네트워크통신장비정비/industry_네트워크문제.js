@@ -1,729 +1,1216 @@
 export const industry010801 = [
-    {    
-    question: "자동차 네트워크 통신에서 가장 널리 사용되는 통신 방식이며, 고속 및 저속 통신이 모두 가능한 표준은 무엇입니까?",
-    options: ["LIN", "CAN (Controller Area Network)", "FlexRay", "MOST"],
+{
+    question: "CAN(Controller Area Network) 통신에서 메시지의 우선순위를 결정하는 필드는 무엇이며, 그 결정 방식은?",
+    options: ["Data Field, 길이가 짧을수록 높다", "DLC (Data Length Code), 값이 클수록 높다", "Arbitration Field, 값이 낮을수록 높다", "CRC Field, 값이 높을수록 높다"],
+    answer: 2,
+    explain: "CAN의 Arbitration Field(중재 필드)는 Identifier(ID)를 포함하며, ID 값이 낮을수록 우선순위가 높고 버스 제어권을 갖는다. 이를 Non-Destructive Arbitration이라고 한다.",
+  },
+  {
+    question: "고속 CAN(High-Speed CAN) 통신에서 CAN-H와 CAN-L 두 신호선에 120Ω의 종단 저항(Termination Resistor)을 사용하는 주된 이유는?",
+    options: ["데이터 전송 속도 제한", "버스에 흐르는 전류 증가", "신호 반사에 의한 파형 왜곡 방지", "버스 전원 공급"],
+    answer: 2,
+    explain: "종단 저항은 통신선의 임피던스 정합을 통해 신호가 통신선 끝에서 반사되어 원래 신호와 겹쳐 파형을 왜곡하는 현상을 방지한다.",
+  },
+  {
+    question: "CAN 통신의 표준 프레임(Standard Frame)에서 메시지 식별자(Identifier)의 비트 수와 최대 데이터 필드 길이(바이트)는?",
+    options: ["11비트, 8바이트", "29비트, 8바이트", "11비트, 64바이트", "29비트, 64바이트"],
+    answer: 0,
+    explain: "표준 CAN 프레임의 식별자는 11비트이며, 데이터 필드(Data Field)는 최대 8바이트까지 전송할 수 있다.",
+  },
+  {
+    question: "CAN 통신에서 연속적으로 동일한 레벨(Dominant 또는 Recessive)의 비트가 전송될 때, 오류를 방지하고 동기화를 유지하기 위해 삽입되는 비트는?",
+    options: ["Parity Bit", "Stop Bit", "Stuff Bit", "ACK Bit"],
+    answer: 2,
+    explain: "Bit Stuffing은 연속되는 5개의 동일 레벨 비트 뒤에 강제로 반대 레벨의 비트를 삽입하여 동기화 오류를 막고 전송 중 오류 검출에 활용된다.",
+  },
+  {
+    question: "LIN(Local Interconnect Network) 프로토콜의 주된 특징으로 옳지 않은 것은?",
+    options: ["단일 마스터와 다수의 슬레이브 구조", "시계열(Time-triggered) 통신 방식", "저속 통신과 저비용에 초점", "단일선(Single-wire) 통신 방식"],
     answer: 1,
-    explain: "CAN 통신은 높은 신뢰성과 유연성으로 인해 파워트레인, 차체 제어 등 자동차의 핵심 네트워크로 가장 널리 사용됩니다."
+    explain: "LIN은 마스터의 스케줄링 테이블에 의해 제어되는 이벤트 기반 통신 방식이며, 시계열(Time-triggered) 통신은 FlexRay의 주된 특징이다.",
   },
   {
-    question: "CAN 통신에서 여러 ECU가 동시에 데이터를 전송하려고 할 때, 데이터의 중요도에 따라 전송 우선순위를 결정하는 방식은 무엇입니까?",
-    options: ["토큰 패싱", "마스터-슬레이브 방식", "비트 단위 중재 (Arbitration)", "CSMA/CA"],
+    question: "고속 CAN 통신 시, CAN-H 라인이 단선(Open)되어 접지(Ground)에 단락(Short to Ground)되었을 때, 버스 상태에 미치는 영향은?",
+    options: ["통신 속도가 절반으로 줄어든다.", "CAN-L 라인이 통신을 이어받아 정상 통신한다.", "버스 전체가 Dominant 상태로 고정되어 통신 불능 상태가 된다.", "버스 전체가 Recessive 상태로 고정되어 통신 불능 상태가 된다."],
     answer: 2,
-    explain: "CAN 통신은 메시지 식별자 (ID)의 낮은 값에 높은 우선순위를 부여하며, 비트 단위로 중재하여 충돌 없이 데이터 전송을 관리합니다."
+    explain: "CAN-H가 접지 단락되면 CAN-H의 전위가 낮아지고, CAN-L과의 차동 전압이 Dominant 상태를 유지하게 되어 버스가 Dominant 고정으로 통신 불능이 된다.",
   },
   {
-    question: "CAN 통신 회로의 종단 저항 (Termination Resistor)이 필요한 주된 이유는 무엇입니까?",
-    options: ["통신 속도 감소", "데이터 패킷 크기 조절", "신호의 반사파를 흡수하여 통신 품질 확보", "ECU의 전력 공급"],
+    question: "자동차 네트워크에서 서로 다른 통신 프로토콜(예: CAN, LIN, FlexRay)을 사용하는 ECU 간에 데이터를 중계하고 변환하는 장치는?",
+    options: ["Transceiver", "Termination Resistor", "Gateway ECU", "Bus Driver"],
     answer: 2,
-    explain: "종단 저항은 통신 케이블 끝에서 발생하는 신호의 반사파를 흡수하여 데이터의 오류를 방지하고 통신 신뢰도를 높이는 데 필수적입니다. 일반적으로 120Ω 저항 2개가 사용됩니다."
+    explain: "Gateway ECU(게이트웨이 ECU)는 서로 다른 네트워크 간의 데이터 포맷을 변환하고 라우팅하여 통신을 가능하게 한다.",
   },
   {
-    question: "LIN Local Interconnect Network 통신이 주로 사용되는 시스템은 무엇입니까?",
-    options: ["엔진 제어 및 변속기 제어", "에어백 및 ABS 등 안전 시스템", "도어, 창문, 시트 등 저속/단순 제어 시스템", "ADAS 및 인포테인먼트 시스템"],
-    answer: 2,
-    explain: "LIN은 CAN보다 저렴하고 간단하며, 주로 도어 모듈, 와이퍼, 라이팅 등 저속의 단순한 서브 시스템 제어에 사용됩니다."
-  },
-  {
-    question: "FlexRay 통신 시스템의 가장 큰 특징 중 하나로, 시간 트리거 방식을 사용하여 높은 신뢰성을 확보하는 방식은 무엇입니까?",
-    options: ["확률적 접근 방식", "시간 분할 다중 접속 (TDMA)", "CSMA/CD", "경쟁 기반 방식"],
+    question: "CAN 통신 프레임의 ACK 필드(Acknowledge Field)에서 송신 ECU는 어떤 상태의 비트를 전송하는가?",
+    options: ["Dominant 비트를 전송한다.", "Recessive 비트를 전송한다.", "ACK 필드를 사용하지 않는다.", "이전 비트의 반대 레벨을 전송한다."],
     answer: 1,
-    explain: "FlexRay는 TDMA (Time Division Multiple Access) 방식을 사용하여 각 ECU에 정해진 시간 슬롯을 할당함으로써, 통신 충돌이 없고 높은 실시간성 및 결정론적 (Deterministic) 통신이 가능합니다."
+    explain: "송신 ECU는 Recessive 비트를 전송하며, 수신에 성공한 모든 ECU는 이 비트를 Dominant로 덮어써서 성공적인 수신을 송신 ECU에 알린다.",
   },
   {
-    question: "자동차 이더넷 (Automotive Ethernet) 통신이 기존 CAN 대비 갖는 가장 큰 장점은 무엇입니까?",
-    options: ["저렴한 케이블 비용", "낮은 데이터 전송 속도", "ADAS 및 인포테인먼트를 위한 초고속 통신 속도", "단일 마스터-슬레이브 구조"],
+    question: "FlexRay 통신 프로토콜이 CAN이나 LIN과 비교하여 갖는 가장 큰 장점은?",
+    options: ["초저가 구현 비용", "마스터/슬레이브의 단순한 제어 구조", "실시간성과 높은 신뢰성을 보장하는 시계열(Time-triggered) 통신", "단일선(Single-wire) 통신"],
     answer: 2,
-    explain: "이더넷은 GB 단위의 데이터를 처리할 수 있어, 카메라, 레이더 등 ADAS 센서의 대용량 데이터 및 인포테인먼트 시스템의 고속 데이터 전송에 필수적입니다."
+    explain: "FlexRay는 Time-Triggered 통신 방식을 도입하여 엄격한 시간 동기화를 통해 데이터 전송의 실시간성과 예측 가능성을 극대화한다.",
   },
   {
-    question: "자동차 네트워크 진단 시, 오실로스코프를 사용하여 CAN-High 선과 CAN-Low 선의 전압 파형을 측정하는 주된 목적은 무엇입니까?",
-    options: ["ECU 내부 온도 측정", "통신선의 신호 레벨, 반사파, 노이즈 확인", "케이블 길이 측정", "접지 저항 측정"],
+    question: "CAN 통신에서 Recessive 비트 상태 시, CAN-H와 CAN-L의 공칭(Nominal) 전압 레벨은?",
+    options: ["CAN-H: 5V, CAN-L: 0V", "CAN-H: 3.5V, CAN-L: 1.5V", "CAN-H: 2.5V, CAN-L: 2.5V", "CAN-H: 0V, CAN-L: 5V"],
+    answer: 2,
+    explain: "Recessive 상태는 버스 휴지 상태로, CAN-H와 CAN-L 모두 공통 모드 전압인 약 2.5V를 유지하여 차동 전압이 0V에 가깝다.",
+  },
+  {
+    question: "CAN 통신 프로토콜에서 수신된 메시지에 오류가 있음을 감지했을 때, 오류를 감지한 수신 ECU가 전송하는 오류 신호는?",
+    options: ["Overload Frame", "Error Flag", "Stuff Bit", "ACK Bit"],
     answer: 1,
-    explain: "오실로스코프를 통해 통신 파형의 펄스 폭, 전압 레벨, 상승 및 하강 시간, 노이즈 등을 확인하여 물리적인 통신 상태를 정확하게 진단할 수 있습니다."
+    explain: "오류가 감지된 ECU는 Error Flag(오류 플래그)를 버스에 전송하여 현재 메시지의 전송을 강제로 중단하고 오류 상태를 알린다.",
   },
   {
-    question: "CAN 통신에서 Active Error Frame이 발생했을 때, 해당 메시지를 전송한 ECU가 취하는 조치는 무엇입니까?",
-    options: ["즉시 통신 종료", "데이터 전송률 증가", "메시지를 재전송하여 오류 복구 시도", "CAN 통신 모듈 초기화"],
+    question: "LIN 통신 프레임에서 마스터 노드가 슬레이브 노드에 데이터 전송을 요청하는 필드는?",
+    options: ["Data Field", "CRC Field", "ID Field (식별자)", "Sync Field"],
     answer: 2,
-    explain: "Active Error Frame은 통신 오류를 모든 노드에 알리는 역할을 하며, 오류를 발견한 ECU는 해당 메시지를 오류로 간주하고 재전송을 시도하여 오류 복구를 수행합니다."
+    explain: "LIN은 마스터가 식별자(ID)를 포함한 헤더(Header)를 전송하면, 해당 ID에 응답하는 슬레이브가 데이터와 체크섬을 전송하는 방식으로 통신한다.",
   },
   {
-    question: "LIN 통신의 기본적인 구조 및 통신 제어 방식을 가장 잘 설명하는 것은 무엇입니까?",
-    options: ["분산 제어, 경쟁 기반", "멀티 마스터, 토큰 기반", "단일 마스터, 다수 슬레이브 방식", "멀티 마스터, TDMA 기반"],
+    question: "CAN 통신에서 메시지 전송 후, 수신 ECU가 ACK 필드를 Dominant로 변경하지 않았을 때(ACK 에러), 송신 ECU가 취하는 조치는?",
+    options: ["메시지 전송을 중단하고 Bus-Off 상태로 진입", "다음 메시지를 전송", "오류 카운터를 증가시키고 메시지를 재전송", "통신 속도를 낮춘다."],
     answer: 2,
-    explain: "LIN은 하나의 마스터 ECU가 통신을 주도하고, 다수의 슬레이브 ECU는 마스터의 요청에 따라 응답하는 단순한 마스터-슬레이브 구조를 가집니다."
+    explain: "ACK 에러는 메시지가 정상적으로 수신되지 않았음을 의미하며, 송신 ECU는 오류 카운터를 증가시키고 해당 메시지를 재전송한다.",
   },
   {
-    question: "FlexRay가 CAN 대비 갖는 결정적인 안전상의 장점으로, 하나의 채널이 고장나도 통신이 가능한 구조는 무엇입니까?",
-    options: ["단일 종단 저항 사용", "저전력 모드 지원", "이중 채널 (Dual Channel) 구조", "토큰 패싱 방식"],
+    question: "CAN 통신 프레임에서 데이터 필드(Data Field)에 전송할 데이터가 전혀 없을 때, DLC (Data Length Code)의 값은?",
+    options: ["0", "1", "8", "15"],
+    answer: 0,
+    explain: "DLC는 데이터 필드의 실제 길이를 나타내며, 데이터가 없을 경우 0으로 설정된다. 이 경우 'Remote Frame(원격 프레임)'과 구별된다.",
+  },
+  {
+    question: "자동차 ECU 간의 통신에서 CAN 통신이 주로 사용되는 영역으로 가장 적합한 것은?",
+    options: ["멀티미디어 및 인포테인먼트 시스템", "도어 잠금 장치 및 라이트 제어(저속)", "파워트레인 및 샤시 제어(고속)", "타이어 공기압 센서 통신"],
     answer: 2,
-    explain: "FlexRay는 Channel A와 Channel B의 이중 채널 구조를 가질 수 있어, 하나의 채널에 문제가 생겨도 다른 채널로 통신을 유지하는 이중화 (Redundancy)를 지원하여 안전성이 높습니다."
+    explain: "CAN은 높은 신뢰성과 적절한 통신 속도(최대 1Mbps)를 제공하여 파워트레인, 샤시 제어 등 안전과 관련된 핵심 영역에 주로 사용된다.",
   },
   {
-    question: "자동차 네트워크 진단 시, CAN-High와 CAN-Low의 단선이 발생했을 때 나타나는 현상은 무엇입니까?",
-    options: ["통신 속도 증가", "통신 모듈 과열", "통신선 단선 부위 이후의 통신 불능", "종단 저항 값의 감소"],
+    question: "LIN 통신에서 마스터 노드가 담당하는 가장 중요한 기능은?",
+    options: ["데이터 오류 자동 정정", "버스 종단 저항 설치", "통신 스케줄링 및 동기화", "다중 마스터 제어"],
     answer: 2,
-    explain: "CAN 버스에서 한쪽 라인이 단선되면 신호가 왜곡되거나 종단 저항의 역할이 상실되어 해당 단선 지점 이후의 통신이 중단되거나 오류가 발생합니다."
+    explain: "LIN은 마스터 노드가 전송 헤더를 주기적으로 전송하여 버스상의 모든 통신을 스케줄링하고 슬레이브 노드의 동기화를 유지한다.",
   },
   {
-    question: "CAN 통신 프로토콜에서 데이터 필드가 가질 수 있는 최대 데이터 바이트 수는 얼마입니까?",
-    options: ["2 바이트", "8 바이트", "16 바이트", "64 바이트"],
+    question: "FlexRay 통신에서 높은 신뢰성을 확보하기 위해 사용하는 방법 중 하나로, 두 개의 채널(Channel A, Channel B)을 이용하여 동일 데이터를 전송하는 방식은?",
+    options: ["Single-Channel Mode", "Dual-Mode Redundancy", "Time-Triggered Slot", "Dynamic Segment"],
     answer: 1,
-    explain: "CAN 통신 메시지의 데이터 필드는 최대 8바이트 (Byte)의 데이터를 전송할 수 있도록 설계되었습니다. (CAN FD는 최대 64바이트)"
+    explain: "Dual-Mode Redundancy는 두 개의 독립된 채널을 통해 동일한 데이터를 전송하여 하나의 채널에 오류가 발생하더라도 통신을 유지할 수 있게 한다.",
   },
   {
-    question: "자동차 통신 시스템 중, 주로 멀티미디어 데이터 (오디오/비디오) 전송에 특화된 광통신 기반의 네트워크는 무엇입니까?",
-    options: ["CAN", "LIN", "MOST (Media Oriented Systems Transport)", "FlexRay"],
-    answer: 2,
-    explain: "MOST는 오디오/비디오 스트리밍과 같은 대용량 멀티미디어 데이터를 처리하기 위해 개발된 통신 프로토콜이며, 주로 광섬유를 사용합니다."
-  },
-  {
-    question: "LIN 통신 시스템에서 슬레이브 ECU가 통신 오류를 일으켰을 때, 통신 오류를 복구하고 재시작을 유도하는 주체는 무엇입니까?",
-    options: ["다른 슬레이브 ECU", "마스터 ECU", "게이트웨이", "종단 저항"],
+    question: "CAN 통신에서 Dominant 비트 상태 시, CAN-H와 CAN-L의 공칭(Nominal) 전압 레벨은?",
+    options: ["CAN-H: 5V, CAN-L: 0V", "CAN-H: 3.5V, CAN-L: 1.5V", "CAN-H: 2.5V, CAN-L: 2.5V", "CAN-H: 1.5V, CAN-L: 3.5V"],
     answer: 1,
-    explain: "LIN은 마스터-슬레이브 구조이므로, 모든 통신 및 오류 복구의 주도권은 마스터 ECU에게 있으며, 슬레이브는 마스터의 지시에 따라 응답하거나 리셋됩니다."
+    explain: "Dominant 상태는 버스에서 데이터가 전송되는 상태로, CAN-H는 약 3.5V, CAN-L은 약 1.5V를 유지하여 차동 전압이 2V가 된다.",
   },
   {
-    question: "FlexRay 통신에서 정적 세그먼트 (Static Segment)가 사용되는 주된 목적은 무엇입니까?",
-    options: ["멀티미디어 데이터 전송", "가변적인 진단 데이터 전송", "실시간성 및 결정론적인 핵심 제어 데이터 전송", "비용 절감"],
+    question: "CAN 통신에서 ECU가 오류 카운터를 누적하여 Bus-Off 상태로 진입하는 기준은?",
+    options: ["전송 오류 카운터가 127을 초과할 때", "수신 오류 카운터가 127을 초과할 때", "전송 오류 카운터가 255를 초과할 때", "전송 오류 카운터가 255를 초과하고 수신 오류 카운터가 127을 초과할 때"],
     answer: 2,
-    explain: "정적 세그먼트는 TDMA 방식으로 정해진 시간 슬롯에 따라 통신하여, ABS, VDC와 같은 실시간 제어가 필수적인 핵심 데이터 전송에 사용됩니다."
+    explain: "CAN 프로토콜은 전송 오류 카운터가 255를 초과하면 해당 ECU를 Bus-Off 상태로 전환하여 버스에서 격리시킨다.",
   },
   {
-    question: "자동차 이더넷에서 UTP (Unshielded Twisted Pair) 케이블 대신 STP (Shielded Twisted Pair) 케이블을 사용했을 때 얻을 수 있는 주된 장점은 무엇입니까?",
-    options: ["가격 경쟁력 확보", "케이블 무게 감소", "외부 노이즈 차단 및 EMI/EMC 성능 향상", "데이터 전송 거리 단축"],
-    answer: 2,
-    explain: "쉴드(차폐) 처리는 외부 전자기 간섭(EMI)과 노이즈 유입을 막고, 통신선에서 발생하는 전자기파 방출(EMC)을 줄여 통신 품질을 높입니다."
-  },
-  {
-    question: "CAN 통신의 물리적 계층에서 CAN-High와 CAN-Low 두 선을 사용하는 주된 방식은 무엇입니까?",
-    options: ["단일 종단 방식 (Single-ended)", "차동 신호 방식 (Differential Signaling)", "광학 통신 방식", "직렬 통신 방식"],
+    question: "CAN 프레임에서 비트 레벨의 위반(예: Stuff Bit 규칙 위반, 프레임 구조의 고정 필드 비트 위반 등)이 감지되었을 때 발생하는 오류 유형은?",
+    options: ["Bit Error", "Form Error", "CRC Error", "ACK Error"],
     answer: 1,
-    explain: "CAN은 두 선의 전압 차이를 이용하여 데이터를 전송하는 차동 신호 방식을 채택하여, 노이즈에 강하고 신뢰성이 높습니다."
+    explain: "Form Error(형식 오류)는 CAN 프레임의 고정된 형식(예: Start of Frame, ACK Delimiter 등)이나 Bit Stuffing 규칙 위반 시 발생한다.",
   },
   {
-    question: "진단 장비 (스캐너)가 CAN 통신 네트워크의 오류를 감지하고 DTC를 생성하는 주된 원인은 무엇입니까?",
-    options: ["냉각수 온도 상승", "엔진 오일량 부족", "정상적인 통신 메시지가 수신되지 않거나 오류 메시지가 과도하게 발생할 때", "실내 조명 밝기 변경"],
+    question: "OBD-II 진단 커넥터(DLC)의 핀 배열 중, CAN 통신에 사용되는 핀 번호는?",
+    options: ["핀 7 (K-Line) 및 핀 15 (L-Line)", "핀 4 (섀시 접지) 및 핀 5 (신호 접지)", "핀 6 (CAN-H) 및 핀 14 (CAN-L)", "핀 2 (J1850 PWM) 및 핀 10 (J1850 VPW)"],
     answer: 2,
-    explain: "ECU는 다른 ECU로부터 특정 주기 내에 필요한 데이터(메시지)를 수신해야 하는데, 통신선 단절이나 ECU 고장으로 인해 메시지 수신에 실패하거나, 에러 프레임이 반복되면 통신 오류로 간주하고 DTC를 발생시킵니다."
+    explain: "OBD-II 규격에 따라 CAN 통신은 핀 6(CAN-H)과 핀 14(CAN-L)을 통해 이루어지며, 이는 범용적으로 사용된다.",
   },
   {
-    question: "LIN 통신에서 마스터 ECU가 통신을 시작하기 위해 전송하는 필드는 무엇입니까?",
-    options: ["CRC 필드", "데이터 필드", "헤더 필드 (Header Field)", "응답 필드"],
+    question: "CAN 통신에서 CRC 필드(Cyclic Redundancy Check)의 주된 목적은?",
+    options: ["메시지의 우선순위 결정", "수신 ECU의 정상 수신 확인", "전송된 데이터의 오류 검출", "통신 속도 조절"],
     answer: 2,
-    explain: "LIN 통신은 마스터가 Header (동기 바이트, 식별자 포함)를 전송하면, 해당 ID를 가진 슬레이브가 Response (데이터, 체크섬 포함)를 응답하는 방식으로 이루어집니다."
+    explain: "CRC 필드는 전송된 데이터에 기반한 다항식 계산 결과를 포함하여, 수신 측에서 동일 계산 후 비교를 통해 데이터의 오류 발생 여부를 검출한다.",
   },
   {
-    question: "FlexRay 통신에서 동적 세그먼트 (Dynamic Segment)가 사용되는 주된 목적은 무엇입니까?",
-    options: ["실시간 제어", "에어백 시스템 제어", "가변적인 데이터 (진단, 설정, 이벤트) 전송", "엔진 시동 제어"],
+    question: "LIN 통신에서 슬레이브 노드가 데이터를 전송하는 시점은?",
+    options: ["마스터 노드가 버스가 비었음을 알릴 때", "슬레이브 노드 스스로 데이터 전송이 필요할 때", "마스터 노드가 해당 슬레이브의 ID를 포함한 헤더를 전송했을 때", "Sync Break 신호가 감지되었을 때"],
     answer: 2,
-    explain: "동적 세그먼트는 미니 슬롯팅 (Mini-Slotting) 기반으로 통신하여 가변적인 크기와 비결정론적 특성을 가지는 진단 데이터, 이벤트 데이터 등 유연한 데이터 전송에 사용됩니다."
+    explain: "LIN은 마스터가 스케줄에 따라 ID를 포함한 헤더를 전송하면, 해당 ID에 응답하는 슬레이브 노드가 데이터와 체크섬을 이어서 전송한다.",
   },
   {
-    question: "CAN 통신에서 종단 저항 불량 또는 단선으로 인해 통신 파형에서 가장 흔하게 나타나는 특징은 무엇입니까?",
-    options: ["파형의 전압 레벨 감소", "데이터 전송 속도 증가", "파형의 반사파 및 왜곡 심화", "파형의 주파수 증가"],
-    answer: 2,
-    explain: "종단 저항이 없으면 신호가 케이블 끝에서 반사되어 원래 신호와 합쳐지면서 신호 왜곡이 심해지고 데이터 오류가 급격히 증가합니다."
-  },
-  {
-    question: "자동차 이더넷에서 PoE (Power over Ethernet) 기술이 적용될 경우 얻을 수 있는 가장 큰 이점은 무엇입니까?",
-    options: ["통신 속도 증가", "데이터와 전력을 하나의 케이블로 공급", "통신선의 절연 저항 증가", "통신 충돌 감소"],
+    question: "MDPS(전동식 파워 스티어링) 제어 시스템과 같은 안전 핵심 기능에 CAN 대신 FlexRay 통신을 사용하는 주된 기술적 이유는?",
+    options: ["FlexRay의 저비용 구현", "FlexRay의 시간 동기화 및 결정론적(Deterministic) 통신 특성", "FlexRay의 단일선 통신 방식", "FlexRay의 단순한 프레임 구조"],
     answer: 1,
-    explain: "PoE는 데이터 통신 케이블을 통해 전력을 함께 공급하므로, 별도의 전력선 배선이 필요 없어 배선 단순화 및 무게 감소 효과를 얻을 수 있습니다."
+    explain: "FlexRay는 시간 동기화 기반으로 데이터 전송이 정해진 시간 내에 이루어짐(결정론적)을 보장하여 높은 수준의 안정성과 실시간성이 요구되는 시스템에 적합하다.",
   },
   {
-    question: "FlexRay 통신 시스템에서 정확한 시간 동기화 (Clock Synchronization)가 중요한 주된 이유는 무엇입니까?",
-    options: ["통신선의 절연 저항 유지", "데이터 전송 효율 증가", "TDMA 방식 기반의 시간 분할 통신 신뢰성 확보", "전력 소모 감소"],
+    question: "CAN 통신에서 CAN-H 또는 CAN-L 중 한 선만 단선(Open)되었을 때, 고속 CAN 통신에 미치는 영향은?",
+    options: ["통신이 완전히 중단된다.", "버스 전체가 Dominant 상태로 고정된다.", "차동 신호 대신 단일 종단(Single-ended) 신호로 통신 속도가 저하되거나 오류 발생", "CAN-L이 전압 레벨을 2배로 높여 통신을 이어간다."],
     answer: 2,
-    explain: "FlexRay는 시간 분할 (TDMA) 방식이므로, 모든 노드가 정확하게 동기화된 시간을 공유해야 정해진 시간에 데이터를 전송하여 충돌 없이 통신이 가능합니다."
+    explain: "고속 CAN은 차동 신호에 의존하지만, 한 선 단선 시 일시적으로 단일 종단 신호처럼 작동하려 시도하나, 외부 노이즈에 취약해져 통신 오류가 발생하거나 중단된다.",
   },
   {
-    question: "CAN 통신에서 High-Speed (고속) CAN이 주로 사용되는 시스템은 무엇입니까?",
-    options: ["에어컨, 시트 등 편의 장치", "도어 잠금 장치", "엔진, 변속기, ABS 등 파워트레인 및 안전 시스템", "실내 조명"],
+    question: "CAN 통신에서 ECU가 버스에 메시지를 전송할 때, Dominant 비트가 Recessive 비트보다 우선순위가 높은(버스를 이기는) 이유는?",
+    options: ["Dominant는 5V, Recessive는 0V이기 때문", "Dominant 상태는 모든 ECU가 동시에 구동 가능하며, Recessive는 그렇지 않기 때문", "Dominant는 논리값 '0'을, Recessive는 논리값 '1'을 나타내기 때문", "Dominant 비트의 전송 시간이 더 짧기 때문"],
     answer: 2,
-    explain: "고속 CAN (최대 1Mbps)은 실시간 제어가 필요한 핵심 구동/안전 시스템에 주로 사용되며, 통신선 두 쌍 (CAN-High, CAN-Low)을 모두 사용합니다."
+    explain: "Dominant(논리 0)는 버스 전압을 강하게 낮추어 다른 Recessive(논리 1) 신호를 덮어쓸 수 있으며, 두 메시지가 충돌 시 ID가 낮은(0이 많은) 메시지가 최종적으로 버스 제어권을 갖는다.",
   },
   {
-    question: "자동차 네트워크 진단 시, 게이트웨이 ECU의 주된 역할은 무엇입니까?",
-    options: ["통신선에 종단 저항 제공", "데이터의 전송 우선순위 결정", "서로 다른 통신 프로토콜 간 데이터 중계 및 변환", "12V 전원 공급"],
-    answer: 2,
-    explain: "게이트웨이 (Gateway)는 CAN, LIN, 이더넷 등 서로 다른 네트워크 사이에 위치하여, 데이터 메시지를 변환하고 필요한 네트워크로 중계하여 통신을 가능하게 합니다."
-  },
-  {
-    question: "LIN 통신의 슬레이브 ECU가 마스터의 요청 없이 임의로 데이터를 전송할 수 없는 주된 이유는 무엇입니까?",
-    options: ["낮은 통신 속도", "마스터의 헤더 요청이 없으면 응답하지 않는 마스터-슬레이브 구조", "토큰 패싱 방식", "광통신 사용"],
+    question: "FlexRay 통신에서 'Static Segment(정적 세그먼트)'의 주된 특징은?",
+    options: ["충돌 방지를 위한 메시지 우선순위 중재", "전송 시간이 고정되어 높은 예측 가능성을 보장", "데이터 전송량이 유동적이며 유연함", "다수의 마스터 노드 지원"],
     answer: 1,
-    explain: "LIN은 마스터가 요청하는 Header ID에 해당하는 슬레이브만 Response를 전송할 수 있는 엄격한 마스터-슬레이브 제어 방식을 따릅니다."
+    explain: "Static Segment는 Time Slot이 미리 할당되어 정해진 시간(시계열)에만 메시지를 전송하므로, 통신 전송 시간에 대한 높은 예측 가능성을 갖는다.",
   },
   {
-    question: "FlexRay 통신의 특징 중, 버스 가십 (Bus Guardian)이 수행하는 주된 기능은 무엇입니까?",
-    options: ["메시지 압축", "통신 전압 레벨 조정", "ECU가 정해진 시간 슬롯 외에 통신하는 것을 방지", "통신 프로토콜 변환"],
-    answer: 2,
-    explain: "버스 가십은 FlexRay 통신의 시간 무결성을 보장하기 위해, ECU가 할당된 시간 외에 통신 버스를 사용하는 것을 엄격하게 감시하고 차단하는 역할을 합니다."
-  },
-  {
-    question: "CAN 통신에서 Low-Speed (저속) CAN이 고속 CAN 대비 갖는 특징은 무엇입니까?",
-    options: ["통신 충돌이 없음", "더 많은 데이터 바이트 전송", "한쪽 통신선이 고장나도 통신 지속 가능 (Single Wire Mode)", "주로 ADAS에 사용"],
-    answer: 2,
-    explain: "저속 CAN (최대 125kbps)은 주로 편의장치에 사용되며, 두 통신선 중 하나가 고장나도 나머지 한 선을 이용한 Single Wire 모드로 전환되어 통신을 계속할 수 있습니다."
-  },
-  {
-    question: "자동차 네트워크에서 OTA (Over-The-Air) 업데이트 기능을 지원하기 위해 가장 필수적으로 요구되는 통신 네트워크는 무엇입니까?",
-    options: ["LIN", "CAN", "MOST", "고속 이더넷 (Ethernet)"],
-    answer: 3,
-    explain: "OTA 업데이트는 대용량의 소프트웨어 파일을 차량으로 전송해야 하므로, 초고속 통신 속도를 제공하는 이더넷 네트워크가 필수적으로 요구됩니다."
-  },
-  {
-    question: "CAN 통신 진단 시, 종단 저항 값이 정상 값 (60Ω)보다 훨씬 높은 120Ω으로 측정되었다면 가장 가능성이 높은 물리적 결함은 무엇입니까?",
-    options: ["ECU 단락", "CAN-High와 CAN-Low 간의 단선", "종단 저항 하나가 단선", "CAN 통신 모듈 고장"],
-    answer: 2,
-    explain: "정상적인 CAN 버스는 120Ω 저항 2개가 병렬로 연결되어 60Ω의 합성 저항을 가집니다. 하나가 단선되면 나머지 하나(120Ω)만 측정되어 120Ω으로 측정될 가능성이 높습니다."
-  },
-  {
-    question: "LIN 통신 프레임의 체크섬 (Checksum) 필드가 수행하는 주된 역할은 무엇입니까?",
-    options: ["슬레이브 ECU 식별", "데이터 전송 우선순위 결정", "수신된 데이터의 오류 검출", "통신 속도 설정"],
-    answer: 2,
-    explain: "체크섬은 전송된 데이터 필드를 기반으로 계산된 값을 포함하여, 수신 측에서 동일한 계산을 통해 데이터 변조 또는 오류 발생 여부를 확인하는 데 사용됩니다."
-  },
-  {
-    question: "FlexRay 통신에서 시간 트리거 방식 (Time-Triggered)을 사용하는 주된 이점은 무엇입니까?",
-    options: ["저렴한 비용", "간단한 배선", "충돌이 없고, 통신 지연 시간이 정확하게 예측 가능", "유연한 데이터 전송"],
-    answer: 2,
-    explain: "시간 트리거 방식은 통신 충돌이 원천적으로 배제되며, 데이터 전송 시간이 미리 정해져 있으므로 ABS, 조향 등 안전 관련 시스템에 필수적인 결정론적 통신을 보장합니다."
-  },
-  {
-    question: "CAN 통신 진단 시, 오실로스코프 파형에서 CAN-High와 CAN-Low 선이 서로 다른 진폭을 가지며 신호가 심하게 왜곡되는 주된 원인은 무엇입니까?",
-    options: ["정상적인 통신", "엔진 출력 부족", "통신선의 단락 또는 접지 단락", "냉각수 온도 과열"],
-    answer: 2,
-    explain: "CAN 통신은 차동 신호 방식이므로, 두 선은 대칭적인 (Mirror Image) 파형을 가져야 합니다. 한쪽 선의 단락, 접지 단락 또는 전원 단락은 파형의 비대칭 및 왜곡을 유발합니다."
-  },
-  {
-    question: "자동차 네트워크에서 게이트웨이가 필요한 주된 기술적 이유는 무엇입니까?",
-    options: ["통신 속도 향상", "프로토콜/속도가 다른 네트워크 간 연결 및 데이터 전달", "ECU 개수 최소화", "배터리 전압 안정화"],
+    question: "CAN 통신에서 오류를 감지한 ECU가 Error Flag를 전송한 후, 모든 ECU가 이어서 전송하는 필드는?",
+    options: ["Overload Flag", "Error Delimiter", "ACK Field", "DLC Field"],
     answer: 1,
-    explain: "게이트웨이는 CAN, LIN, FlexRay, 이더넷 등 서로 다른 특성을 가진 네트워크들이 데이터를 주고받을 수 있도록 프로토콜을 변환하고 중계하는 필수적인 역할을 합니다."
+    explain: "Error Flag 전송 후, ECU들은 Error Delimiter(오류 한정자)를 전송하여 오류 상태를 명확히 구분하고 다음 메시지 전송을 준비한다.",
   },
   {
-    question: "LIN 통신에서 절전 모드 (Sleep Mode)로 진입했을 때, 통신을 다시 깨우는 (Wake-up) 주체는 무엇입니까?",
-    options: ["다른 슬레이브 ECU", "차량의 모든 ECU", "마스터 ECU 또는 슬레이브 자체의 Wake-up 신호", "종단 저항"],
-    answer: 2,
-    explain: "LIN 시스템은 절전 모드 진입 후, 마스터 ECU가 통신 버스에 Wake-up 신호를 전송하거나, 슬레이브 ECU가 도어 열림 등 외부 이벤트를 감지하여 Wake-up 신호를 전송함으로써 통신을 재개합니다."
-  },
-  {
-    question: "FlexRay 통신에서 이중 채널 (Dual Channel)을 구성했을 때, 두 채널의 데이터 전송 속도 합이 CAN 통신보다 훨씬 빠른 주된 이유는 무엇입니까?",
-    options: ["낮은 종단 저항 사용", "저전압 사용", "더 높은 비트 전송률 (예: 10Mbps) 및 이중화", "단순한 프로토콜 구조"],
-    answer: 2,
-    explain: "FlexRay는 단일 채널에서도 CAN보다 훨씬 빠른 10Mbps의 속도를 지원하며, 두 개의 채널이 병렬로 작동할 경우 통신 대역폭이 두 배가 되어 매우 빠른 속도를 가집니다."
-  },
-  {
-    question: "CAN 통신 진단 시, 종단 저항 값이 정상 값 (60Ω)보다 훨씬 낮은 0Ω 근처로 측정되었다면 가장 가능성이 높은 물리적 결함은 무엇입니까?",
-    options: ["종단 저항 하나 단선", "CAN-High와 CAN-Low 간의 단락 (합선)", "ECU 전원 공급 불량", "통신선 길이 초과"],
+    question: "LIN 통신에서 Sync Break 필드가 헤더의 가장 앞에 위치하는 주된 목적은?",
+    options: ["데이터 오류 검출", "슬레이브 노드의 물리적인 동기화", "메시지 우선순위 결정", "마스터 노드의 데이터 전송"],
     answer: 1,
-    explain: "CAN-High 선과 CAN-Low 선이 단락(합선)되면 두 선 사이의 저항이 매우 낮게 측정되어 0Ω에 가까운 값이 나옵니다."
+    explain: "Sync Break는 일반적인 통신 비트 폭보다 긴 길이로, 슬레이브 노드가 통신 시작을 인지하고 비트 타이밍을 마스터와 동기화하는 데 사용된다.",
   },
   {
-    question: "자동차 네트워크 통신에서 MOST가 광섬유 (Optical Fiber) 케이블을 사용하는 주된 이유는 무엇입니까?",
-    options: ["케이블 무게 감소", "외부 노이즈의 영향 최소화 및 초고속 대용량 데이터 전송", "낮은 설치 비용", "쉬운 진단"],
-    answer: 1,
-    explain: "광섬유는 구리선에 비해 매우 높은 대역폭을 제공하고 전자기 노이즈의 영향을 전혀 받지 않아, 대용량 멀티미디어 데이터 전송에 최적화되어 있습니다."
-  },
-  {
-    question: "하이브리드/전기차의 파워트레인 제어에 FlexRay가 적용되는 주된 이유는 무엇입니까?",
-    options: ["저렴한 비용", "간단한 배선", "고전압 시스템의 실시간, 고신뢰성 제어", "낮은 통신 속도"],
+    question: "CAN 통신의 확장 프레임(Extended Frame)에서 메시지 식별자(Identifier)의 총 비트 수는?",
+    options: ["11비트", "18비트", "29비트", "64비트"],
     answer: 2,
-    explain: "하이브리드/전기차의 파워트레인 (모터, 인버터, BMS) 제어는 매우 엄격한 실시간성과 신뢰성을 요구하는데, FlexRay의 결정론적 통신 특성이 이에 가장 적합합니다."
+    explain: "확장 CAN 프레임은 표준 11비트에 18비트 확장 식별자를 추가하여 총 29비트의 식별자를 사용한다.",
   },
   {
-    question: "LIN 통신에서 슬레이브의 응답 (Response)이 전송되는 것을 결정하는 주체는 무엇입니까?",
-    options: ["통신 속도", "마스터가 전송한 헤더의 식별자 (ID)", "종단 저항 값", "슬레이브 자체의 타이머"],
+    question: "자동차 네트워크에서 멀티미디어 및 인포테인먼트 시스템에 주로 사용되며, 광섬유를 이용한 고속 통신을 특징으로 하는 프로토콜은?",
+    options: ["LIN", "CAN", "MOST (Media Oriented Systems Transport)", "FlexRay"],
+    answer: 2,
+    explain: "MOST는 높은 대역폭이 필요한 오디오, 비디오, 내비게이션 등 멀티미디어 데이터 전송을 위해 개발되었으며, 주로 광섬유를 사용한다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Passive(오류 수동)' 상태로 진입하는 기준은?",
+    options: ["전송 오류 카운터가 127을 초과할 때", "전송 오류 카운터가 255를 초과할 때", "전송 또는 수신 오류 카운터가 127을 초과할 때", "오류 카운터가 0일 때"],
+    answer: 2,
+    explain: "전송 오류 카운터 또는 수신 오류 카운터 중 하나라도 127을 초과하면 ECU는 Error Passive 상태로 진입한다.",
+  },
+  {
+    question: "CAN 통신에서 CRC 에러(순환 중복 검사 오류)가 발생했다면, 이는 주로 어느 필드에서 발생한 오류를 의미하는가?",
+    options: ["Arbitration Field", "ACK Field", "Data Field 또는 CRC Field 자체", "Start of Frame Field"],
+    answer: 2,
+    explain: "CRC 에러는 Data Field와 CRC Field 자체를 포함한 전송 데이터에 오류가 발생하여 수신 측에서 계산한 값과 수신한 CRC 값이 일치하지 않을 때 발생한다.",
+  },
+  {
+    question: "CAN 트랜시버(Transceiver)의 주된 역할은?",
+    options: ["메시지 우선순위 결정", "데이터 오류 검출 및 정정", "ECU의 디지털 신호를 버스의 물리적 차동 신호로 변환", "버스 전원 공급"],
+    answer: 2,
+    explain: "트랜시버는 ECU의 CAN 컨트롤러가 생성하는 디지털 신호(TXD/RXD)를 CAN 버스상의 물리적인 차동 신호(CAN-H/CAN-L)로 변환하는 역할을 한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment(동적 세그먼트)'의 주된 특징은?",
+    options: ["전송 시간이 고정되어 예측 가능성이 높음", "데이터 전송량이 유동적이며 유연함", "버스에 충돌 발생 시 우선순위 중재", "단일 채널 통신"],
     answer: 1,
-    explain: "LIN 통신은 마스터가 Header (식별자 ID 포함)를 전송하면, 해당 ID에 해당하는 슬레이브만 Response (데이터)를 전송하는 방식으로 통신을 제어합니다."
-  }
+    explain: "Dynamic Segment는 시간 할당이 유동적이며, 메시지 전송이 필요할 때만 대역폭을 할당하여 데이터 전송의 유연성을 확보한다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 자신의 응답을 시작할 수 있도록 허용된 최대 지연 시간(슬립 모드 진입 전)은?",
+    options: ["Sync Break 후 1ms", "헤더 수신 후 10ms", "마스터 노드가 지정하는 시간", "슬레이브 노드 스스로 결정"],
+    answer: 2,
+    explain: "LIN은 마스터가 스케줄링하므로, 슬레이브는 마스터가 정의한 스케줄에 따라 정해진 지연 시간 내에 응답을 시작해야 한다.",
+  },
+  {
+    question: "CAN 통신에서 Bit Stuffing 규칙 위반(연속 6개 동일 레벨 비트 발생)이 감지되었을 때 발생하는 오류 유형은?",
+    options: ["Bit Error", "Stuff Error", "Form Error", "CRC Error"],
+    answer: 1,
+    explain: "Stuff Error(스터프 오류)는 Bit Stuffing 규칙에 따라 삽입되어야 할 비트가 없거나, 연속 5개 이상의 동일 비트 레벨이 발생하는 경우에 검출된다.",
+  },
+  {
+    question: "자동차 ECU 간의 통신에서 LIN 통신이 주로 사용되는 영역으로 가장 적합한 것은?",
+    options: ["파워트레인 및 샤시 제어", "안전 제어 시스템(ABS, ESC)", "도어 잠금 장치, 창문 제어, 미러 등 저속 편의 장치 제어", "차량 진단 및 플래시 프로그래밍"],
+    answer: 2,
+    explain: "LIN은 저속, 저비용 구현이 가능하여 도어 모듈, 에어컨 제어, 라이트 스위치 등 비핵심 편의 장치 제어에 주로 사용된다.",
+  },
+  {
+    question: "CAN 통신에서 CAN-H와 CAN-L의 공통 모드 전압(Common Mode Voltage)이 변하는 주된 원인은?",
+    options: ["메시지 우선순위 중재", "버스 오류 발생", "ECU의 전원 전압 변화 또는 외부 노이즈 유입", "종단 저항 값의 변화"],
+    answer: 2,
+    explain: "공통 모드 전압은 외부의 전기적 간섭이나 ECU 전원의 변동에 의해 함께 변동할 수 있다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Passive' 상태로 진입했을 때, 버스에 오류를 알리기 위해 전송하는 Error Flag의 길이는?",
+    options: ["6 Dominant 비트", "6 Recessive 비트", "8 Recessive 비트", "8 Dominant 비트"],
+    answer: 2,
+    explain: "Error Passive 상태의 ECU는 'Passive Error Flag'인 8개의 Recessive 비트를 전송하여, 다른 ECU의 통신에 미치는 영향을 최소화한다.",
+  }  
 ];
 
 export const industry010802 = [
-    {    
-    question: "CAN 통신에서 ECU가 반복적인 오류를 감지하여 통신 버스에서 완전히 격리되는 상태를 무엇이라고 합니까?",
-    options: ["Error Passive (오류 수동)", "Bus Off (버스 차단)", "Error Active (오류 능동)", "Sleep Mode (절전 모드)"],
+{
+    question: "CAN 통신에서 ECU가 'Error Passive' 상태로 진입했을 때, 해당 ECU가 메시지 충돌(Arbitration)에 참여하는 방식은?",
+    options: ["Bus-Off 상태로 즉시 진입하여 참여 중단", "Recessive 비트만 전송하여 다른 ECU의 Dominant 비트에 영향을 주지 않음", "Dominant 비트만 전송하여 우선권을 확보", "정상적인 ECU와 동일하게 참여"],
     answer: 1,
-    explain: "Bus Off 상태는 ECU가 일정 횟수 이상의 치명적인 오류(Error Count)를 누적했을 때 발생하며, 해당 ECU는 통신 안정성을 위해 네트워크에서 일시적으로 격리됩니다."
+    explain: "Error Passive 상태의 ECU는 다른 ECU의 통신에 미치는 영향을 최소화하기 위해 오류 감지 시 Passive Error Flag(Recessive 8비트)를 전송한다.",
   },
   {
-    question: "CAN 통신 프레임의 CRC Cyclic Redundancy Check 필드의 주된 역할은 무엇입습니까?",
-    options: ["메시지 전송 우선순위 결정", "통신선의 절연 저항 확인", "전송 데이터의 오류 검출 및 무결성 확인", "ECU의 전원 공급"],
+    question: "고속 CAN 통신에서 CAN-L 라인이 단선(Open)되어 전원(VCC, 5V)에 단락(Short to VCC)되었을 때, 버스 상태에 미치는 영향은?",
+    options: ["버스 전체가 Recessive 상태로 고정되어 통신 불능 상태가 된다.", "CAN-H 라인이 통신을 이어받아 정상 통신한다.", "버스 전체가 Dominant 상태로 고정되어 통신 불능 상태가 된다.", "통신 속도가 절반으로 줄어든다."],
     answer: 2,
-    explain: "CRC는 전송되는 데이터에 기반하여 계산된 체크 값을 포함하며, 수신 측에서 동일한 계산을 통해 통신 중 데이터 비트 오류가 발생했는지 확인하는 데 사용됩니다."
+    explain: "CAN-L이 VCC에 단락되면 CAN-L의 전위가 높아지고, CAN-H와의 차동 전압이 Dominant 상태를 유지하게 되어 버스가 Dominant 고정으로 통신 불능이 된다.",
   },
   {
-    question: "CAN 통신에서 Active Error Frame이 발생했을 때, 통신선에서 관찰되는 신호는 주로 무엇입습니까?",
-    options: ["7비트의 Recessive 신호", "8비트의 Dominant 신호", "16비트의 Recessive 신호", "6비트의 Dominant 신호"],
+    question: "LIN 통신 프레임에서 헤더(Header)의 Sync Field(동기 필드)를 전송하는 주체와 그 주된 목적은?",
+    options: ["슬레이브, 데이터 오류 검출", "슬레이브, 메시지 우선순위 결정", "마스터, 슬레이브의 클럭 동기화", "마스터, 데이터 전송 길이 지정"],
+    answer: 2,
+    explain: "Sync Field는 Sync Break 다음에 마스터가 전송하는 필드로, 슬레이브 노드가 내부 클럭을 마스터와 동기화하는 데 사용된다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 Bus-Off 상태에서 Bus-On 상태로 복귀하기 위해 만족해야 하는 가장 중요한 조건은?",
+    options: ["전송 오류 카운터를 0으로 초기화", "메시지 우선순위를 낮춘다.", "Recessive 비트를 128회 연속 감지", "CAN 버스를 5초간 모니터링"],
+    answer: 2,
+    explain: "Bus-Off 상태의 ECU는 버스가 128회 연속 Recessive 비트(버스 휴지 상태)임을 감지해야만 다시 Bus-On(Error Passive) 상태로 복귀할 수 있다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Cycle(사이클)'이 갖는 가장 중요한 의미는?",
+    options: ["단일 메시지 전송 시간", "통신 속도", "Static Segment와 Dynamic Segment를 모두 포함하는 전체 통신 주기", "오류 발생 시 재전송 횟수"],
+    answer: 2,
+    explain: "FlexRay 사이클은 정적 세그먼트와 동적 세그먼트, 그리고 가드 시간 등을 포함하는 전체 반복 통신 주기를 의미하며, 시간 동기화의 기본 단위이다.",
+  },
+  {
+    question: "자동차 진단 프로토콜인 UDS(Unified Diagnostic Services, ISO 14229)가 CAN 통신 기반에서 사용될 때, 이를 지칭하는 명칭은?",
+    options: ["LIN UDS", "FlexRay UDS", "K-Line UDS", "DoCAN (Diagnostics over CAN)"],
     answer: 3,
-    explain: "Active Error Frame은 6개의 Dominant 비트로 구성되어 모든 노드에 오류를 알립니다. (Error Delimiter 8비트 Recessive 포함 시 총 14비트)"
+    explain: "DoCAN은 CAN 통신 프로토콜을 기반으로 UDS 진단 서비스 메시지를 전송하는 방식이다.",
   },
   {
-    question: "CAN 통신을 물리적으로 구현하는 데 있어, 통신 신호를 증폭하고 CAN 컨트롤러와 버스 라인 사이의 전기적 인터페이스 역할을 하는 부품은 무엇입니까?",
-    options: ["유성 기어 세트", "CAN 트랜시버 (Transceiver)", "LDC 컨버터", "종단 저항"],
-    answer: 1,
-    explain: "CAN 트랜시버는 CAN 컨트롤러의 디지털 신호를 CAN 버스의 물리적 신호 (차동 전압)로 변환하고, 반대로 버스 신호를 디지털 신호로 변환하는 역할을 합니다."
-  },
-  {
-    question: "LIN 통신 프레임에서 동기화 필드 (Sync Field)의 주된 목적은 무엇입니까?",
-    options: ["데이터 전송 우선순위 결정", "슬레이브 ECU의 클럭 (Clock) 동기화", "마스터 ECU의 전원 공급", "통신선의 단락 방지"],
-    answer: 1,
-    explain: "마스터 ECU는 헤더의 Sync Field를 통해 슬레이브 ECU가 마스터의 전송 속도에 맞춰 자체 클럭을 조정(동기화)하도록 돕습니다."
-  },
-  {
-    question: "FlexRay 통신의 통신 주기 (Communication Cycle)가 정적 세그먼트와 동적 세그먼트로 나뉘는 주된 이유는 무엇입니까?",
-    options: ["배터리 방전 방지", "통신선의 길이 조절", "핵심 제어의 결정론적 통신과 유연한 데이터 전송의 동시 구현", "게이트웨이의 데이터 변환 속도 증가"],
+    question: "CAN 통신에서 두 개 이상의 ECU가 동시에 메시지 전송을 시작했을 때, 발생하는 현상은?",
+    options: ["오류 발생으로 메시지가 즉시 중단된다.", "메시지 길이가 짧은 ECU가 우선권을 갖는다.", "ID 값이 낮은 ECU가 우선권을 획득하고 계속 전송한다.", "두 메시지가 동시에 버스에 전송된다."],
     answer: 2,
-    explain: "정적 세그먼트는 핵심 제어에 필요한 결정론적 통신을 보장하고, 동적 세그먼트는 진단 등 유연한 데이터 전송을 위해 사용되어 두 가지 통신 방식을 한 주기에 통합합니다."
+    explain: "CAN은 Dominant/Recessive 논리를 이용한 비파괴적 중재(Non-Destructive Arbitration)를 통해 ID 값이 낮은(우선순위가 높은) ECU가 버스 제어권을 갖는다.",
   },
   {
-    question: "CAN FD (Flexible Data-rate) 통신이 기존 CAN 대비 갖는 가장 큰 두 가지 이점은 무엇입니까?",
-    options: ["저렴한 케이블, 간단한 구조", "단일 통신선 사용, 높은 전압", "더 긴 데이터 길이 (최대 64 Byte), 더 높은 전송 속도", "광통신 사용, Ring Topology"],
+    question: "LIN 통신 프레임의 체크섬(Checksum) 필드가 보장하는 오류 제어 방식은?",
+    options: ["데이터 오류 자동 정정", "메시지 우선순위 검증", "전송 데이터의 오류 검출", "슬레이브 노드의 응답 시간 검증"],
     answer: 2,
-    explain: "CAN FD는 데이터 필드 길이를 64바이트로 확장하고, 데이터 필드 전송 시 비트 전송률을 높여 전송 효율과 속도를 크게 향상시켰습니다."
+    explain: "LIN 체크섬은 데이터 필드를 포함한 특정 필드 값을 기반으로 계산되어 전송되며, 수신 측에서 동일 계산 후 비교하여 데이터의 오류 발생 여부를 검출한다.",
   },
   {
-    question: "자동차 이더넷에서 필수적으로 사용되는 네트워크 토폴로지이며, 중앙 집중식 데이터 관리가 가능한 방식은 무엇입니까?",
-    options: ["링 (Ring) 토폴로지", "버스 (Bus) 토폴로지", "데이지 체인 (Daisy Chain) 토폴로지", "스타 (Star) 토폴로지"],
+    question: "FlexRay 통신에서 동기화(Synchronization)의 기본이 되는 것은?",
+    options: ["버스 전압 레벨", "메시지 ID", "전송된 타임 슬롯(Time Slot)", "데이터 필드 길이"],
+    answer: 2,
+    explain: "FlexRay는 시간 동기화 기반 통신으로, 모든 노드가 정해진 타임 슬롯(Time Slot)을 기준으로 엄격하게 통신 시간을 동기화한다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Active(오류 활성)' 상태일 때, 버스에 오류를 알리기 위해 전송하는 Error Flag의 길이는?",
+    options: ["6 Dominant 비트", "6 Recessive 비트", "8 Recessive 비트", "8 Dominant 비트"],
+    answer: 0,
+    explain: "Error Active 상태의 ECU는 'Active Error Flag'인 6개의 Dominant 비트를 전송하여 모든 ECU가 오류를 인지하도록 강제한다.",
+  },
+  {
+    question: "자동차 네트워크에서 서로 다른 CAN 버스(예: 파워트레인 CAN과 바디 CAN) 간의 통신을 중계하는 장치는?",
+    options: ["Transceiver", "Termination Resistor", "Gateway ECU", "CAN Controller"],
+    answer: 2,
+    explain: "Gateway ECU(게이트웨이 ECU)는 서로 다른 네트워크 프로토콜이나 속도를 가진 CAN 버스 사이에서 데이터 포맷을 변환하고 라우팅하는 역할을 한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H와 CAN-L 두 신호선이 서로 단락(Short)되었을 때, 버스 상태에 미치는 영향은?",
+    options: ["CAN-H 라인이 통신을 이어받는다.", "버스 전체가 Dominant 상태로 고정된다.", "버스 전체가 Recessive 상태로 고정되어 통신 불능 상태가 된다.", "통신 속도가 절반으로 줄어든다."],
+    answer: 2,
+    explain: "두 라인이 단락되면 차동 전압이 0V에 가까워져 Recessive 상태와 유사하게 되며, 통신 신호를 구별할 수 없어 통신 불능 상태가 된다.",
+  },
+  {
+    question: "LIN 통신 프레임에서 슬레이브 노드가 마스터에게 데이터를 전송하기 위해 필요한 필드를 포함하는 것은?",
+    options: ["Sync Break", "Sync Field", "Response (응답)", "Header (헤더)"],
+    answer: 2,
+    explain: "슬레이브 노드는 마스터가 보낸 헤더(ID 포함)에 응답하여 Data Field와 Checksum Field를 포함하는 Response(응답)를 전송한다.",
+  },
+  {
+    question: "CAN 통신에서 메시지 프레임의 끝을 알리고 다음 프레임 전송을 위한 휴지 기간을 표시하는 필드는?",
+    options: ["Data Length Code (DLC)", "Arbitration Field", "End of Frame (EOF)", "Interframe Space (IFS)"],
     answer: 3,
-    explain: "자동차 이더넷은 스위치 (Switch)를 중심으로 각 ECU가 연결되는 스타 토폴로지를 사용하며, 이는 통신 충돌 방지 및 중앙 집중식 관리에 유리합니다."
+    explain: "Interframe Space(IFS)는 메시지 프레임 전송 완료 후 다음 메시지 전송 시작까지의 버스 휴지 기간을 의미한다.",
   },
   {
-    question: "CAN 통신 진단 시, 오실로스코프 파형에서 CAN-High 전압이 정상적으로 상승하지만, CAN-Low 전압이 접지 레벨 (0V)에 머무는 현상이 발생했을 때 의심해야 할 결함은 무엇입습니까?",
-    options: ["CAN-High 선의 단락", "CAN-High와 CAN-Low 간의 단락", "CAN-Low 선의 접지 단락", "종단 저항 값의 증가"],
+    question: "FlexRay 통신에서 'Time Slot'의 길이(duration)는 누가 결정하는가?",
+    options: ["각 노드의 데이터 길이", "버스상의 오류 발생 빈도", "시스템 설계 시 통신 매트릭스에 의해 고정", "노드의 전원 전압"],
     answer: 2,
-    explain: "CAN-Low 선이 접지와 단락되면 해당 선의 전압이 0V로 고정되어 파형의 대칭성이 깨지고 통신이 불가능해집니다."
+    explain: "FlexRay는 Time-triggered 통신이므로, Time Slot의 길이는 네트워크 설계 단계에서 정의된 통신 매트릭스에 의해 엄격하게 고정된다.",
   },
   {
-    question: "자동차 진단 프로토콜 중 하나인 K-Line의 주된 특징은 무엇입니까?",
-    options: ["광통신 기반, Ring Topology", "단일 선 (Single Wire), 비동기 직렬 통신", "차동 신호 방식, TDMA 기반", "고속 이더넷 기반, Star Topology"],
+    question: "LIN 통신에서 슬레이브 노드의 클럭 동기화에 사용되는 'Sync Field'는 몇 바이트로 구성되는가?",
+    options: ["1 바이트 (0x55)", "2 바이트 (0xAA)", "4 바이트 (0x00)", "8 바이트 (0xFF)"],
+    answer: 0,
+    explain: "Sync Field는 1바이트(8비트)로, 비트 타이밍 동기화를 위해 패턴 0x55 (01010101)를 사용한다.",
+  },
+  {
+    question: "CAN 통신에서 전송 오류 카운터가 127을 초과하고 수신 오류 카운터가 0일 때, 해당 ECU의 오류 상태는?",
+    options: ["Error Active", "Error Passive", "Bus-Off", "Bus-On"],
     answer: 1,
-    explain: "K-Line (ISO 9141, KWP2000)은 CAN 등장 이전에 사용되던 통신 방식으로, 단일 와이어를 사용하는 비동기 직렬 통신 방식을 채택합니다."
+    explain: "전송 또는 수신 오류 카운터 중 하나라도 127을 초과하면 Error Passive 상태로 진입한다.",
   },
   {
-    question: "FlexRay 통신에서 Cold Start 노드가 수행하는 주된 역할은 무엇입니까?",
-    options: ["고전압 배터리 충전", "통신 사이클 시작 및 네트워크 시간 동기화", "엔진 시동 보조", "멀티미디어 데이터 압축"],
-    answer: 1,
-    explain: "FlexRay 네트워크는 초기 시동 시 모든 노드의 통신 시간을 동기화해야 하는데, Cold Start 노드가 이 최초의 동기화 및 사이클 시작을 주도합니다."
-  },
-  {
-    question: "CAN 통신 진단 시, 오실로스코프에서 Dominant (우선) 신호가 나타낼 때의 전압 레벨은 무엇을 의미합니까?",
-    options: ["데이터 비트가 1임을 의미", "데이터 비트가 0임을 의미", "통신선에 단선이 발생했음을 의미", "종단 저항이 없음을 의미"],
-    answer: 1,
-    explain: "CAN 통신에서 Dominant는 논리적 0을 의미하며, 이는 CAN-High와 CAN-Low의 전압 차가 발생하여 전송이 진행 중임을 나타냅니다."
-  },
-  {
-    question: "LIN 통신이 CAN 통신 대비 가지는 통신 지연 (Latency)의 가장 큰 특징은 무엇입니까?",
-    options: ["지연 시간이 CAN보다 짧다", "지연 시간이 CAN과 동일하다", "지연 시간이 CAN보다 길고 예측 가능하다", "지연 시간이 매우 불안정하다"],
+    question: "자동차 ECU 플래시 프로그래밍과 같이 대용량 데이터 전송에 높은 대역폭을 제공하는 프로토콜이 가장 유리한 것은?",
+    options: ["LIN", "CAN", "FlexRay", "K-Line"],
     answer: 2,
-    explain: "LIN은 마스터가 요청해야 슬레이브가 응답하는 엄격한 스케줄링 방식이므로, CAN의 경쟁 방식보다 지연 시간은 길지만 정해진 시간표에 따라 통신이 이루어져 예측 가능합니다."
+    explain: "FlexRay는 CAN이나 LIN보다 훨씬 높은 통신 속도(최대 10Mbps)를 제공하여 대용량 데이터 전송에 유리하다.",
   },
   {
-    question: "자동차 이더넷에서 100BASE-T1에서 'T1'이 의미하는 것은 무엇입니까?",
-    options: ["데이터 전송 속도 100Mbps", "단일 트위스트 페어 (Single Twisted Pair) 케이블 사용", "최대 전송 거리 1km", "Ring Topology 사용"],
-    answer: 1,
-    explain: "100BASE-T1 및 1000BASE-T1에서 'T1'은 단일 비차폐 트위스트 페어 (UTP) 케이블을 사용하여 자동차 환경에 맞게 최적화된 이더넷 표준임을 나타냅니다."
+    question: "CAN 통신 프레임의 ACK 필드(Acknowledge Field)에서 수신 ECU가 전송에 성공했음을 알리기 위해 전송하는 비트는?",
+    options: ["Dominant 비트 (논리 '0')", "Recessive 비트 (논리 '1')", "Parity Bit", "Start Bit"],
+    answer: 0,
+    explain: "성공적으로 메시지를 수신한 ECU는 송신 ECU가 보낸 Recessive 비트를 Dominant 비트로 덮어써서 수신 성공을 알린다.",
   },
   {
-    question: "CAN 통신에서 ACK Slot (응답 슬롯)의 주된 역할은 무엇입니까?",
-    options: ["다음 메시지의 우선순위 설정", "통신선의 절연 상태 확인", "수신된 메시지의 수신 성공 여부를 전송 ECU에 알림", "데이터 비트 오류 검출"],
-    answer: 2,
-    explain: "ACK Slot은 수신 측 ECU가 오류 없이 메시지를 수신했을 경우, 해당 비트 필드를 Recessive에서 Dominant로 변경하여 전송 성공을 알리는 데 사용됩니다."
-  },
-  {
-    question: "MOST 네트워크가 링 (Ring) 토폴로지를 사용하는 주된 이유는 무엇입니까?",
-    options: ["CAN과의 호환성 확보", "배선 비용 절감", "멀티미디어 데이터의 연속적인 스트리밍 보장", "높은 통신 속도"],
-    answer: 2,
-    explain: "MOST는 오디오/비디오와 같은 스트림 데이터를 안정적으로 전송하기 위해 모든 노드가 순환적으로 연결된 링 토폴로지를 채택했습니다."
-  },
-  {
-    question: "자동차 네트워크 진단 시, 진단 장비가 DTC P0600 (직렬 통신 링크 고장)을 표시했을 때, 가장 먼저 확인해야 할 것은 무엇입니까?",
-    options: ["엔진 오일 잔량", "브레이크 패드 마모도", "ECU 전원 및 접지 상태, 그리고 통신선 (CAN/LIN) 연결 상태", "타이어 공기압"],
-    answer: 2,
-    explain: "DTC P0600은 통신선 자체의 물리적 단절이나, 통신선에 연결된 ECU에 전원 또는 접지 공급이 안 되어 통신이 완전히 끊겼을 때 주로 발생합니다."
-  },
-  {
-    question: "FlexRay 통신에서 가드 타임 (Guard Time)의 주된 목적은 무엇입니까?",
-    options: ["통신선에 종단 저항 제공", "각 통신 슬롯/주기 사이의 버퍼 시간을 제공하여 통신 충돌 방지", "데이터 프레임의 크기 결정", "슬레이브 ECU의 클럭 동기화"],
-    answer: 1,
-    explain: "가드 타임은 FlexRay의 엄격한 시간 분할 방식에서, 통신 슬롯이 끝난 후 다음 슬롯이 시작되기 전까지 통신 버스를 쉬게 하여 다음 전송과의 간섭을 방지합니다."
-  },
-  {
-    question: "LIN 통신 시스템에서 슬레이브 ECU의 통신 기능을 담당하는 가장 기본적인 하드웨어 구성 요소는 무엇입니까?",
-    options: ["CAN 트랜시버", "LIN 트랜시버", "고전압 배터리", "휠 속도 센서"],
-    answer: 1,
-    explain: "LIN 통신은 CAN과 별개의 프로토콜이므로, 통신을 수행하기 위해 LIN 규격에 맞는 트랜시버가 각 ECU에 내장되어야 합니다."
-  },
-  {
-    question: "CAN 통신에서 확장 식별자 (Extended ID)가 사용될 때, 식별자 (ID)의 비트 길이는 몇 비트입니까?",
-    options: ["11 비트", "16 비트", "29 비트", "64 비트"],
-    answer: 2,
-    explain: "표준 CAN (Standard CAN)은 11비트 ID를 사용하고, 확장 CAN (Extended CAN)은 추가 18비트를 포함하여 총 29비트의 식별자를 사용하여 더 많은 메시지를 구분할 수 있습니다."
-  },
-  {
-    question: "자동차 이더넷 네트워크에서 스위치 (Switch)가 허브 (Hub) 대비 갖는 가장 큰 장점은 무엇입니까?",
-    options: ["더 저렴한 가격", "더 간단한 구조", "데이터 충돌 없이 원하는 포트로만 데이터를 전송하여 통신 효율 증대", "전원 공급 불필요"],
-    answer: 2,
-    explain: "스위치는 목적지 주소를 인식하고 해당 포트로만 데이터를 전송하는 반면, 허브는 모든 포트에 데이터를 전송하여 충돌 및 불필요한 트래픽을 유발합니다."
-  },
-  {
-    question: "CAN 통신 진단 시, 통신선에 노이즈가 심하거나 반사파가 발생하는 현상을 오실로스코프로 확인했을 때, 가장 먼저 확인해야 할 것은 무엇입니까?",
-    options: ["엔진의 압축 압력", "냉각수 펌프의 작동 상태", "CAN 종단 저항의 값 및 연결 상태", "브레이크액의 수분 함량"],
-    answer: 2,
-    explain: "노이즈와 반사파는 주로 종단 저항이 불량이거나 없어서 신호가 제대로 흡수되지 못할 때 발생합니다. 따라서 종단 저항을 가장 먼저 점검해야 합니다."
-  },
-  {
-    question: "하이브리드/전기차의 배터리 관리 시스템 (BMS) 등 핵심 ECU 간의 통신에 FlexRay가 적용되는 주된 이유는 무엇입니까?",
-    options: ["저렴한 배선 비용", "간단한 통신 구조", "결정론적이고 높은 대역폭으로 실시간 안전 제어에 필수적", "단일 마스터 제어"],
-    answer: 2,
-    explain: "배터리 및 파워트레인 제어는 높은 실시간성과 신뢰성이 요구되므로, 충돌이 없고 전송 지연이 예측 가능한 FlexRay가 유리합니다."
-  },
-  {
-    question: "LIN 통신에서 마스터 ECU가 슬레이브 ECU에 특정 데이터 전송을 요청하는 행위는 무엇입니까?",
-    options: ["Response (응답)", "CRC 필드 전송", "Header (헤더) 전송", "Wake-up (깨우기) 신호 전송"],
-    answer: 2,
-    explain: "마스터는 Header를 전송하며, 이 Header에는 어떤 슬레이브가 응답해야 하는지 지정하는 식별자 (ID)가 포함되어 있습니다."
-  },
-  {
-    question: "자동차 네트워크 통신에서 시간 민감형 네트워킹 (TSN, Time-Sensitive Networking) 기술이 이더넷에 적용되는 주된 목적은 무엇입니까?",
-    options: ["데이터 암호화 강화", "실시간 및 결정론적인 통신을 지원하여 ADAS/자율 주행에 활용", "배터리 전압 안정화", "단순 멀티미디어 전송"],
-    answer: 1,
-    explain: "기존 이더넷은 비결정론적이므로, TSN은 시간 동기화 및 트래픽 스케줄링 기능을 추가하여 ADAS/자율 주행에 필수적인 실시간 데이터 전송을 가능하게 합니다."
-  },
-  {
-    question: "CAN 통신의 물리적 레이어에서 Recessive (열성) 신호가 나타낼 때의 전압 레벨은 무엇을 의미합니까?",
-    options: ["데이터 비트가 0임을 의미", "통신선이 단락되었음을 의미", "데이터 비트가 1임을 의미", "종단 저항 불량"],
-    answer: 2,
-    explain: "CAN 통신에서 Recessive는 논리적 1을 의미하며, 이는 CAN-High와 CAN-Low의 전압 차가 거의 없어 전송이 잠시 멈춤 상태에 있음을 나타냅니다."
-  },
-  {
-    question: "MOST 네트워크에서 오디오/비디오 스트리밍 데이터 전송에 주로 사용되는 데이터 유형은 무엇입니까?",
-    options: ["제어 데이터", "진단 데이터", "스트림 데이터 (Stream Data)", "패킷 데이터 (Packet Data)"],
-    answer: 2,
-    explain: "MOST는 스트림 데이터를 사용하여 오디오/비디오와 같은 시간에 민감하고 연속적인 데이터를 일정한 흐름으로 전송하는 데 최적화되어 있습니다."
-  },
-  {
-    question: "FlexRay 통신에서 이중 채널 (Dual Channel)을 사용하는 주된 이점 중, 데이터 전송률 향상과 함께 얻을 수 있는 것은 무엇입니까?",
-    options: ["배선 단순화", "단일 채널 고장 시에도 통신 유지되는 고가용성 및 이중화", "통신선 길이 증가", "전력 소모 감소"],
-    answer: 1,
-    explain: "이중 채널은 하나의 채널에 오류가 발생하더라도 다른 채널로 통신을 유지할 수 있는 이중화를 제공하여 안전성과 신뢰성을 극대화합니다."
-  },
-  {
-    question: "LIN 통신에서 슬레이브 ECU가 마스터 ECU의 요청 없이 자발적으로 버스에 전송하는 유일한 신호는 무엇입니까?",
-    options: ["데이터 응답 (Response)", "헤더 필드", "Error Frame", "Wake-up (깨우기) 신호"],
+    question: "CAN 통신에서 Bit Stuffing이 이루어지는 필드가 아닌 것은?",
+    options: ["Arbitration Field", "Data Field", "CRC Field", "CRC Delimiter Field"],
     answer: 3,
-    explain: "LIN은 엄격한 마스터-슬레이브 구조이지만, 슬레이브는 절전 모드에서 외부 이벤트 (예: 도어 핸들 감지)에 의해 Wake-up 신호를 버스에 전송하여 통신 재개를 요청할 수 있습니다."
+    explain: "Bit Stuffing은 메시지의 동기화와 오류 검출을 위해 Arbitation Field부터 CRC Field까지 적용되며, Delimiter와 EOF, IFS 등에는 적용되지 않는다.",
   },
   {
-    question: "자동차 네트워크의 사이버 보안을 위해, 비정상적인 통신 트래픽 패턴이나 메시지 변조를 감지하여 네트워크 침입을 막는 시스템은 무엇입니까?",
-    options: ["ADAS", "EHB", "LDC", "IDS (Intrusion Detection System)"],
+    question: "LIN 통신에서 슬립 모드(Sleep Mode)를 해제하고 다시 통신을 시작하도록 하는 신호는?",
+    options: ["Sync Field", "Wakeup Signal", "Checksum Field", "ID Field"],
+    answer: 1,
+    explain: "슬립 모드에 진입한 LIN 노드는 버스상의 Wakeup Signal(기존 비트보다 긴 Dominant 펄스)을 감지하고 다시 통신에 참여한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Static Segment'에서 메시지 전송 시 충돌이 발생하지 않는 주된 이유는?",
+    options: ["Dominant/Recessive 중재 사용", "Single-wire 통신", "메시지 ID 우선순위 사용", "미리 할당된 Time Slot 사용"],
     answer: 3,
-    explain: "IDS는 CAN, 이더넷 등 네트워크 통신을 모니터링하여 비정상적인 메시지나 권한 없는 접근을 감지하고 시스템에 보고하여 보안 위협에 대응합니다."
+    explain: "Static Segment에서는 각 노드가 지정된 Time Slot에만 전송을 허용하므로 메시지 간의 충돌 자체가 발생하지 않는다.",
   },
   {
-    question: "CAN 통신 진단 시, 종단 저항 값이 0Ω에 매우 가깝게 측정되었을 때, 가장 유력한 결함은 무엇입니까?",
-    options: ["종단 저항 하나 단선", "CAN-High 선의 접지 단락", "CAN-High와 CAN-Low 선의 단락 (합선)", "ECU 전원 공급 불량"],
+    question: "CAN 통신에서 두 개 이상의 ECU가 동시에 메시지 전송을 시도할 때, ID가 낮은 ECU가 우선권을 갖는 통신 방식은?",
+    options: ["Time-triggered", "Master-slave", "Token passing", "Non-Destructive Arbitration"],
+    answer: 3,
+    explain: "CAN은 비파괴적 중재(Non-Destructive Arbitration)를 통해 메시지 ID를 비교하며, ID가 낮은(Dominant 비트가 많은) 메시지가 버스 제어권을 갖는다.",
+  },
+  {
+    question: "자동차 ECU 간의 통신에서 LIN 통신이 주로 사용되는 영역으로 가장 적합한 것은?",
+    options: ["파워트레인 및 샤시 제어", "안전 제어 시스템(ABS, ESC)", "도어 잠금 장치, 창문 제어, 미러 등 저속 편의 장치 제어", "차량 진단 및 플래시 프로그래밍"],
     answer: 2,
-    explain: "CAN-High와 CAN-Low 선이 합선되면 두 선 사이의 저항이 거의 없어지므로 0Ω에 가깝게 측정됩니다. (정상 값은 60Ω)"
+    explain: "LIN은 저속, 저비용 구현이 가능하여 도어 모듈, 에어컨 제어, 라이트 스위치 등 비핵심 편의 장치 제어에 주로 사용된다.",
   },
   {
-    question: "LIN 통신에서 헤더 필드 (Header Field)와 응답 필드 (Response Field) 사이의 주된 차이점은 무엇입니까?",
-    options: ["전송 속도의 차이", "헤더는 마스터가, 응답은 슬레이브가 전송", "데이터 길이에 대한 차이", "통신선의 색상 차이"],
+    question: "CAN 통신에서 Recessive 비트 상태 시, CAN-H와 CAN-L의 차동 전압(Vd = Vh - Vl)은?",
+    options: ["약 2V", "약 -2V", "약 0V", "약 5V"],
+    answer: 2,
+    explain: "Recessive 상태는 두 라인 모두 약 2.5V로 동일하여 차동 전압이 0V에 가깝고, 버스 휴지 상태를 나타낸다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment'에서 메시지 전송 시 충돌을 방지하기 위해 사용하는 기법은?",
+    options: ["메시지 ID 기반의 중재", "Master-slave 제어", "시간 기반의 Mini-slot을 이용한 중재", "토큰 패싱"],
+    answer: 2,
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 노드가 전송을 원할 경우 Mini-slot을 선점하여 메시지 충돌을 방지한다.",
+  },
+  {
+    question: "LIN 통신 프레임에서 마스터 노드가 슬레이브 노드에 데이터 전송을 요청하는 필드는?",
+    options: ["Data Field", "CRC Field", "ID Field (식별자)", "Sync Field"],
+    answer: 2,
+    explain: "LIN은 마스터가 식별자(ID)를 포함한 헤더(Header)를 전송하면, 해당 ID에 응답하는 슬레이브가 데이터와 체크섬을 전송하는 방식으로 통신한다.",
+  },
+  {
+    question: "CAN 통신에서 Form Error(형식 오류)가 발생하는 필드로 옳지 않은 것은?",
+    options: ["Start of Frame Field", "ACK Delimiter Field", "CRC Delimiter Field", "Data Field"],
+    answer: 3,
+    explain: "Form Error는 CAN 프레임의 고정된 형식(Delimiters, EOF, SOF 등)이나 Bit Stuffing 규칙 위반 시 발생하며, Data Field 자체의 오류는 CRC Error나 Bit Error로 검출될 수 있다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H 라인이 단선(Open)되었을 때, 버스 상태에 미치는 영향은?",
+    options: ["통신이 완전히 중단된다.", "버스 전체가 Dominant 상태로 고정된다.", "차동 신호 대신 단일 종단 신호로 통신 속도가 저하되거나 오류 발생", "CAN-L이 전압 레벨을 2배로 높여 통신을 이어간다."],
+    answer: 2,
+    explain: "한 선 단선 시 일시적으로 단일 종단 신호처럼 작동하려 시도하나, 외부 노이즈에 취약해져 통신 오류가 발생하거나 중단된다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Passive' 상태로 복귀하는 조건은?",
+    options: ["전송 오류 카운터가 0이 될 때", "수신 오류 카운터가 0이 될 때", "전송 또는 수신 오류 카운터가 127 이하로 감소할 때", "Bus-Off 상태에서 복귀할 때"],
+    answer: 2,
+    explain: "전송 및 수신 오류 카운터가 127 이하로 떨어지면 Error Passive 상태로 복귀한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Static Segment'의 타임 슬롯은 누가 소유하며 데이터를 전송하는가?",
+    options: ["가장 높은 ID를 가진 ECU", "가장 낮은 ID를 가진 ECU", "통신 매트릭스에 지정된 단 하나의 ECU", "선착순으로 메시지를 전송하는 ECU"],
+    answer: 2,
+    explain: "Static Segment의 타임 슬롯은 시스템 설계 시 특정 ECU에게만 할당되어 해당 ECU만 그 시간에 데이터를 전송한다.",
+  },
+  {
+    question: "LIN 통신에서 'Sync Break' 필드의 비트 시간은 일반적인 데이터 비트 시간보다 얼마나 긴가?",
+    options: ["동일하다.", "2배 이상 길다.", "10배 이상 길다.", "13배 이상 길다."],
+    answer: 3,
+    explain: "Sync Break는 일반 비트 시간의 13배 이상(13Tbit)의 Dominant 레벨로, 슬레이브 노드가 통신 시작과 동기화를 인지하도록 한다.",
+  },
+  {
+    question: "CAN 통신 프레임의 확장 프레임(Extended Frame)에서 메시지 식별자(Identifier)의 총 비트 수는?",
+    options: ["11비트", "18비트", "29비트", "64비트"],
+    answer: 2,
+    explain: "확장 CAN 프레임은 표준 11비트에 18비트 확장 식별자를 추가하여 총 29비트의 식별자를 사용한다.",
+  },
+  {
+    question: "자동차 네트워크에서 높은 대역폭과 이중 채널을 통한 높은 신뢰성이 요구되는 영역에 사용되는 프로토콜은?",
+    options: ["LIN", "CAN", "FlexRay", "K-Line"],
+    answer: 2,
+    explain: "FlexRay는 최대 10Mbps의 높은 대역폭과 이중 채널(Channel A, B)을 통한 이중화(Redundancy)를 제공한다.",
+  },
+  {
+    question: "CAN 통신에서 메시지 전송 후, 수신 ECU가 ACK 필드를 Dominant로 변경하지 않았을 때(ACK 에러) 발생하는 현상은?",
+    options: ["메시지가 정상적으로 전송된 것으로 간주", "송신 ECU가 오류 카운터를 증가시키고 메시지 재전송", "버스 전체가 Dominant 상태로 고정", "통신 속도 감소"],
     answer: 1,
-    explain: "LIN 통신은 마스터가 헤더를 전송하여 통신을 요청하고, 해당 헤더를 인식한 슬레이브가 응답을 전송하는 방식으로 이루어집니다."
+    explain: "ACK 에러는 수신 실패를 의미하며, 송신 ECU는 이를 감지하고 오류 카운터를 증가시킨 후 재전송을 시도한다.",
   },
   {
-    question: "FlexRay 통신에서 시간 동기화가 틀어졌을 때 발생하는 가장 심각한 문제는 무엇입니까?",
-    options: ["연료 분사량 증가", "TDMA 슬롯 시간 미준수로 인한 통신 충돌 및 시스템 고장", "12V 보조 배터리 방전", "타이어 공기압 감소"],
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드에게 데이터를 요청하는 필드가 포함된 부분은?",
+    options: ["Response (응답)", "Checksum", "Header (헤더)", "Data Field"],
+    answer: 2,
+    explain: "LIN 헤더는 Sync Break, Sync Field, ID Field로 구성되며, ID Field가 슬레이브 노드에게 데이터 응답을 요청하는 역할을 한다.",
+  },
+  {
+    question: "CAN 통신에서 CAN-H와 CAN-L의 공통 모드 전압(Common Mode Voltage)이 변하는 주된 원인은?",
+    options: ["메시지 우선순위 중재", "버스 오류 발생", "ECU의 전원 전압 변화 또는 외부 노이즈 유입", "종단 저항 값의 변화"],
+    answer: 2,
+    explain: "공통 모드 전압은 외부의 전기적 간섭이나 ECU 전원의 변동에 의해 함께 변동할 수 있다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Bus-Off' 상태로 진입했을 때, ECU가 취하는 조치로 옳은 것은?",
+    options: ["오류 메시지를 계속 전송한다.", "메시지 우선순위를 낮춘다.", "버스에서 완전히 격리되어 통신 중단", "Recessive 비트만 전송한다."],
+    answer: 2,
+    explain: "Bus-Off 상태는 심각한 오류 상태로, 해당 ECU는 버스에 영향을 주지 않도록 통신에서 완전히 격리된다.",
+  },
+  {
+    question: "자동차 네트워크에서 게이트웨이 ECU(Gateway ECU)가 수행하는 역할로 가장 중요한 것은?",
+    options: ["ECU의 클럭 동기화", "CAN 버스의 종단 저항 역할", "서로 다른 네트워크 프로토콜 및 속도 간의 데이터 중계 및 변환", "데이터 오류 자동 정정"],
+    answer: 2,
+    explain: "게이트웨이 ECU는 서로 다른 통신 규격을 가진 네트워크 간에 데이터를 라우팅하고 프로토콜을 변환하는 핵심 역할을 한다.",
+  },
+  {
+    question: "LIN 통신에서 Sync Break 필드가 헤더의 가장 앞에 위치하는 주된 목적은?",
+    options: ["데이터 오류 검출", "슬레이브 노드의 물리적인 동기화", "메시지 우선순위 결정", "마스터 노드의 데이터 전송"],
     answer: 1,
-    explain: "FlexRay는 시간 분할 방식이므로, 시간 동기화가 틀어지면 각 노드가 다른 시간에 데이터를 전송하여 충돌이 발생하고 시스템 신뢰성이 무너집니다."
-  },
-  {
-    question: "CAN 통신에서 오류 수동 (Error Passive) 상태의 ECU가 통신에 미치는 영향은 무엇입니까?",
-    options: ["통신 버스를 완전히 차단", "메시지를 재전송하지 않음", "오류 프레임을 Recessive 신호로 전송하여 다른 노드에 영향을 최소화", "통신 속도를 늦춤"],
-    answer: 2,
-    explain: "Error Passive 상태의 ECU는 여전히 통신은 가능하지만, 오류 프레임을 Recessive로 전송하여 다른 노드의 통신에 미치는 영향을 줄이고 오류 복구를 위해 노력합니다."
-  },
-  {
-    question: "자동차 이더넷에서 PoE (Power over Ethernet) 기술을 사용할 때, 데이터와 전력을 동시에 전송하는 물리적 수단은 무엇입니까?",
-    options: ["광섬유", "별도의 전력선", "단일 트위스트 페어 케이블", "동축 케이블"],
-    answer: 2,
-    explain: "PoE는 데이터 통신에 사용되는 단일 트위스트 페어 케이블을 통해 데이터 신호와 함께 전력까지 공급하여 배선을 단순화합니다."
-  },
-  {
-    question: "자동차 네트워크 통신 장비 정비 시, 와이어 하네스의 피복이 심하게 마모되거나 손상된 부분을 정비해야 하는 주된 이유는 무엇입니까?",
-    options: ["ECU의 전력 소모 증가", "통신선의 단락 또는 접지 단락을 방지하여 통신 오류 예방", "엔진 소음 증가", "실내 습도 증가"],
-    answer: 1,
-    explain: "통신선의 피복 손상은 통신선이 차체나 다른 선과 접촉하여 단락을 일으킬 수 있으며, 이는 치명적인 통신 오류의 원인이 됩니다."
-  },
-  {
-    question: "CAN 통신 진단 시, CAN-High와 CAN-Low 전압이 모두 접지 (0V)에 가까운 상태로 관찰되었다면 의심해야 할 결함은 무엇입니까?",
-    options: ["종단 저항 불량", "ECU의 통신 모듈 단선", "통신선 전체의 접지 단락 (두 선 모두 접지와 단락)", "12V 전원 과다 공급"],
-    answer: 2,
-    explain: "두 통신선 모두 접지(0V)와 단락되면, CAN-High와 CAN-Low의 전압 차이가 발생하지 않아 통신이 불가능하며, 두 선의 전압 레벨이 0V로 고정됩니다."
-  },
-  {
-    question: "MOST 네트워크에서 토큰 패싱 (Token Passing) 방식이 사용되는 주된 목적은 무엇입니까?",
-    options: ["통신 속도 감소", "데이터 전송 거리 증가", "통신 버스 접근 권한을 순차적으로 부여하여 충돌 방지", "CAN과의 호환성 유지"],
-    answer: 2,
-    explain: "MOST의 제어 데이터는 토큰 패싱 방식으로 전송되어, 토큰을 가진 노드만이 통신을 할 수 있어 통신 충돌을 방지하고 순차적인 접근을 보장합니다."
-  },
-  {
-    question: "자동차 네트워크 진단 시, J2534 Pass-Thru 장비가 사용되는 주된 목적은 무엇입니까?",
-    options: ["오실로스코프 파형 측정", "외부 진단 소프트웨어와 차량 ECU 간의 통신 중계", "고전압 배터리 충전", "타이어 공기압 센서 활성화"],
-    answer: 1,
-    explain: "J2534는 표준화된 인터페이스를 통해 PC 기반의 외부 진단 프로그램이나 ECU 프로그래밍 소프트웨어와 차량 네트워크 사이의 통신 게이트웨이 역할을 수행합니다."
-  },
-  {
-    question: "자율 주행 시스템에서 CAN 통신이 FlexRay나 이더넷으로 점차 대체되는 주된 기술적 이유는 무엇입니까?",
-    options: ["CAN의 배선 단순성", "CAN의 저렴한 비용", "CAN의 낮은 대역폭과 비결정론적 특성", "CAN의 높은 전압 레벨"],
-    answer: 2,
-    explain: "자율 주행은 초고속/대용량의 데이터와 엄격한 실시간성 (결정론적)을 요구하므로, 기존 CAN은 대역폭과 실시간성 측면에서 한계를 가집니다."
-  }
+    explain: "Sync Break는 일반적인 통신 비트 폭보다 긴 길이로, 슬레이브 노드가 통신 시작을 인지하고 비트 타이밍을 마스터와 동기화하는 데 사용된다.",
+  }  
     
 ];
 
 export const industry010803 = [
-    {    
-    question: "CAN 통신에서 비트 타이밍 (Bit Timing)을 설정하는 주된 목적은 무엇입니까?",
-    options: ["통신선의 색상 지정", "통신 버스의 물리적 길이 조절", "각 ECU의 클럭 오차를 보상하고 데이터 동기화를 유지", "종단 저항 값 설정"],
-    answer: 2,
-    explain: "비트 타이밍은 통신 속도를 결정하고, 각 ECU의 샘플링 지점을 조정하여 클럭 오차를 보상함으로써 데이터 전송의 안정성과 정확도를 확보합니다."
-  },
-  {
-    question: "LIN 통신 프레임의 식별자 (ID) 필드가 가질 수 있는 주된 값의 범위는 무엇입니까?",
-    options: ["0부터 1023", "0부터 7", "0부터 63", "0부터 255"],
-    answer: 2,
-    explain: "LIN 통신은 6비트의 식별자를 사용하여 0부터 63까지의 메시지를 구분합니다. (ID 60~61은 진단용, 62~63은 예약됨)"
-  },
-  {
-    question: "FlexRay 통신에서 콜드 스타트 (Cold Start) 과정의 가장 첫 단계에서 이루어져야 하는 필수적인 작업은 무엇입니까?",
-    options: ["고전압 배터리 충전", "버스 가십 (Bus Guardian) 활성화", "진단 DTC 소거", "엔진 시동"],
+{
+    question: "CAN 통신에서 ECU가 'Bus-Off' 상태로 진입했을 때, 이 ECU가 다른 ECU의 메시지를 수신할 수 있는가?",
+    options: ["Bus-Off 상태에서는 송수신 모두 불가능하다.", "수신은 가능하나, 메시지 전송은 불가능하다.", "송수신 모두 가능하나, 오류 플래그를 전송할 수 없다.", "수신은 불가능하고, 메시지 전송만 가능하다."],
     answer: 1,
-    explain: "FlexRay의 콜드 스타트는 네트워크의 시간 동기화를 시작하는 과정이며, 이전에 버스 가십을 활성화하여 ECU가 정해진 시간 외에 통신하는 것을 막아야 통신 안정성을 확보할 수 있습니다."
+    explain: "Bus-Off 상태는 버스에 영향을 주지 않기 위해 메시지 전송은 중단하지만, 버스 모니터링 및 메시지 수신은 계속 가능하다.",
   },
   {
-    question: "자동차 네트워크 진단 시, DTC B1000과 같이 B-Code가 나타내는 시스템의 고장 위치는 주로 어디입니까?",
-    options: ["엔진/변속기 (파워트레인)", "섀시 (제동/조향)", "바디/편의 장치", "네트워크 통신"],
-    answer: 2,
-    explain: "자동차 DTC 코드는 일반적으로 P(파워트레인), C(섀시), B(바디), U(네트워크 통신)로 분류됩니다."
-  },
-  {
-    question: "CAN 통신에서 비트 스터핑 (Bit Stuffing)이 필요한 주된 이유는 무엇입니까?",
-    options: ["데이터 전송 속도 향상", "통신선의 절연 저항 조절", "연속적인 동일 비트 발생 시, 비트 동기화를 상실하는 것을 방지", "메시지 우선순위 결정"],
-    answer: 2,
-    explain: "CAN은 5개의 동일 비트가 연속될 경우 강제로 반대 비트(Stuff Bit)를 삽입하여 동기화 비트 (Edge)를 생성, 클럭 동기화가 깨지는 것을 방지합니다."
-  },
-  {
-    question: "자동차 이더넷에서 차량용 커넥터 (예: HMTD)가 일반적인 RJ-45 커넥터 대신 사용되는 주된 이유는 무엇입니까?",
-    options: ["더 높은 전압 사용", "광섬유 지원", "진동, 온도 변화, 방수/방진 등 자동차 환경 요구 사항 충족", "더 낮은 통신 속도"],
-    answer: 2,
-    explain: "자동차 환경은 진동, 온도, 습도, EMI 등 가혹한 조건이 많으므로, 산업 표준을 만족하는 견고한 차량용 전용 커넥터가 사용됩니다."
-  },
-  {
-    question: "LIN 통신에서 메시지 스케줄 테이블을 관리하고 실행하는 주체는 무엇입니까?",
-    options: ["모든 슬레이브 ECU", "마스터 ECU", "게이트웨이", "CAN 트랜시버"],
+    question: "고속 CAN 통신에서 종단 저항(Termination Resistor)의 주된 역할은 무엇이며, 통상적으로 버스 양 끝단에 설치되는 저항 값은?",
+    options: ["버스 전원 공급, 60Ω", "신호 반사 방지, 120Ω", "데이터 오류 검출, 60Ω", "버스 전류 제한, 120Ω"],
     answer: 1,
-    explain: "LIN 통신의 모든 통신 순서와 주기는 마스터 ECU에 저장된 스케줄 테이블에 의해 엄격하게 제어됩니다."
+    explain: "종단 저항은 통신선의 임피던스 정합을 통해 신호 반사를 방지하며, 고속 CAN에서는 일반적으로 120Ω 저항 두 개를 버스 양 끝에 설치하여 병렬 60Ω을 만든다.",
   },
   {
-    question: "FlexRay 통신에서 Dynamic Segment 내의 데이터 전송이 비결정론적인 주된 이유는 무엇입니까?",
-    options: ["통신 속도가 낮아서", "토큰 패싱 방식을 사용해서", "미니 슬롯팅 경쟁 기반으로 통신 권한을 얻기 때문", "이중 채널을 사용해서"],
+    question: "LIN 통신에서 슬레이브 노드가 슬립 모드(Sleep Mode)로 진입하는 주된 조건은?",
+    options: ["버스 전압이 12V 이하일 때", "슬레이브 노드 스스로 결정", "버스에 데이터 통신이 4초 이상 없을 때", "마스터 노드가 Wakeup Signal을 전송했을 때"],
     answer: 2,
-    explain: "Dynamic Segment는 미니 슬롯팅에서 통신 권한을 얻기 위한 경쟁 방식이므로, 데이터 전송 시간이 확정되지 않아 비결정론적 특징을 가집니다."
+    explain: "LIN 프로토콜에서는 버스 통신이 일정 시간(보통 4초) 동안 없을 경우, 노드의 전력 절감을 위해 슬립 모드로 자동 진입한다.",
   },
   {
-    question: "CAN 통신 진단 시, CAN-High와 CAN-Low의 전압이 모두 Vcc (예: 5V)에 가까운 상태로 관찰되었다면 의심해야 할 결함은 무엇입니까?",
-    options: ["종단 저항 단선", "통신선 전체의 전원 단락 (Vcc 단락)", "CAN-Low 선의 접지 단락", "ECU의 통신 모듈 단선"],
+    question: "FlexRay 통신에서 'Cycle(사이클)' 내에서 Static Segment(정적 세그먼트)가 Dynamic Segment(동적 세그먼트)보다 먼저 배치되는 주된 이유는?",
+    options: ["동적 세그먼트의 유연성 확보", "시간 보장형 메시지의 실시간성 확보", "메시지 우선순위 중재", "전력 소비 최소화"],
     answer: 1,
-    explain: "두 통신선 모두 전원(Vcc)에 단락되면 두 선의 전압 레벨이 Vcc로 고정되어 Recessive 상태와 Dominant 상태의 구분이 불가능해집니다."
+    explain: "Static Segment는 시간 보장이 필수적인 핵심 메시지를 전송하므로, Cycle의 시작 부분에 배치하여 실시간성을 최우선으로 확보한다.",
   },
   {
-    question: "자동차 네트워크 진단에서 U-Code (예: U0100)가 나타내는 고장 위치는 주로 어디입니까?",
-    options: ["엔진/변속기", "바디/편의 장치", "섀시 (제동/조향)", "네트워크 통신"],
+    question: "CAN 통신에서 ECU의 트랜시버가 CAN-H 라인에만 지속적인 단락(Short to Ground)을 발생시켰을 때, 버스의 차동 전압 파형은?",
+    options: ["파형의 진폭이 2배로 증가", "파형의 진폭이 감소하고 Dominant 상태로 고정", "파형의 주파수만 감소", "파형이 Recessive 상태로 고정"],
+    answer: 1,
+    explain: "CAN-H가 접지 단락되면 CAN-H 전위가 낮아져 차동 전압이 감소하면서 Dominant 상태를 유지하려 하여 통신 불능 상태가 된다.",
+  },
+  {
+    question: "LIN 통신 프레임의 헤더(Header)에서 Sync Field(동기 필드) 다음에 위치하며, 마스터가 슬레이브에게 데이터 응답을 요청하는 필드는?",
+    options: ["Data Field", "CRC Field", "Identifier Field (식별자)", "Sync Break"],
+    answer: 2,
+    explain: "마스터는 Sync Break와 Sync Field 다음에 Identifier Field(ID)를 전송하여, 해당 ID를 가진 슬레이브 노드의 데이터 응답을 유도한다.",
+  },
+  {
+    question: "FlexRay 통신의 특징 중, CAN 통신과 가장 뚜렷하게 구별되는 기술적인 특징은?",
+    options: ["높은 전송 속도", "비파괴적 중재(Arbitration)", "메시지 ID 우선순위", "시간 동기화 및 결정론적(Time-Triggered) 통신"],
     answer: 3,
-    explain: "U-Code는 네트워크 통신 관련 고장, 즉 다른 ECU와의 통신 불능(Lost Communication)이나 데이터 오류를 나타냅니다."
+    explain: "FlexRay의 핵심은 엄격한 시간 동기화를 기반으로 한 결정론적 통신이며, 이는 CAN의 충돌 기반 비파괴적 중재 방식과 근본적으로 다르다.",
   },
   {
-    question: "CAN 통신에서 Standard ID (표준 식별자)가 사용될 때, 식별자 (ID)의 비트 길이는 몇 비트입니까?",
-    options: ["7 비트", "11 비트", "29 비트", "64 비트"],
-    answer: 1,
-    explain: "Standard CAN은 11비트의 식별자 필드를 사용하여 메시지의 우선순위와 내용을 구분합니다."
-  },
-  {
-    question: "자동차 네트워크의 펌웨어 (Firmware)를 업데이트할 때, 진단 장비와 ECU 간의 통신에 주로 사용되는 표준 프로토콜은 무엇입니까?",
-    options: ["LIN", "FlexRay", "UDS (Unified Diagnostic Services)", "MOST"],
+    question: "CAN 통신에서 Recessive 비트 상태 시, CAN-H와 CAN-L의 공통 모드 전압(Common Mode Voltage)은 일반적으로 몇 V 인가?",
+    options: ["0V", "1.5V", "2.5V", "3.5V"],
     answer: 2,
-    explain: "UDS (ISO 14229)는 ECU 진단, DTC 읽기/삭제, 펌웨어 플래싱 (Programming) 등 모든 진단 서비스에 사용되는 범용 프로토콜입니다."
+    explain: "Recessive 상태는 버스 휴지 상태로, CAN-H와 CAN-L 모두 공통 모드 전압인 약 2.5V를 유지하여 차동 전압이 0V에 가깝다.",
   },
   {
-    question: "LIN 통신 프레임에서 슬립 모드 (Sleep Mode) 진입을 위해 마스터가 전송하는 특별한 프레임은 무엇입니까?",
-    options: ["Wake-up 신호", "진단 요청 프레임", "Error Frame", "유휴 프레임"],
-    answer: 1,
-    explain: "마스터는 슬레이브들이 특정 시간 동안 통신이 없거나, 진단 요청 프레임 (ID 60)을 이용하여 슬립 모드 진입을 지시할 수 있습니다."
-  },
-  {
-    question: "FlexRay 통신에서 시간 트리거 방식을 구현하기 위해 각 ECU가 가져야 하는 필수적인 요소는 무엇입니까?",
-    options: ["대용량 메모리", "고성능 그래픽 카드", "매우 정밀한 로컬 클럭 (Clock)", "광통신 트랜시버"],
+    question: "OBD-II 진단에서 차량과 진단기 간의 통신에 UDS(Unified Diagnostic Services)가 사용될 때, 해당 프로토콜을 통칭하는 용어는?",
+    options: ["KWP 2000", "J1850", "DoCAN (Diagnostics over CAN)", "ISO 9141"],
     answer: 2,
-    explain: "FlexRay는 정확한 시간 동기화 기반이므로, 모든 노드가 오차 없이 시간을 측정할 수 있도록 매우 정밀한 클럭을 요구합니다."
+    explain: "DoCAN은 CAN 통신 프로토콜을 기반으로 UDS(ISO 14229) 진단 메시지를 전송하는 방식을 의미한다.",
   },
   {
-    question: "CAN 통신에서 비트 중재 (Arbitration) 과정에 사용되는 비트는 무엇입니까?",
-    options: ["CRC 필드", "식별자 (ID) 필드", "데이터 필드", "ACK 슬롯"],
-    answer: 1,
-    explain: "여러 ECU가 동시에 전송을 시도할 때, 식별자 (ID) 필드의 비트 값을 비교하여 Dominant (0) 비트를 전송한 쪽이 우선권을 가져 통신 충돌 없이 중재를 진행합니다."
-  },
-  {
-    question: "자동차 이더넷이 링 (Ring) 토폴로지 대신 스타 (Star) 토폴로지를 사용하는 주된 이유는 무엇입니까?",
-    options: ["케이블 길이 단축", "중앙 집중식 관리 및 단일 노드 고장 시 네트워크 전체 다운 방지", "저렴한 통신 비용", "LIN과의 호환성 확보"],
-    answer: 1,
-    explain: "스타 토폴로지는 중앙 스위치를 통해 관리되며, 하나의 케이블이나 노드 고장 시에도 네트워크 전체가 다운되는 것을 방지합니다."
-  },
-  {
-    question: "CAN 통신 회로 진단 시, 종단 저항을 측정해야 하는 두 지점은 어디입니까?",
-    options: ["CAN-High와 접지", "CAN-Low와 접지", "CAN-High와 CAN-Low", "ECU 전원과 접지"],
-    answer: 2,
-    explain: "종단 저항은 CAN-High와 CAN-Low 두 통신선 사이에 연결되어 신호 반사를 방지하므로, 이 두 선 사이의 저항을 측정해야 합니다."
-  },
-  {
-    question: "자동차 네트워크 진단 시, DTC P-Code가 나타내는 고장 위치는 주로 어디입니까?",
-    options: ["섀시 (제동/조향)", "바디/편의 장치", "엔진/변속기 (파워트레인)", "네트워크 통신"],
-    answer: 2,
-    explain: "P-Code는 파워트레인 관련 고장, 즉 엔진, 변속기, 연료 시스템 등 구동계통의 오류를 나타냅니다."
-  },
-  {
-    question: "LIN 통신에서 마스터 ECU가 슬레이브 ECU에 전송하는 헤더 (Header)에 포함되지 않는 필드는 무엇입니까?",
-    options: ["Break Field", "Sync Field", "Protected ID (식별자)", "데이터 필드"],
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드에 데이터 응답을 요청하는 헤더를 전송할 때, 슬레이브 노드가 응답하는 프레임의 부분은?",
+    options: ["Sync Break", "Sync Field", "Header (헤더)", "Response (응답)"],
     answer: 3,
-    explain: "헤더는 마스터가 전송하는 요청 부분이며, 데이터 필드와 체크섬은 슬레이브가 응답하는 응답 (Response) 부분에 포함됩니다."
+    explain: "마스터의 헤더 수신 후, 해당 슬레이브는 Data Field와 Checksum Field를 포함하는 Response(응답)를 전송한다.",
   },
   {
-    question: "FlexRay 통신에서 Static Segment에 할당된 데이터 슬롯의 가장 큰 특징은 무엇입니까?",
-    options: ["슬롯 크기가 가변적이다", "슬롯 크기와 전송 시간이 고정되어 예측 가능", "경쟁 기반으로 통신한다", "데이터 지연 시간이 매우 길다"],
+    question: "CAN 통신 프레임의 ACK 필드(Acknowledge Field)에서 수신 ECU가 전송에 성공했음을 알리기 위해 전송하는 비트는?",
+    options: ["논리값 '1' (Recessive)", "논리값 '0' (Dominant)", "Parity Bit", "Start Bit"],
     answer: 1,
-    explain: "Static Segment는 결정론적 통신을 위해 미리 정해진 고정된 크기의 슬롯을 할당하며, 전송 시간이 정확하게 예측 가능합니다."
+    explain: "성공적으로 메시지를 수신한 ECU는 송신 ECU가 보낸 Recessive 비트를 Dominant 비트로 덮어써서 수신 성공을 알린다.",
   },
   {
-    question: "CAN 통신의 물리적 레이어에서, 차동 신호 방식 (Differential Signaling)을 사용하는 주된 이점은 무엇입니까?",
-    options: ["통신선 길이 단축", "외부 노이즈의 영향을 상쇄하여 통신 신뢰성 증대", "저렴한 통신 비용", "단일선 통신 지원"],
-    answer: 1,
-    explain: "차동 신호는 두 선에 동일하게 유입되는 노이즈를 전압 차 계산 과정에서 제거하여 노이즈에 대한 내성이 매우 높습니다."
-  },
-  {
-    question: "자동차 이더넷에서 PHY (Physical Layer) 칩이 수행하는 주된 역할은 무엇입니까?",
-    options: ["운전자에게 정보 표시", "통신선의 절연 저항 측정", "데이터 링크 레이어와 물리적 통신 매체 사이의 전기적/물리적 변환", "엔진 출력 제어"],
+    question: "LIN 통신에서 슬레이브 노드의 데이터 전송이 지연되거나 누락되는 주된 오류 유형은?",
+    options: ["Form Error", "Stuff Error", "Frame Error (응답 지연)", "CRC Error"],
     answer: 2,
-    explain: "PHY 칩은 이더넷 컨트롤러의 디지털 신호를 케이블로 전송 가능한 물리적 신호로 변환하고, 반대로 수신 신호를 디지털로 변환하는 역할을 합니다."
+    explain: "마스터가 헤더를 전송했음에도 불구하고, 슬레이브 노드의 응답(Response)이 지정된 시간 내에 오지 않거나 누락될 때 Frame Error로 간주된다.",
   },
   {
-    question: "CAN 통신에서 Bus Off 상태에 진입한 ECU가 통신을 재개하기 위해 수행하는 과정은 무엇입니까?",
-    options: ["LDC 초기화", "일정 횟수 이상의 Recessive 비트 (128회)를 기다린 후 재연결 시도", "엔진 재시동", "종단 저항 제거"],
-    answer: 1,
-    explain: "Bus Off 상태에서 ECU는 즉시 복귀할 수 없으며, 통신 버스에 잡음이 없는 상태를 확인한 후 (128회 11비트) 재연결 (Bus On)을 시도하여 통신을 재개합니다."
-  },
-  {
-    question: "자동차 네트워크 진단 시, DTC C-Code가 나타내는 시스템의 고장 위치는 주로 어디입니까?",
-    options: ["엔진/변속기", "섀시 (제동, 조향, 서스펜션)", "바디/편의 장치", "네트워크 통신"],
-    answer: 1,
-    explain: "C-Code는 섀시 관련 고장, 즉 ABS, VDC, EPS 등 제동, 조향, 서스펜션 시스템의 오류를 나타냅니다."
-  },
-  {
-    question: "LIN 통신에서 Protected ID (식별자)에 포함된 패리티 비트의 주된 역할은 무엇입니까?",
-    options: ["데이터 전송 속도 향상", "슬레이브 ECU의 클럭 동기화", "식별자 값의 오류 검출", "통신선에 전원 공급"],
+    question: "FlexRay 통신에서 'Dynamic Segment(동적 세그먼트)'의 타임 슬롯이 유동적으로 할당되는 주된 이유는?",
+    options: ["시간 보장형 메시지 전송", "버스 종단 저항 제어", "비주기적 이벤트 메시지의 유연한 처리", "통신 속도 증가"],
     answer: 2,
-    explain: "Protected ID는 식별자 6비트와 패리티 2비트로 구성되어, 마스터가 전송한 식별자 값의 오류가 발생했는지 확인하여 통신 신뢰도를 높입니다."
+    explain: "Dynamic Segment는 Static Segment의 시간 보장형 메시지와 달리, 에어백 전개와 같은 비주기적인 이벤트 데이터를 유연하게 처리하기 위해 사용된다.",
   },
   {
-    question: "FlexRay 통신에서 Global Time (전역 시간)이 필요한 주된 이유는 무엇입니까?",
-    options: ["통신 비용 절감", "배선 단순화", "모든 ECU가 통신 주기 및 시간을 정확하게 공유하여 동기화", "데이터 압축"],
+    question: "CAN 통신에서 ECU의 트랜시버가 CAN-L 라인에만 지속적인 단락(Short to Ground)을 발생시켰을 때, 버스의 차동 전압 파형은?",
+    options: ["파형의 진폭이 2배로 증가", "파형의 진폭이 감소하고 Dominant 상태로 고정", "파형의 주파수만 감소", "파형이 Recessive 상태로 고정"],
+    answer: 1,
+    explain: "CAN-L이 접지 단락되면 CAN-L 전위가 낮아져 차동 전압이 Dominant 상태를 유지하려 하여 통신 불능 상태가 된다.",
+  },
+  {
+    question: "LIN 통신의 저비용 구현을 위한 물리 계층의 특징은?",
+    options: ["이중 차동선 통신", "광섬유 사용", "단일 차동선 통신", "단일선(Single-wire) 통신"],
+    answer: 3,
+    explain: "LIN은 저비용을 위해 단일선 통신 방식을 채택하며, 최대 통신 속도는 20kbps로 제한된다.",
+  },
+  {
+    question: "CAN 통신에서 메시지 ID가 낮을수록 우선순위가 높은 통신 방식을 무엇이라고 하는가?",
+    options: ["Token Passing", "Master-Slave", "Non-Destructive Arbitration (비파괴적 중재)", "Time-Triggered"],
     answer: 2,
-    explain: "FlexRay는 시간 분할 기반이므로, 모든 노드가 정확히 동일한 시간을 기준으로 통신해야 하며, Global Time이 이를 위한 기준 시간을 제공합니다."
+    explain: "CAN은 비파괴적 중재(Non-Destructive Arbitration)를 사용하여 ID가 낮은 메시지가 충돌 없이 버스 제어권을 획득하게 한다.",
   },
   {
-    question: "MOST 네트워크에서 제어 채널 (Control Channel)의 주된 역할은 무엇입니까?",
-    options: ["대용량 비디오 데이터 전송", "오디오 스트리밍", "네트워크 관리, 설정, 진단 명령 전송", "차량의 구동 정보 전송"],
+    question: "FlexRay 통신에서 두 개의 채널(Channel A, Channel B)을 통해 동일 데이터를 전송하여 신뢰성을 높이는 방법은?",
+    options: ["Single-Channel Mode", "Dual-Mode Redundancy (이중화)", "Time-Triggered Slot", "Dynamic Segment"],
+    answer: 1,
+    explain: "Dual-Mode Redundancy는 두 채널을 사용하여 데이터의 이중화를 통해 하나의 채널에 오류가 발생해도 통신 신뢰성을 유지하게 한다.",
+  },
+  {
+    question: "OBD-II 진단에서 진단기가 ECU에 데이터를 요청할 때 사용하는 서비스 ID(Service ID)는?",
+    options: ["$0x01 (요청 데이터 식별)", "$0x02 (요청 DTC)", "$0x03 (요청 데이터 스트림)", "$0x04 (요청 제어)"],
+    answer: 0,
+    explain: "서비스 ID $0x01은 파워트레인 진단 데이터(PID)를 요청하는 서비스이다. (PID는 Service ID $0x01의 서브 기능)",
+  },
+  {
+    question: "CAN 통신 프레임에서 수신 ECU가 수신된 데이터의 오류 여부를 검사하기 위해 사용하는 필드는?",
+    options: ["Arbitration Field", "DLC Field", "CRC Field (순환 중복 검사)", "ACK Field"],
     answer: 2,
-    explain: "MOST는 스트림 데이터 외에 네트워크의 제어 및 관리를 위한 저속의 제어 메시지를 전송하는 별도의 Control Channel을 운영합니다."
+    explain: "CRC(Cyclic Redundancy Check) 필드는 전송된 데이터에 기반한 오류 검출 코드를 포함하여 수신 측의 오류 검사를 가능하게 한다.",
   },
   {
-    question: "CAN 통신 진단 시, CAN-High와 CAN-Low의 전압 파형이 오실로스코프에서 평행하게 이동하는 현상이 관찰되었다면 의심해야 할 결함은 무엇입니까?",
-    options: ["종단 저항 불량", "ECU의 통신 모듈 단선", "공통 모드 노이즈 (Common Mode Noise) 유입", "통신선 단락"],
+    question: "LIN 통신에서 슬레이브 노드가 전송하는 데이터 필드의 최대 길이는 몇 바이트인가?",
+    options: ["2 바이트", "4 바이트", "8 바이트", "64 바이트"],
+    answer: 1,
+    explain: "LIN 데이터 필드는 1바이트부터 8바이트까지 전송할 수 있으며, 일반적인 CAN과 동일하게 최대 8바이트이다.",
+  },
+  {
+    question: "MDPS(전동식 파워 스티어링)와 같은 안전 관련 시스템에 CAN 대신 FlexRay 통신을 사용하는 주된 기술적 이유는?",
+    options: ["FlexRay의 저비용 구현", "FlexRay의 시간 동기화 및 결정론적 통신 특성", "FlexRay의 단일선 통신 방식", "FlexRay의 단순한 프레임 구조"],
+    answer: 1,
+    explain: "FlexRay는 결정론적 통신을 보장하여 데이터 전송 시간이 예측 가능하므로, 높은 실시간성과 안전성이 요구되는 시스템에 적합하다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Active(오류 활성)' 상태일 때, 버스에 오류를 알리기 위해 전송하는 Active Error Flag의 비트 길이는?",
+    options: ["6 Dominant 비트", "6 Recessive 비트", "8 Recessive 비트", "8 Dominant 비트"],
+    answer: 0,
+    explain: "Error Active 상태의 ECU는 6개의 Dominant 비트를 전송하여 모든 ECU가 오류를 인지하고 현재 메시지 전송을 강제로 중단하도록 한다.",
+  },
+  {
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드의 응답을 기다리는 동안 발생하는 타임아웃 오류는 주로 어디서 검출되는가?",
+    options: ["슬레이브 노드", "CAN 게이트웨이", "마스터 노드", "트랜시버"],
     answer: 2,
-    explain: "차동 신호 방식인 CAN에서 두 선의 전압이 함께 변동하는 것은 외부에서 유입된 공통 모드 노이즈의 특징입니다. (이 경우 전압 차는 유지되어 통신은 가능할 수 있음)"
+    explain: "LIN은 마스터-슬레이브 구조이므로, 마스터 노드가 슬레이브 노드의 응답 지연을 감지하고 타임아웃 오류를 검출한다.",
   },
   {
-    question: "자동차 이더넷에서 MAC (Media Access Control) 주소의 주된 역할은 무엇입니까?",
-    options: ["데이터 전송 속도 결정", "네트워크 장치 (ECU)의 고유 식별", "통신 프로토콜 설정", "전원 공급 관리"],
-    answer: 1,
-    explain: "MAC 주소는 이더넷 네트워크 내에서 각 장치 (ECU)를 구분하고 데이터를 정확한 목적지로 전송하기 위한 하드웨어 고유 주소입니다."
+    question: "FlexRay 통신에서 'Static Segment'에서 메시지 전송 시 충돌이 발생하지 않는 주된 이유는?",
+    options: ["Dominant/Recessive 중재 사용", "Single-wire 통신", "메시지 ID 우선순위 사용", "미리 할당된 Time Slot 사용"],
+    answer: 3,
+    explain: "Static Segment에서는 각 노드가 지정된 Time Slot에만 전송을 허용하므로 메시지 간의 충돌 자체가 발생하지 않는다.",
   },
   {
-    question: "LIN 통신에서 응답 (Response) 필드에 포함되지 않는 요소는 무엇입니까?",
-    options: ["데이터 필드", "체크섬 필드", "Protected ID (식별자)", "데이터 바이트"],
+    question: "CAN 통신에서 CAN-H와 CAN-L 두 신호선이 단락(Short)되었을 때, 버스의 차동 전압 파형은?",
+    options: ["파형의 진폭이 2배로 증가", "파형의 진폭이 증가하고 Dominant 상태로 고정", "파형의 주파수만 감소", "파형이 Recessive 상태로 고정되어 차동 전압 0V에 가까워짐"],
+    answer: 3,
+    explain: "두 라인이 단락되면 차동 전압이 0V에 가까워져 Recessive 상태와 유사하게 되며, 통신 신호를 구별할 수 없어 통신 불능 상태가 된다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 Wakeup Signal을 수신한 후, 통신에 참여하기 위해 수행하는 조치는?",
+    options: ["메시지 ID를 마스터에게 전송", "버스 전압을 5V로 고정", "내부 클럭을 마스터와 동기화", "Bus-Off 상태로 진입"],
     answer: 2,
-    explain: "응답은 슬레이브가 전송하는 데이터와 체크섬으로 구성됩니다. Protected ID는 마스터가 전송하는 헤더에 포함됩니다."
+    explain: "Wakeup Signal 수신 후, 슬레이브는 슬립 모드에서 벗어나 통신에 참여하며, Sync Field를 통해 클럭 동기화를 재수행한다.",
   },
   {
-    question: "CAN 통신에서 Error Passive 상태의 ECU가 통신에 복귀하기 위해 오류 카운트를 감소시키는 조건은 무엇입니까?",
-    options: ["차량 시동 끄기", "오류가 없는 상태로 일정 횟수 이상의 메시지를 전송 또는 수신", "종단 저항 교체", "12V 보조 배터리 분리"],
+    question: "CAN 통신에서 비트 레벨의 위반(예: Stuff Bit 규칙 위반, 프레임 구조의 고정 필드 비트 위반 등)이 감지되었을 때 발생하는 오류 유형은?",
+    options: ["Bit Error", "Form Error", "CRC Error", "ACK Error"],
     answer: 1,
-    explain: "Error Passive 상태는 오류 카운트가 낮아져야만 Active 상태로 복귀할 수 있으며, 이는 정상적인 통신을 지속적으로 수행할 때 발생합니다."
+    explain: "Form Error(형식 오류)는 CAN 프레임의 고정된 형식(예: Delimiters, EOF, SOF)이나 Bit Stuffing 규칙 위반 시 발생한다.",
   },
   {
-    question: "자동차 네트워크의 사이버 보안을 강화하기 위해 통신 메시지를 암호화하고 인증하는 기술은 무엇입니까?",
-    options: ["OTA", "AVAS", "SecOC (Secure On-board Communication)", "LDC"],
+    question: "OBD-II 진단에서 '요청 시점의 현재 데이터'를 확인하기 위해 사용하는 서비스 ID와 PID(Parameter ID) 요청 코드는?",
+    options: ["$0x01", "$0x02", "$0x03", "$0x04"],
+    answer: 0,
+    explain: "서비스 ID $0x01은 '요청 시점의 현재 진단 데이터'를 의미하며, PID를 통해 특정 센서 값 등을 요청한다.",
+  },
+  {
+    question: "FlexRay 통신 프레임에서 메시지 전송 시 충돌이 발생하면, 이는 주로 어느 세그먼트에서 발생할 수 있는가?",
+    options: ["Static Segment", "Cycle", "Dynamic Segment", "Startup Frame"],
     answer: 2,
-    explain: "SecOC는 ECU 간의 통신 메시지에 MAC (Message Authentication Code)을 추가하여 데이터의 무결성과 인증을 보장하는 보안 기술입니다."
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 노드가 동시에 전송을 시도할 경우 충돌이 발생할 수 있다. Static Segment는 충돌이 발생하지 않는다.",
   },
   {
-    question: "FlexRay 통신에서 시간 분할 다중 접속 (TDMA) 방식이 적용되는 통신 세그먼트는 무엇입니까?",
-    options: ["Dynamic Segment", "Static Segment", "Control Segment", "Stream Segment"],
-    answer: 1,
-    explain: "TDMA는 Static Segment에 적용되어, 각 ECU에 고정된 시간 슬롯을 할당함으로써 충돌 없는 결정론적 통신을 가능하게 합니다."
-  },
-  {
-    question: "CAN 통신 회로 진단 시, 종단 저항을 측정했을 때 120Ω으로 측정되었다면 가장 유력한 결함은 무엇입니까?",
-    options: ["CAN-High/Low 합선", "ECU의 전원 단선", "종단 저항 하나가 단선되어 나머지 하나만 측정", "통신선 단선"],
+    question: "CAN 통신에서 전송 오류 카운터가 255를 초과하여 ECU가 Bus-Off 상태로 진입했을 때, 이 ECU가 다시 Bus-On 상태로 복귀하기 위해 만족해야 하는 가장 중요한 조건은?",
+    options: ["전송 오류 카운터를 0으로 초기화", "메시지 우선순위를 낮춘다.", "Recessive 비트를 128회 연속 감지", "CAN 버스를 5초간 모니터링"],
     answer: 2,
-    explain: "정상적인 CAN 버스의 합성 종단 저항은 60Ω입니다. 120Ω으로 측정되는 경우는 주로 양 끝에 있는 120Ω 저항 중 하나가 단선되어 나머지 하나만 남아있을 때 발생합니다."
+    explain: "Bus-Off 상태의 ECU는 버스가 128회 연속 Recessive 비트(버스 휴지 상태)임을 감지해야만 다시 Bus-On(Error Passive) 상태로 복귀할 수 있다.",
   },
   {
-    question: "하이브리드/전기차의 충전 시스템 진단 시, PLC (Power Line Communication)를 사용하는 주된 목적은 무엇입니까?",
-    options: ["차량 내부 네트워크 통신", "충전소와 차량 간의 통신 (예: ISO 15118)", "엔진 시동 제어", "실내 조명 제어"],
-    answer: 1,
-    explain: "PLC는 전력선을 통해 데이터 통신을 수행하며, 주로 충전 시스템에서 충전기와 차량 간의 제어 및 정보 교환 (통신 규약, 전력량 협상 등)에 사용됩니다."
-  },
-  {
-    question: "LIN 통신 프레임의 Break Field가 수행하는 주된 역할은 무엇입니까?",
-    options: ["데이터 전송 완료 알림", "통신 시작을 알리고 슬레이브 클럭을 리셋", "응답 데이터의 오류 검출", "절전 모드 진입"],
-    answer: 1,
-    explain: "Break Field는 마스터가 통신 프레임의 시작을 알리기 위해 전송하며, 슬레이브 ECU의 통신 클럭을 초기화 (리셋)하는 역할을 합니다."
-  },
-  {
-    question: "자동차 네트워크 진단 시, J2534 Pass-Thru 장비를 사용하는 주된 목적이 아닌 것은 무엇입니까?",
-    options: ["DTC 읽기/삭제", "오실로스코프를 이용한 파형 측정", "ECU 펌웨어 업데이트", "센서 데이터 스트리밍"],
-    answer: 1,
-    explain: "J2534는 주로 진단 및 프로그래밍을 위한 프로토콜 변환 및 중계 장치이며, 오실로스코프처럼 아날로그 파형을 직접 측정하는 용도로는 사용되지 않습니다."
-  },
-  {
-    question: "MOST 네트워크에서 Stream Data가 전송되는 방식의 주된 특징은 무엇입니까?",
-    options: ["패킷 기반의 비동기 통신", "시간 동기화된 연속적인 데이터 전송", "경쟁 기반의 데이터 전송", "단일 마스터-슬레이브 통신"],
-    answer: 1,
-    explain: "MOST의 Stream Data (오디오/비디오)는 시간 동기화된 상태로 연속적인 데이터 전송이 이루어져 끊김 없는 멀티미디어 환경을 제공합니다."
-  },
-  {
-    question: "CAN 통신에서 Low-Speed CAN이 Single Wire Mode로 전환되어 통신을 유지할 수 있는 주된 이유는 무엇입니까?",
-    options: ["종단 저항이 없어서", "CAN-Low 선을 사용하여 신호를 접지 기준으로 측정 가능", "통신 속도가 빨라서", "데이터 바이트가 길어서"],
-    answer: 1,
-    explain: "저속 CAN은 내고장성이 있어 한쪽 선이 단절될 경우, 나머지 선을 이용하여 접지 기준으로 신호를 측정하여 통신을 계속할 수 있습니다."
-  },
-  {
-    question: "CAN FD (Flexible Data-rate) 통신에서 'Flexible Data-rate' 기능이 적용되는 통신 프레임 영역은 주로 어디입니까?",
-    options: ["중재 필드 (Arbitration Field)", "CRC 필드 (Cyclic Redundancy Check)", "데이터 필드 (Data Field) 및 CRC 필드", "응답 필드 (ACK Slot)"],
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드에 데이터 전송을 요청하는 필드가 포함된 부분은?",
+    options: ["Response (응답)", "Checksum", "Header (헤더)", "Data Field"],
     answer: 2,
-    explain: "CAN FD는 중재 필드까지는 기존 CAN과 동일한 낮은 속도(Low-speed)를 유지하여 호환성을 확보하고, 데이터 필드(Data Field)와 CRC 필드 전송 구간에서만 비트 전송률을 높여(High-speed) 전송 속도를 향상시킵니다."
+    explain: "LIN 헤더는 Sync Break, Sync Field, ID Field로 구성되며, ID Field가 슬레이브 노드에게 데이터 응답을 요청하는 역할을 한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Cycle'이 갖는 가장 중요한 의미는?",
+    options: ["단일 메시지 전송 시간", "통신 속도", "Static Segment와 Dynamic Segment를 모두 포함하는 전체 통신 주기", "오류 발생 시 재전송 횟수"],
+    answer: 2,
+    explain: "FlexRay 사이클은 정적 세그먼트와 동적 세그먼트, 그리고 가드 시간 등을 포함하는 전체 반복 통신 주기를 의미하며, 시간 동기화의 기본 단위이다.",
+  },
+  {
+    question: "CAN 통신에서 Dominant 비트 상태 시, CAN-H와 CAN-L의 차동 전압(Vd = Vh - Vl)은?",
+    options: ["약 2V", "약 -2V", "약 0V", "약 5V"],
+    answer: 0,
+    explain: "Dominant 상태는 CAN-H가 약 3.5V, CAN-L이 약 1.5V를 유지하여 차동 전압이 약 2V가 된다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드의 클럭 동기화에 사용되는 'Sync Field'는 몇 바이트로 구성되며, 사용하는 패턴은?",
+    options: ["1 바이트, 0xAA", "1 바이트, 0x55", "2 바이트, 0xFF", "4 바이트, 0x00"],
+    answer: 1,
+    explain: "Sync Field는 1바이트(8비트)로, 비트 타이밍 동기화를 위해 패턴 0x55 (01010101)를 사용한다.",
+  },
+  {
+    question: "CAN 통신에서 CRC 에러(순환 중복 검사 오류)가 발생했다면, 이는 주로 어느 필드에서 발생한 오류를 의미하는가?",
+    options: ["Arbitration Field", "ACK Field", "Data Field 또는 CRC Field 자체", "Start of Frame Field"],
+    answer: 2,
+    explain: "CRC 에러는 Data Field와 CRC Field 자체를 포함한 전송 데이터에 오류가 발생하여 수신 측에서 계산한 값과 수신한 CRC 값이 일치하지 않을 때 발생한다.",
+  },
+  {
+    question: "OBD-II 진단에서 '저장된 고장 코드(DTC)'를 확인하기 위해 사용하는 서비스 ID는?",
+    options: ["$0x01", "$0x02", "$0x03", "$0x04"],
+    answer: 2,
+    explain: "서비스 ID $0x03은 '저장된 고장 코드(Diagnostic Trouble Code, DTC)'를 요청하는 서비스이다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment'의 유연한 타임 슬롯 할당 방식에서 메시지 충돌을 방지하기 위해 사용하는 기법은?",
+    options: ["메시지 ID 기반의 중재", "Master-slave 제어", "시간 기반의 Mini-slot을 이용한 중재", "토큰 패싱"],
+    answer: 2,
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 노드가 전송을 원할 경우 Mini-slot을 선점하여 메시지 충돌을 방지한다.",
+  },
+  {
+    question: "CAN 통신에서 Bit Stuffing 규칙 위반(연속 6개 동일 레벨 비트 발생)이 감지되었을 때 발생하는 오류 유형은?",
+    options: ["Bit Error", "Stuff Error", "Form Error", "CRC Error"],
+    answer: 1,
+    explain: "Stuff Error(스터프 오류)는 Bit Stuffing 규칙에 따라 삽입되어야 할 비트가 없거나, 연속 5개 이상의 동일 비트 레벨이 발생하는 경우에 검출된다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 데이터를 전송하는 시점은?",
+    options: ["마스터 노드가 버스가 비었음을 알릴 때", "슬레이브 노드 스스로 데이터 전송이 필요할 때", "마스터 노드가 해당 슬레이브의 ID를 포함한 헤더를 전송했을 때", "Sync Break 신호가 감지되었을 때"],
+    answer: 2,
+    explain: "LIN은 마스터가 스케줄에 따라 ID를 포함한 헤더를 전송하면, 해당 ID에 응답하는 슬레이브가 데이터와 체크섬을 이어서 전송한다.",
+  },
+  {
+    question: "CAN 통신에서 CAN-H와 CAN-L 두 신호선이 단선(Open)되었을 때, 버스의 차동 전압 파형은?",
+    options: ["차동 전압이 0V에 가까워져 통신 불능", "차동 전압이 2배로 증가", "차동 신호 대신 단일 종단 신호로 통신 속도가 저하되거나 오류 발생", "CAN-L이 전압 레벨을 2배로 높여 통신을 이어간다."],
+    answer: 2,
+    explain: "고속 CAN은 차동 신호에 의존하지만, 두 선 모두 단선되면 통신 자체가 거의 불가능해지며, 심각한 오류가 발생한다.",
+  }  
+];
+
+export const industry010804 = [
+{
+    question: "고속 CAN 통신에서 버스 종단 저항(Termination Resistor)이 규정 값(60Ω)보다 현저히 높은 상태(예: 120Ω 이상)일 때, 나타나는 주된 통신 문제는?",
+    options: ["버스 전체가 Dominant 상태로 고정된다.", "통신 속도가 2배로 증가한다.", "버스에서 신호 반사가 발생하여 파형 왜곡이 심해진다.", "ECU의 전력 소비가 증가한다."],
+    answer: 2,
+    explain: "종단 저항이 높으면 임피던스 정합이 불량해져 신호가 통신선 끝에서 반사되어 원래 신호와 겹쳐 파형 왜곡(링잉 현상)을 일으킨다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 데이터를 전송하기 전에 마스터 노드가 전송하는 필드를 순서대로 나열한 것은?",
+    options: ["Sync Field - Sync Break - Identifier Field", "Identifier Field - Data Field - Checksum Field", "Sync Field - Identifier Field - Checksum Field", "Sync Break - Sync Field - Identifier Field"],
+    answer: 3,
+    explain: "LIN 헤더는 Sync Break로 시작을 알리고, Sync Field로 클럭 동기화를 하며, Identifier Field로 응답할 슬레이브를 지정한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Startup Frame(시작 프레임)'을 전송하는 주된 목적은?",
+    options: ["비주기적인 이벤트 데이터 전송", "통신 속도 조절", "버스상의 모든 노드의 동기화(Sync) 및 클럭 동기", "메시지 우선순위 중재"],
+    answer: 2,
+    explain: "Startup Frame은 FlexRay 통신 사이클의 시작을 알리고, 버스상의 모든 노드의 시간 동기화를 확립하는 데 사용된다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Passive' 상태일 때, 해당 ECU가 전송하는 오류 플래그(Error Flag)의 특징은?",
+    options: ["6개의 Dominant 비트", "8개의 Dominant 비트", "6개의 Recessive 비트", "8개의 Recessive 비트"],
+    answer: 3,
+    explain: "Error Passive 상태의 ECU는 8개의 Recessive 비트를 전송하여, 다른 ECU의 통신에 미치는 영향을 최소화한다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, ECU에 저장된 영구적인 고장 코드(DTC)를 지우도록 요청하는 서비스 ID는?",
+    options: ["$0x03", "$0x04", "$0x14", "$0x19"],
+    answer: 1,
+    explain: "서비스 ID $0x04는 'Clear Diagnostic Information'으로, ECU에 저장된 고장 코드 및 관련 데이터를 삭제하도록 요청한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H와 CAN-L이 모두 접지(Ground)에 단락(Short to Ground)되었을 때, 나타나는 현상은?",
+    options: ["버스 전체가 Dominant 상태로 고정된다.", "통신 속도가 절반으로 줄어든다.", "버스 전체가 Recessive 상태로 고정되어 통신 불능", "CAN 통신이 정상적으로 작동한다."],
+    answer: 2,
+    explain: "두 라인이 모두 접지에 단락되면 두 전위 모두 0V에 가까워져 차동 전압이 0V가 되므로 Recessive 상태와 유사하게 되어 통신 불능이 된다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 슬립 모드에서 벗어나기 위해 수신해야 하는 Wakeup Signal의 특징은?",
+    options: ["Sync Break 신호와 동일하다.", "일반 비트보다 짧은 Dominant 펄스이다.", "일반 비트보다 긴 Dominant 펄스이다.", "Recessive 비트만 연속된다."],
+    answer: 2,
+    explain: "Wakeup Signal은 일반적인 데이터 비트 폭보다 긴 Dominant 펄스 형태로 전송되어, 슬립 상태의 노드가 통신 시작을 감지하도록 한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Static Segment'의 타임 슬롯이 결정론적(Deterministic) 특성을 갖는 주된 이유는?",
+    options: ["버스 전압이 항상 5V로 유지되기 때문에", "메시지 ID가 낮은 것이 우선순위를 갖기 때문에", "타임 슬롯이 시스템 설계 시 미리 할당되고 고정되기 때문에", "메시지 길이가 유동적이기 때문에"],
+    answer: 2,
+    explain: "결정론적 통신은 메시지 전송 시간이 예측 가능하다는 의미이며, Static Segment는 시간 슬롯이 고정되어 이 특성을 보장한다.",
+  },
+  {
+    question: "CAN 통신에서 메시지 ID가 낮은 ECU가 메시지 충돌 시 우선권을 갖는 통신 방식을 무엇이라고 하는가?",
+    options: ["Time-Triggered", "Master-Slave", "Token Passing", "Non-Destructive Arbitration (비파괴적 중재)"],
+    answer: 3,
+    explain: "CAN은 Dominant/Recessive 논리를 이용한 비파괴적 중재를 통해 ID가 낮은(우선순위 높은) 메시지가 버스 제어권을 획득한다.",
+  },
+  {
+    question: "자동차 네트워크에서 서로 다른 CAN 버스(예: 파워트레인 CAN과 바디 CAN) 간의 통신을 중계하는 장치는?",
+    options: ["Transceiver", "Termination Resistor", "Gateway ECU", "CAN Controller"],
+    answer: 2,
+    explain: "Gateway ECU(게이트웨이 ECU)는 서로 다른 네트워크 프로토콜이나 속도를 가진 CAN 버스 사이에서 데이터 포맷을 변환하고 라우팅하는 역할을 한다.",
+  },
+  {
+    question: "LIN 통신 프레임의 체크섬(Checksum) 필드가 보장하는 오류 제어 방식은?",
+    options: ["데이터 오류 자동 정정", "메시지 우선순위 검증", "전송 데이터의 오류 검출", "슬레이브 노드의 응답 시간 검증"],
+    answer: 2,
+    explain: "LIN 체크섬은 데이터 필드를 포함한 특정 필드 값을 기반으로 계산되어 전송되며, 수신 측에서 동일 계산 후 비교하여 데이터의 오류 발생 여부를 검출한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment'의 타임 슬롯은 누가 소유하며 데이터를 전송하는가?",
+    options: ["가장 높은 ID를 가진 ECU", "가장 낮은 ID를 가진 ECU", "통신 매트릭스에 지정된 단 하나의 ECU", "메시지 전송이 필요한 노드들이 선점 방식으로 사용"],
+    answer: 3,
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 메시지 전송이 필요한 노드가 선점 방식으로 타임 슬롯을 사용한다.",
+  },
+  {
+    question: "CAN 통신에서 전송 오류 카운터가 255를 초과하여 ECU가 Bus-Off 상태로 진입했을 때, 이 ECU가 다시 Bus-On 상태로 복귀하기 위해 만족해야 하는 가장 중요한 조건은?",
+    options: ["전송 오류 카운터를 0으로 초기화", "메시지 우선순위를 낮춘다.", "Recessive 비트를 128회 연속 감지", "CAN 버스를 5초간 모니터링"],
+    answer: 2,
+    explain: "Bus-Off 상태의 ECU는 버스가 128회 연속 Recessive 비트(버스 휴지 상태)임을 감지해야만 다시 Bus-On(Error Passive) 상태로 복귀할 수 있다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, ECU가 제공하는 현재 데이터 스트림(Live Data)을 요청하는 서비스 ID는?",
+    options: ["$0x01", "$0x02", "$0x03", "$0x04"],
+    answer: 0,
+    explain: "서비스 ID $0x01은 'Request Current Powertrain Diagnostic Data'로, 엔진 RPM, 온도 등 현재의 파라미터 ID(PID) 값을 요청한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 버스 종단 저항(Termination Resistor)이 규정 값(60Ω)보다 현저히 낮은 상태(예: 30Ω 이하)일 때, 나타나는 주된 통신 문제는?",
+    options: ["버스에 흐르는 전류가 과도하게 증가하여 트랜시버에 부하 발생", "신호 반사가 발생하여 파형 왜곡이 심해진다.", "버스 전체가 Recessive 상태로 고정된다.", "통신 속도가 감소한다."],
+    answer: 0,
+    explain: "저항이 낮아지면 버스의 총 전류가 증가하여 트랜시버에 과도한 부하가 걸리고 신호 전압 레벨이 낮아져 통신이 어려워진다.",
+  },
+  {
+    question: "LIN 통신에서 슬립 모드(Sleep Mode)를 해제하고 다시 통신을 시작하도록 하는 신호는?",
+    options: ["Sync Field", "Wakeup Signal", "Checksum Field", "ID Field"],
+    answer: 1,
+    explain: "슬립 모드에 진입한 LIN 노드는 버스상의 Wakeup Signal(긴 Dominant 펄스)을 감지하고 다시 통신에 참여한다.",
+  },
+  {
+    question: "FlexRay 통신에서 높은 신뢰성을 확보하기 위해 사용하는 방법 중 하나로, 두 개의 채널(Channel A, Channel B)을 이용하여 동일 데이터를 전송하는 방식은?",
+    options: ["Single-Channel Mode", "Dual-Mode Redundancy", "Time-Triggered Slot", "Dynamic Segment"],
+    answer: 1,
+    explain: "Dual-Mode Redundancy는 두 개의 독립된 채널을 통해 동일한 데이터를 전송하여 하나의 채널에 오류가 발생하더라도 통신을 유지할 수 있게 한다.",
+  },
+  {
+    question: "CAN 통신에서 메시지 전송 후, 수신 ECU가 ACK 필드를 Dominant로 변경하지 않았을 때(ACK 에러), 송신 ECU가 취하는 조치는?",
+    options: ["메시지 전송을 중단하고 Bus-Off 상태로 진입", "다음 메시지를 전송", "오류 카운터를 증가시키고 메시지를 재전송", "통신 속도를 낮춘다."],
+    answer: 2,
+    explain: "ACK 에러는 메시지가 정상적으로 수신되지 않았음을 의미하며, 송신 ECU는 오류 카운터를 증가시키고 해당 메시지를 재전송한다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, '특정 진단 기능의 제어'를 요청하는 서비스 ID는?",
+    options: ["$0x14", "$0x22", "$0x27", "$0x2F"],
+    answer: 3,
+    explain: "서비스 ID $0x2F는 'InputOutputControlByIdentifier'로, 특정 부품의 작동을 활성화/비활성화하거나 값을 변경하는 제어 기능을 요청한다.",
+  },
+  {
+    question: "CAN 통신에서 Dominant 비트 상태 시, CAN-H와 CAN-L의 차동 전압(Vd = Vh - Vl)은?",
+    options: ["약 2V", "약 -2V", "약 0V", "약 5V"],
+    answer: 0,
+    explain: "Dominant 상태는 CAN-H가 약 3.5V, CAN-L이 약 1.5V를 유지하여 차동 전압이 약 2V가 된다.",
+  },
+  {
+    question: "LIN 통신 프레임에서 슬레이브 노드의 데이터 전송이 지연되거나 누락되는 주된 오류 유형은?",
+    options: ["Form Error", "Stuff Error", "Frame Error (응답 지연)", "CRC Error"],
+    answer: 2,
+    explain: "마스터가 헤더를 전송했음에도 불구하고, 슬레이브 노드의 응답(Response)이 지정된 시간 내에 오지 않거나 누락될 때 Frame Error로 간주된다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment'의 유연한 타임 슬롯 할당 방식에서 메시지 충돌을 방지하기 위해 사용하는 기법은?",
+    options: ["메시지 ID 기반의 중재", "Master-slave 제어", "시간 기반의 Mini-slot을 이용한 중재", "토큰 패싱"],
+    answer: 2,
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 노드가 전송을 원할 경우 Mini-slot을 선점하여 메시지 충돌을 방지한다.",
+  },
+  {
+    question: "CAN 통신에서 ECU의 트랜시버가 CAN-H 라인에만 지속적인 단락(Short to VCC)을 발생시켰을 때, 버스의 차동 전압 파형은?",
+    options: ["파형의 진폭이 감소하고 Dominant 상태로 고정", "파형의 진폭이 감소하고 Recessive 상태로 고정", "파형의 주파수만 감소", "파형이 Recessive 상태로 고정"],
+    answer: 1,
+    explain: "CAN-H가 VCC에 단락되면 CAN-H와 CAN-L의 전압 차이가 줄어들어 Recessive 상태를 유지하려 하여 통신 불능 상태가 된다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, '저장된 고장 코드(DTC)'를 확인하기 위해 사용하는 서비스 ID는?",
+    options: ["$0x01", "$0x02", "$0x03", "$0x04"],
+    answer: 2,
+    explain: "서비스 ID $0x03은 '저장된 고장 코드(Diagnostic Trouble Code, DTC)'를 요청하는 서비스이다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 슬립 모드(Sleep Mode)로 진입하는 주된 조건은?",
+    options: ["버스 전압이 12V 이하일 때", "슬레이브 노드 스스로 결정", "버스에 데이터 통신이 4초 이상 없을 때", "마스터 노드가 Wakeup Signal을 전송했을 때"],
+    answer: 2,
+    explain: "LIN 프로토콜에서는 버스 통신이 일정 시간(보통 4초) 동안 없을 경우, 노드의 전력 절감을 위해 슬립 모드로 자동 진입한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Static Segment'의 타임 슬롯이 결정론적(Deterministic) 특성을 갖는 주된 이유는?",
+    options: ["버스 전압이 항상 5V로 유지되기 때문에", "메시지 ID가 낮은 것이 우선순위를 갖기 때문에", "타임 슬롯이 시스템 설계 시 미리 할당되고 고정되기 때문에", "메시지 길이가 유동적이기 때문에"],
+    answer: 2,
+    explain: "결정론적 통신은 메시지 전송 시간이 예측 가능하다는 의미이며, Static Segment는 시간 슬롯이 고정되어 이 특성을 보장한다.",
+  },
+  {
+    question: "CAN 통신에서 메시지 프레임의 끝을 알리고 다음 프레임 전송을 위한 휴지 기간을 표시하는 필드는?",
+    options: ["Data Length Code (DLC)", "Arbitration Field", "End of Frame (EOF)", "Interframe Space (IFS)"],
+    answer: 3,
+    explain: "Interframe Space(IFS)는 메시지 프레임 전송 완료 후 다음 메시지 전송 시작까지의 버스 휴지 기간을 의미한다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, 'ECU의 식별 정보(예: 부품 번호, 소프트웨어 버전)'를 요청하는 서비스 ID는?",
+    options: ["$0x10", "$0x14", "$0x22", "$0x27"],
+    answer: 2,
+    explain: "서비스 ID $0x22는 'ReadDataByIdentifier'로, ECU의 메모리나 식별 정보(예: VIN, 부품 번호)를 요청한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H와 CAN-L이 모두 전원(VCC)에 단락(Short to VCC)되었을 때, 나타나는 현상은?",
+    options: ["버스 전체가 Dominant 상태로 고정된다.", "통신 속도가 절반으로 줄어든다.", "버스 전체가 Recessive 상태로 고정되어 통신 불능", "CAN 통신이 정상적으로 작동한다."],
+    answer: 2,
+    explain: "두 라인이 모두 VCC에 단락되면 두 전위 모두 높아져 차동 전압이 0V가 되므로 Recessive 상태와 유사하게 되어 통신 불능이 된다.",
+  },
+  {
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드에 데이터 전송을 요청하는 필드가 포함된 부분은?",
+    options: ["Response (응답)", "Checksum", "Header (헤더)", "Data Field"],
+    answer: 2,
+    explain: "LIN 헤더는 Sync Break, Sync Field, ID Field로 구성되며, ID Field가 슬레이브 노드에게 데이터 응답을 요청하는 역할을 한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Cycle(사이클)' 내에서 Static Segment(정적 세그먼트)가 Dynamic Segment(동적 세그먼트)보다 먼저 배치되는 주된 이유는?",
+    options: ["동적 세그먼트의 유연성 확보", "시간 보장형 메시지의 실시간성 확보", "메시지 우선순위 중재", "전력 소비 최소화"],
+    answer: 1,
+    explain: "Static Segment는 시간 보장이 필수적인 핵심 메시지를 전송하므로, Cycle의 시작 부분에 배치하여 실시간성을 최우선으로 확보한다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Active' 상태일 때, 버스에 오류를 알리기 위해 전송하는 Active Error Flag의 비트 길이는?",
+    options: ["6 Dominant 비트", "6 Recessive 비트", "8 Recessive 비트", "8 Dominant 비트"],
+    answer: 0,
+    explain: "Error Active 상태의 ECU는 6개의 Dominant 비트를 전송하여 모든 ECU가 오류를 인지하고 현재 메시지 전송을 강제로 중단하도록 한다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, 'ECU 통신 세션의 변경'을 요청하는 서비스 ID는?",
+    options: ["$0x10", "$0x14", "$0x22", "$0x27"],
+    answer: 0,
+    explain: "서비스 ID $0x10은 'DiagnosticSessionControl'로, 기본 세션에서 확장 또는 프로그래밍 세션으로 전환하는 데 사용된다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H와 CAN-L의 차동 신호(Differential Signal)를 사용하는 주된 이유는?",
+    options: ["통신 속도 증가", "전력 소비 감소", "외부 노이즈에 대한 강한 내성 확보", "메시지 우선순위 중재"],
+    answer: 2,
+    explain: "차동 신호는 외부 노이즈가 두 라인에 동시에 영향을 주더라도 차동 전압에는 변화가 없어 노이즈 내성이 높다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 응답하는 Data Field의 최대 길이는 몇 바이트인가?",
+    options: ["2 바이트", "4 바이트", "8 바이트", "64 바이트"],
+    answer: 2,
+    explain: "LIN 데이터 필드는 1바이트부터 8바이트까지 전송할 수 있으며, 일반적인 CAN과 동일하게 최대 8바이트이다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment'에서 메시지 전송 시 충돌을 방지하기 위해 사용하는 기법은?",
+    options: ["메시지 ID 기반의 중재", "Master-slave 제어", "시간 기반의 Mini-slot을 이용한 중재", "토큰 패싱"],
+    answer: 2,
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 노드가 전송을 원할 경우 Mini-slot을 선점하여 메시지 충돌을 방지한다.",
+  },
+  {
+    question: "CAN 통신에서 Bit Stuffing 규칙 위반(연속 6개 동일 레벨 비트 발생)이 감지되었을 때 발생하는 오류 유형은?",
+    options: ["Bit Error", "Stuff Error", "Form Error", "CRC Error"],
+    answer: 1,
+    explain: "Stuff Error(스터프 오류)는 Bit Stuffing 규칙에 따라 삽입되어야 할 비트가 없거나, 연속 5개 이상의 동일 비트 레벨이 발생하는 경우에 검출된다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, ECU의 보안 접근(Security Access)을 위해 'Seed' 값을 요청하는 서비스 ID는?",
+    options: ["$0x10", "$0x14", "$0x27", "$0x2F"],
+    answer: 2,
+    explain: "서비스 ID $0x27은 'SecurityAccess'로, ECU의 잠금 해제를 위한 Seed-Key 교환 절차의 첫 단계인 Seed를 요청한다.",
+  },
+  {
+    question: "LIN 통신에서 Sync Break 필드가 헤더의 가장 앞에 위치하는 주된 목적은?",
+    options: ["데이터 오류 검출", "슬레이브 노드의 물리적인 동기화", "메시지 우선순위 결정", "마스터 노드의 데이터 전송"],
+    answer: 1,
+    explain: "Sync Break는 일반적인 통신 비트 폭보다 긴 길이로, 슬레이브 노드가 통신 시작을 인지하고 비트 타이밍을 마스터와 동기화하는 데 사용된다.",
+  },
+  {
+    question: "CAN 통신에서 ECU의 트랜시버가 CAN-L 라인에만 지속적인 단락(Short to VCC)을 발생시켰을 때, 버스의 차동 전압 파형은?",
+    options: ["파형의 진폭이 감소하고 Dominant 상태로 고정", "파형의 진폭이 감소하고 Recessive 상태로 고정", "파형의 주파수만 감소", "파형이 Recessive 상태로 고정"],
+    answer: 1,
+    explain: "CAN-L이 VCC에 단락되면 CAN-H와의 전압 차이가 줄어들어 Recessive 상태를 유지하려 하여 통신 불능 상태가 된다.",
+  }  
+];
+
+export const industry010805 = [
+{
+    question: "CAN 통신에서 표준 프레임(Standard Frame)과 확장 프레임(Extended Frame)을 구분하는 필드는 무엇인가?",
+    options: ["Data Length Code (DLC)", "RTR (Remote Transmission Request) Bit", "IDE (Identifier Extension) Bit", "CRC Field"],
+    answer: 2,
+    explain: "IDE(Identifier Extension Bit)는 표준 프레임에서는 Recessive로, 확장 프레임에서는 Dominant로 전송되어 프레임 유형을 구분한다.",
+  },
+  {
+    question: "FlexRay 통신에서 높은 신뢰성을 위해 두 개의 채널(Channel A, Channel B)을 이용하여 통신할 때, 채널 간의 주된 차이점은 무엇인가?",
+    options: ["채널 A는 Static, 채널 B는 Dynamic 세그먼트만 전송한다.", "채널 A는 CAN, 채널 B는 LIN 프로토콜을 사용한다.", "두 채널 모두 동일한 데이터와 구조를 가지며 이중화에 사용된다.", "채널 A는 전원선, 채널 B는 접지선 역할을 한다."],
+    answer: 2,
+    explain: "FlexRay 이중화(Redundancy)는 두 채널이 동일한 통신 구조와 데이터를 가지며, 오류 발생 시 서로를 백업하여 신뢰성을 높인다.",
+  },
+  {
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드에 데이터 전송을 요청하는 '폴링(Polling)' 역할을 하는 필드는?",
+    options: ["Sync Break", "Sync Field", "Identifier Field (식별자)", "Data Field"],
+    answer: 2,
+    explain: "마스터가 전송하는 ID(식별자)는 버스상의 슬레이브 노드 중 해당 ID의 데이터가 필요한 노드를 지정하여 응답(데이터 전송)을 요청한다.",
+  },
+  {
+    question: "CAN 트랜시버(Transceiver)에서 TXD(Transmit Data) 입력 라인이 접지(Ground)에 단락되었을 때, 버스 상태에 미치는 영향은?",
+    options: ["버스 전체가 Recessive 상태로 고정된다.", "트랜시버가 지속적으로 Dominant 비트만 출력하여 통신 불능 상태가 된다.", "통신 속도가 절반으로 줄어든다.", "CAN 통신이 정상적으로 작동한다."],
+    answer: 1,
+    explain: "트랜시버는 TXD 입력이 Dominant(낮은 전압)일 때 Dominant 신호를 버스에 출력하며, 접지 단락은 지속적인 Dominant 입력을 유발한다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, ECU에 저장된 영구적인 고장 코드(DTC)를 지우도록 요청하는 서비스 ID는?",
+    options: ["$0x03", "$0x04", "$0x14", "$0x19"],
+    answer: 1,
+    explain: "서비스 ID $0x04는 'Clear Diagnostic Information'으로, ECU에 저장된 고장 코드 및 관련 데이터를 삭제하도록 요청한다.",
+  },
+  {
+    question: "CAN 통신에서 'Remote Frame(원격 프레임)'의 주된 목적은 무엇인가?",
+    options: ["긴급 데이터 전송", "오류 메시지 전송", "다른 ECU에게 특정 데이터 전송 요청", "메시지 우선순위 설정"],
+    answer: 2,
+    explain: "Remote Frame은 데이터 필드 없이 특정 메시지 ID를 전송하여, 해당 데이터를 가진 ECU에게 데이터 프레임 전송을 요청한다.",
+  },
+  {
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드의 클럭 동기화에 사용되는 'Sync Field'는 몇 비트로 구성되는가?",
+    options: ["8 비트 (0x55)", "10 비트 (0xAA)", "16 비트 (0xFF)", "32 비트 (0x00)"],
+    answer: 0,
+    explain: "Sync Field는 1바이트(8비트)로, 비트 타이밍 동기화를 위해 패턴 0x55 (01010101)를 사용한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Cycle(사이클)'이 갖는 가장 중요한 의미는?",
+    options: ["단일 메시지 전송 시간", "통신 속도", "Static Segment와 Dynamic Segment를 모두 포함하는 전체 통신 주기", "오류 발생 시 재전송 횟수"],
+    answer: 2,
+    explain: "FlexRay 사이클은 정적 세그먼트와 동적 세그먼트, 그리고 가드 시간 등을 포함하는 전체 반복 통신 주기를 의미하며, 시간 동기화의 기본 단위이다.",
+  },
+  {
+    question: "CAN 통신에서 Bit Stuffing 규칙 위반(연속 6개 동일 레벨 비트 발생)이 감지되었을 때 발생하는 오류 유형은?",
+    options: ["Bit Error", "Stuff Error", "Form Error", "CRC Error"],
+    answer: 1,
+    explain: "Stuff Error(스터프 오류)는 Bit Stuffing 규칙에 따라 삽입되어야 할 비트가 없거나, 연속 5개 이상의 동일 비트 레벨이 발생하는 경우에 검출된다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, ECU의 보안 접근(Security Access)을 위해 'Seed' 값을 요청하는 서비스 ID는?",
+    options: ["$0x10", "$0x14", "$0x27", "$0x2F"],
+    answer: 2,
+    explain: "서비스 ID $0x27은 'SecurityAccess'로, ECU의 잠금 해제를 위한 Seed-Key 교환 절차의 첫 단계인 Seed를 요청한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H와 CAN-L 두 신호선이 단락(Short)되었을 때, 버스의 차동 전압 파형은?",
+    options: ["파형의 진폭이 2배로 증가", "파형의 진폭이 증가하고 Dominant 상태로 고정", "파형의 주파수만 감소", "파형이 Recessive 상태로 고정되어 차동 전압 0V에 가까워짐"],
+    answer: 3,
+    explain: "두 라인이 단락되면 차동 전압이 0V에 가까워져 Recessive 상태와 유사하게 되며, 통신 신호를 구별할 수 없어 통신 불능 상태가 된다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 슬립 모드에서 벗어나기 위해 수신해야 하는 Wakeup Signal의 특징은?",
+    options: ["Sync Break 신호와 동일하다.", "일반 비트보다 짧은 Dominant 펄스이다.", "일반 비트보다 긴 Dominant 펄스이다.", "Recessive 비트만 연속된다."],
+    answer: 2,
+    explain: "Wakeup Signal은 일반적인 데이터 비트 폭보다 긴 Dominant 펄스 형태로 전송되어, 슬립 상태의 노드가 통신 시작을 감지하도록 한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Static Segment'의 타임 슬롯이 결정론적(Deterministic) 특성을 갖는 주된 이유는?",
+    options: ["버스 전압이 항상 5V로 유지되기 때문에", "메시지 ID가 낮은 것이 우선순위를 갖기 때문에", "타임 슬롯이 시스템 설계 시 미리 할당되고 고정되기 때문에", "메시지 길이가 유동적이기 때문에"],
+    answer: 2,
+    explain: "결정론적 통신은 메시지 전송 시간이 예측 가능하다는 의미이며, Static Segment는 시간 슬롯이 고정되어 이 특성을 보장한다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Error Passive' 상태일 때, 해당 ECU가 전송하는 오류 플래그(Error Flag)의 특징은?",
+    options: ["6개의 Dominant 비트", "8개의 Dominant 비트", "6개의 Recessive 비트", "8개의 Recessive 비트"],
+    answer: 3,
+    explain: "Error Passive 상태의 ECU는 8개의 Recessive 비트를 전송하여, 다른 ECU의 통신에 미치는 영향을 최소화한다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, '특정 진단 기능의 제어'를 요청하는 서비스 ID는?",
+    options: ["$0x14", "$0x22", "$0x27", "$0x2F"],
+    answer: 3,
+    explain: "서비스 ID $0x2F는 'InputOutputControlByIdentifier'로, 특정 부품의 작동을 활성화/비활성화하거나 값을 변경하는 제어 기능을 요청한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 버스 종단 저항(Termination Resistor)이 규정 값(60Ω)보다 현저히 높은 상태(예: 120Ω 이상)일 때, 나타나는 주된 통신 문제는?",
+    options: ["버스 전체가 Dominant 상태로 고정된다.", "통신 속도가 2배로 증가한다.", "버스에서 신호 반사가 발생하여 파형 왜곡이 심해진다.", "ECU의 전력 소비가 증가한다."],
+    answer: 2,
+    explain: "종단 저항이 높으면 임피던스 정합이 불량해져 신호가 통신선 끝에서 반사되어 원래 신호와 겹쳐 파형 왜곡(링잉 현상)을 일으킨다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드의 클럭 동기화에 사용되는 'Sync Field'를 전송하는 주체는?",
+    options: ["슬레이브 노드", "CAN 게이트웨이", "마스터 노드", "트랜시버"],
+    answer: 2,
+    explain: "Sync Field는 마스터 노드가 Sync Break 다음에 전송하여 슬레이브 노드들의 내부 클럭을 마스터와 동기화하는 데 사용된다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment'의 유연한 타임 슬롯 할당 방식에서 메시지 충돌을 방지하기 위해 사용하는 기법은?",
+    options: ["메시지 ID 기반의 중재", "Master-slave 제어", "시간 기반의 Mini-slot을 이용한 중재", "토큰 패싱"],
+    answer: 2,
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 노드가 전송을 원할 경우 Mini-slot을 선점하여 메시지 충돌을 방지한다.",
+  },
+  {
+    question: "CAN 통신에서 Recessive 비트 상태 시, CAN-H와 CAN-L의 공통 모드 전압(Common Mode Voltage)은 일반적으로 몇 V 인가?",
+    options: ["0V", "1.5V", "2.5V", "3.5V"],
+    answer: 2,
+    explain: "Recessive 상태는 버스 휴지 상태로, CAN-H와 CAN-L 모두 공통 모드 전압인 약 2.5V를 유지하여 차동 전압이 0V에 가깝다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, 'ECU의 식별 정보(예: 부품 번호, 소프트웨어 버전)'를 요청하는 서비스 ID는?",
+    options: ["$0x10", "$0x14", "$0x22", "$0x27"],
+    answer: 2,
+    explain: "서비스 ID $0x22는 'ReadDataByIdentifier'로, ECU의 메모리나 식별 정보(예: VIN, 부품 번호)를 요청한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H와 CAN-L의 차동 신호(Differential Signal)를 사용하는 주된 이유는?",
+    options: ["통신 속도 증가", "전력 소비 감소", "외부 노이즈에 대한 강한 내성 확보", "메시지 우선순위 중재"],
+    answer: 2,
+    explain: "차동 신호는 외부 노이즈가 두 라인에 동시에 영향을 주더라도 차동 전압에는 변화가 없어 노이즈 내성이 높다.",
+  },
+  {
+    question: "LIN 통신 프레임에서 슬레이브 노드의 데이터 전송이 지연되거나 누락되는 주된 오류 유형은?",
+    options: ["Form Error", "Stuff Error", "Frame Error (응답 지연)", "CRC Error"],
+    answer: 2,
+    explain: "마스터가 헤더를 전송했음에도 불구하고, 슬레이브 노드의 응답(Response)이 지정된 시간 내에 오지 않거나 누락될 때 Frame Error로 간주된다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Cycle' 내에서 Static Segment(정적 세그먼트)가 Dynamic Segment(동적 세그먼트)보다 먼저 배치되는 주된 이유는?",
+    options: ["동적 세그먼트의 유연성 확보", "시간 보장형 메시지의 실시간성 확보", "메시지 우선순위 중재", "전력 소비 최소화"],
+    answer: 1,
+    explain: "Static Segment는 시간 보장이 필수적인 핵심 메시지를 전송하므로, Cycle의 시작 부분에 배치하여 실시간성을 최우선으로 확보한다.",
+  },
+  {
+    question: "CAN 통신에서 ECU가 'Bus-Off' 상태에서 'Bus-On' 상태로 복귀하기 위해 만족해야 하는 가장 중요한 조건은?",
+    options: ["전송 오류 카운터를 0으로 초기화", "메시지 우선순위를 낮춘다.", "Recessive 비트를 128회 연속 감지", "CAN 버스를 5초간 모니터링"],
+    answer: 2,
+    explain: "Bus-Off 상태의 ECU는 버스가 128회 연속 Recessive 비트(버스 휴지 상태)임을 감지해야만 다시 Bus-On(Error Passive) 상태로 복귀할 수 있다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, '요청 시점의 현재 데이터'를 확인하기 위해 사용하는 서비스 ID는?",
+    options: ["$0x01", "$0x02", "$0x03", "$0x04"],
+    answer: 0,
+    explain: "서비스 ID $0x01은 '요청 시점의 현재 진단 데이터'를 의미하며, PID를 통해 특정 센서 값 등을 요청한다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-L 라인이 단선(Open)되어 전원(VCC, 5V)에 단락(Short to VCC)되었을 때, 버스 상태에 미치는 영향은?",
+    options: ["버스 전체가 Recessive 상태로 고정되어 통신 불능 상태가 된다.", "CAN-H 라인이 통신을 이어받아 정상 통신한다.", "버스 전체가 Dominant 상태로 고정되어 통신 불능 상태가 된다.", "통신 속도가 절반으로 줄어든다."],
+    answer: 2,
+    explain: "CAN-L이 VCC에 단락되면 CAN-L의 전위가 높아지고, CAN-H와의 차동 전압이 Dominant 상태를 유지하게 되어 버스가 Dominant 고정으로 통신 불능이 된다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 Wakeup Signal을 수신한 후, 통신에 참여하기 위해 수행하는 조치는?",
+    options: ["메시지 ID를 마스터에게 전송", "버스 전압을 5V로 고정", "내부 클럭을 마스터와 동기화", "Bus-Off 상태로 진입"],
+    answer: 2,
+    explain: "Wakeup Signal 수신 후, 슬레이브는 슬립 모드에서 벗어나 통신에 참여하며, Sync Field를 통해 클럭 동기화를 재수행한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Static Segment'에서 메시지 전송 시 충돌이 발생하지 않는 주된 이유는?",
+    options: ["Dominant/Recessive 중재 사용", "Single-wire 통신", "메시지 ID 우선순위 사용", "미리 할당된 Time Slot 사용"],
+    answer: 3,
+    explain: "Static Segment에서는 각 노드가 지정된 Time Slot에만 전송을 허용하므로 메시지 간의 충돌 자체가 발생하지 않는다.",
+  },
+  {
+    question: "CAN 통신에서 ECU의 트랜시버가 RXD(Receive Data) 출력 라인에 단선(Open) 고장이 발생했을 때, 해당 ECU의 메시지 수신 상태는?",
+    options: ["메시지 전송만 불가능하다.", "메시지 수신은 가능하나, CAN 컨트롤러로 데이터 전달이 안 된다.", "송수신 모두 불가능하다.", "CAN 통신이 정상적으로 작동한다."],
+    answer: 1,
+    explain: "트랜시버는 버스 신호를 RXD를 통해 컨트롤러에 전달하므로, RXD 단선 시 버스 수신은 가능하지만 컨트롤러는 데이터를 받을 수 없다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, 'ECU 통신 세션의 변경'을 요청하는 서비스 ID는?",
+    options: ["$0x10", "$0x14", "$0x22", "$0x27"],
+    answer: 0,
+    explain: "서비스 ID $0x10은 'DiagnosticSessionControl'로, 기본 세션에서 확장 또는 프로그래밍 세션으로 전환하는 데 사용된다.",
+  },
+  {
+    question: "고속 CAN 통신에서 버스 종단 저항(Termination Resistor)이 규정 값(60Ω)보다 현저히 낮은 상태(예: 30Ω 이하)일 때, 나타나는 주된 통신 문제는?",
+    options: ["버스에 흐르는 전류가 과도하게 증가하여 트랜시버에 부하 발생", "신호 반사가 발생하여 파형 왜곡이 심해진다.", "버스 전체가 Recessive 상태로 고정된다.", "통신 속도가 감소한다."],
+    answer: 0,
+    explain: "저항이 낮아지면 버스의 총 전류가 증가하여 트랜시버에 과도한 부하가 걸리고 신호 전압 레벨이 낮아져 통신이 어려워진다.",
+  },
+  {
+    question: "LIN 통신에서 마스터 노드가 슬레이브 노드에게 데이터를 요청하는 필드가 포함된 부분은?",
+    options: ["Response (응답)", "Checksum", "Header (헤더)", "Data Field"],
+    answer: 2,
+    explain: "LIN 헤더는 Sync Break, Sync Field, ID Field로 구성되며, ID Field가 슬레이브 노드에게 데이터 응답을 요청하는 역할을 한다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Startup Frame(시작 프레임)'을 전송하는 주된 목적은?",
+    options: ["비주기적인 이벤트 데이터 전송", "통신 속도 조절", "버스상의 모든 노드의 동기화(Sync) 및 클럭 동기", "메시지 우선순위 중재"],
+    answer: 2,
+    explain: "Startup Frame은 FlexRay 통신 사이클의 시작을 알리고, 버스상의 모든 노드의 시간 동기화를 확립하는 데 사용된다.",
+  },
+  {
+    question: "CAN 통신에서 Dominant 비트 상태 시, CAN-H와 CAN-L의 공통 모드 전압(Common Mode Voltage)은 일반적으로 몇 V 인가?",
+    options: ["0V", "1.5V", "2.5V", "3.5V"],
+    answer: 2,
+    explain: "Dominant 상태에서도 공통 모드 전압은 약 2.5V를 유지하며, CAN-H는 3.5V, CAN-L은 1.5V로 차동 전압이 2V가 된다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, '저장된 고장 코드(DTC)'를 확인하기 위해 사용하는 서비스 ID는?",
+    options: ["$0x01", "$0x02", "$0x03", "$0x04"],
+    answer: 2,
+    explain: "서비스 ID $0x03은 '저장된 고장 코드(Diagnostic Trouble Code, DTC)'를 요청하는 서비스이다.",
+  },
+  {
+    question: "고속 CAN 통신에서 CAN-H 라인이 단선(Open)되어 접지(Ground)에 단락(Short to Ground)되었을 때, 버스 상태에 미치는 영향은?",
+    options: ["통신 속도가 절반으로 줄어든다.", "CAN-L 라인이 통신을 이어받아 정상 통신한다.", "버스 전체가 Dominant 상태로 고정되어 통신 불능 상태가 된다.", "버스 전체가 Recessive 상태로 고정되어 통신 불능 상태가 된다."],
+    answer: 2,
+    explain: "CAN-H가 접지 단락되면 CAN-H의 전위가 낮아지고, CAN-L과의 차동 전압이 Dominant 상태를 유지하게 되어 버스가 Dominant 고정으로 통신 불능이 된다.",
+  },
+  {
+    question: "LIN 통신에서 슬레이브 노드가 응답하는 Data Field의 최대 길이는 몇 바이트인가?",
+    options: ["2 바이트", "4 바이트", "8 바이트", "64 바이트"],
+    answer: 2,
+    explain: "LIN 데이터 필드는 1바이트부터 8바이트까지 전송할 수 있으며, 일반적인 CAN과 동일하게 최대 8바이트이다.",
+  },
+  {
+    question: "FlexRay 통신에서 'Dynamic Segment'의 타임 슬롯은 누가 소유하며 데이터를 전송하는가?",
+    options: ["가장 높은 ID를 가진 ECU", "가장 낮은 ID를 가진 ECU", "통신 매트릭스에 지정된 단 하나의 ECU", "메시지 전송이 필요한 노드들이 선점 방식으로 사용"],
+    answer: 3,
+    explain: "Dynamic Segment는 유연성을 위해 Mini-slot을 사용하며, 메시지 전송이 필요한 노드가 선점 방식으로 타임 슬롯을 사용한다.",
+  },
+  {
+    question: "CAN 통신에서 메시지 ID가 낮은 ECU가 메시지 충돌 시 우선권을 갖는 통신 방식을 무엇이라고 하는가?",
+    options: ["Time-Triggered", "Master-Slave", "Token Passing", "Non-Destructive Arbitration (비파괴적 중재)"],
+    answer: 3,
+    explain: "CAN은 Dominant/Recessive 논리를 이용한 비파괴적 중재를 통해 ID가 낮은(우선순위 높은) 메시지가 버스 제어권을 획득한다.",
+  },
+  {
+    question: "OBD-II 기반 진단 프로토콜(UDS)에서, 'ECU의 메모리(DTC 또는 데이터)를 읽는' 범용 서비스 ID는?",
+    options: ["$0x10", "$0x14", "$0x22", "$0x27"],
+    answer: 2,
+    explain: "서비스 ID $0x22는 'ReadDataByIdentifier'로, 특정 ID가 지정하는 ECU의 저장 데이터를 읽는 데 사용된다.",
   }
+    
 ];
