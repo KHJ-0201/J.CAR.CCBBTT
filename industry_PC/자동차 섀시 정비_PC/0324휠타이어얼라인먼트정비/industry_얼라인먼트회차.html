@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>휠·타이어·얼라인먼트 정비 회차 선택</title>
+<link rel="stylesheet" href="../../../회차.css">
+</head>
+<body>    
+
+<h1>휠·타이어·얼라인먼트 정비 - 회차 선택</h1>
+
+<div class="random-wrapper">
+    <div class="round-card random-card" onclick="goToMaintenance(0)">전체 회차 랜덤 60문제</div>
+</div>
+
+<div class="round-container">
+    <div class="round-card" onclick="goToMaintenance(1)">휠·타이어·얼라인먼트 정비 1회차</div>
+    <div class="round-card" onclick="goToMaintenance(2)">휠·타이어·얼라인먼트 정비 2회차</div>
+    <div class="round-card" onclick="goToMaintenance(3)">휠·타이어·얼라인먼트 정비 3회차</div>
+    <div class="round-card" onclick="goToMaintenance(4)">휠·타이어·얼라인먼트 정비 4회차</div>
+    <div class="round-card" onclick="goToMaintenance(5)">휠·타이어·얼라인먼트 정비 5회차</div>
+</div>
+
+<script>
+function goToMaintenance(round){
+    window.location.href = `industry_얼라인먼트통합.html?round=${round}`;
+}
+</script>
+</body>
+</html>

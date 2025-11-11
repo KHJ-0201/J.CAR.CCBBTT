@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>자동차전기·전자장치정비 - 과목 선택</title>
+<link rel="stylesheet" href="../../회차.css">
+</head>
+<body>    
+
+<h1>자동차전기·전자장치정비 - 과목 선택</h1>
+
+<div class="random-wrapper">
+    <div class="round-card random-card" onclick="goToMaintenance('총랜덤_PC.html')">전체 랜덤</div>
+</div>
+
+<div class="round-container">
+    <div class="round-card" onclick="goToMaintenance('0103자동차 냉난방장치정비/industry_냉난방회차.html')">자동차냉·난방장치정비</div>
+    <div class="round-card" onclick="goToMaintenance('0104자동차 전기전자회로분석/industry_회로분석회차.html')">자동차 전기·전자회로분석</div>
+    <div class="round-card" onclick="goToMaintenance('0105자동차 편의장치 정비/industry_편의장치회차.html')">자동차 편의장치 정비</div>
+    <div class="round-card" onclick="goToMaintenance('0107자동차 주행안전장치정비/industry_주행안전회차.html')">자동차 주행안전장치 정비</div>
+    <div class="round-card" onclick="goToMaintenance('0108자동차 네트워크통신장비정비/industry_네트워크회차.html')">자동차 네트워크 통신 장비 정비</div>
+    <div class="round-card" onclick="goToMaintenance('0109하이브리드자동차 특화시스템정비/industry_하이브리드회차.html')">하이브리드자동차 특화 시스템 정비</div>
+</div>
+
+<script>
+function goToMaintenance(path){
+    window.location.href = path;
+}
+</script>
+</body>
+</html>

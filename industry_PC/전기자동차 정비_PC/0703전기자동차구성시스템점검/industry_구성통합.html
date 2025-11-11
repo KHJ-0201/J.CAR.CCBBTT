@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title id="pageTitle">전기자동차 구성시스템 점검 회차</title>
+  <link rel="stylesheet" href="../../../문제풀이_PC.css">
+</head>
+<body>
+
+  <h1 id="mainTitle">전기자동차 구성시스템 점검 회차</h1>
+
+  <div id="status">
+    <span id="timer">남은 시간: 60:00:00</span>
+    <span id="remaining">남은 문제: 0/0</span>
+  </div>
+
+  <!-- 퀴즈 영역 -->
+  <div id="quiz"></div>
+
+  <button id="submitBtn">제출</button>
+
+  <!-- 결과 표시 영역 -->
+  <div id="result"></div>
+
+  <script>
+    // URL에서 회차 번호 받기
+    const params = new URLSearchParams(window.location.search);
+    const round = params.get('round');
+
+    const titleEl = document.getElementById('mainTitle');
+    const pageTitle = document.getElementById('pageTitle');
+
+    // 회차 제목 동적 설정
+    if (round === '0') {
+      titleEl.textContent = '전체 회차 랜덤 60문제';
+      pageTitle.textContent = '전기자동차 구성시스템 점검 전체 랜덤';
+      loadScript(`industry_구성통합.js`)
+    } else if (!isNaN(round)) {
+      titleEl.textContent = `전기자동차 구성시스템 점검 ${round}회차`;
+      pageTitle.textContent = `전기자동차 구성시스템 점검 ${round}회차`;
+      loadScript(`industry_구성통합.js`)
+    } else {
+      titleEl.textContent = '잘못된 회차입니다.';
+    }
+
+    // JS 파일 동적 로드 함수
+    function loadScript(src) {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = src;
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>
