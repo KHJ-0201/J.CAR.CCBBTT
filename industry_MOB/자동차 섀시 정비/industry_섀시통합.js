@@ -68,11 +68,11 @@ async function loadQuestions() {
         // 통합 문제 수가 60개 미만일 경우 처리
         questions = allQuestions; 
         console.warn(`총 문제가 60개 미만입니다. 총 ${allQuestions.length}문제를 로드합니다.`);
-        document.getElementById("roundTitle").textContent = `자동차 섀시정비 전체 랜덤`;
+        document.getElementById("roundTitle").textContent = `섀시 정비`;
     } else {
         // 3. 전체 문제 중 60문제만 랜덤으로 추출
         questions = shuffleArray(allQuestions).slice(0, 60);
-        document.getElementById("roundTitle").textContent = `자동차 섀시정비 전체 랜덤`;
+        document.getElementById("roundTitle").textContent = `섀시 정비`;
     }
 
     if (questions.length === 0) throw new Error('로드할 문제가 없습니다.');
