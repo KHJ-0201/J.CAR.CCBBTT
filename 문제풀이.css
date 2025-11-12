@@ -55,6 +55,38 @@ body {
     color: #1f3b73;
 }
 
+/* 채점 완료 후 #status가 가운데 정렬되면서 점수와 버튼을 포함하도록 설정 */
+#status.center {
+    justify-content: center; /* 점수와 버튼을 중앙에 배치 */
+    gap: 30px; /* 점수와 버튼 사이 간격 */
+    height: 60px; /* 기존 높이 유지 */
+}
+
+/* 채점 완료 후 표시되는 점수 스타일 (크기 조정 완료) */
+#status #scoreDisplay {
+    font-size: 2.2rem; 
+    font-weight: 700;
+    color: #b30000; /* 붉은색으로 강조 */
+}
+
+/* '다시 풀기' 버튼 스타일 (크기 조정 완료) */
+#retryBtn {
+    background-color: #dc3545; /* 선명한 붉은색 */
+    color: white;
+    font-size: 1.8rem; /* 크기 조정 완료 */
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 12px; /* 크기 조정 완료 */
+    margin-left: 20px; 
+    cursor: pointer;
+    transition: background-color 0.3s;
+    line-height: 1.5; 
+}
+
+#retryBtn:hover {
+    background-color: #c82333;
+}
 /* ===========================
      문제 카드
 =========================== */
@@ -166,3 +198,15 @@ body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
+@media (max-width: 900px) {
+    #status #scoreDisplay {
+        font-size: 1.8rem; /* 모바일 상태바에 맞게 축소 */
+    }
+    
+    #retryBtn {
+        font-size: 1.4rem; /* 모바일 상태바에 맞게 버튼 폰트 축소 */
+        padding: 3px 8px; /* 패딩도 약간 줄여서 버튼 크기 줄임 */
+        line-height: normal;
+        margin-left: 10px;
+    }
+}

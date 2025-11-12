@@ -212,12 +212,60 @@ function submitQuiz() {
 
     const status = document.getElementById("status");
     status.classList.add("center");
-    status.innerHTML = `<span id="scoreDisplay">자동차 전기·전자장치 정비 전체랜덤 총점: ${score}/${questions.length}</span>`;
+    status.innerHTML = `<span id="scoreDisplay">자동차 전기·전자장치 정비 전체랜덤 총점: ${score}/${questions.length}</span>
+    <button id="retryBtn">다시 풀기</button>`;
+
+    const retryBtn = document.getElementById("retryBtn");
+    if (retryBtn) {
+        retryBtn.addEventListener("click", resetQuiz);
+    }
 
     document.getElementById("submitBtn").style.display = "none";
 
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = `<h2>자동차 전기·전자장치 정비 전체랜덤 총점: ${score}/${questions.length}</h2>`;
+}
+
+/* ===========================
+    ✨ [신규 함수] 다시 풀기 로직 (순서/보기 셔플 포함)
+=========================== */
+function resetQuiz() {
+    if (!confirm("현재 풀었던 60문제를 다시 푸시겠습니까? (문제 순서 및 보기 순서도 다시 섞입니다.)")) {
+        return;
+    }
+
+    // 1. 문제 순서 및 보기 순서 재셔플
+    questions = shuffleArray(questions); 
+    
+    // 2. 답안 초기화
+    answers = Array(questions.length).fill(-1);
+    
+    // 3. 타이머 재시작 (1시간 설정)
+    clearInterval(timerInterval);
+    totalSeconds = 60 * 60; 
+    timerInterval = setInterval(updateTimer, 1000);
+    
+    // 4. UI 초기화 및 재렌더링
+    
+    // Status Bar 복원 및 타이머 표시
+    const status = document.getElementById("status");
+    status.classList.remove("center");
+    status.innerHTML = `
+            <span id="timer">남은 시간: 60:00:00</span>
+            <span id="roundTitle">전기·전자장치 정비</span>
+            <span id="remaining">남은 문제: ${questions.length}/${questions.length}</span>`;
+    
+    // 제출 버튼 복원 (두 개 모두)
+    document.getElementById("submitBtn").style.display = "block";
+    
+    // 결과창 숨김
+    document.getElementById("result").innerHTML = "";
+
+    // 퀴즈 영역 재렌더링 (순서가 바뀌었으므로 DOM을 새로 만듭니다)
+    renderQuiz();
+    
+    // 화면 최상단으로 이동
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // -----------------------------
