@@ -126,7 +126,7 @@ body {
 /* 문제 텍스트 (번호 위치) */
 .q-title {
     display: block;
-    font-size: 2.5rem; 
+    font-size: 3.5rem; 
     font-weight: 600;
     margin-bottom: -30px;
     color: #222;
@@ -138,8 +138,8 @@ body {
 /* 🏆 기본 아이콘 위치 (X, O 적용) */
 .q-status {
     position: absolute !important; 
-    top: 35px !important;
-    left: -22px !important;
+    top: 45px !important;
+    left: -17px !important;
     font-size: 3.0rem !important; 
     font-weight: 700;
     z-index: 10 !important;
@@ -157,7 +157,7 @@ body {
     padding: 10px 14px;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 2rem; 
+    font-size: 2.5rem; 
     margin-bottom: 6px;
 }
 
@@ -221,12 +221,12 @@ body {
     z-index: 1010;
     background-color: #28a745;
     color: white;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 3rem;
+    font-weight: 500;
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 150px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     cursor: pointer;
     display: flex;
