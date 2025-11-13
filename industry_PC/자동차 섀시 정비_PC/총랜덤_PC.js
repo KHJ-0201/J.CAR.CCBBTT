@@ -365,7 +365,7 @@ function submitQuiz() {
     const unansweredCount = answers.filter((a) => a < 0).length;
 
     // 2. 안 푼 문제가 있을 경우 확인
-    if (unansweredCount > 0) {
+    if (unansweredCount > 0 && totalSeconds > 0) {
         const confirmSubmit = confirm(
             `아직 ${unansweredCount}개의 문제를 풀지 않았습니다.\n계속 제출하시겠습니까? (취소 시 문제풀이 계속 및 첫 안 푼 문제로 이동)`
         );
@@ -513,7 +513,7 @@ function resetQuiz() {
     status.innerHTML = `
         <h1 class="page-title">자동차 섀시 정비 전체랜덤</h1> 
         <div class="status-info">
-            <span id="timer">남은 시간: 60:00:00</span>
+            <span id="timer">남은 시간: 01:00:00</span>
             <span id="remaining">남은 문제: 0/0</span>
         </div>`;
     

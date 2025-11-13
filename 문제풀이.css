@@ -126,7 +126,7 @@ body {
 /* 문제 텍스트 (번호 위치) */
 .q-title {
     display: block;
-    font-size: 2.5rem; 
+    font-size: 2.75rem; 
     font-weight: 600;
     margin-bottom: -30px;
     color: #222;
@@ -157,7 +157,7 @@ body {
     padding: 10px 14px;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 2.3rem; 
+    font-size: 2.5rem; 
     margin-bottom: 6px;
 }
 

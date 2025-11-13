@@ -280,7 +280,7 @@ function submitQuiz() {
     const unansweredCount = answers.filter((a) => a < 0).length;
 
     // 2. 안 푼 문제가 있을 경우 확인
-    if (unansweredCount > 0) {
+    if (unansweredCount > 0 && totalSeconds > 0) {
         const confirmSubmit = confirm(
             `아직 ${unansweredCount}개의 문제를 풀지 않았습니다.\n계속 제출하시겠습니까? (취소 시 문제풀이 계속 및 첫 안 푼 문제로 이동)`
         );
@@ -293,7 +293,7 @@ function submitQuiz() {
             return;
         }
     }
-    
+
     clearInterval(timerInterval);
     document.getElementById("timer").textContent = "";
 
@@ -394,7 +394,7 @@ function resetQuiz() {
     
     // 3. 타이머 재시작 (1시간 40분 설정 - 초기 스크린샷 시간 참조)
     clearInterval(timerInterval);
-    totalSeconds = (1 * 60 * 60) + (40 * 60); // 1시간 40분
+    totalSeconds = 100 * 60; // 1시간 40분
     timerInterval = setInterval(updateTimer, 1000);
     
     // 4. UI 초기화 및 재렌더링
@@ -435,7 +435,7 @@ function resetQuiz() {
 
 // -----------------------------
 // 타이머
-let totalSeconds = (1 * 60 * 60) + (40 * 60); // 1시간 40분으로 초기화
+let totalSeconds = 100 * 60; // 1시간 40분으로 초기화
 
 function updateTimer() {
     // ✨ 수정: 엔진통합과 동일하게 분:초만 표시

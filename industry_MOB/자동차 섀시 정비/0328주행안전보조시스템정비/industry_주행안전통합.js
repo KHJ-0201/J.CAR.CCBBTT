@@ -123,7 +123,7 @@ function submitQuiz() {
     const firstUnansweredIndex = answers.findIndex((a) => a < 0);
     const unansweredCount = answers.filter((a) => a < 0).length;
 
-    if (unansweredCount > 0) {
+    if (unansweredCount > 0 && totalSeconds > 0) {
         const confirmSubmit = confirm(
         `아직 ${unansweredCount}개의 문제를 풀지 않았습니다.\n계속 제출하시겠습니까?`
         );
