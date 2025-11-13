@@ -221,12 +221,12 @@ body {
     z-index: 1010;
     background-color: #28a745;
     color: white;
-    font-size: 3rem;
+    font-size: 2.2rem;
     font-weight: 500;
     border: none;
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     cursor: pointer;
     display: flex;
