@@ -148,7 +148,7 @@ function renderQuiz() {
                 const nextQuestion = div.nextElementSibling;
                 
                 if (nextQuestion && nextQuestion.classList.contains('question')) {
-                    nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
                 // ------------------------------------------------
             });
@@ -272,9 +272,9 @@ function resetQuiz() {
     const status = document.getElementById("status");
     status.classList.remove("center");
     status.innerHTML = `
-            <span id="timer">남은 시간: 60:00</span>
-            <span id="roundTitle">섀시 정비</span>
-            <span id="remaining">남은 문제: ${questions.length}/${questions.length}</span>`;
+    <span id="timer">남은 시간: 60:00</span>
+    <span id="roundTitle">섀시 정비</span>
+    span id="remaining">남은 문제: ${questions.length}/${questions.length}</span>`;
     
     // 제출 버튼 복원 (두 개 모두)
     document.getElementById("submitBtn").style.display = "block";

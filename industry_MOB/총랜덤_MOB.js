@@ -408,7 +408,7 @@ function resetQuiz() {
     const initialSeconds = totalSeconds % 60;
     
     status.innerHTML = `
-        <span id="timer">남은 시간: ${initialMinutes.toString().padStart(2, "0")}:${initialSeconds.toString().padStart(2, "0")}</span>
+        <span id="timer">남은 시간: ${initialMinutes.toString().padStart(2, "0")}:${initialSeconds.toString().padStart(2, "0")}</span>
         <span id="roundTitle">전기전자+엔진+섀시 전체랜덤</span> 
         <span id="remaining">남은 문제: ${questions.length}/${questions.length}</span>`;
     
@@ -446,9 +446,9 @@ function updateTimer() {
         `남은 시간: ${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
     
     if (totalSeconds <= 0) {
-    submitQuiz();
+        submitQuiz();
     } else {
-    totalSeconds--;
+        totalSeconds--;
     }
 }
 let timerInterval = setInterval(updateTimer, 1000);
