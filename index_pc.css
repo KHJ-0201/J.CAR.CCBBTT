@@ -1,3 +1,6 @@
+/* ==========================================================
+ * 기본 스타일 및 h1 정리
+ * ========================================================== */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -6,42 +9,100 @@ body {
 }
 
 h1 {
-    margin-top: 50px;
+    margin-top: 50px; 
+    font-size: 2.5em; 
 }
 
-.exam-container {
+/* ==========================================================
+ * 1. .random-wrapper: 중앙 1열 유지
+ * * random-wrapper도 중앙 정렬이 필요하다면 margin: auto를 추가해야 합니다. *
+ * ========================================================== */
+.random-wrapper {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 50px;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 30px; 
     gap: 20px;
-    /* 모든 카드를 중앙에 정렬하기 위해 컨테이너의 최대 너비를 제거하거나 고정할 수 있습니다. */
+    /* random-wrapper도 max-width가 있다면 중앙 정렬을 위해 auto를 추가합니다. */
+    max-width: 420px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto; 
 }
 
-.exam-card {
-    /* ✅ 가장 긴 글자를 기준으로 너비 고정 (예: 280px) */
-    width: 280px; 
-    /* ✅ 최대 너비도 동일하게 고정 */
-    max-width: 280px; 
+/* ==========================================================
+ * 2. .round-container: 중앙 2열 강제 및 전체 중앙 정렬 (✨핵심 수정)
+ * ========================================================== */
+.round-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    align-items: center; 
     
-    height: 120px;
+    gap: 10px;
+    max-width: 820px; 
+    width: 95%;
+    
+    /* ✨ 수정: 상단 마진 30px을 포함하여, 좌우 마진을 auto로 설정해 블록 요소를 중앙 정렬합니다. */
+    margin: 30px auto 0 auto; 
+}
+
+/* ==========================================================
+ * 3. 자식 요소 (.round-card, .random-card) 스타일
+ * ========================================================== */
+.round-card {
+    /* round-container (gap: 10px) 내 2열 강제 코드 */
+    width: calc(50% - 5px); 
+    max-width: 400px; 
+    height: 80px; 
     background-color: #4CAF50;
     color: white;
-    font-size: 18px;
-    
-    /* 텍스트가 자동으로 줄바꿈 되도록 설정 */
+    font-size: 20px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center; /* 텍스트 중앙 정렬 */
-    padding: 0 10px; /* 좌우 패딩 추가 */
-
     cursor: pointer;
     border-radius: 10px;
     transition: 0.3s;
 }
 
-.exam-card:hover {
+/* 5. "전체 랜덤" 버튼 (random-wrapper 1열에 맞춤) */
+.random-card {
+    /* random-wrapper는 1열이므로 너비를 90%로 설정 */
+    width: 90%; 
+    max-width: 400px;
+    background-color: #f44336;
+}
+
+/* PC에서는 hover 효과를 그대로 유지합니다. */
+.round-card:hover {
     background-color: #45a049;
     transform: scale(1.05);
+}
+
+/* 6. "전체 랜덤" 버튼 색상 변경 */
+.random-card:hover {
+    background-color: #d32f2f;
+}
+
+/* ==========================================================
+ * 📱 모바일 최적화 스타일 (600px 이하)
+ * ========================================================== */
+@media (max-width: 600px) {
+    /* h1 마진을 모바일에서만 줄임 */
+    h1 {
+        margin-top: 30px; 
+    }
+    
+    /* 모바일에서는 불필요한 깜빡임을 막기 위해 hover 효과 제거 */
+    .round-card:hover {
+        transform: none;
+        background-color: #4CAF50; 
+    }
+    .random-card:hover {
+        transform: none;
+        background-color: #f44336; 
+    }
 }
