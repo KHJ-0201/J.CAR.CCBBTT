@@ -335,21 +335,24 @@ function renderQuiz() {
             
             const radioInput = label.querySelector("input");
             
-            // 라디오 버튼 change 이벤트 리스너
-            radioInput.addEventListener("change", () => {
-              answers[i] = j;
-              updateRemaining(); // OMR 상태 업데이트 포함
+                // 라디오 버튼 change 이벤트 리스너
+radioInput.addEventListener("change", () => {
+    answers[i] = j;
+    updateRemaining(); // OMR 상태 업데이트 포함
 
-              const allLabels = optsDiv.querySelectorAll('label');
-              allLabels.forEach(l => l.classList.remove('selected'));
+    const allLabels = optsDiv.querySelectorAll('label');
+    allLabels.forEach(l => l.classList.remove('selected'));
 
-              label.classList.add('selected');
+    label.classList.add('selected');
 
-              // 보기 클릭 시 다음 문제로 이동하는 로직 
-              if (i < questions.length - 1) {
-                  scrollToQuestion(i + 1); 
-              }
-            });
+    // 보기 클릭 시 다음 문제로 이동하는 로직 (여기를 수정합니다)
+    if (i < questions.length - 1) {
+        // 0.5초(500밀리초) 지연 후 다음 문제로 스크롤 이동
+        setTimeout(() => {
+            scrollToQuestion(i + 1); 
+        }, 500); // 👈 딜레이 시간 (밀리초)
+    }
+});
             
             optsDiv.appendChild(label);
         });
