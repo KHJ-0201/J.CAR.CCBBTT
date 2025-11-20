@@ -1,1 +1,0 @@
-export const CORRECT_HASH = 'MDkzNg==';
