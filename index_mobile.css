@@ -12,7 +12,7 @@ h1 {
     font-size: 1.5em; /* 글꼴 크기도 줄입니다 */
 }
 
-.exam-container {
+.random-wrapper {
     display: flex;
     justify-content: center;
     /* 핵심 수정: 무조건 세로 1열로 배치 */
@@ -23,7 +23,18 @@ h1 {
     gap: 20px;
 }
 
-.exam-card {
+.round-container {
+    display: flex;
+    justify-content: center;
+    /* 핵심 수정: 무조건 세로 1열로 배치 */
+    flex-direction: column; 
+    /* 세로로 쌓인 아이템들을 수평 중앙에 정렬 */
+    align-items: center; 
+    margin-top: 30px; /* h1과 동일하게 마진을 줄입니다 */
+    gap: 20px;
+}
+
+.round-card {
     /* 모바일 최적화된 너비와 높이를 기본값으로 사용 */
     width: 90%; 
     max-width: 400px; /* 너무 넓은 화면에서도 보기 좋게 최대 너비 제한 */
@@ -40,7 +51,7 @@ h1 {
 }
 
 /* PC에서는 hover 효과를 그대로 유지합니다. */
-.exam-card:hover {
+.round-card:hover {
     background-color: #45a049;
     transform: scale(1.05);
 }
@@ -52,8 +63,18 @@ h1 {
 */
 @media (max-width: 600px) {
     /* 모바일에서는 불필요한 깜빡임을 막기 위해 hover 효과를 제거/단순화 */
-    .exam-card:hover {
+    .round-card:hover {
         transform: none;
         background-color: #4CAF50; /* 원래 색상 유지 */
     }
+}
+
+/* 5. ✅ "전체 랜덤" 버튼만 빨간색으로 변경 */
+.random-card {
+    background-color: #f44336; /* 빨간색으로 구분 */
+}
+
+/* 6. ✅ "전체 랜덤" 버튼 색상 변경 */
+.random-card:hover {
+    background-color: #d32f2f; /* 어두운 빨간색 */
 }
