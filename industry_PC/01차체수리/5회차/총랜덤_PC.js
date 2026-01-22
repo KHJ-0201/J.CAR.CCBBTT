@@ -1,7 +1,7 @@
 /* ===========================
     1. 데이터 및 초기 설정
 =========================== */
-import * as Data from './1회차.js';
+import * as Data from './5회차.js';
 
 const allQuestions = Object.values(Data).find(val => Array.isArray(val)) || [];
 let rawQuestions = allQuestions.slice(0, 80); 
@@ -207,7 +207,7 @@ function initApp() {
     const status = document.getElementById("status");
     status.classList.remove("center");
     status.innerHTML = `
-        <h1 class="page-title">차체수리 1회차 전체랜덤</h1>
+        <h1 class="page-title">차체수리 5회차 전체랜덤</h1>
         <div class="status-info"><span id="timer"></span> <span id="remaining"></span></div>
     `;
 
