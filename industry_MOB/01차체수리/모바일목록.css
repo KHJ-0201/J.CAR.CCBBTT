@@ -80,5 +80,15 @@ h1 {
 
 /* 6. ✅ "전체 랜덤" 버튼 색상 변경 */
 .random-card:hover {
-    background-color: #d32f2f; /* 어두운 빨간색 */
+    background-color: #8a2121; /* 어두운 빨간색 */
+}
+
+/* 5. ✅ "전체 랜덤" 버튼만 빨간색으로 변경 */
+.random-card1 {
+    background-color: #34af03; /* 빨간색으로 구분 */
+}
+
+/* 6. ✅ "전체 랜덤" 버튼 색상 변경 */
+.random-card1:hover {
+    background-color: #055a03; /* 어두운 빨간색 */
 }
