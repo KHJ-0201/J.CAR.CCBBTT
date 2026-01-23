@@ -82,7 +82,7 @@ function renderGlobalBtns() {
 window.scrollToQuestion = (i) => {
     const q = document.getElementsByClassName("question")[i];
     if (q) {
-        const yOffset = -300; // 상단바 + OMR 영역 높이만큼 띄움
+        const yOffset = -270; // 상단바 + OMR 영역 높이만큼 띄움
         const y = q.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({top: y, behavior: 'smooth'});
     }
