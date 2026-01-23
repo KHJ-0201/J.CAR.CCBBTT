@@ -4,12 +4,8 @@ import * as Data3 from './3회차/3회차.js';
 import * as Data4 from './4회차/4회차.js';
 import * as Data5 from './5회차/5회차.js';
 import * as Data6 from './6회차/6회차.js';
-import * as Data7 from './심화1/심화1회차.js';
-import * as Data8 from './심화2/심화2회차.js';
-import * as Data9 from './심화3/심화3회차.js';
-import * as Data10 from './심화4/심화4회차.js';
 
-const allSets = [Data1, Data2, Data3, Data4, Data5, Data6, Data7, Data8, Data9, Data10];
+const allSets = [Data1, Data2, Data3, Data4, Data5, Data6];
 let questions = [];
 let answers = [];
 let totalSeconds = 60 * 60;
@@ -175,7 +171,7 @@ function initApp() {
     let rawPool = [];
     allSets.forEach((mod, idx) => {
         if (mod.repairData) {
-            const picked = shuffleArray(mod.repairData).slice(0, 6).map(q => ({...q, roundInfo: `${idx+1}회차`}));
+            const picked = shuffleArray(mod.repairData).slice(0, 10).map(q => ({...q, roundInfo: `${idx+1}회차`}));
             rawPool = rawPool.concat(picked);
         }
     });
