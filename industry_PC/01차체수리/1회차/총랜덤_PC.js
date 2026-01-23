@@ -8,7 +8,7 @@ let rawQuestions = allQuestions.slice(0, 80);
 
 let questions = [];
 let answers = [];
-let totalSeconds = 100 * 60;
+let totalSeconds = 60 * 60;
 let timerInterval = null;
 
 /* ===========================
@@ -202,7 +202,7 @@ function initApp() {
     if (timerInterval) clearInterval(timerInterval);
     questions = prepareQuestions(rawQuestions); 
     answers = Array(questions.length).fill(-1);
-    totalSeconds = 100 * 60;
+    totalSeconds = 60 * 60;
 
     const status = document.getElementById("status");
     status.classList.remove("center");

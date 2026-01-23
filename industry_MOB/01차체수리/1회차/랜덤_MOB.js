@@ -6,7 +6,7 @@ import * as Data1 from './1회차.js';
 // 기존 6개 그룹 변수는 제거하거나 1회차만 할당
 let questions = [];
 let answers = [];
-let totalSeconds = 100 * 60;
+let totalSeconds = 60 * 60;
 let timerInterval = null;
 
 /* ===========================

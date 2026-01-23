@@ -8,7 +8,7 @@ import * as Data6 from './6회차/6회차.js';
 const allSets = [Data1, Data2, Data3, Data4, Data5, Data6];
 let questions = [];
 let answers = [];
-let totalSeconds = 100 * 60;
+let totalSeconds = 60 * 60;
 let timerInterval = null;
 
 function shuffleArray(array) { return [...array].sort(() => Math.random() - 0.5); }

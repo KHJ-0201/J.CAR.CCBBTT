@@ -12,7 +12,7 @@ const allSets = [Data1, Data2, Data3, Data4, Data5, Data6];
 
 let questions = [];
 let answers = [];
-let totalSeconds = 100 * 60;
+let totalSeconds = 60 * 60;
 let timerInterval = null;
 
 /* ===========================
@@ -233,7 +233,7 @@ function initApp() {
     // 전체 60문제를 다시 랜덤하게 섞고 보기 셔플
     questions = prepareQuestions(shuffleArray(rawPool)); 
     answers = Array(questions.length).fill(-1);
-    totalSeconds = 100 * 60;
+    totalSeconds = 60 * 60;
 
     const status = document.getElementById("status");
     if (status) {
