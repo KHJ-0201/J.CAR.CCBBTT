@@ -1,0 +1,495 @@
+/* ===========================
+    기본 설정 (수정)
+=========================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f4f6fa;
+    color: #222;
+    line-height: 1.6;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 0;
+    /* 고정 #status 높이에 맞게 조정 (60px + 여백) */
+    padding-top: 60px; 
+    min-height: 100vh;
+    /* 이전 요청으로 인해 커졌던 body 폰트 크기 제거 (기본 폰트 크기 사용) */
+}
+
+/* ===========================
+    상단 제목 (기존 스타일 유지)
+=========================== */
+h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #1f3b73;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+/* ===========================
+    고정 상단 상태바 (#status) 
+=========================== */
+#status {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px; /* 고정 높이 */
+    background: #ffffff; 
+    backdrop-filter: none;
+    border-bottom: 3px solid #1f3b73; 
+    padding: 0 20px;
+    font-size: 1.8rem; 
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+#status .page-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1f3b73;
+    margin: 0;
+}
+
+#status .status-info {
+    display: flex;
+    gap: 30px;
+}
+
+/* =========================================================
+ * ✨ 수정 부분: 채점 완료 후 상단 상태바 (#status.center) 스타일
+ * (점수 표시 및 다시 풀기 버튼 스타일)
+ * =========================================================
+ */
+
+/* 채점 완료 후 #status가 가운데 정렬되면서 점수와 버튼을 포함하도록 설정 */
+#status.center {
+    justify-content: center; /* 점수와 버튼을 중앙에 배치 */
+    gap: 30px; /* 점수와 버튼 사이 간격 */
+    height: 60px; /* 기존 높이 유지 */
+}
+
+/* 채점 완료 후 표시되는 점수 스타일 (크기 조정 완료) */
+#status #scoreDisplay {
+    font-size: 2.2rem; 
+    font-weight: 700;
+    color: #b30000; /* 붉은색으로 강조 */
+}
+
+/* '다시 풀기' 버튼 스타일 (크기 조정 완료) */
+#retryBtn {
+    background-color: #dc3545; /* 선명한 붉은색 */
+    color: white;
+    font-size: 1.8rem; /* 크기 조정 완료 */
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 12px; /* 크기 조정 완료 */
+    margin-left: 20px; 
+    cursor: pointer;
+    transition: background-color 0.3s;
+    line-height: 1.5; 
+}
+
+#retryBtn:hover {
+    background-color: #c82333;
+}
+/* =========================================================
+ * ✨ 수정 부분 끝
+ * =========================================================
+ */
+
+
+/* ===========================
+    PC 메인 레이아웃 (#main-container) 
+=========================== */
+#main-container {
+    display: flex;
+    width: 95%; 
+    max-width: 1400px; /* PC 최대 폭 설정 */
+    margin-top: 10px;
+    gap: 25px; 
+    align-items: flex-start; 
+}
+
+#quiz-wrapper {
+    flex-grow: 1; 
+    min-width: 0; 
+    background: #fff; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#quiz {
+    background: none;
+    box-shadow: none;
+    /* 상단 여백을 15px에서 5px로 줄여서 교과목을 위로 이동 */
+    padding: 60px 30px 15px 30px; 
+    width: 100%; 
+    max-width: none;
+    margin-top: 0;
+}
+
+/* ===========================
+    OMR 사이드바 (#omr-card) 
+=========================== */
+#omr-card {
+    position: sticky; /* 화면에 고정 */
+    top: 75px; 
+    width: 380px; 
+    flex-shrink: 0; 
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.omr-header {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 15px; /* 헤더 요소들 사이의 간격 추가 */
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.omr-title {
+    font-size: 0.8rem; 
+    font-weight: 700;
+    color: #1f3b73;
+}
+
+/* OMR 전체 선택 버튼 컨테이너 */
+.global-select-wrapper {
+    display: flex;
+    gap: 5px; /* 버튼 사이 간격 */
+}
+
+/* OMR 전체 선택 버튼 스타일 */
+.omr-global-select-btn {
+    background-color: #1f3b73;
+    color: white;
+    font-size: 0.6rem; 
+    font-weight: 700;
+    border: none;
+    border-radius: 4px; 
+    padding: 3px 6px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    line-height: 1;
+    min-width: 20px;
+    text-align: center;
+}
+
+.omr-global-select-btn:hover {
+    background-color: #0d2850;
+    transform: translateY(-1px);
+}
+/* ----------------------------------------------------- */
+
+#omrSubmitBtn {
+    background-color: #28a745;
+    color: white;
+    font-size: 0.6rem; 
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 3px 6px; 
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: auto; /* 제출 버튼을 오른쪽 끝으로 이동 */
+}
+
+#omrSubmitBtn:hover {
+    background-color: #1e7e34;
+}
+
+/* OMR 문제 목록 (2열 수직, 60문제 한 화면) */
+#omr-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-auto-flow: column; /* 수직으로 채우기 (1-30열, 31-60열) */
+    grid-template-rows: repeat(30, auto); /* 30개 행 확보 */
+    gap: 5px; 
+}
+
+.omr-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem; 
+    padding: 1px 0; 
+}
+
+/* OMR 문제 번호 (가로 크기 통일 및 크기 최적화) */
+.omr-q-num {
+    background-color: #e9ecef;
+    color: #495057;
+    border-radius: 4px;
+    padding: 1px 4px; 
+    margin-right: 5px; 
+    font-weight: 600;
+    cursor: pointer;
+    width: 25px; /* 가로 크기 통일 */
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.omr-q-num:hover {
+    background-color: #c4c9cc;
+}
+
+.omr-options-wrapper {
+    display: flex;
+    gap: 3px; 
+}
+
+/* OMR 답안 옵션 (크기 최적화) */
+.omr-option {
+    width: 15px; 
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 50%; 
+    cursor: pointer;
+    font-size: 0.6rem; /* 답안 텍스트 크기 축소 */
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+/* OMR 선택 상태 */
+.omr-option.selected {
+    background-color: #1f3b73; 
+    color: white;
+    border-color: #1f3b73;
+}
+
+/* OMR 채점 결과 상태 */
+.omr-option.correct {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+    font-weight: 700;
+}
+
+.omr-option.wrong {
+    background-color: #F44336;
+    color: white;
+    border-color: #F44336;
+    font-weight: 700;
+}
+
+
+/* ===========================
+    문제 카드 (폰트 크기 복원 완료)
+=========================== */
+.question {
+    margin-bottom: 30px; 
+    border-bottom: 1px solid #e5e9f0;
+    padding-bottom: 10px;
+    position: relative; 
+    padding-top: 20px; 
+
+        /* ✨추가: 다음 문제로 스크롤할 때 상단 고정바에 가려지지 않도록 마진을 추가합니다. */
+    scroll-margin-top: 10rem; /* 상태바 높이(5rem)보다 조금 더 여유를 줍니다. */
+}
+
+
+.q-title {
+    display: block;
+    font-size: 1.8rem; /* 복원된 폰트 크기 */
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #222;
+    padding-left: 0px !important; 
+    position: relative; 
+    z-index: 1; 
+}
+
+
+
+/* ===========================
+    선택지 (폰트 크기 복원 완료)
+=========================== */
+.options label {
+    display: block;
+    background: #f9fafc;
+    border: 2px solid #d9e2ef;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.6rem; /* 복원된 폰트 크기 */
+    margin-bottom: 6px;
+}
+
+.options label.selected {
+    background-color: #e0f7ff; 
+    border-color: #00bcd4; 
+    box-shadow: 0 0 5px rgba(0, 188, 212, 0.3);
+}
+
+.options input[type="radio"] {
+    display: none; 
+}
+
+/* ===========================
+    해설 (폰트 크기 복원 완료)
+=========================== */
+.explain {
+    margin-top: 8px;
+    background: #fff8f8;
+    border-left: 4px solid #ff6b6b;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 1.5rem; /* 복원된 폰트 크기 */
+}
+
+/* ===========================
+    제출 버튼 (#submitBtn) (기존 스타일 유지)
+=========================== */
+#submitBtn {
+    background-color: #28a745;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 35px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* ===========================
+    결과창 (기존 스타일 유지)
+=========================== */
+#result {
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ===========================
+    미디어 쿼리 (Media Query) - 반응형 레이아웃 (모니터 크기별 대응)
+=========================== */
+
+/* 화면 너비 1200px 이하: OMR과 퀴즈 영역을 살짝 압축 */
+@media (max-width: 1200px) {
+    
+    #main-container {
+        width: 90%; 
+        gap: 15px; 
+    }
+
+    #omr-card {
+        width: 320px; 
+    }
+
+    .omr-title {
+        font-size: 0.7rem; 
+    }
+    .omr-q-num, .omr-option {
+        font-size: 0.55rem;
+    }
+}
+
+
+/* 화면 너비 900px 이하: OMR을 퀴즈 아래로 전환 (태블릿/모바일 레이아웃) */
+@media (max-width: 900px) {
+    
+    /* PC 레이아웃(좌우 분할) 해제 및 수직 정렬 */
+    #main-container {
+        flex-direction: column; 
+        align-items: center;
+        gap: 20px;
+    }
+    
+    /* OMR 고정 해제 및 너비 100% 설정 */
+    #omr-card {
+        position: static; /* 고정 해제 */
+        width: 100%; 
+        max-width: 600px; 
+        order: 3; /* OMR을 문제 목록 아래로 이동 */
+        margin-top: 20px;
+        padding: 10px;
+    }
+    
+    /* OMR 목록을 가로 배열로 다시 전환 (모바일/태블릿 가로 공간 사용) */
+    #omr-list {
+        grid-template-columns: repeat(6, 1fr); /* 6열로 변경 */
+        grid-auto-flow: row; /* 수평(기본)으로 변경 */
+        grid-template-rows: auto; /* 행 제한 해제 */
+        gap: 8px 5px; 
+    }
+
+    /* 상단 상태바 글씨 크기 조정 */
+    #status {
+        font-size: 1.5rem;
+        height: 50px;
+        padding: 0 10px;
+    }
+    body {
+        padding-top: 55px; /* 상태바 높이(50px)에 맞춰 조정 */
+    }
+    
+    /* OMR 버튼 간격 조정 */
+    .omr-header {
+        gap: 10px; 
+    }
+
+    /* =========================================================
+     * ✨ 모바일 전용 수정: 다시 풀기 버튼 크기 최적화 (900px 이하)
+     * ========================================================= */
+    #status #scoreDisplay {
+        font-size: 1.8rem; /* 모바일 상태바에 맞게 축소 */
+    }
+    
+    #retryBtn {
+        font-size: 1.4rem; /* 모바일 상태바에 맞게 버튼 폰트 축소 */
+        padding: 3px 8px; /* 패딩도 약간 줄여서 버튼 크기 줄임 */
+        line-height: normal;
+        margin-left: 10px;
+    }
+}
+
+/* 휠·타이어·얼라인먼트 정비 (TopicName)와 문제 (q-title) 사이의 간격 최소화 */
+
+/* 1. 과목 이름을 감싸는 .q-header의 불필요한 마진/패딩 제거 */
+.q-header {
+    margin: 0 !important; 
+    padding: 0 !important;
+}
+
+/* 2. 문제 제목 (.q-title)의 상단 마진을 0으로 설정하여 TopicName에 밀착 */
+.q-title {
+    margin-top: -50px !important; 
+    /* 기존 CSS에는 margin-bottom: 8px; 가 있었으므로 하단 여백은 유지 */
+}
+
+/* 3. TopicName 텍스트 자체의 높이도 조정 (선택 사항이지만 안전합니다) */
+.topic-code {
+    line-height: 1.2; 
+    display: block; 
+}

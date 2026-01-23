@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-top: 50px;
+    /* 모바일에서는 h1 마진을 조금 줄여줍니다 */
+    margin-top: 30px; 
+    font-size: 2.5em; /* 글꼴 크기도 줄입니다 */
+}
+
+.random-wrapper {
+    display: flex;
+    justify-content: center;
+    /* 핵심 수정: 무조건 세로 1열로 배치 */
+    flex-direction: column; 
+    /* 세로로 쌓인 아이템들을 수평 중앙에 정렬 */
+    align-items: center; 
+    margin-top: 10px; /* h1과 동일하게 마진을 줄입니다 */
+    gap: 20px;
+}
+
+.round-container {
+    display: flex;
+    justify-content: center;
+    /* 핵심 수정: 무조건 세로 1열로 배치 */
+    flex-direction: column; 
+    /* 세로로 쌓인 아이템들을 수평 중앙에 정렬 */
+    align-items: center; 
+    margin-top: 40px; /* h1과 동일하게 마진을 줄입니다 */
+    gap: 20px;
+}
+
+.round-card {
+    /* 모바일 최적화된 너비와 높이를 기본값으로 사용 */
+    width: 100%; 
+    max-width: 600px; /* 너무 넓은 화면에서도 보기 좋게 최대 너비 제한 */
+    height: 80px; 
+    background-color: #4c54af;
+    color: rgb(255, 255, 255);
+    font-size: 25px; /* 글꼴 크기 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+/* PC에서는 hover 효과를 그대로 유지합니다. */
+.round-card:hover {
+    background-color: #6845a0;
+    transform: scale(1.05);
+}
+
+/* 📱 모바일 최적화 스타일 (추가적인 조정만 남김) */
+/*
+   주요 레이아웃(flex-direction: column)이 이미 기본 스타일에 적용되었기 때문에,
+   이 미디어 쿼리 블록은 모바일에서 필요 없는 효과(hover)를 제거하는 용도로만 사용됩니다.
+*/
+@media (max-width: 600px) {
+    /* 모바일에서는 불필요한 깜빡임을 막기 위해 hover 효과를 제거/단순화 */
+    .round-card:hover {
+        transform: none;
+        background-color: #4CAF50; /* 원래 색상 유지 */
+    }
+}
+
+/* 5. ✅ "전체 랜덤" 버튼만 빨간색으로 변경 */
+.random-card {
+    background-color: #f44336; /* 빨간색으로 구분 */
+}
+
+/* 6. ✅ "전체 랜덤" 버튼 색상 변경 */
+.random-card:hover {
+    background-color: #d32f2f; /* 어두운 빨간색 */
+}
