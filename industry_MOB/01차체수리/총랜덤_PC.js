@@ -128,8 +128,8 @@ function submitQuiz(isQuick = false) {
             // ⭕ 기호 위치 설정 추가
          status.style.cssText = `
          position: absolute; 
-         left: -13px; 
-         top: 13px; 
+         left: -6px; 
+         top: 28px; 
          font-size: 1rem; 
          font-weight: 700;
          z-index: 10;
@@ -145,8 +145,8 @@ function submitQuiz(isQuick = false) {
             // ❌ 기호 위치 설정 (⭕와 가급적 동일하게 설정)
              status.style.cssText = `
              position: absolute; 
-             left: -13px; 
-             top: 13px; 
+             left: -6px; 
+             top: 28px; 
              font-size: 1rem; 
              font-weight: 700;
              z-index: 10;
