@@ -1,10 +1,14 @@
 /* ===========================
-    1. 데이터 및 초기 설정
+    1. 데이터 임포트
 =========================== */
-import * as Data from './4회차.js';
+import * as Data1 from './1회차/1회차.js';
+import * as Data2 from './2회차/2회차.js';
+import * as Data3 from './3회차/3회차.js';
+import * as Data4 from './4회차/4회차.js';
+import * as Data5 from './5회차/5회차.js';
+import * as Data6 from './6회차/6회차.js';
 
-const allQuestions = Object.values(Data).find(val => Array.isArray(val)) || [];
-let rawQuestions = allQuestions.slice(0, 80); 
+const allSets = [Data1, Data2, Data3, Data4, Data5, Data6];
 
 let questions = [];
 let answers = [];
@@ -35,12 +39,17 @@ function prepareQuestions(sourceArray) {
 =========================== */
 function renderQuiz() {
     const quizDiv = document.getElementById("quiz");
+    if (!quizDiv) return;
     quizDiv.innerHTML = "";
+    
     questions.forEach((q, i) => {
         const div = document.createElement("div");
         div.className = "question";
         div.innerHTML = `
-            <div class="q-header"><span id="q-status-${i}" class="q-status"></span></div>
+            <div class="q-header">
+                <span id="q-status-${i}" class="q-status"></span>
+                <span class="round-tag" style="font-size: 0.85rem; color: #777; background: #eee; padding: 2px 8px; border-radius: 4px; margin-bottom: 5px; display: inline-block;">${q.roundInfo}</span>
+            </div>
             <strong class="q-title">${i + 1}. ${q.question}</strong>
             ${q.imagePath ? `<img src="${q.imagePath}" alt="문제" style="width: 100%; max-width: 500px; height: auto; margin: 15px 0;">` : ''}
             <div class="options"></div>
@@ -65,6 +74,7 @@ function renderQuiz() {
 
 function renderOMR() {
     const omrListDiv = document.getElementById("omr-list");
+    if (!omrListDiv) return;
     omrListDiv.innerHTML = "";
     questions.forEach((_, i) => {
         const itemDiv = document.createElement("div");
@@ -83,6 +93,7 @@ function renderOMR() {
 
 function renderGlobalBtns() {
     const header = document.querySelector(".omr-header");
+    if (!header) return;
     let wrap = header.querySelector(".global-select-wrapper") || document.createElement("div");
     wrap.className = "global-select-wrapper";
     wrap.innerHTML = [0,1,2,3].map(i => `<button class="omr-global-select-btn" onclick="globalSelect(${i})">${i+1}</button>`).join('');
@@ -124,29 +135,19 @@ function updateRemaining() {
     });
 }
 
-function scrollToQuestion(i) {
-    const q = document.getElementsByClassName("question")[i];
-    if (q) q.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
 /* ===========================
-    5. 제출 및 채점 로직 (수정: 다 풀었을 때 즉시 제출)
+    5. 제출 및 채점 로직
 =========================== */
 function submitQuiz(isQuick = false) {
-    // 1. 일반 제출 모드(isQuick: false)에서만 검사 수행
     if (!isQuick) {
         const unansweredIdx = answers.findIndex(a => a < 0);
-        
-        // 안 푼 문제가 있다면 안내 후 이동 (제출 중단)
         if (unansweredIdx !== -1) {
             alert("미풀이 문제가 있습니다. 해당 문제로 이동합니다.");
             scrollToQuestion(unansweredIdx);
             return; 
         }
-        // 미풀이 문제가 없으면 alert나 confirm 없이 바로 하단 채점 로직으로 넘어감
     }
 
-    // 2. 채점 프로세스 (바로제출 클릭 시 혹은 모든 문제 풀이 시 실행)
     clearInterval(timerInterval);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -170,22 +171,24 @@ function submitQuiz(isQuick = false) {
             status.innerHTML = '❌';
             omrOpts[q.answer].classList.add('correct');
         }
-        status.style.cssText = 'font-size: 2rem; font-weight: 700; position: absolute; left:-14px; top: -35px;';
+        status.style.cssText = 'font-size: 2rem; font-weight: 700; position: absolute; left:-14px; top: 10px;';
         qDiv.querySelector(".explain").innerHTML = `<strong>정답: ${q.originalCorrectOptionText}</strong><br>${q.explain || '해설이 없습니다.'}`;
         qDiv.querySelectorAll('input').forEach(r => r.disabled = true);
     });
 
-    // 3. 상단 결과 표시
     const statusHeader = document.getElementById("status");
-    statusHeader.classList.add("center");
-    statusHeader.innerHTML = `
-        <span id="scoreDisplay">결과: ${score}/${questions.length}</span>
-        <button id="retryBtn" onclick="location.reload()">다시 풀기</button>
-    `;
+    if (statusHeader) {
+        statusHeader.classList.add("center");
+        statusHeader.innerHTML = `
+            <span id="scoreDisplay">결과: ${score}/${questions.length}</span>
+            <button id="retryBtn" onclick="location.reload()">다시 풀기</button>
+        `;
+    }
     
-    document.getElementById("submitBtn").style.display = "none";
-    document.getElementById("omrSubmitBtn").style.display = "none";
-    document.getElementById("quickSubmitBtn").style.display = "none";
+    ["submitBtn", "omrSubmitBtn", "quickSubmitBtn"].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.style.display = "none";
+    });
 }
 
 function updateTimer() {
@@ -196,24 +199,55 @@ function updateTimer() {
 }
 
 /* ===========================
-    6. 초기화 실행
+    6. 초기화 실행 (회차 정보 추출 로직 포함)
 =========================== */
 function initApp() {
     if (timerInterval) clearInterval(timerInterval);
-    questions = prepareQuestions(rawQuestions); 
+
+    let rawPool = [];
+
+    allSets.forEach((dataModule, index) => {
+        const setQuestions = dataModule.repairData; 
+        
+        if (setQuestions && Array.isArray(setQuestions)) {
+            // 각 회차에서 랜덤하게 10개 추출
+            const picked = shuffleArray(setQuestions).slice(0, 10);
+            
+            // 추출된 데이터에 출처(회차) 정보 주입
+            const pickedWithInfo = picked.map(q => ({
+                ...q,
+                roundInfo: `${index + 1}회차`
+            }));
+            
+            rawPool = rawPool.concat(pickedWithInfo);
+        } else {
+            console.error(`${index + 1}회차 데이터를 찾지 못했습니다.`);
+        }
+    });
+
+    if (rawPool.length === 0) {
+        alert("문제가 로드되지 않았습니다.");
+        return;
+    }
+
+    // 전체 60문제를 다시 랜덤하게 섞고 보기 셔플
+    questions = prepareQuestions(shuffleArray(rawPool)); 
     answers = Array(questions.length).fill(-1);
     totalSeconds = 60 * 60;
 
     const status = document.getElementById("status");
-    status.classList.remove("center");
-    status.innerHTML = `
-        <h1 class="page-title">차체수리 1회차 전체랜덤</h1>
-        <div class="status-info"><span id="timer"></span> <span id="remaining"></span></div>
-    `;
+    if (status) {
+        status.classList.remove("center");
+        status.innerHTML = `
+            <h1 class="page-title">차체수리 통합 랜덤 (60문항)</h1>
+            <div class="status-info"><span id="timer"></span> <span id="remaining"></span></div>
+        `;
+    }
 
-    document.getElementById("submitBtn").style.display = "block";
-    document.getElementById("omrSubmitBtn").style.display = "block";
-    document.getElementById("quickSubmitBtn").style.display = "block";
+    ["submitBtn", "omrSubmitBtn", "quickSubmitBtn"].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.style.display = "block";
+    });
 
     renderQuiz();
     renderOMR();
@@ -221,8 +255,13 @@ function initApp() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.getElementById("submitBtn").onclick = () => submitQuiz(false);
-document.getElementById("omrSubmitBtn").onclick = () => submitQuiz(false);
-document.getElementById("quickSubmitBtn").onclick = () => submitQuiz(true);
+// 초기 실행
+const sBtn = document.getElementById("submitBtn");
+const oBtn = document.getElementById("omrSubmitBtn");
+const qBtn = document.getElementById("quickSubmitBtn");
+
+if (sBtn) sBtn.onclick = () => submitQuiz(false);
+if (oBtn) oBtn.onclick = () => submitQuiz(false);
+if (qBtn) qBtn.onclick = () => submitQuiz(true);
 
 initApp();
