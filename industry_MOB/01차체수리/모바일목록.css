@@ -23,15 +23,19 @@ h1 {
     gap: 20px;
 }
 
+/* 1. 컨테이너를 2열 그리드로 변경 */
 .round-container {
-    display: flex;
-    justify-content: center;
-    /* 핵심 수정: 무조건 세로 1열로 배치 */
-    flex-direction: column; 
-    /* 세로로 쌓인 아이템들을 수평 중앙에 정렬 */
-    align-items: center; 
-    margin-top: 40px; /* h1과 동일하게 마진을 줄입니다 */
-    gap: 20px;
+    display: grid; /* flex 대신 grid 사용 */
+    /* 너비를 화면의 90% 정도로 설정하고 중앙 정렬 */
+    width: 90%;
+    max-width: 800px; 
+    margin: 40px auto; 
+    
+    /* 핵심: 가로로 2개의 열을 똑같은 비율(1:1)로 나눔 */
+    grid-template-columns: repeat(2, 1fr); 
+    
+    /* 아이템 간의 간격 (세로, 가로) */
+    gap: 15px; 
 }
 
 .round-card {
