@@ -1,0 +1,113 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; line-height: 1.6; padding-top: 60px; }
+
+/* 1. 상단 상태바 (빨간 네모) */
+#status {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1100;
+    height: 60px; background: #fff; border-bottom: 2px solid #1f3b73;
+    display: flex; justify-content: space-between; align-items: center; padding: 0 15px;
+}
+.page-title { font-size: 1.2rem; font-weight: 700; color: #1f3b73; }
+.status-info { display: flex; gap: 15px; font-weight: 600; font-size: 0.9rem; }
+
+/* 2. 메인 컨테이너 (수직 배치) */
+#main-container {
+    display: flex; flex-direction: column; width: 100%; max-width: 1000px; margin: 0 auto;
+}
+
+/* 3. OMR 카드 (노란 네모 - 상단 고정) */
+#omr-card {
+    position: sticky; top: 60px; z-index: 1000;
+    background: #fdfdfd; border-bottom: 1px solid #ddd; padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.omr-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.omr-title { font-size: 0.8rem; font-weight: bold; }
+
+/* OMR 그리드: 10열로 촘촘하게 배치 */
+#omr-list {
+    display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px;
+}
+.omr-item { display: flex; flex-direction: column; align-items: center; }
+
+/* 채점 완료 후 정답 상태 */
+.omr-item.correct .omr-q-num {
+    background-color: #28a745 !important; /* 초록색 */
+    color: white !important;
+    border-color: #1e7e34 !important;
+}
+
+/* 채점 완료 후 오답 상태 */
+.omr-item.wrong .omr-q-num {
+    background-color: #dc3545 !important; /* 빨간색 */
+    color: white !important;
+    border-color: #bd2130 !important;
+}
+
+.omr-q-num {
+    font-size: 0.4rem;
+    cursor: pointer;
+    background-color: #f8f9fa; /* 안 풀었을 때 배경색 (연회색) */
+    color: #333;               /* 글자색 */
+    border: 0px solid #dee2e6;
+    border-radius: 4px;        /* 약간의 곡률을 주면 더 깔끔합니다 */
+    display: inline-block;     /* 크기 적용을 위해 추가 */
+    width: 10px;               /* 번호 영역 너비 고정 */
+    text-align: center;        /* 번호 가운데 정렬 */
+    transition: all 0.3s;
+}
+
+/* 문제를 풀었을 때 부모(omr-item)에 answered 클래스가 붙으면 색상 변경 */
+.omr-item.answered .omr-q-num {
+    background-color: #007bff; /* 풀었을 때 배경색 (파란색) */
+    color: white;              /* 글자색 (흰색) */
+    border-color: #0056b3;
+}
+
+/* 문제를 풀었을 때 (답이 선택되었을 때) 변할 스타일 */
+.omr-item.answered .omr-q-num {
+    background-color: #007bff; /* 풀었을 때 배경색 (파란색) */
+    color: white;              /* 글자색 흰색으로 */
+    border-color: #0056b3;
+}
+.omr-options-wrapper { display: flex; gap: 1px; }
+.omr-option {
+    width: 6px; height: 6px; font-size: 0.3rem; border: 1px solid #ccc;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.omr-option.selected { background: #1f3b73; color: white; border-color: #1f3b73; }
+.omr-option.correct { background: #28a745; color: white; }
+.omr-option.wrong { background: #dc3545; color: white; }
+
+/* 4. 문제 영역 (파란 네모) */
+#quiz-wrapper { padding: 20px 15px; }
+.question { 
+    margin-bottom: 50px; padding-bottom: 20px; border-bottom: 1px dashed #eee;
+    scroll-margin-top: 500px; /* OMR에 가려지지 않게 높이 조절 */
+    position: relative;
+}
+.q-title { display: block; font-size: 1.2rem; font-weight: 600; margin-bottom: 15px; }
+.options label {
+    display: block; background: #f8f9fa; border: 1px solid #dee2e6;
+    border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer;
+}
+.options label.selected { background: #e7f1ff; border-color: #0d6efd; }
+.options input { display: none; }
+.round-tag { font-size: 0.7rem; background: #eee; padding: 2px 6px; border-radius: 4px; }
+
+/* 채점 관련 스타일 */
+.q-status { position: absolute; left: -10px; top: 0; font-size: 1.5rem; }
+.explain { background: #fff4f4; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 0.9rem; }
+
+/* 버튼 스타일 */
+#submitBtn { width: 100%; padding: 15px; font-size: 1.2rem; background: #28a745; color: #fff; border: none; border-radius: 8px; }
+#omrSubmitBtn, #quickSubmitBtn, .omr-global-select-btn {
+    padding: 3px 6px; font-size: 0.6rem; border: none; border-radius: 4px; cursor: pointer;
+}
+#omrSubmitBtn { background: #28a745; color: white; }
+#quickSubmitBtn { background: #6c757d; color: white; }
+.omr-global-select-btn { background: #1f3b73; color: white; margin-right: 2px; }
+
+/* 채점 완료 후 상단바 */
+#status.center { justify-content: center; gap: 20px; }
+#retryBtn { background: #dc3545; color: white; border: none; padding: 5px 15px; border-radius: 4px; }
