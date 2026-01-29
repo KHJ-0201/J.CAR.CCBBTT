@@ -198,3 +198,37 @@ document.getElementById("omrSubmitBtn").onclick = () => submitQuiz(false);
 document.getElementById("quickSubmitBtn").onclick = () => submitQuiz(true);
 
 initApp();
+
+// 사용자가 페이지를 떠나려고 할 때 경고창을 띄우는 함수
+function enableExitPrevention() {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+}
+
+// 경고창을 해제하는 함수 (제출 시에는 경고 없이 넘어가야 함)
+function disableExitPrevention() {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+}
+
+function handleBeforeUnload(e) {
+    // 표준에 따라 기본 동작 방지 및 메시지 설정
+    e.preventDefault();
+    // 최신 브라우저에서는 보안상 사용자 지정 메시지보다 브라우저 기본 메시지가 출력됩니다.
+    e.returnValue = '시험을 종료하시겠습니까? 작성 중인 답안이 저장되지 않습니다.';
+}
+
+// 1. 앱 초기화 시 이탈 방지 활성화
+// initApp() 내부 혹은 파일 하단에 추가
+enableExitPrevention();
+
+// 2. 문제 제출 시에는 이탈 방지 해제
+// submitQuiz 함수 시작 부분에 추가하거나, 기존 코드의 submitQuiz 호출 직전에 추가
+const originalSubmitQuiz = submitQuiz;
+window.submitQuiz = function(isQuick) {
+    if (!isQuick && answers.includes(-1)) {
+        // 미풀이 안내 로직은 유지
+    } else {
+        // 실제 제출 단계로 넘어갈 때 이탈 방지 해제
+        disableExitPrevention();
+    }
+    originalSubmitQuiz(isQuick);
+};
