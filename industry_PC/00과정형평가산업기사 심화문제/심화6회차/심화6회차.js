@@ -1,3 +1,4 @@
+export const roundName = "심화 6회차";
 export const repairData =
 [
   {

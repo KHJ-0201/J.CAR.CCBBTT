@@ -2,38 +2,50 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>과평산업기사 심화5회차 랜덤</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>심화문제 전체 랜덤</title>
   <link rel="stylesheet" href="../문제풀이_PC.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+  <div id="top-nav">
+    <button onclick="toggleDarkMode()">🌓 테마 변경</button>
+    <button onclick="showStats()">📊 성적 통계</button>
+    <button onclick="startWrongNote()">📝 오답 노트</button>
+    </div>
+
   <div id="status">
-    <h1 class="page-title">과평산업기사 심화5회차 랜덤</h1> 
+    <h1 class="page-title">심화문제 전체 랜덤</h1> 
     <div class="status-info">
-        <span id="timer">남은 시간: 01:40:00</span>
+        <span id="timer">남은 시간: 01:00:00</span>
         <span id="remaining">남은 문제: 0/0</span>
     </div>
   </div>
 
   <div id="main-container"> 
-      
       <div id="quiz-wrapper">
           <div id="quiz"></div>
-          <button id="submitBtn">제출</button> 
+          <button id="submitBtn">제출하기</button> 
       </div>
 
       <div id="omr-card">
           <div class="omr-header">
               <div class="omr-title">OMR 답안지</div>
-              <button id="quickSubmitBtn" style="background-color: #0c6ec4; color: white; font-size: 0.6rem; font-weight: 600; border: none; border-radius: 6px; padding: 7px 6px; cursor: pointer; margin-left: auto; margin-right: 5px;">바로제출</button>
+              <button id="quickSubmitBtn">바로제출</button>
               <button id="omrSubmitBtn" class="submit-btn">제출</button>
           </div>
-          
           <div id="omr-list"></div>
       </div>
   </div>
 
-  <div id="result"></div>
+  <div id="modal-overlay" class="hidden">
+      <div id="modal-content">
+          <div id="modal-body">
+              </div>
+          <button onclick="closeModal()" class="close-modal-btn">닫기</button>
+      </div>
+  </div>
 
   <script type="module" src="랜덤_PC.js"></script>
 </body>
