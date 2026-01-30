@@ -208,49 +208,71 @@ document.getElementById("quickSubmitBtn").onclick = () => submitQuiz(true);
 
 initApp();
 
-// 1. 이탈 방지 핸들러 (아이폰/PC 공용)
+// 1. 이탈 방지 핸들러
 function handleBeforeUnload(e) {
     e.preventDefault();
-    // iOS Safari는 이 값이 빈 문자열이라도 명시적으로 할당되어야 팝업을 띄웁니다.
     e.returnValue = ''; 
     return '';
 }
 
-// 2. 이탈 방지 활성화 함수
+// 2. [추가] 아이폰 Safari 전용 대응 (pagehide)
+// Safari는 새로고침 시 beforeunload보다 pagehide가 더 안정적으로 호출됩니다.
+function handlePageHide(e) {
+    // 사용자가 답을 작성 중이었다면 로컬 스토리지에 임시 저장 (보험)
+    localStorage.setItem('temp_answers', JSON.stringify(answers));
+}
+
 function enableExitPrevention() {
     window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('pagehide', handlePageHide); // iOS 대응 추가
     
-    // [아이폰 대응] 뒤로가기 버튼 클릭 시 이탈 방지 (History API)
+    // 뒤로가기 방지
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function() {
         if (confirm("시험을 종료하시겠습니까? 작성 중인 답안이 저장되지 않습니다.")) {
             disableExitPrevention();
             window.history.back();
         } else {
-            // 취소 시 현재 페이지 유지
             window.history.pushState(null, null, window.location.href);
         }
     };
 }
 
-// 3. 이탈 방지 해제 함수
 function disableExitPrevention() {
     window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.removeEventListener('pagehide', handlePageHide);
     window.onpopstate = null;
+    localStorage.removeItem('temp_answers'); // 정상 제출 시 임시 데이터 삭제
 }
 
-// 4. 앱 초기화 시 활성화
+// 3. 앱 초기화 및 터치 권한
 enableExitPrevention();
-
-// 5. 아이폰 특성 대응: 화면 터치 시 브라우저 권한 활성화
 window.addEventListener('touchstart', () => {}, { once: true });
 
-// 6. 제출 시 로직 (기존 submitQuiz 래핑)
+// 4. [보너스] 만약 새로고침 되어버렸을 때, 기존 답안 불러오기 (initApp 마지막에 추가 권장)
+function restoreAnswers() {
+    const saved = localStorage.getItem('temp_answers');
+    if (saved) {
+        const savedAnswers = JSON.parse(saved);
+        savedAnswers.forEach((val, idx) => {
+            if (val !== -1) {
+                // 저장된 답이 있다면 OMR과 라디오 버튼에 적용
+                selectFromOMR(idx, val);
+            }
+        });
+    }
+}
+
+// 제출 로직 래핑
 const originalSubmitQuiz = submitQuiz;
 window.submitQuiz = function(isQuick) {
-    // 미풀이 문제가 없고 실제로 제출을 진행할 때만 이탈 방지 해제
     if (isQuick || !answers.includes(-1)) {
         disableExitPrevention();
     }
     originalSubmitQuiz(isQuick);
+};
+
+// 페이지 로드 시 복구 실행 (코드 맨 끝에 추가)
+window.onload = () => {
+    restoreAnswers();
 };
