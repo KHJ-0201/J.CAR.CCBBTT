@@ -498,9 +498,29 @@ body.dark-mode #retryBtn {
 
     .omr-options-wrapper { display: none !important; }
 
-    /* 5. 메인 본문 및 퀴즈 레이아웃 */
+    /* 5. 메인 본문 및 퀴즈 레이아웃 - 클릭 방해 없는 최종 보정 */
     #main-container { flex-direction: column; width: 100%; margin: 0; }
     #quiz-wrapper { width: 100% !important; padding: 15px 10px !important; border-radius: 0; }
+    
+    .question { 
+        margin-bottom: 30px; 
+        padding: 15px; 
+        border-bottom: 1px solid #eee; 
+        position: relative; 
+        
+        /* 🚀 핵심: 투명한 테두리를 위쪽에 만들어 스크롤 위치를 확보합니다. */
+        /* 이 수치가 OMR 카드 밑으로 밀어내는 '스크롤 여유분'입니다. */
+        border-top: 180px solid transparent; 
+        /* 테두리 때문에 밀려난 만큼 마진을 깎아 레이아웃을 유지합니다. */
+        margin-top: -180px; 
+        
+        /* 배경색이 위쪽 테두리까지 침범하지 않도록 설정 */
+        background-clip: padding-box;
+    }
+
+    /* 가상 요소 ::before는 이제 필요 없으므로 삭제하거나 아래처럼 초기화하세요. */
+    .question::before { content: none !important; }
+
     .q-title { font-size: 1.05rem !important; line-height: 1.4; margin-bottom: 12px; }
     .options label { padding: 10px !important; font-size: 0.95rem !important; margin-bottom: 8px !important; }
 }
