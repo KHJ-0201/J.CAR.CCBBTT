@@ -367,3 +367,92 @@ body.dark-mode #retryBtn {
     background-color: #a61d24;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
+
+/* ===========================
+    모바일 최적화: 4행 20열 가로형 OMR
+=========================== */
+@media (max-width: 768px) {
+    body {
+        /* 상단바(30) + 상태바(50) + 슬림OMR(약 60) 여백 */
+        padding-top: 145px !important; 
+    }
+
+    #main-container {
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+    }
+
+    /* 1. OMR 카드를 아주 얇은 띠 형태로 상단 고정 */
+    #omr-card {
+        position: fixed !important;
+        top: 80px !important; 
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 60px !important; /* 높이를 확 줄임 */
+        z-index: 1200;
+        background: var(--card-bg);
+        border-radius: 0;
+        border-bottom: 2px solid var(--status-border);
+        padding: 4px !important;
+        overflow: hidden !important; /* 스크롤 방지 */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    #omr-card .omr-header {
+        display: none !important;
+    }
+
+    /* 2. 4행 20열 그리드 설정 (80문제) */
+    #omr-list {
+        display: grid !important;
+        grid-template-columns: repeat(20, 1fr) !important; /* 가로 20열 */
+        grid-template-rows: repeat(4, 1fr) !important;    /* 세로 4행 */
+        /* 번호가 왼쪽에서 오른쪽으로 흐르게 설정 */
+        grid-auto-flow: row !important; 
+        gap: 2px !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* 3. 번호 타일 디자인 (가로로 긴 칩 형태) */
+    .omr-item {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .omr-q-num {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 10px !important;
+        font-size: 0.5rem !important; /* 숫자가 아주 작게 표시됨 */
+        border-radius: 1px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 1px solid var(--option-border) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    /* 4. 상태별 색상 (작은 칸에서도 잘 보이도록) */
+    .omr-item.answered .omr-q-num {
+        background-color: #1a73e8 !important;
+        color: white !important;
+        border-color: #1a73e8 !important;
+    }
+
+    /* 보기 선택 버튼 숨김 */
+    .omr-options-wrapper {
+        display: none !important;
+    }
+
+    /* 5. 하단 퀴즈 영역 여백 최적화 */
+    #quiz-wrapper {
+        width: 100% !important;
+        padding: 15px 10px !important;
+    }
+}
