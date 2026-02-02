@@ -92,7 +92,6 @@ h1 {
 /* 투명한 버튼 스타일 */
 .random-card2 {
     background-color: transparent !important; /* 배경 투명 */
-    border: 2px dashed #ccc; /* 점선 테두리로 '개발중' 느낌 강조 (선택 사항) */
     color: rgba(255, 255, 255, 0.5); /* 글자색도 살짝 투명하게 */
     box-shadow: none !important; /* 그림자 제거 */
     cursor: default; /* 클릭 불가능한 느낌을 주려면 default, 가능하면 pointer */
