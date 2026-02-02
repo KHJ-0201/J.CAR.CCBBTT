@@ -371,11 +371,11 @@ body.dark-mode #retryBtn {
 /* ============================================================
     모바일 환경 최종 최적화 (768px 이하)
     - 80문항 번호판 + 조작 버튼 통합 상단 고정
-    - 요소 간 겹침 방지 및 터치 영역 최적화
+    - 요소 간 겹침 방지 및 터치 영역 최적화 (Border-top 간섭 제거)
 ============================================================ */
 @media (max-width: 768px) {
     body {
-        /* 상단바(30)+상태바(45)+OMR카드(약 130) 높이에 맞춘 여백 */
+        /* 상단바(30)+상태바(45)+OMR카드(약 135) 높이에 맞춘 여백 */
         padding-top: 215px !important; 
     }
 
@@ -387,7 +387,7 @@ body.dark-mode #retryBtn {
     }
 
     #status .page-title {
-        font-size: 0.85rem !important; /* 제목 크기 축소 */
+        font-size: 0.85rem !important;
         max-width: 30% !important;
         white-space: nowrap;
         overflow: hidden;
@@ -409,11 +409,11 @@ body.dark-mode #retryBtn {
     /* 2. OMR 카드: 80문항 + 조작 버튼 통합 배치 */
     #omr-card {
         position: fixed !important;
-        top: 75px !important; /* 상태바 바로 아래 */
+        top: 75px !important;
         left: 0 !important;
         right: 0 !important;
         width: 100% !important;
-        height: 135px !important; /* 번호판(90) + 버튼(45) */
+        height: 135px !important; 
         z-index: 1200;
         background: var(--card-bg);
         border-radius: 0;
@@ -422,23 +422,35 @@ body.dark-mode #retryBtn {
         overflow: hidden !important;
         display: flex;
         flex-direction: column;
-        gap: 8px; /* 번호판과 버튼 사이 간격 */
+        gap: 8px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+
+        /* 🚀 중요: 카드 배경이 터치를 가로막지 않도록 설정 */
+        pointer-events: none !important;
     }
 
-    /* 3. OMR 버튼부 (밀기, 제출 버튼들) 복구 및 정렬 */
+    /* 3. OMR 내부 요소만 터치 허용 */
+    #omr-list, 
+    #omr-card .omr-header, 
+    .global-select-wrapper, 
+    #omrSubmitBtn, 
+    #quickSubmitBtn, 
+    .omr-q-num {
+        pointer-events: auto !important;
+    }
+
     #omr-card .omr-header {
         display: flex !important;
         border: none !important;
         padding: 0 !important;
         margin: 0 !important;
-        order: 2; /* 번호판 아래로 배치 */
+        order: 2;
         justify-content: space-between;
         align-items: center;
         width: 100%;
     }
 
-    #omr-card .omr-title { display: none !important; } /* OMR 글자 숨김 */
+    #omr-card .omr-title { display: none !important; }
 
     .global-select-wrapper {
         display: flex !important;
@@ -472,7 +484,7 @@ body.dark-mode #retryBtn {
         gap: 3px 2px !important;
         width: 100% !important;
         height: 85px !important;
-        order: 1; /* 상단 배치 */
+        order: 1;
     }
 
     .omr-item {
@@ -498,7 +510,7 @@ body.dark-mode #retryBtn {
 
     .omr-options-wrapper { display: none !important; }
 
-    /* 5. 메인 본문 및 퀴즈 레이아웃 - 클릭 방해 없는 최종 보정 */
+    /* 5. 메인 본문 및 퀴즈 레이아웃 - 클릭 방해 요소 제거 및 보정 */
     #main-container { flex-direction: column; width: 100%; margin: 0; }
     #quiz-wrapper { width: 100% !important; padding: 15px 10px !important; border-radius: 0; }
     
@@ -508,19 +520,26 @@ body.dark-mode #retryBtn {
         border-bottom: 1px solid #eee; 
         position: relative; 
         
-        /* 🚀 핵심: 투명한 테두리를 위쪽에 만들어 스크롤 위치를 확보합니다. */
-        /* 이 수치가 OMR 카드 밑으로 밀어내는 '스크롤 여유분'입니다. */
-        border-top: 180px solid transparent; 
-        /* 테두리 때문에 밀려난 만큼 마진을 깎아 레이아웃을 유지합니다. */
-        margin-top: -180px; 
+        /* 🚀 [테스트 및 해결] 범인으로 의심되는 border-top 제거 */
+        border-top: 0 !important; 
+        margin-top: 0 !important; 
         
-        /* 배경색이 위쪽 테두리까지 침범하지 않도록 설정 */
-        background-clip: padding-box;
+        /* 🚀 대신 터치 간섭이 없는 '스크롤 마진' 사용 (상단바+상태바+OMR 높이만큼) */
+        scroll-margin-top: 220px;
+        
+        background-clip: border-box;
     }
 
-    /* 가상 요소 ::before는 이제 필요 없으므로 삭제하거나 아래처럼 초기화하세요. */
     .question::before { content: none !important; }
 
     .q-title { font-size: 1.05rem !important; line-height: 1.4; margin-bottom: 12px; }
-    .options label { padding: 10px !important; font-size: 0.95rem !important; margin-bottom: 8px !important; }
+    
+    /* 보기 레이아웃: 클릭을 확실히 보장하기 위해 레이어 순서 미세 조정 */
+    .options label { 
+        padding: 10px !important; 
+        font-size: 0.95rem !important; 
+        margin-bottom: 8px !important; 
+        position: relative;
+        z-index: 10; /* 바닥 레이어보다 위로 올림 */
+    }
 }

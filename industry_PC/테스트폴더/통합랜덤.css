@@ -1,0 +1,57 @@
+:root {
+    --bg-color: #f4f6fa; --card-bg: #ffffff; --text-color: #222;
+    --status-bg: #ffffff; --status-border: #1f3b73;
+    --option-bg: #f9fafc; --option-border: #d9e2ef; --nav-bg: #1f3b73;
+}
+body.dark-mode {
+    --bg-color: #121212; --card-bg: #1e1e1e; --text-color: #e0e0e0;
+    --status-bg: #252525; --status-border: #3a5ba0;
+    --option-bg: #2a2a2a; --option-border: #444444; --nav-bg: #000000;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-color); padding-top: 105px; min-height: 100vh; }
+
+/* 메뉴 화면 스타일 */
+.menu-grid { display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 20px; }
+.set-select-btn {
+    padding: 25px; font-size: 1.1rem; font-weight: bold; border: 2px solid var(--status-border);
+    border-radius: 12px; background: var(--card-bg); color: var(--text-color); cursor: pointer; transition: 0.3s;
+}
+.set-select-btn:hover { background: var(--status-border); color: white; transform: translateY(-3px); }
+.all-random-btn { border-color: #e67e22; color: #e67e22; }
+
+/* 상단바 및 레이아웃 */
+#top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1100; height: 35px; background: var(--nav-bg); display: flex; justify-content: center; align-items: center; gap: 10px; }
+#top-nav button { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 2px 15px; border-radius: 4px; cursor: pointer; }
+#status { position: fixed; top: 35px; left: 0; right: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; height: 60px; background: var(--status-bg); border-bottom: 3px solid var(--status-border); padding: 0 20px; }
+.page-title { font-size: 1.5rem; color: var(--status-border); }
+
+#main-container { display: flex; width: 95%; max-width: 1400px; margin: 20px auto; gap: 20px; align-items: flex-start; }
+#quiz-wrapper { flex: 1; background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+#omr-card { position: sticky; top: 110px; width: 350px; background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); max-height: 80vh; overflow-y: auto; }
+
+/* 문제 스타일 */
+.question { margin-bottom: 40px; padding: 15px; border-bottom: 1px solid #eee; position: relative; scroll-margin-top: 120px; }
+.options label { display: block; background: var(--option-bg); border: 2px solid var(--option-border); border-radius: 8px; padding: 12px; cursor: pointer; margin-bottom: 8px; transition: 0.2s; }
+.options label.selected { background: #e0f7ff !important; border-color: #00bcd4; color: #000; }
+.explain { margin-top: 15px; background: #fff8f8; border-left: 5px solid #ff6b6b; padding: 15px; border-radius: 6px; display: none; color: #222; }
+
+/* OMR 아이템 */
+#omr-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-top: 10px; }
+.omr-item { display: flex; align-items: center; font-size: 0.8rem; }
+.omr-q-num { width: 30px; height: 25px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-right: 5px; cursor: pointer; }
+.omr-item.answered .omr-q-num { background: #007bff; color: white; }
+.omr-option { width: 20px; height: 20px; border: 1px solid #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 3px; cursor: pointer; font-size: 0.7rem; }
+.omr-option.selected { background: #1f3b73; color: white; }
+
+/* 모달 */
+#modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+#modal-content { background: var(--card-bg); padding: 25px; border-radius: 15px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
+.hidden { display: none !important; }
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    #main-container { flex-direction: column; }
+    #omr-card { position: fixed; top: 95px; left: 0; width: 100%; height: auto; z-index: 1001; border-radius: 0; max-height: 150px; }
+    body { padding-top: 250px; }
+}

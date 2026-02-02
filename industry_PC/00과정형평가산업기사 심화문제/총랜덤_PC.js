@@ -220,12 +220,19 @@ function renderGlobalBtns() {
 window.scrollToQuestion = (i) => {
     const q = document.getElementsByClassName("question")[i];
     if (q) {
-        const offset = 110; // 상단바 높이 고려
+        // 모바일(768px 이하)일 때는 OMR 카드 높이만큼(220px) 더 내려주고, PC는 기존 110px 유지
+        const isMobile = window.innerWidth <= 768;
+        const offset = isMobile ? 220 : 110; 
+
         const bodyRect = document.body.getBoundingClientRect().top;
         const elementRect = q.getBoundingClientRect().top;
         const elementPosition = elementRect - bodyRect;
         const offsetPosition = elementPosition - offset;
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        
+        window.scrollTo({ 
+            top: offsetPosition, 
+            behavior: 'smooth' 
+        });
     }
 };
 
