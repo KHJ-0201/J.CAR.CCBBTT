@@ -11,9 +11,6 @@ let lastQuizTitle = "";
 let adminClickCount = 0;
 let adminClickTimer = null;
 
-// [기존 변수 설정 구역 아래에 추가]
-let isDarkMode = localStorage.getItem("theme") === "dark";
-
 // [유틸리티] 문제와 보기를 무작위로 섞어주는 공통 함수
 function shuffleLogic(questions) {
     const newQuestions = JSON.parse(JSON.stringify(questions)); 
@@ -31,7 +28,6 @@ function shuffleLogic(questions) {
 
 // [실행] 페이지 시작 시 설정
 function init() {
-    applyTheme();
     renderMenu();
     
     // 브라우저 뒤로가기 감지 및 이탈 방지
@@ -122,6 +118,8 @@ function renderMenu() {
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
 ${roundKeys.length > 0 ? roundKeys.map(roundName => {
     const roundWrongs = allWrongNotes[roundName];
+    // 해당 회차에서 가장 많이 틀린 문제의 횟수나, 전체 틀린 문항 합계 등 취향껏 표시 가능
+    // 여기서는 "저장된 문항 수"를 유지하되, 개별 문제 렌더링 시 횟수를 보여주도록 로직 준비
     const count = roundWrongs.length;
     return `
         <div style="display: flex; align-items: stretch; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
@@ -175,16 +173,11 @@ window.toggleHistoryList = () => {
     }
 };
 
-// [기능] 퀴즈 인터페이스 정리 (메인 화면 복귀 시 모바일 제어바 제거 추가)
+// [기능] 퀴즈 인터페이스 정리
 function clearQuizInterface(pushBack = true) {
     document.getElementById("quiz-menu").style.display = "block";
     document.getElementById("quiz-wrapper").style.display = "none";
     document.getElementById("omr-card").style.display = "none";
-    
-    // 모바일 제어바 숨김
-    const mBar = document.querySelector(".mobile-control-bar");
-    if (mBar) mBar.classList.remove("active");
-
     if (timerInterval) clearInterval(timerInterval);
     document.getElementById("main-title").innerHTML = "문제 은행";
     if (pushBack && history.state && history.state.page === 'quiz') {
@@ -200,7 +193,7 @@ window.retryCurrentQuiz = () => {
     startQuizProcess(lastQuizTitle);
 };
 
-// [수정] 퀴즈 시작 프로세스 (모바일 제어바 노출 추가)
+// [수정] 퀴즈 시작 프로세스 (OMR 표시 보장 및 드래그 방지 스타일 추가)
 function startQuizProcess(title) {
     lastQuizTitle = title;
     if (!(history.state && history.state.page === 'quiz')) {
@@ -210,12 +203,6 @@ function startQuizProcess(title) {
     document.getElementById("quiz-wrapper").style.display = "block";
     document.getElementById("omr-card").style.display = "block"; 
     
-    // 모바일 제어바 활성화
-    const mBar = document.querySelector(".mobile-control-bar");
-    if (mBar && window.innerWidth <= 768) {
-        mBar.classList.add("active");
-    }
-
     document.getElementById("main-title").innerHTML = `
         <div style="display:flex; align-items:center; width:100%; justify-content: space-between; user-select: none;">
             <div style="display:flex; align-items:center;">
@@ -228,116 +215,45 @@ function startQuizProcess(title) {
     startTimer();
 }
 
-// [1] 바로 제출 (확인 없이 즉시 실행)
-window.directSubmit = () => {
-    processSubmit();
-};
-
-// [2] 일반 제출 (미풀이 체크 및 스크롤 이동 기능 포함)
 window.submitQuiz = () => {
-    const unAnsweredIdx = userAnswers.findIndex(a => a === -1);
+    clearInterval(timerInterval);
+    if (!confirm("제출하시겠습니까?")) return startTimer();
     
-    if (unAnsweredIdx !== -1) {
-        if (confirm(`아직 풀지 않은 문제가 있습니다. (${unAnsweredIdx + 1}번 등)\n이대로 제출하시겠습니까? (미풀이는 오답 처리)`)) {
-            processSubmit();
-        } else {
-            window.scrollToQ(unAnsweredIdx);
-            const targetQ = document.getElementById(`q-${unAnsweredIdx}`);
-            if (targetQ) {
-                const originalBg = targetQ.style.backgroundColor;
-                targetQ.style.backgroundColor = isDarkMode ? "#4a1d1d" : "#fff0f0";
-                setTimeout(() => { targetQ.style.backgroundColor = originalBg; }, 1500);
-            }
-        }
-    } else {
-        if (confirm("모든 문제를 풀었습니다. 제출하시겠습니까?")) {
-            processSubmit();
-        }
-    }
-};
-
-// [3] 실제 채점 프로세스 통합 함수
-function processSubmit() {
-    if (timerInterval) clearInterval(timerInterval);
     let score = 0;
     let wrongQuestions = []; 
-
     currentQuestions.forEach((q, i) => {
         const isCorrect = userAnswers[i] === q.answer;
-        const qBox = document.getElementById(`q-${i}`);
+        if (isCorrect) score++;
+        else wrongQuestions.push({ ...q, saveDate: new Date().getTime() });
         
-        if (qBox) {
-            const oldIcon = qBox.querySelector('.result-icon');
-            if (oldIcon) oldIcon.remove();
-
-            const icon = document.createElement('span');
-            icon.className = 'result-icon';
-            
-            if (isCorrect) {
-                score++;
-                qBox.classList.add('correct');
-                qBox.classList.remove('wrong');
-                icon.innerHTML = '✓';
-            } else {
-                wrongQuestions.push({ ...q, saveDate: new Date().getTime() });
-                qBox.classList.add('wrong');
-                qBox.classList.remove('correct');
-                icon.innerHTML = '✕';
-            }
-            
-            const qTitle = qBox.querySelector('.q-title strong');
-            if (qTitle) qTitle.prepend(icon);
-        }
-        
+        document.getElementById(`q-${i}`).style.borderLeft = isCorrect ? "5px solid green" : "5px solid red";
         const omrNum = document.querySelector(`#omr-item-${i} .omr-q-num`);
         if (omrNum) {
-            const darkModeActive = document.body.classList.contains("dark-mode");
-            if (darkModeActive) {
-                omrNum.style.setProperty('background-color', isCorrect ? '#1b4332' : '#4a1d1d', 'important');
-                omrNum.style.setProperty('color', isCorrect ? '#75f0a0' : '#ff8585', 'important');
-            } else {
-                omrNum.style.setProperty('background-color', isCorrect ? '#e6ffed' : '#ffeeee', 'important'); 
-                omrNum.style.setProperty('color', isCorrect ? "#28a745" : "#dc3545", 'important');
-            }
+            omrNum.style.backgroundColor = isCorrect ? "#e6ffed" : "#ffeeee"; 
+            omrNum.style.color = isCorrect ? "green" : "red";
         }
-        
-        const explainBox = document.getElementById(`explain-${i}`);
-        if (explainBox) explainBox.style.display = "block";
+        document.getElementById(`explain-${i}`).style.display = "block";
     });
 
     saveStudyRecord(lastQuizTitle, score, currentQuestions.length);
     if (wrongQuestions.length > 0) saveWrongNotes(wrongQuestions);
 
     const percent = Math.round((score / currentQuestions.length) * 100);
+
     const scoreArea = document.getElementById("header-score-area");
-    if (scoreArea) {
-        scoreArea.style.display = "flex";
-        scoreArea.innerHTML = `
-            <span style="background: #ffeb3b; color: #1f3b73; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">${percent}점</span>
-            <button onclick="retryCurrentQuiz()" style="margin-left:8px; background: white; border: 1px solid #1f3b73; color: #1f3b73; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer;">다시풀기</button>
-        `;
-    }
+    scoreArea.style.display = "flex";
+    scoreArea.innerHTML = `
+        <span style="background: #ffeb3b; color: #1f3b73; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; user-select: none;">${percent}점</span>
+        <button onclick="retryCurrentQuiz()" style="background: white; border: 1px solid #1f3b73; color: #1f3b73; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; user-select: none;">다시풀기</button>
+    `;
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
     renderMenu(); 
-}
-
-function applyTheme() {
-    const btn = document.getElementById("dark-mode-toggle");
-    if (isDarkMode) {
-        document.body.classList.add("dark-mode");
-        if (btn) btn.innerHTML = "☀️ 라이트모드";
-    } else {
-        document.body.classList.remove("dark-mode");
-        if (btn) btn.innerHTML = "🌙 다크모드";
-    }
-}
-
-window.toggleDarkMode = () => {
-    isDarkMode = !isDarkMode;
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-    applyTheme();
 };
 
+// --- 공통 로직 및 추가 기능 ---
+
+// [성적 통계] 그래프 그리기 및 모달 열기 (수정본)
 window.showStatsChart = () => {
     const history = JSON.parse(localStorage.getItem("studyHistory")) || [];
     const chartContainer = document.getElementById("chart-container");
@@ -365,6 +281,7 @@ window.showStatsChart = () => {
         `;
     }).join('');
 
+    // 히든 버튼 위치: 모달 내 제목(최근 성적 추이)을 5번 누르면 작동하도록 연결
     const titleElement = modal.querySelector("strong");
     if (titleElement) {
         titleElement.onclick = window.handleAdminClick;
@@ -377,6 +294,7 @@ window.showStatsChart = () => {
     modal.style.display = "flex";
 };
 
+// 히든 초기화 기능 (최근 5회 평균 박스 클릭 시 작동)
 window.handleAdminClick = (event) => {
     event.stopPropagation(); 
     adminClickCount++;
@@ -387,7 +305,7 @@ window.handleAdminClick = (event) => {
         if (confirm("모든 학습 기록(성적 통계)을 초기화하시겠습니까?")) { 
             localStorage.removeItem("studyHistory"); 
             alert("기록이 초기화되었습니다.");
-            location.reload();
+            location.reload(); // 깔끔하게 전체 새로고침
         }
         adminClickCount = 0;
     }
@@ -395,6 +313,17 @@ window.handleAdminClick = (event) => {
 
 window.closeStatsChart = () => {
     document.getElementById("stats-modal").style.display = "none";
+};
+
+// 관리자 클릭 및 성적 저장
+window.handleAdminClick = (event) => {
+    event.stopPropagation(); adminClickCount++;
+    if (adminClickTimer) clearTimeout(adminClickTimer);
+    adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
+    if (adminClickCount === 5) {
+        if (confirm("기록을 초기화할까요?")) { localStorage.removeItem("studyHistory"); renderMenu(); }
+        adminClickCount = 0;
+    }
 };
 
 window.saveStudyRecord = (roundName, score, total) => {
@@ -410,6 +339,7 @@ window.saveStudyRecord = (roundName, score, total) => {
     localStorage.setItem("studyHistory", JSON.stringify(history.slice(0, 30)));
 };
 
+// 퀴즈 시작 및 랜덤 로직
 window.startQuiz = (id) => {
     const set = quizSets.find(s => s.id === id);
     if (!set) return;
@@ -436,45 +366,35 @@ window.startWrongNote = (name) => {
 
 function renderQuiz() {
     const container = document.getElementById("quiz");
-    const quizContent = currentQuestions.map((q, i) => {
+    container.innerHTML = currentQuestions.map((q, i) => {
+        // [추가] 2회 이상 틀린 문제일 경우 배지 생성
         const wrongBadge = (q.wrongCount && q.wrongCount >= 2) 
             ? `<span style="background:#dc3545; color:white; padding:2px 6px; border-radius:4px; font-size:0.7rem; margin-right:5px; vertical-align:middle; display:inline-block;">${q.wrongCount}회 오답</span>` 
             : "";
 
         return `
             <div class="question" id="q-${i}" style="margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
-                <div class="round-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">${q.fromRound || lastQuizTitle}</div>
-                <div class="q-title">
+                <div class="round-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px; user-select: text;">${q.fromRound || lastQuizTitle}</div>
+                <div class="q-title" style="user-select: text;">
                     <strong>${i + 1}. ${wrongBadge}${q.question}</strong>
                 </div>
-                <div class="options" style="margin-top:15px;">
+                <div class="options" style="margin-top:15px; user-select: text;">
                     ${q.options.map((opt, j) => `
-                        <label id="label-${i}-${j}" style="display:block; margin-bottom:8px; padding:12px; border:1px solid var(--option-border); border-radius:8px; cursor:pointer;">
+                        <label id="label-${i}-${j}" style="display:block; margin-bottom:8px; padding:12px; border:1px solid #ddd; border-radius:8px; cursor:pointer; background: #fff;">
                             <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i}, ${j})" style="margin-right:8px;"> ${opt}
                         </label>
                     `).join('')}
                 </div>
-                <div class="explain" id="explain-${i}" style="display:none; margin-top:15px; padding:15px; border-left:5px solid var(--status-border);">
+                <div class="explain" id="explain-${i}" style="display:none; margin-top:15px; padding:15px; background:#f0f8ff; border-left:5px solid #1f3b73; user-select: text;">
                     <strong>정답: ${q.options[q.answer]}</strong><br>
                     <small>${q.explain || '해설이 없습니다.'}</small>
                 </div>
             </div>
         `;
     }).join('');
-
-    const finalSubmitHtml = `
-        <div class="quiz-final-submit-area">
-            <button type="button" class="quiz-final-submit-btn" onclick="submitQuiz()">
-                📝 시험 제출하고 채점하기
-            </button>
-        </div>
-    `;
-
-    container.innerHTML = quizContent + finalSubmitHtml;
     userAnswers = Array(currentQuestions.length).fill(-1);
     window.scrollTo(0, 0);
-    renderOMR(); 
-    updateStatus();
+    renderOMR(); updateStatus();
 }
 
 function saveWrongNotes(newWrongs) {
@@ -497,6 +417,12 @@ window.clearRound = (name) => {
     renderMenu();
 };
 
+window.clearAllWrong = () => {
+    if (!confirm("초기화?")) return;
+    localStorage.removeItem("myWrongNotesV2");
+    renderMenu();
+};
+
 function updateStatus() {
     const done = userAnswers.filter(a => a !== -1).length;
     const remaining = document.getElementById("remaining");
@@ -506,48 +432,11 @@ function updateStatus() {
 window.selectAnswer = (qIdx, aIdx) => {
     userAnswers[qIdx] = aIdx;
     updateStatus();
-
-    const darkModeActive = document.body.classList.contains("dark-mode");
-
-    document.querySelectorAll(`#q-${qIdx} label`).forEach(l => {
-        if (darkModeActive) {
-            l.style.setProperty('background', '#2a2a2a', 'important');
-            l.style.setProperty('color', '#e0e0e0', 'important');
-            l.style.setProperty('border-color', '#444', 'important');
-        } else {
-            l.style.setProperty('background', '#f9fafc', 'important');
-            l.style.setProperty('color', '#222', 'important');
-            l.style.setProperty('border-color', '#d9e2ef', 'important');
-        }
-    });
-
-    const selectedLabel = document.getElementById(`label-${qIdx}-${aIdx}`);
-    if (selectedLabel) {
-        if (darkModeActive) {
-            selectedLabel.style.setProperty('background', '#1a3a5f', 'important');
-            selectedLabel.style.setProperty('color', '#ffffff', 'important');
-            selectedLabel.style.setProperty('border-color', '#3a86ff', 'important');
-        } else {
-            selectedLabel.style.setProperty('background', '#e0f7ff', 'important');
-            selectedLabel.style.setProperty('color', '#000000', 'important');
-            selectedLabel.style.setProperty('border-color', '#00bcd4', 'important');
-        }
-    }
-
-    document.querySelectorAll(`#omr-item-${qIdx} .omr-option`).forEach(opt => { 
-        opt.style.background = darkModeActive ? '#1e1e1e' : 'white'; 
-    });
+    document.querySelectorAll(`#q-${qIdx} label`).forEach(l => l.style.background = '#fff');
+    document.getElementById(`label-${qIdx}-${aIdx}`).style.background = '#e0f7ff';
+    document.querySelectorAll(`#omr-item-${qIdx} .omr-option`).forEach(opt => { opt.style.background = 'white'; opt.style.color = 'black'; });
     const sel = document.getElementById(`omr-opt-${qIdx}-${aIdx}`);
-    if (sel) { 
-        sel.style.background = darkModeActive ? '#3a5ba0' : '#1f3b73'; 
-        sel.style.color = 'white'; 
-    }
-
-    if (window.innerWidth <= 768) {
-        const omr = document.getElementById("omr-card");
-        if (omr.classList.contains("active")) toggleMobileOMR();
-    }
-
+    if (sel) { sel.style.background = '#1f3b73'; sel.style.color = 'white'; }
     if (qIdx < currentQuestions.length - 1) {
         setTimeout(() => {
             const next = document.getElementById(`q-${qIdx + 1}`);
@@ -581,6 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("submitBtn");
     if (btn) btn.onclick = window.submitQuiz;
     
+    // 모달 바깥 클릭 시 닫기
     window.addEventListener('click', (e) => {
         const modal = document.getElementById("stats-modal");
         if (e.target === modal) modal.style.display = "none";
@@ -602,18 +492,6 @@ window.toggleWrongNoteList = () => {
     const arrow = document.getElementById("wrong-arrow");
     if (list.style.display === "none") { list.style.display = "block"; arrow.style.transform = "rotate(180deg)"; }
     else { list.style.display = "none"; arrow.style.transform = "rotate(0deg)"; }
-};
-
-window.toggleMobileOMR = () => {
-    const omr = document.getElementById("omr-card");
-    const overlay = document.getElementById("omr-overlay");
-    const toggleBtn = document.getElementById("mobile-omr-toggle");
-
-    const isActive = omr.classList.toggle("active");
-    overlay.classList.toggle("active");
-
-    toggleBtn.innerHTML = isActive ? "✕" : "📝";
-    toggleBtn.style.background = isActive ? "#dc3545" : "#1f3b73";
 };
 
 init();

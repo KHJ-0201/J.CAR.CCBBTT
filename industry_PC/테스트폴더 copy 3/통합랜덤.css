@@ -1,0 +1,126 @@
+/* [1] 변수 및 테마 설정 (기존 유지) */
+:root {
+    --bg-color: #f4f6fa; --card-bg: #ffffff; --text-color: #222;
+    --status-bg: #ffffff; --status-border: #1f3b73;
+    --option-bg: #f9fafc; --option-border: #d9e2ef; --nav-bg: #1f3b73;
+}
+body.dark-mode {
+    --bg-color: #121212; --card-bg: #1e1e1e; --text-color: #e0e0e0;
+    --status-bg: #252525; --status-border: #3a5ba0;
+    --option-bg: #2a2a2a; --option-border: #444444; --nav-bg: #000000;
+}
+
+/* [2] 다크모드 세부 가독성 (중복 제거 통합) */
+body.dark-mode .q-title { color: #ffffff; }
+body.dark-mode .omr-title { color: #8ab4f8; }
+body.dark-mode .omr-q-num { background-color: #333; color: #aaaaaa; }
+body.dark-mode .omr-option { border-color: #555; background-color: #252525; }
+body.dark-mode .omr-item.answered .omr-q-num { background-color: #1a73e8 !important; color: #fff !important; }
+body.dark-mode .omr-option.selected { background-color: #8ab4f8; color: #000; border-color: #8ab4f8; }
+
+/* [3] 레이아웃 초기화 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-color); padding-top: 105px; min-height: 100vh; }
+
+/* [4] 상단 영역 */
+#top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1100; height: 30px; background: var(--nav-bg); display: flex; justify-content: center; align-items: center; gap: 15px; }
+#top-nav button { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 2px 20px; border-radius: 4px; cursor: pointer; }
+#status { position: fixed; top: 30px; left: 0; right: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; height: 50px; background: var(--status-bg); border-bottom: 3px solid var(--status-border); padding: 0 20px; }
+#status .page-title { font-size: 1.5rem; font-weight: 700; color: #1f3b73; }
+
+/* [5] 메인 컨테이너 */
+#main-container { display: flex; width: 95%; max-width: 1450px; margin: 10px auto; gap: 20px; align-items: flex-start; }
+#quiz-wrapper { flex: 1; background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+/* [6] OMR 카드 (여기서 중복 제거 및 최적화) */
+#omr-card {
+    position: sticky; 
+    top: 90px; 
+    width: 320px;           /* 3열을 위해 살짝 넓힘 */
+    background: var(--card-bg); 
+    border-radius: 12px; 
+    padding: 12px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    max-height: 85vh;       /* 화면의 85%까지 공간 확보 */
+    overflow-y: auto; 
+    flex-shrink: 0;
+}
+
+.omr-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; margin-bottom: 10px; }
+.omr-title { font-size: 0.85rem; font-weight: 700; color: #1f3b73; }
+
+/* [7] OMR 리스트 (세로 30줄 3열 핵심 로직) */
+#omr-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; 
+    grid-template-rows: repeat(30, auto) !important;
+    grid-auto-flow: column !important;  /* 아래로 먼저 채우기 */
+    gap: 0px 8px !important;            /* 상하는 붙이고 좌우는 벌림 */
+}
+
+.omr-item { display: flex; align-items: center; padding: 2px 0; height: 24px; }
+.omr-q-num {
+    background-color: #e9ecef; color: #495057; border-radius: 4px;
+    width: 25px; height: 18px; line-height: 18px; text-align: center;
+    font-size: 0.7rem; font-weight: 600; cursor: pointer; margin-right: 5px;
+}
+
+/* OMR 상태별 색상 */
+.omr-item.answered .omr-q-num { background-color: #007bff !important; color: white !important; }
+.omr-item.correct .omr-q-num { background-color: #28a745 !important; color: white !important; }
+.omr-item.wrong .omr-q-num { background-color: #dc3545 !important; color: white !important; }
+
+/* 보기 점 디자인 */
+.omr-options-wrapper { display: flex; gap: 2px; }
+.omr-option { width: 13px; height: 13px; border: 1px solid #ccc; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+.omr-option.selected { background-color: #1f3b73 !important; border-color: #1f3b73 !important; }
+
+/* [8] 문제 및 보기 스타일 (기존 유지) */
+.question { margin-bottom: 40px; padding: 15px; border-bottom: 1px solid #eee; }
+.q-title { font-size: 1.2rem; margin-top: 10px; margin-bottom: 15px; display: block; }
+.options label { display: block; background: var(--option-bg); border: 2px solid var(--option-border); border-radius: 8px; padding: 12px; cursor: pointer; margin-bottom: 8px; }
+.options label.selected { background: #e0f7ff !important; border-color: #00bcd4; }
+.options input { display: none; }
+
+/* [9] 모바일 최적화 (기존 핵심 로직 유지) */
+@media (max-width: 768px) {
+    body { padding-top: 220px !important; }
+    #omr-card { position: fixed !important; top: 75px !important; left: 0 !important; right: 0 !important; width: 100% !important; height: 140px !important; z-index: 1200; pointer-events: none !important; }
+    #omr-list, .omr-header, .omr-q-num { pointer-events: auto !important; }
+    #omr-list { grid-template-columns: repeat(5, 1fr) !important; grid-template-rows: auto !important; grid-auto-flow: row !important; height: 100px; overflow-y: auto; }
+    .omr-options-wrapper { display: none !important; }
+}
+
+/* [10] 드래그 방지 및 특정 영역 허용 설정 */
+
+/* 1. 전체 요소 드래그 방지 (UI 요소 보호) */
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* 2. 학습에 필요한 텍스트 영역만 드래그 허용 */
+/* 문제 제목(.q-title), 보기 라벨(.options label), 해설(.explain) */
+.q-title, 
+.options label, 
+.explain,
+.q-source,
+.round-name {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+/* 3. 입력창 등 기본 조작 요소는 브라우저 기본값 유지 */
+input, textarea {
+    user-select: auto;
+}
+
+/* 4. 버튼 위에서 커서가 포인터로 변할 때 텍스트가 선택되는 현상 방지 */
+button {
+    -webkit-user-select: none;
+    user-select: none;
+}
