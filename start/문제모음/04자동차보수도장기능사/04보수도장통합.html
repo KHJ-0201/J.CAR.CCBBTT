@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>정비 산업기사 마스터 CBT</title>
+    <title>보수도장 마스터 CBT</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
@@ -14,7 +14,7 @@
 
     <nav class="top-nav no-drag">
         <div class="nav-inner">
-            <h1 id="main-title" onclick="location.reload()" style="cursor:pointer">정비 산업기사</h1>
+            <h1 id="main-title" onclick="location.reload()" style="cursor:pointer">보수도장</h1>
             <div id="quiz-status-area" class="hidden status-group">
                 <span id="timer-display" class="status-badge">60:00</span>
                 <span id="progress-display" class="status-badge">
@@ -30,81 +30,71 @@
 
     <main class="container">
         <section id="home-screen" class="active-screen">
-            
-            <div class="banner-flex-row no-drag">
-                
-                <div class="dashboard glass-card">
-    <div class="stat-container">
-        <div class="stat-row">
-            <div class="stat-pill">최근: <strong id="stat-last">0</strong>점</div>
-            <div class="stat-pill">평균: <strong id="stat-avg">0</strong>점</div>
+    
+    <div class="main-sticky-wrapper">
+        
+        <div class="banner-flex-row no-drag">
+            <div class="dashboard glass-card">
+                <div class="stat-container">
+                    <div class="stat-row">
+                        <div class="stat-pill">최근: <strong id="stat-last">0</strong>점</div>
+                        <div class="stat-pill">평균: <strong id="stat-avg">0</strong>점</div>
+                    </div>
+                    <div class="dashboard-btns" style="display: flex; gap: 8px; margin-top: 10px; width: 100%;">
+                        <button class="btn-open-chart" style="flex: 1; padding: 12px 0;" onclick="openStatsModal()">성 적 통 계</button>
+                        <button class="btn-open-link" style="flex: 1; padding: 12px 0; background: #6366f1; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: 'Pretendard';" onclick="window.open('https://blog.naver.com/ddsp0201/223777941218')">블로그문제</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-panel-slim glass-card">
+                <div class="settings-flex">
+                    <div class="setting-item-mini">
+                        <label class="st-switch">
+                            <input type="checkbox" id="setting-one-by-one" onchange="toggleViewMode()">
+                            <span class="slider"></span><span class="lbl-txt">한문제씩</span>
+                        </label>
+                    </div>
+                    <div class="setting-item-mini">
+                        <label class="st-switch">
+                            <input type="checkbox" id="setting-instant-feedback" onchange="syncInstantMode(this)">
+                            <span class="slider"></span><span class="lbl-txt">즉시해설</span>
+                        </label>
+                    </div>
+                    <div class="setting-item-mini">
+                        <label class="st-switch">
+                            <input type="checkbox" id="multi-mode-chk" onchange="toggleMultiMode()">
+                            <span class="slider"></span><span class="lbl-txt">회차랜덤</span>
+                        </label>
+                    </div>
+                    <button id="btn-multi-start" class="hidden" onclick="startExam('multi')">선택 회차<br>80문제 시작</button>
+                </div>
+            </div>
         </div>
-        <div class="dashboard-btns" style="display: flex; gap: 8px; margin-top: 10px; width: 100%;">
-    <button class="btn-open-chart" 
-            style="flex: 1; padding: 12px 0;" 
-            onclick="openStatsModal()">
-        성 적 통 계
-    </button>
 
-    <button class="btn-open-link" 
-            style="flex: 1; padding: 12px 0; background: #6366f1; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: 'Pretendard';" 
-            onclick="window.open('https://www.q-net.or.kr', '_blank')">
-        큐넷 바로가기
-    </button>
-</div>
-    </div>
-</div>
+        <div class="main-action-independent no-drag">
+            <button class="btn-unified-action blue-style" onclick="startExam('full')">🎲 전체 범위 랜덤 풀기 (80문항)</button>
+        </div>
 
-                <div class="settings-panel-slim glass-card">
-                    <div class="settings-flex">
-                        <div class="setting-item-mini">
-                            <label class="st-switch">
-                                <input type="checkbox" id="setting-one-by-one" onchange="toggleViewMode()">
-                                <span class="slider"></span><span class="lbl-txt">한문제씩</span>
-                            </label>
-                        </div>
-                        <div class="setting-item-mini">
-                            <label class="st-switch">
-                                <input type="checkbox" id="setting-instant-feedback" onchange="syncInstantMode(this)">
-                                <span class="slider"></span><span class="lbl-txt">즉시해설</span>
-                            </label>
-                        </div>
-                        <div class="setting-item-mini">
-                            <label class="st-switch">
-                                <input type="checkbox" id="multi-mode-chk" onchange="toggleMultiMode()">
-                                <span class="slider"></span><span class="lbl-txt">회차랜덤</span>
-                            </label>
-                        </div>
-                             <button id="btn-multi-start" class="hidden" onclick="startExam('multi')">
-                             선택 회차<br>80문제 시작
-                             </button>
-                    </div>
-                </div>
-
+        <div class="wrong-note-section glass-card no-drag">
+            <div class="accordion-trigger" onclick="toggleWrongAccordion()">
+                <span>📕 회차별 오답 기록</span>
+                <span id="wrong-arrow-icon">▼</span>
             </div>
-
-            <div class="main-action-independent no-drag">
-                <button class="btn-unified-action blue-style" onclick="startExam('full')">🎲 전체 범위 랜덤 풀기 (80문항)</button>
-            </div>
-
-            <div class="wrong-note-section glass-card no-drag">
-                <div class="accordion-trigger" onclick="toggleWrongAccordion()">
-                    <span>📕 회차별 오답 기록</span>
-                    <span id="wrong-arrow-icon">▼</span>
+            <div id="wrong-content-area" class="accordion-body hidden">
+                <div class="wrong-header-btns" style="display:flex; justify-content:space-between; align-items:center;">
+                    <button onclick="clearAllWrongs()" class="btn-danger-mini">전체 오답 초기화</button>
+                    <button id="btn-wrong-multi-start" class="btn-wrong-multi hidden" onclick="startMultiWrongReview()">🚀 선택 회차 모아풀기</button>
                 </div>
-                <div id="wrong-content-area" class="accordion-body hidden">
-                    <div class="wrong-header-btns" style="display:flex; justify-content:space-between; align-items:center;">
-                        <button onclick="clearAllWrongs()" class="btn-danger-mini">전체 오답 초기화</button>
-                        <button id="btn-wrong-multi-start" class="btn-wrong-multi hidden" onclick="startMultiWrongReview()">🚀 선택 회차 모아풀기</button>
-                    </div>
-                    <div class="wrong-scroll-container" style="max-height: 250px; overflow-y: auto; margin-top: 10px;">
-                        <div id="wrong-list-display"></div>
-                    </div>
+                <div class="wrong-scroll-container" style="max-height: 250px; overflow-y: auto; margin-top: 10px;">
+                    <div id="wrong-list-display"></div>
                 </div>
             </div>
+        </div>
 
-            <div id="round-grid-display" class="round-card-grid no-drag"></div>
-        </section>
+    </div> <div id="round-grid-display" class="round-card-grid no-drag"></div>
+
+</section>
 
         <section id="quiz-screen" class="hidden">
             <div class="quiz-quick-settings-fixed no-drag">
@@ -199,7 +189,7 @@
         </div>
     </div>
 
-    <script src="01정비산업기사문제.js"></script>
-    <script src="01정비산업기사통합.js"></script>
+    <script src="04보수도장문제.js"></script> 
+    <script src="04보수도장통합.js"></script>
 </body>
 </html>

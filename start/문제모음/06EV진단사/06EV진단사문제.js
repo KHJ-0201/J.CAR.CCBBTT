@@ -2,102 +2,102 @@
 window.quizSets = [
     {
         id: "round_1",
-        roundName: "정비 산업기사 1회차",
+        roundName: "EV진단사 1회차",
         repairData: []
     },
     {
         id: "round_2",
-        roundName: "정비 산업기사 2회차",
+        roundName: "EV진단사 2회차",
         repairData: []
     },
     {
         id: "round_3",
-        roundName: "정비 산업기사 3회차",
+        roundName: "EV진단사 3회차",
         repairData: []
     },
     {
         id: "round_4",
-        roundName: "정비 산업기사 4회차",
+        roundName: "EV진단사 4회차",
         repairData: []
     },
     {
         id: "round_5",
-        roundName: "정비 산업기사 5회차",
+        roundName: "EV진단사 5회차",
         repairData: []
     },
     {
         id: "round_6",
-        roundName: "정비 산업기사 6회차",
+        roundName: "EV진단사 6회차",
         repairData: []
     },
     {
         id: "round_7",
-        roundName: "정비 산업기사 7회차",
+        roundName: "EV진단사 7회차",
         repairData: []
     },
     {
         id: "round_8",
-        roundName: "정비 산업기사 8회차",
+        roundName: "EV진단사 8회차",
         repairData: []
     },
     {
         id: "round_9",
-        roundName: "정비 산업기사 9회차",
+        roundName: "EV진단사 9회차",
         repairData: []
     },
     {
         id: "round_10",
-        roundName: "정비 산업기사 10회차",
+        roundName: "EV진단사 10회차",
         repairData: []
     },
     {
         id: "round_11",
-        roundName: "정비 산업기사 11회차",
+        roundName: "EV진단사 11회차",
         repairData: []
     },
     {
         id: "round_12",
-        roundName: "정비 산업기사 12회차",
+        roundName: "EV진단사 12회차",
         repairData: []
     },
     {
         id: "round_13",
-        roundName: "정비 산업기사 13회차",
+        roundName: "EV진단사 13회차",
         repairData: []
     },
     {
         id: "round_14",
-        roundName: "정비 산업기사 14회차",
+        roundName: "EV진단사 14회차",
         repairData: []
     },
     {
         id: "round_15",
-        roundName: "정비 산업기사 15회차",
+        roundName: "EV진단사 15회차",
         repairData: []
     },
     {
         id: "round_16",
-        roundName: "정비 산업기사 16회차",
+        roundName: "EV진단사 16회차",
         repairData: []
     },
     {
         id: "round_17",
-        roundName: "정비 산업기사 17회차",
+        roundName: "EV진단사 17회차",
         repairData: []
     },
     {
         id: "round_18",
-        roundName: "정비 산업기사 18회차",
+        roundName: "EV진단사 18회차",
         repairData: []
     },
     {
         id: "round_19",
-        roundName: "정비 산업기사 19회차",
+        roundName: "EV진단사 19회차",
         repairData: []
     },
     {
         id: "round_20",
-        roundName: "정비 산업기사 20회차",
+        roundName: "EV진단사 20회차",
         repairData: []
     }
 ];
