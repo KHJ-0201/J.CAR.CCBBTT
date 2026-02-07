@@ -2,30 +2,37 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>버전 선택 페이지 (인증)</title>
-    <link rel="stylesheet" href="index.css"> 
+    <title>보안 인증</title>
+    <link rel="stylesheet" href="00시작.css">
 </head>
 <body>
-    
-    
-    
-    <div id="pageContent">
-        <div class="container">
-            <h1>원하는 버전을 선택하세요</h1>
-            <div class="banner-wrapper">
-                <div id="pcBanner" class="banner pc-color">
-                    <h2>🖥️ PC 버전</h2>
-                    <p>넓은 화면에 최적화된 레이아웃</p>
-                </div>
-                <div id="mobileBanner" class="banner mobile-color">
-                    <h2>📱 모바일 버전</h2>
-                    <p>스마트폰 화면에 최적화된 레이아웃</p>
-                </div>
-            </div>
+    <div class="auth-overlay">
+        <div class="auth-modal">
+            <h2>보안 인증</h2>
+            <p>비밀번호를 입력하세요.</p>
+            <input type="password" id="pwInput" placeholder="Password">
+            <button id="authBtn">인증하기</button>
+            <p id="errorMsg" style="display:none; color:red; margin-top:10px;">비밀번호가 틀렸습니다.</p>
         </div>
     </div>
-    
-    <script src="index.js"></script> 
+    <script>
+        // 대문에 들어온 순간 이전 기록은 싹 지웁니다.
+        sessionStorage.clear();
+
+        const SITE_PASSWORD = "0936";
+        const pwInput = document.getElementById('pwInput');
+
+        function check() {
+            if (pwInput.value === SITE_PASSWORD) {
+                sessionStorage.setItem('auth_status', 'verified');
+                // replace를 써야 '앞으로 가기' 우회가 불가능해집니다.
+                window.location.replace('00시작.html');
+            }
+        }
+        pwInput.addEventListener('input', check);
+        document.getElementById('authBtn').addEventListener('click', () => {
+            if (pwInput.value !== SITE_PASSWORD) document.getElementById('errorMsg').style.display='block';
+        });
+    </script>
 </body>
 </html>

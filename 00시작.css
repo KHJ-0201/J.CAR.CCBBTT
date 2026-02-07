@@ -1,0 +1,209 @@
+/* [공통 정비] 모든 요소의 기본 여백을 0으로 맞추고 박스 크기 계산 방식을 통일합니다. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+:root {
+    --bg-base: #e7eff3;
+    --text-main: #334155;     
+    --card-bg: rgba(255, 255, 255, 0.5); 
+    --accent-blue: #0ea5e9;    
+    --accent-purple: #6366f1;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    color: var(--text-main);
+    min-height: 100vh;
+    width: 100%; /* 너비를 100%로 고정 */
+    background-color: var(--bg-base);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.5) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(203, 213, 225, 0.4) 0px, transparent 50%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/xml' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cpath fill='%23d1dce5' fill-opacity='0.3' d='M-400 0C-400 0 0 800 400 800C800 800 1200 0 1600 0C2000 0 2400 800 2800 800'/%3E%3Cpath fill='%23dbeafe' fill-opacity='0.3' d='M-400 800C-400 800 0 0 400 0C800 0 1200 800 1600 800C2000 800 2400 0 2800 0'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden; /* 모바일에서 우측으로 밀리는 현상을 방지하는 가드레일 */
+}
+
+/* [보안 모달 스타일] */
+.auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.auth-modal {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+}
+
+.auth-modal h2 { margin-top: 0; font-weight: 800; color: #1e293b; }
+.auth-modal p { color: #64748b; font-size: 0.95rem; margin-bottom: 25px; }
+
+.auth-modal input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid #cbd5e1;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.auth-modal button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    background: var(--accent-blue);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.auth-modal button:hover {
+    background: #0284c7;
+    transform: scale(1.02);
+}
+
+.error-msg {
+    color: #ef4444 !important;
+    font-size: 0.85rem !important;
+    margin-top: 10px;
+    display: none;
+}
+
+/* [컨테이너 및 배너 스타일] */
+.container {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 50px;
+    color: #1e293b;
+    letter-spacing: -1px;
+}
+
+.banner-wrapper {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    justify-content: center;
+}
+
+.banner {
+    flex: 1;
+    max-width: 360px;
+    padding: 50px 30px;
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+}
+
+.pc-color { border-bottom: 6px solid var(--accent-blue); }
+.mobile-color { border-bottom: 6px solid var(--accent-purple); }
+
+.banner:hover {
+    transform: translateY(-12px);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: white;
+}
+
+.banner h2 { font-size: 1.8rem; margin: 0 0 12px 0; font-weight: 800; }
+.banner p { font-size: 1.05rem; margin: 0; color: #64748b; font-weight: 500; word-break: keep-all; }
+
+.bottom-memo {
+    margin-top: 60px;
+    opacity: 0.7;
+    text-align: center;
+}
+
+.bottom-memo p {
+    font-size: 0.95rem;
+    color: #475569;
+    font-weight: 500;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+}
+
+/* [모바일 전용 레이아웃] 수평 정렬 영점 조절 */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        width: 100%;
+        padding: 20px 0; /* 좌우 여백을 제거하여 쏠림 방지 */
+        margin: 0 auto;
+    }
+
+    .banner-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .banner {
+        width: 85%; /* 너비를 85%로 조절하여 좌우 여백을 똑같이 배분 */
+        max-width: 320px;
+        margin: 0 auto; /* 좌우 마진 자동 배분으로 정중앙 고정 */
+        padding: 40px 20px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+        margin-bottom: 30px;
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    .bottom-memo {
+        margin-top: 40px;
+        padding: 0 20px;
+    }
+}
