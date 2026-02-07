@@ -1059,7 +1059,7 @@ body:not(.mode-one-by-one) .options-fixed-area {
     position: relative;
     z-index: 1;
     /* [기본 설정: PC용] 버튼이 보일 때까지 이 숫자를 조절하세요 */
-    margin-top: 310px !important; 
+    margin-top: 300px !important; 
 }
 
 /* 3. 모바일 화면 전용 간격 설정 (1024px 이하) */
@@ -1069,6 +1069,6 @@ body:not(.mode-one-by-one) .options-fixed-area {
     }
     #round-grid-display {
         /* 선생님께서 "괜찮다"고 하신 모바일 마진값 고정 */
-        margin-top: 310px !important; 
+        margin-top: 330px !important; 
     }
 }
