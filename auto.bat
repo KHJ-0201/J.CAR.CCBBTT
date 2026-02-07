@@ -1,6 +1,6 @@
 @echo off
 
-REM "~\Desktop\code"
+REM "~\Desktop\code - 완전자동화v1"
 cd /d "%~dp0" 
 git init
 
