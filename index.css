@@ -207,37 +207,39 @@ h1 {
         padding: 0 20px;
     }
 
-    /* 1. 모달 바구니 크기 키우기 */
+    /* 1. 모달 바구니 전체 크기를 대폭 확대 */
     .auth-modal {
-        max-width: 90% !important; /* 화면 좌우 여백 10%만 남기고 꽉 채움 */
-        width: 350px !important;   /* 모바일에서도 넉넉한 너비 확보 */
-        padding: 30px 20px !important; /* 안쪽 여백 조절 */
+        max-width: 95% !important;   /* 화면 좌우 여백을 최소화하여 꽉 채움 */
+        width: 420px !important;     /* 기존 350px에서 420px로 확대 */
+        padding: 50px 30px !important; /* 위아래 높이를 확보하기 위해 패딩 대폭 추가 */
+        border-radius: 40px !important; /* 커진 크기에 맞춰 테두리도 더 둥글게 */
     }
 
-    /* 2. 비밀번호 입력창 키우기 (터치하기 쉽게) */
-    .auth-modal input {
-        height: 60px !important;   /* 높이를 키워 터치 영역 확보 */
-        font-size: 1.4rem !important; /* 입력하는 숫자도 큼직하게 */
-        margin-bottom: 20px !important;
-        border-radius: 12px !important;
-    }
-
-    /* 3. 인증하기 버튼 키우기 */
-    .auth-modal button {
-        height: 60px !important;   /* 버튼도 큼직하게 개조 */
-        font-size: 1.2rem !important;
-        border-radius: 12px !important;
-    }
-
-    /* 4. 안내 텍스트 크기 조절 */
+    /* 2. 안내 텍스트 (제목 및 설명) 확대 */
     .auth-modal h2 {
-        font-size: 1.5rem !important;
-        margin-bottom: 10px !important;
+        font-size: 2.2rem !important;  /* 제목을 아주 크게 조절 */
+        margin-bottom: 15px !important;
     }
     
     .auth-modal p {
-        font-size: 1rem !important;
-        margin-bottom: 20px !important;
+        font-size: 1.3rem !important;  /* 설명 문구 확대 */
+        margin-bottom: 35px !important;
     }
 
+    /* 3. 비밀번호 입력창 규격 확대 */
+    .auth-modal input {
+        height: 85px !important;      /* 높이를 1.5배 이상 키움 (기존 60px -> 85px) */
+        font-size: 2rem !important;    /* 입력하는 글자 크기 대폭 확대 */
+        margin-bottom: 25px !important;
+        border-radius: 20px !important;
+        border: 2px solid #cbd5e1 !important; /* 선명도 보강 */
+    }
+
+    /* 4. 인증하기 버튼 규격 확대 */
+    .auth-modal button {
+        height: 85px !important;      /* 버튼 높이도 입력창과 맞춰서 확대 */
+        font-size: 1.6rem !important;  /* 버튼 글자 크기 확대 */
+        border-radius: 20px !important;
+        font-weight: 800 !important;
+    }
 }
