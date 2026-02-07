@@ -206,38 +206,4 @@ h1 {
         margin-top: 40px;
         padding: 0 20px;
     }
-
-    /* 1. 모달 바구니 크기 키우기 */
-    .auth-modal {
-        max-width: 90% !important; /* 화면 좌우 여백 10%만 남기고 꽉 채움 */
-        width: 350px !important;   /* 모바일에서도 넉넉한 너비 확보 */
-        padding: 30px 20px !important; /* 안쪽 여백 조절 */
-    }
-
-    /* 2. 비밀번호 입력창 키우기 (터치하기 쉽게) */
-    .auth-modal input {
-        height: 60px !important;   /* 높이를 키워 터치 영역 확보 */
-        font-size: 1.4rem !important; /* 입력하는 숫자도 큼직하게 */
-        margin-bottom: 20px !important;
-        border-radius: 12px !important;
-    }
-
-    /* 3. 인증하기 버튼 키우기 */
-    .auth-modal button {
-        height: 60px !important;   /* 버튼도 큼직하게 개조 */
-        font-size: 1.2rem !important;
-        border-radius: 12px !important;
-    }
-
-    /* 4. 안내 텍스트 크기 조절 */
-    .auth-modal h2 {
-        font-size: 1.5rem !important;
-        margin-bottom: 10px !important;
-    }
-    
-    .auth-modal p {
-        font-size: 1rem !important;
-        margin-bottom: 20px !important;
-    }
-
 }

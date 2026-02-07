@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>보안 인증</title>
+    <link rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <div class="auth-overlay">
+        <div class="auth-modal">
+            <h2>보안 인증</h2>
+            <p>비밀번호를 입력하세요.</p>
+            <input type="password" id="pwInput" placeholder="Password">
+            <button id="authBtn">인증하기</button>
+            <p id="errorMsg" style="display:none; color:red; margin-top:10px;">비밀번호가 틀렸습니다.</p>
+        </div>
+    </div>
+    <script>
+        // 대문에 들어온 순간 이전 기록은 싹 지웁니다.
+        sessionStorage.clear();
+
+        const SITE_PASSWORD = "0936";
+        const pwInput = document.getElementById('pwInput');
+
+        function check() {
+            if (pwInput.value === SITE_PASSWORD) {
+                sessionStorage.setItem('auth_status', 'verified');
+                // replace를 써야 '앞으로 가기' 우회가 불가능해집니다.
+                window.location.replace('../index.html');
+            }
+        }
+        pwInput.addEventListener('input', check);
+        document.getElementById('authBtn').addEventListener('click', () => {
+            if (pwInput.value !== SITE_PASSWORD) document.getElementById('errorMsg').style.display='block';
+        });
+    </script>
+</body>
+</html>
