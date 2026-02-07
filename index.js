@@ -4,7 +4,7 @@
 (function checkSecurity() {
     // 출입증이 없으면 대문(index.html)으로 쫓아냄
     if (sessionStorage.getItem('auth_status') !== 'verified') {
-        window.location.replace('index.html');
+        window.location.replace('start/lock.html');
     }
 })();
 
@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 내부 이동 시에는 아무 제약 없이 이동합니다.
     pcBanner.addEventListener('click', () => {
         localStorage.setItem('userDevice', 'pc'); 
-        window.location.href = '01자격증선택.html';
+        window.location.href = 'start/01자격증선택.html';
     });
 
     mobileBanner.addEventListener('click', () => {
         localStorage.setItem('userDevice', 'mobile'); 
-        window.location.href = '01자격증선택.html';
+        window.location.href = 'start/01자격증선택.html';
     });
 });
 

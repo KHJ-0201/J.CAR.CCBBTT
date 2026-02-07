@@ -1,10 +1,10 @@
 @echo off
 
-REM "~\Desktop\code - 완전자동화v1"
+REM "~\Desktop\codev1"
 cd /d "%~dp0" 
 git init
 
-git remote add origin https://github.com/D2PANG/CBT
+git remote add origin https://github.com/KHJ-0201/J.CAR.CCBBTT
 
 git pull origin master
 
