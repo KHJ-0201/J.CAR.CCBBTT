@@ -1028,7 +1028,7 @@ body:not(.mode-one-by-one) .options-fixed-area {
         align-items: center;
     }
     .round-card strong {
-        font-size: 1rem !important; 
+        font-size: 0.85rem !important; 
         line-height: 1.2 !important;
         display: block;
         word-break: keep-all; 
