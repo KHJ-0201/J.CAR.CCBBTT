@@ -50,20 +50,19 @@ window.onload = () => {
         }
     }, 100);
 
-    window.history.pushState(null, null, window.location.href);
-    window.onpopstate = function() {
+   window.onpopstate = function(event) {
         const isQuiz = !document.getElementById('quiz-screen').classList.contains('hidden');
         const isResult = !document.getElementById('result-screen').classList.contains('hidden');
         
         if (isQuiz || isResult) {
-            const msg = isResult ? "회차 선택 화면으로 가시겠습니까?" : "시험을 중지하고 메인으로 돌아가시겠습니까?";
-            if (confirm(msg)) {
-                location.reload();
-            } else {
-                window.history.pushState(null, null, window.location.href);
-            }
+            // 시험 중이거나 결과창일 때만 뒤로가기를 가로채서 메인으로 보냅니다.
+            goBackToMain();
         } else {
-            window.history.pushState(null, null, window.location.href);
+            // 4번 메인 화면일 때는 이 함수가 개입하지 않아 즉시 3번으로 이동합니다.
+            // 만약 브라우저가 반응하지 않으면 history.back()을 호출합니다.
+            if (!event.state) {
+                window.location.href = "../../01자격증선택.html"; // 또는 3번 화면의 정확한 경로
+            }
         }
     };
 };
@@ -178,7 +177,8 @@ function startExamProcess(sets, isBalanced) {
 function launchQuiz() {
     userAnswers = {};
     currentIdx = 0;
-    
+    // [추가] 이제 시험을 시작할 때만 '안전벨트'를 매서 뒤로가기를 1회 방어합니다.
+    window.history.pushState({ page: 'quiz' }, null, window.location.href);
     // [추가 포인트] 새 시험 시 하단 패널과 열기 버튼을 리셋 (강제 숨김)
     const panel = document.getElementById('instant-exp-overlay');
     const openBtn = document.getElementById('btn-open-exp');
@@ -205,7 +205,6 @@ function launchQuiz() {
     renderQuestion();
     renderOMR();
     if (!isInstant) startTimer();
-    window.history.pushState({ page: 'quiz' }, null, window.location.href);
 }
 
 function renderQuestion() {
@@ -353,18 +352,29 @@ function updateProgressDisplay() {
 }
 
 function handleFinishSubmit() {
-    // 인터넷 기본창 대신 커스텀 배너를 띄웁니다.
+    // 1. 배너 본체 부품을 가져옵니다.
     const banner = document.getElementById('confirm-banner');
+    
     if (banner) {
-        banner.classList.remove('hidden');
-        
-        // 미풀이 문제가 있을 경우 배너 텍스트를 동적으로 변경해주는 센스!
+        // 2. 미풀이 문항 수를 계산합니다.
         const unsolvedCount = questions.length - Object.keys(userAnswers).length;
-        const msgText = unsolvedCount > 0 
-            ? `<strong>미풀이 문제가 ${unsolvedCount}개 있습니다.</strong><br>그래도 제출하시겠습니까?` 
-            : `<strong>모든 문제를 다 푸셨나요?</strong><br>제출 후에는 정답과 해설이 표시됩니다.`;
         
-        banner.querySelector('.banner-body p').innerHTML = msgText;
+        // 3. 메시지를 적을 p 태그를 찾습니다. (.banner-body p)
+        const pTag = banner.querySelector('.banner-body p');
+        
+        if (pTag) {
+            const msgText = unsolvedCount > 0 
+                ? `<strong style="color:var(--accent-red)">미풀이 문제가 ${unsolvedCount}개 있습니다.</strong><br>그래도 제출하시겠습니까?` 
+                : `<strong>모든 문제를 다 푸셨나요?</strong><br>제출 후에는 정답과 해설이 표시됩니다.`;
+            
+            pTag.innerHTML = msgText;
+        }
+
+        // 4. 마지막으로 배너를 화면에 표시합니다.
+        banner.classList.remove('hidden');
+    } else {
+        // 배너 부품 자체가 없을 때 개발자 도구에 기록을 남깁니다.
+        console.error("오류: 'confirm-banner' 아이디를 가진 HTML 요소를 찾을 수 없습니다.");
     }
 }
 
