@@ -23,19 +23,6 @@ let lastUsedExamData = [];
 let lastWrongAnswers = []; 
 
 window.onload = () => {
-    // [추가] 4번 화면에 도착해서 아무데나 한 번만 클릭하면 즉시 전체화면 전환!
-    // 학생들은 보통 회차를 선택하려고 화면을 누르기 때문에 자연스럽게 작동합니다.
-    const autoFull = () => {
-        if (!document.fullscreenElement) {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) { elem.requestFullscreen(); }
-            else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
-        }
-    };
-
-    // 화면 어디든 클릭하거나 터치하면 실행 (딱 한 번만 실행되도록 설정)
-    document.addEventListener('click', autoFull, { once: true });
-    document.addEventListener('touchstart', autoFull, { once: true });
     const dataCheck = setInterval(() => {
         if (window.quizSets) {
             clearInterval(dataCheck);
@@ -347,19 +334,14 @@ function updateProgressDisplay() {
 }
 
 function handleFinishSubmit() {
-    // 인터넷 기본창 대신 커스텀 배너를 띄웁니다.
-    const banner = document.getElementById('confirm-banner');
-    if (banner) {
-        banner.classList.remove('hidden');
-        
-        // 미풀이 문제가 있을 경우 배너 텍스트를 동적으로 변경해주는 센스!
-        const unsolvedCount = questions.length - Object.keys(userAnswers).length;
-        const msgText = unsolvedCount > 0 
-            ? `<strong>미풀이 문제가 ${unsolvedCount}개 있습니다.</strong><br>그래도 제출하시겠습니까?` 
-            : `<strong>모든 문제를 다 푸셨나요?</strong><br>제출 후에는 정답과 해설이 표시됩니다.`;
-        
-        banner.querySelector('.banner-body p').innerHTML = msgText;
-    }
+    const unsolvedCount = questions.length - Object.keys(userAnswers).length;
+    if (unsolvedCount > 0) {
+        if (confirm(`미풀이 문제가 ${unsolvedCount}개 있습니다. 제출하시겠습니까?`)) { finalizeExam(); }
+        else {
+            const firstUnsolved = questions.findIndex((_, i) => userAnswers[i] === undefined);
+            if (firstUnsolved !== -1) jumpTo(firstUnsolved);
+        }
+    } else { finalizeExam(); }
 }
 
 function finalizeExam() {
@@ -455,12 +437,8 @@ function updateOMRMark(qIdx, aIdx) {
 }
 
 function pushAllAnswers(answerIdx) {
-    // 알림창 없이 즉시 미풀이 문제를 해당 번호로 채웁니다.
-    questions.forEach((_, i) => { 
-        if (userAnswers[i] === undefined) { 
-            selectAnswer(i, answerIdx); 
-        } 
-    });
+    if(!confirm(`${answerIdx + 1}번으로 모든 미풀이 문제를 밀겠습니까?`)) return;
+    questions.forEach((_, i) => { if (userAnswers[i] === undefined) { selectAnswer(i, answerIdx); } });
 }
 
 function moveQuestion(dir) {
@@ -799,37 +777,4 @@ function loadSavedFontSize() {
     const optSlider = document.getElementById('slider-opt-size');
     if (qSlider) qSlider.value = finalQ;
     if (optSlider) optSlider.value = finalOpt;
-}
-
-// [신규] 제출 확인 배너 닫기 (취소 버튼용)
-function closeConfirmBanner() {
-    const banner = document.getElementById('confirm-banner');
-    if (banner) banner.classList.add('hidden');
-}
-
-// [신규] 진짜 제출 처리 (네, 제출합니다 버튼용)
-function realSubmit() {
-    closeConfirmBanner(); // 배너 닫기
-    finalizeExam();      // 213행에 있는 실제 채점 엔진 가동
-}
-
-// [신규] 전체화면 유지하며 메인으로 리셋하여 복귀
-function goBackToMain() {
-    // 1. 엔진 세척 (변수 초기화)
-    questions = []; 
-    userAnswers = {}; 
-    currentIdx = 0;
-    if(timerInterval) clearInterval(timerInterval);
-
-    // 2. 화면 전환 (섹션 제어)
-    document.getElementById('quiz-screen').classList.add('hidden');
-    document.getElementById('result-screen').classList.add('hidden');
-    document.getElementById('quiz-status-area').classList.add('hidden');
-    document.getElementById('home-screen').classList.remove('hidden');
-
-    // 3. 앱 재시동 (메인 화면 요소들 다시 그리기)
-    initApp(); 
-
-    // 4. 위치 리셋
-    window.scrollTo(0, 0);
 }

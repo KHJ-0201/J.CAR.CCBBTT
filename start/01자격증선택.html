@@ -12,7 +12,23 @@
   <h1>CBT 자격증 선택</h1>
 
   <div class="random-wrapper">
-    <div class="round-card random-card" onclick="window.location.href='문제모음/01자동차정비산업기사/01정비산업기사통합.html'">과정형평가 산업기사 필기</div>
+    <div class="round-card random-card" onclick="startSystem('문제모음/01자동차정비산업기사/01정비산업기사통합.html')">
+    과정형평가 산업기사 필기
+</div>
+
+<script>
+function startSystem(url) {
+    // 1. 전체화면 실행
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) { elem.requestFullscreen(); }
+    else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
+    
+    // 2. 아주 짧은 찰나(0.1초) 뒤에 페이지 이동 (전체화면 요청이 브라우저에 전달될 시간 확보)
+    setTimeout(() => {
+        window.location.href = url;
+    }, 150);
+}
+</script>
 </div>
 
   <div class="round-container">

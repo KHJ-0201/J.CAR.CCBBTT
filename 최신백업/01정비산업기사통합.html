@@ -190,7 +190,7 @@
                         <strong id="final-result-score" class="score-highlight">0</strong>점
                     </div>
                     <div class="res-action-btns-mini">
-                        <button class="btn-res-sm home" onclick="goBackToMain()">메인</button>
+                        <button class="btn-res-sm home" onclick="location.reload()">메인</button>
                         <button class="btn-res-sm retry" onclick="retryCurrentExam(false)">전체 다시풀기</button>
                         <button class="btn-res-sm wrong" onclick="retryCurrentExam(true)">오답 다시풀기</button>
                     </div>
@@ -223,23 +223,6 @@
         </div>
     </div>
 
-
-    <div id="confirm-banner" class="font-banner hidden no-drag" style="top: 50%; bottom: auto; transform: translate(-50%, -50%); z-index: 10000; width: 90%; max-width: 400px;">
-        <div class="banner-header">
-            <span>⚠️ 시험 제출 확인</span>
-            <button class="btn-close-banner" onclick="closeConfirmBanner()">×</button>
-        </div>
-        <div class="banner-body" style="text-align: center; padding: 25px 15px;">
-            <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.5; color: var(--text-color);">
-                <strong>모든 문제를 다 푸셨나요?</strong><br>
-                제출 후에는 정답과 해설이 표시됩니다.
-            </p>
-            <div style="display: flex; gap: 10px; justify-content: center;">
-                <button onclick="realSubmit()" style="flex: 1; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">네, 제출합니다</button>
-                <button onclick="closeConfirmBanner()" style="flex: 1; padding: 12px; background: #64748b; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">취소</button>
-            </div>
-        </div>
-    </div>
     <script src="01정비산업기사문제.js"></script> 
     <script src="01정비산업기사통합.js"></script>
 </body>
