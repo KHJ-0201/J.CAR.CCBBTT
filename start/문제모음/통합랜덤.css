@@ -1276,11 +1276,11 @@ body.dark-mode .btn-open-exp-mini { background: #334155; }
 /* [신설] 폰트 조절 베너 기본 스타일 (불투명) */
 .font-banner {
     position: fixed;
-    bottom: 85px; /* 네비바 바로 위 */
+    top: 85px; /* 네비바 바로 위 */
     left: 50%;
     transform: translateX(-50%);
     width: 92%;
-    max-width: 500px;
+    max-width: 1150px;
     background: #ffffff; /* 기본은 불투명 흰색 */
     border: 2px solid var(--accent-blue);
     border-radius: 20px;
