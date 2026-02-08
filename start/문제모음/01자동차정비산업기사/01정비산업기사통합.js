@@ -23,19 +23,25 @@ let lastUsedExamData = [];
 let lastWrongAnswers = []; 
 
 window.onload = () => {
-    // [추가] 4번 화면에 도착해서 아무데나 한 번만 클릭하면 즉시 전체화면 전환!
-    // 학생들은 보통 회차를 선택하려고 화면을 누르기 때문에 자연스럽게 작동합니다.
+    // [개조] 모바일 및 다양한 브라우저 환경에서도 작동하도록 로직 보강
     const autoFull = () => {
-        if (!document.fullscreenElement) {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
             const elem = document.documentElement;
-            if (elem.requestFullscreen) { elem.requestFullscreen(); }
-            else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
+            // 각 브라우저 엔진별 명령어 세트 (현대차, 기아차 공용 부품처럼 다 준비함)
+            if (elem.requestFullscreen) { 
+                elem.requestFullscreen().catch(err => console.log("전체화면 대기 중...")); 
+            }
+            else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); } // 사파리/크롬 모바일
+            else if (elem.mozRequestFullScreen) { elem.mozRequestFullScreen(); }    // 파이어폭스
+            else if (elem.msRequestFullscreen) { elem.msRequestFullscreen(); }      // IE/엣지 구버전
         }
     };
 
-    // 화면 어디든 클릭하거나 터치하면 실행 (딱 한 번만 실행되도록 설정)
+    // 모바일은 'click'보다 'touchstart'가 더 빠르고 확실하게 인식됩니다.
+    // 'once: true'를 유지하여 한 번만 성공하면 더 이상 간섭하지 않게 합니다.
     document.addEventListener('click', autoFull, { once: true });
     document.addEventListener('touchstart', autoFull, { once: true });
+
     const dataCheck = setInterval(() => {
         if (window.quizSets) {
             clearInterval(dataCheck);
