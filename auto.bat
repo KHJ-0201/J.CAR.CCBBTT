@@ -1,44 +1,37 @@
 @echo off
-:: 한글 깨짐 방지 설정
 chcp 65001 >nul
-
-REM 파일이 있는 위치로 이동
 cd /d "%~dp0"
 
-echo [1/5] 사용자 계정 설정 중...
+echo [1/4] 계정 설정 중...
 git config user.name "KHJ-0201"
 git config user.email "ddsp0201@naver.com"
 git config credential.helper store
 
-echo [2/5] 저장소 연결 확인 및 초기화...
-if not exist .git (
-    git init
-)
-
+echo [2/4] 연결 및 동기화...
+if not exist .git ( git init )
 git remote remove origin 2>nul
 git remote add origin https://github.com/KHJ-0201/J.CAR.CCBBTT
-
-echo [3/5] 최신 데이터 동기화 중 (Pull)...
 git pull origin master --rebase
 
-echo [4/5] 변경된 문제 파일 기록 중...
+echo [3/4] 업로드 중...
 git add .
-set CUR_DATE=%date%
 set CUR_TIME=%time%
-git commit -m "Auto Commit: %CUR_DATE% %CUR_TIME%"
-
-echo [5/5] 깃허브로 전송 중 (Push)...
+git commit -m "Auto Commit: %CUR_TIME%"
 git push origin master
 
-if errorlevel 1 (
-    echo.
-    echo [!] 전송 실패! 네트워크 연결이나 권한을 확인하세요.
-    pause
-    exit /b
-)
+echo [4/4] 작업 완료!
+echo ==========================================
+echo ● 그냥 종료: 창을 닫거나 아무 키나 누르세요.
+echo ● 로그아웃: 영문 'off'를 입력하고 엔터를 누르세요.
+echo ==========================================
+set /p exit_choice="입력: "
 
-echo.
-echo ==========================================
-echo 업로드 성공! 오늘도 고생하셨습니다, 선생님.
-echo ==========================================
-pause
+:: 사용자가 off를 입력했을 때만 로그아웃 실행
+if /i "%exit_choice%"=="off" (
+    echo.
+    echo 로그아웃 및 보안 파기 중...
+    git config --global --unset credential.helper
+    git config --system --unset credential.helper 2>nul
+    echo [완료] 이 컴퓨터에서 선생님의 정보가 안전하게 삭제되었습니다.
+    pause
+)
