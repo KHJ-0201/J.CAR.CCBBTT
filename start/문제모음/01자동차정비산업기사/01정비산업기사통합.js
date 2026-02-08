@@ -664,12 +664,15 @@ function startMultiWrongReview() {
 }
 
 function deleteWrongRound(roundName) {
-    if (confirm(`'${roundName}' 회차의 오답 기록을 삭제하시겠습니까?`)) {
-        let data = JSON.parse(localStorage.getItem('cbt_wrong_v4') || '{}');
-        delete data[roundName];
-        localStorage.setItem('cbt_wrong_v4', JSON.stringify(data));
-        renderWrongNoteArea();
-    }
+    openConfirmBanner("delete_item", roundName); // 배너를 먼저 띄웁니다.
+}
+
+function confirmDeleteRound() {
+    let data = JSON.parse(localStorage.getItem('cbt_wrong_v4') || '{}');
+    delete data[pendingDeleteRound]; // 보관해둔 회차명을 삭제
+    localStorage.setItem('cbt_wrong_v4', JSON.stringify(data));
+    renderWrongNoteArea(); // 화면 갱신
+    console.log(pendingDeleteRound + " 삭제 완료");
 }
 
 function startWrongReview(roundName) {
@@ -884,12 +887,11 @@ function handleFinishSubmit() {
     // 제출 버튼을 눌렀을 때는 "제출 모드"로 배너 호출
     openConfirmBanner("submit");
 }
-
+let pendingDeleteRound = ""; // [추가] 삭제할 회차명을 잠시 보관하는 장착대
 /* [Section Name] 배너 엔진 확장 (제출 / 중단 / 초기화 통합) */
-function openConfirmBanner(mode) {
+function openConfirmBanner(mode, param) { // [수정] param 추가
     const banner = document.getElementById('confirm-banner');
     if (!banner) return;
-
     const pTag = banner.querySelector('.banner-body p');
     const submitBtn = banner.querySelector('.btn-banner-submit');
     const closeBtn = banner.querySelector('.btn-banner-close');
@@ -912,6 +914,18 @@ function openConfirmBanner(mode) {
         };
         closeBtn.innerText = "취소";
     }
+// ★ [신규] 개별 회차 삭제 모드 추가 ★
+    else if (mode === "delete_item") {
+        pendingDeleteRound = param; 
+        pTag.innerHTML = `<strong style="color:var(--accent-red)">'${param}' 기록을 삭제할까요?</strong><br>삭제된 오답은 복구할 수 없습니다.`;
+        submitBtn.innerText = "네, 삭제합니다";
+        submitBtn.onclick = function() { 
+            closeConfirmBanner(); 
+            confirmDeleteRound(); // 아래에서 새로 만들 실제 삭제 함수
+        };
+        closeBtn.innerText = "취소";
+    }
+
     else {
         // [제출 모드]
         const unsolvedCount = questions.length - Object.keys(userAnswers).length;
