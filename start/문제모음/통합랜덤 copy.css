@@ -13,8 +13,6 @@
     --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     --radius-lg: 24px;
     --radius-md: 14px;
-    --q-font-size: 1.2rem;
-    --opt-font-size: 1.0rem;
 }
 
 body.dark-mode {
@@ -61,26 +59,8 @@ body {
     user-select: none; 
 }
 
-/* [수정] 문제 텍스트: 슬라이더 변수(--q-font-size)와 연결 */
-.q-text {
-    font-size: var(--q-font-size) !important;
-    font-weight: 700;
-    margin-bottom: 20px;
-    display: block;
-    word-break: keep-all;
-}
-
-/* [수정] 보기 텍스트: 슬라이더 변수(--opt-font-size)와 연결 */
-.opt-txt {
-    flex: 1;
-    display: block !important;
-    white-space: normal;
-    line-height: 1.1;
-    word-break: break-all;
-    text-align: left;
-    transition: font-size 0.2s ease;
-    /* ★ 기존 폰트 크기 설정을 이 변수로 대체합니다 ★ */
-    font-size: var(--opt-font-size) !important; 
+.q-text, .option-btn, .exp-text, .ans-label { 
+    user-select: text !important; 
 }
 
 /* 공통 버튼 효과 */
@@ -814,6 +794,9 @@ body:not(.mode-one-by-one) .options-fixed-area {
 .left-hand-mode-active #btn-move-prev { order: 2; }
 .left-hand-mode-active #btn-move-next { order: 1; }
 
+#main-body.font-small .q-text { font-size: 1.0rem !important; }
+#main-body.font-medium .q-text { font-size: 1.25rem !important; }
+#main-body.font-large .q-text { font-size: 1.6rem !important; }
 
 /* 성적 팝업 모달 */
 .modal-overlay { 
@@ -1070,6 +1053,7 @@ body:not(.mode-one-by-one) .options-fixed-area {
     }
 
     .opt-txt {
+        font-size: 1.15rem !important; /* PC에서만 글자 크기를 1.15배로 키움 */
         line-height: 1.4 !important;   /* PC에서는 줄 간격을 조금 더 넓게 설정 */
     }
     
@@ -1271,61 +1255,4 @@ body.dark-mode .btn-open-exp-mini { background: #334155; }
         
         /* display: block !important; <--- 이 줄을 삭제했습니다. */
     }
-}
-
-/* [신설] 폰트 조절 베너 기본 스타일 (불투명) */
-.font-banner {
-    position: fixed;
-    bottom: 85px; /* 네비바 바로 위 */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 92%;
-    max-width: 500px;
-    background: #ffffff; /* 기본은 불투명 흰색 */
-    border: 2px solid var(--accent-blue);
-    border-radius: 20px;
-    padding: 20px;
-    z-index: 5000;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    transition: background 0.3s ease, opacity 0.3s ease; /* 투명도 변화 부드럽게 */
-    opacity: 1;
-}
-
-/* ★ 조작 중(is-adjusting)일 때 활성화되는 투명 모드 ★ */
-.font-banner.is-adjusting {
-    background: rgba(255, 255, 255, 0) !important; /* 배경을 투명하게 */
-    backdrop-filter: blur(0px); /* 뒤쪽이 살짝 비치는 유리 효과 */
-    border-color: rgba(37, 99, 235, 0);
-    opacity: 0.4;
-}
-
-/* 다크모드 대응 */
-body.dark-mode .font-banner { background: #1e293b; color: white; }
-body.dark-mode .font-banner.is-adjusting { background: rgba(30, 41, 59, 0.2) !important; }
-
-/* 내부 구성 요소 정렬 */
-.banner-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 15px; 
-    font-weight: 800; 
-}
-.btn-close-banner { 
-    background: #f1f5f9; 
-    border: none; 
-    font-size: 1.2rem; 
-    width: 30px; 
-    height: 30px; 
-    border-radius: 50%; 
-    cursor: pointer; 
-}
-.slider-group { margin-bottom: 18px; }
-.slider-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
-
-/* 슬라이더(Range) 디자인 커스텀 */
-.slider-group input[type="range"] { 
-    width: 100%; 
-    cursor: pointer; 
-    accent-color: var(--accent-blue); /* 슬라이더 핸들 색상 */
 }

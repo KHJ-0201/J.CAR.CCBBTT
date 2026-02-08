@@ -27,7 +27,6 @@ window.onload = () => {
         if (window.quizSets) {
             clearInterval(dataCheck);
             initApp();
-            loadSavedFontSize();
         }
     }, 100);
 
@@ -715,66 +714,4 @@ function updateExpButtonVisibility() {
             openBtn.classList.add('hidden');
         }
     }
-}
-
-// [신규] 글자 크기 조절 시스템
-
-// 1. 조절 베너 열기/닫기
-function toggleFontControl() {
-    const banner = document.getElementById('font-control-banner');
-    if (banner) banner.classList.toggle('hidden');
-}
-
-// 2. 조작 중 베너 투명도 제어
-function setBannerTransparent(isTransparent) {
-    const banner = document.getElementById('font-control-banner');
-    if (!banner) return;
-    if (isTransparent) {
-        banner.classList.add('is-adjusting');
-    } else {
-        banner.classList.remove('is-adjusting');
-    }
-}
-
-// 3. 폰트 크기 업데이트 및 저장 (보기 저장 기능 정밀 수리)
-function updateFontSize(type, val) {
-    let numVal = parseFloat(val);
-    
-    // 값이 이상하면 각 타입에 맞는 기본값 할당
-    if (isNaN(numVal)) {
-        numVal = (type === 'q') ? 1.20 : 1.00;
-    }
-    
-    const formattedVal = numVal.toFixed(2);
-
-    if (type === 'q') {
-        document.documentElement.style.setProperty('--q-font-size', formattedVal + 'rem');
-        if (document.getElementById('val-q-size')) document.getElementById('val-q-size').innerText = formattedVal;
-        localStorage.setItem('user-q-size', formattedVal); // 문제 크기 저장 키
-    } else if (type === 'opt') {
-        document.documentElement.style.setProperty('--opt-font-size', formattedVal + 'rem');
-        if (document.getElementById('val-opt-size')) document.getElementById('val-opt-size').innerText = formattedVal;
-        localStorage.setItem('user-opt-size', formattedVal); // 보기 크기 저장 키
-    }
-}
-
-// 4. 저장된 설정 불러오기 (시동 시 메모리 호출)
-function loadSavedFontSize() {
-    // 로컬 스토리지에서 각각의 키로 값을 가져옴
-    const savedQ = localStorage.getItem('user-q-size');
-    const savedOpt = localStorage.getItem('user-opt-size');
-    
-    // 가져온 값이 있으면 그 값을 쓰고, 없으면 기본값(1.20 / 1.00) 사용
-    const finalQ = (savedQ && savedQ !== "NaN") ? savedQ : '1.20';
-    const finalOpt = (savedOpt && savedOpt !== "NaN") ? savedOpt : '1.00';
-    
-    // 화면에 적용 (배선 연결)
-    updateFontSize('q', finalQ);
-    updateFontSize('opt', finalOpt);
-    
-    // 슬라이더 조절 바 위치도 저장된 값으로 동기화
-    const qSlider = document.getElementById('slider-q-size');
-    const optSlider = document.getElementById('slider-opt-size');
-    if (qSlider) qSlider.value = finalQ;
-    if (optSlider) optSlider.value = finalOpt;
 }
