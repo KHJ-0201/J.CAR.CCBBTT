@@ -14,7 +14,7 @@
 
     <nav class="top-nav no-drag">
         <div class="nav-inner">
-            <h1 id="main-title" onclick="location.reload()" style="cursor:pointer">정비 산업기사</h1>
+            <h1 id="main-title" onclick="handleTitleClick()" style="cursor:pointer">정비 산업기사</h1>
             <div id="quiz-status-area" class="hidden status-group">
                 <span id="timer-display" class="status-badge">60:00</span>
                 <span id="progress-display" class="status-badge">
@@ -83,7 +83,7 @@
             </div>
             <div id="wrong-content-area" class="accordion-body hidden">
                 <div class="wrong-header-btns" style="display:flex; justify-content:space-between; align-items:center;">
-                    <button onclick="clearAllWrongs()" class="btn-danger-mini">전체 오답 초기화</button>
+                    <button onclick="openConfirmBanner('reset')" class="btn-danger-mini">전체 오답 초기화</button>
                     <button id="btn-wrong-multi-start" class="btn-wrong-multi hidden" onclick="startMultiWrongReview()">🚀 선택 회차 모아풀기</button>
                 </div>
                 <div class="wrong-scroll-container" style="max-height: 250px; overflow-y: auto; margin-top: 10px;">

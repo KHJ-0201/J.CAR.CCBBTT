@@ -680,7 +680,23 @@ function startWrongReview(roundName) {
     launchQuiz();
 }
 
-function clearAllWrongs() { if(confirm("모든 오답 기록을 초기화하시겠습니까?")) { localStorage.removeItem('cbt_wrong_v4'); renderWrongNoteArea(); } }
+/* 수정 후: 배너에서 승인받았으므로 즉시 실행 */
+function clearAllWrongs() { 
+    // 1. 저장소에서 오답 데이터를 즉시 삭제 (데이터 초기화)
+    localStorage.removeItem('cbt_wrong_v4'); 
+    
+    // 2. 화면의 오답 영역을 다시 그려서 비워줌 (화면 갱신)
+    if (typeof renderWrongNoteArea === 'function') {
+        renderWrongNoteArea(); 
+    }
+    
+    // 3. 메인 화면의 통계 수치도 0으로 갱신 (선택 사항)
+    if (typeof updateStats === 'function') {
+        updateStats();
+    }
+
+    console.log("오답 기록 초기화 완료");
+}
 
 function openStatsModal() {
     document.getElementById('modal-stats-overlay').classList.remove('hidden');
@@ -848,4 +864,64 @@ function goBackToMain() {
 
     // 4. 위치 리셋
     window.scrollTo(0, 0);
+}
+
+// 1. 타이틀 클릭 시 실행 (이탈 방지용)
+function handleTitleClick() {
+    const isQuiz = !document.getElementById('quiz-screen').classList.contains('hidden');
+    
+    if (isQuiz) {
+        // 시험 중일 때는 "중단 모드"로 배너 호출
+        openConfirmBanner("quit"); 
+    } else {
+        // 이미 메인이거나 결과창이면 그냥 메인으로
+        goBackToMain();
+    }
+}
+
+// 2. 시험 제출 버튼 클릭 시 실행 (제출 확인용)
+function handleFinishSubmit() {
+    // 제출 버튼을 눌렀을 때는 "제출 모드"로 배너 호출
+    openConfirmBanner("submit");
+}
+
+/* [Section Name] 배너 엔진 확장 (제출 / 중단 / 초기화 통합) */
+function openConfirmBanner(mode) {
+    const banner = document.getElementById('confirm-banner');
+    if (!banner) return;
+
+    const pTag = banner.querySelector('.banner-body p');
+    const submitBtn = banner.querySelector('.btn-banner-submit');
+    const closeBtn = banner.querySelector('.btn-banner-close');
+
+    if (mode === "quit") {
+        // [중단 모드]
+        pTag.innerHTML = `<strong style="color:var(--accent-red)">시험이 아직 진행 중입니다!</strong><br>정말 중단하고 메인으로 돌아가시겠습니까?`;
+        submitBtn.innerText = "네, 중단합니다";
+        submitBtn.onclick = function() { closeConfirmBanner(); goBackToMain(); };
+        closeBtn.innerText = "계속 풀기";
+    } 
+   else if (mode === "reset") {
+        pTag.innerHTML = `<strong style="color:var(--accent-red)">주의: 전체 오답 기록이 삭제됩니다!</strong><br>정말 모든 데이터를 초기화하시겠습니까?`;
+        submitBtn.innerText = "네, 초기화합니다";
+        
+        // [수정 포인트] 선생님의 실제 삭제 함수 이름인 clearAllWrongs를 여기에 넣습니다.
+        submitBtn.onclick = function() { 
+            closeConfirmBanner(); 
+            clearAllWrongs(); // 이 부분이 엔진의 실제 스위치입니다.
+        };
+        closeBtn.innerText = "취소";
+    }
+    else {
+        // [제출 모드]
+        const unsolvedCount = questions.length - Object.keys(userAnswers).length;
+        pTag.innerHTML = unsolvedCount > 0 
+            ? `<strong style="color:var(--accent-red)">미풀이 문제가 ${unsolvedCount}개 있습니다.</strong><br>그래도 제출하시겠습니까?` 
+            : `<strong>모든 문제를 다 푸셨나요?</strong><br>제출 후에는 정답과 해설이 표시됩니다.`;
+        submitBtn.innerText = "네, 제출합니다";
+        submitBtn.onclick = realSubmit;
+        closeBtn.innerText = "취소";
+    }
+
+    banner.classList.remove('hidden');
 }
