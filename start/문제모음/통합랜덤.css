@@ -714,7 +714,7 @@ body:not(.mode-one-by-one) .options-fixed-area {
     }
 }
 
-/* 모바일 하단 내비게이션 고정 */
+/* 1. 네비게이션 바: 최상위 레이어로 격상 (핸들/조작부) */
 .quiz-bottom-nav { 
     position: fixed; 
     bottom: 0; 
@@ -726,7 +726,46 @@ body:not(.mode-one-by-one) .options-fixed-area {
     display: flex; 
     padding: 10px 20px; 
     gap: 15px; 
-    z-index: 2500; 
+    z-index: 3000 !important; /* 해설창이 절대로 이 버튼들을 가리지 못함 */
+}
+
+/* 2. [신설] 즉시 해설 패널: 네비 바 바로 위에서 팝업되는 전용창 */
+.instant-exp-panel {
+    position: fixed;
+    bottom: 80px; /* 네비 바(70px)보다 10px 위로 띄움 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1200px;
+    z-index: 2500; /* 네비 바보다는 뒤, 보기 영역보다는 앞 */
+    background: var(--card-bg);
+    border: 2px solid var(--accent-blue);
+    border-radius: 20px;
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    max-height: 38vh; /* 모바일에서 너무 커지지 않게 제한 */
+    overflow-y: auto;
+    animation: slideUpExp 0.3s ease-out; /* 부드럽게 올라오는 효과 */
+}
+
+/* 패널 등장 애니메이션 */
+@keyframes slideUpExp {
+    from { transform: translate(-50%, 30px); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+/* 3. [신설] 해설 접기 버튼 스타일 */
+.btn-close-exp {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    background: var(--bg-color);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
 }
 
 .btn-nav-prev, .btn-nav-next { 
@@ -1072,3 +1111,64 @@ body:not(.mode-one-by-one) .options-fixed-area {
         margin-top: 330px !important; 
     }
 }
+
+/* --- [신설] 즉시 해설 패널 및 열기 버튼 (선생님 요청사항 반영) --- */
+
+.instant-exp-panel {
+    position: fixed;
+    bottom: 80px; /* 네비 바(70px)보다 10px 위로 띄움 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1200px;
+    z-index: 2500; /* 네비 바보다는 뒤, 보기 영역보다는 앞 */
+    background: var(--card-bg);
+    border: 2px solid var(--accent-blue);
+    border-radius: 20px;
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    max-height: 38vh; /* 모바일 화면의 약 40%까지만 차지 */
+    overflow-y: auto;
+    animation: slideUpExp 0.3s ease-out;
+}
+
+/* 해설창 등장 애니메이션 */
+@keyframes slideUpExp {
+    from { transform: translate(-50%, 30px); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+/* 해설 접기 버튼 스타일 */
+.btn-close-exp {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    background: var(--bg-color);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* 해설 열기 버튼 (접었을 때 나타남) */
+.btn-open-exp-mini {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2450;
+    background: var(--navy-dark);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 15px 15px 0 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+/* 다크모드 대응 */
+body.dark-mode .instant-exp-panel { background: #1e293b; }
+body.dark-mode .btn-open-exp-mini { background: #334155; }

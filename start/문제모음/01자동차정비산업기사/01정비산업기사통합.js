@@ -243,26 +243,40 @@ function generateQuestionHTML(q, idx, isInstant) {
     `;
 }
 
-function selectAnswer(qIdx, aIdx) {
+function selectAnswer(qIdx, aIdx, isMoving = false) {
     const isInstant = document.getElementById('setting-instant-feedback').checked;
-    if (isInstant && userAnswers[qIdx] !== undefined) return;
+    if (isInstant && userAnswers[qIdx] !== undefined && !isMoving) return;
+    
     userAnswers[qIdx] = aIdx;
     const block = document.getElementById(`q-block-${qIdx}`);
+    
     if (block) {
         block.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
         const target = block.querySelector(`#opt-${qIdx}-${aIdx}`);
         if(target) target.classList.add('selected');
+        
         if (isInstant) {
-            const feedback = block.querySelector(`#feedback-${qIdx}`);
-            const tag = block.querySelector(`#instant-tag-${qIdx}`);
-            const isCorrect = questions[qIdx].options[aIdx] === questions[qIdx].correctAnswerText;
-            feedback.classList.remove('hidden');
-            tag.innerHTML = isCorrect ? '<strong style="color:var(--success-green)">✅ 정답입니다!</strong>' : '<strong style="color:var(--accent-red)">❌ 틀렸습니다.</strong>';
+            const panel = document.getElementById('instant-exp-overlay');
+            const content = document.getElementById('instant-exp-content');
+            const openBtn = document.getElementById('btn-open-exp');
+            const q = questions[qIdx];
+            const isCorrect = q.options[aIdx] === q.correctAnswerText;
+
+            content.innerHTML = `
+                <div style="margin-bottom:12px; display:flex; align-items:center; gap:10px;">
+                    ${isCorrect ? '<span style="background:var(--success-green); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">✅ 정답</span>' : '<span style="background:var(--accent-red); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">❌ 오답</span>'}
+                    <span style="font-weight:bold; color:var(--text-primary);">Q${qIdx + 1}. 정답: ${q.correctAnswerText}</span>
+                </div>
+                <div style="background:rgba(37,99,235,0.05); padding:15px; border-radius:12px; border-left:4px solid var(--accent-blue);">
+                    <div style="font-size:1rem; line-height:1.6; color:var(--text-primary); word-break:keep-all;">${q.explain}</div>
+                </div>`;
+            panel.classList.remove('hidden');
+            if (openBtn) openBtn.classList.add('hidden');
         }
     }
     updateOMRMark(qIdx, aIdx);
     updateProgressDisplay();
-    if (document.getElementById('setting-auto-scroll').checked && !isInstant) {
+    if (document.getElementById('setting-auto-scroll').checked && !isInstant && !isMoving) {
         setTimeout(() => {
             if (document.getElementById('setting-one-by-one').checked) { moveQuestion(1); }
             else {
@@ -393,7 +407,12 @@ function pushAllAnswers(answerIdx) {
 
 function moveQuestion(dir) {
     const next = currentIdx + dir;
-    if (next >= 0 && next < questions.length) { currentIdx = next; renderQuestion(); window.scrollTo(0, 0); }
+    if (next >= 0 && next < questions.length) { 
+        currentIdx = next; renderQuestion(); 
+        if (userAnswers[currentIdx] !== undefined) { selectAnswer(currentIdx, userAnswers[currentIdx], true); } 
+        else { closeInstantExp(); }
+        window.scrollTo(0, 0); 
+    }
 }
 
 function jumpTo(idx) {
@@ -575,3 +594,19 @@ function openStatsModal() {
 function closeStatsModal() { document.getElementById('modal-stats-overlay').classList.add('hidden'); }
 
 function handleSecretReset() { if (++secretResetCount >= 5) { if (confirm("초기화하시겠습니까?")) { localStorage.removeItem('cbt_history_v4'); location.reload(); } secretResetCount = 0; } }
+
+function closeInstantExp() { const panel = document.getElementById('instant-exp-overlay'); if (panel) panel.classList.add('hidden'); }
+
+function closeInstantExp() { 
+    const panel = document.getElementById('instant-exp-overlay'); 
+    const openBtn = document.getElementById('btn-open-exp');
+    if (panel) panel.classList.add('hidden'); 
+    if (openBtn && userAnswers[currentIdx] !== undefined) openBtn.classList.remove('hidden'); 
+}
+
+function openInstantExp() {
+    const panel = document.getElementById('instant-exp-overlay');
+    const openBtn = document.getElementById('btn-open-exp');
+    if (panel) panel.classList.remove('hidden');
+    if (openBtn) openBtn.classList.add('hidden');
+}
