@@ -479,24 +479,23 @@ body.mode-one-by-one .question-container.fixed-layout {
 
 /* [콕핏 개조] 한문제씩 모드일 때 버튼 규격화 및 폰트 조절 */
 body.mode-one-by-one .option-btn {
-    height: 45px !important;    
-    margin-bottom: 8px !important;
+    height: 50px !important;      /* 버튼 높이 고정 (선생님 취향에 맞게 조절 가능) */
     display: flex !important;
-    align-items: center;
-    padding: 0 20px !important;
-    overflow: hidden;           
+    align-items: center;          /* 글자가 한 줄이든 두 줄이든 수직 중앙 정렬 */
+    justify-content: flex-start;
+    padding: 0 15px !important;
+    overflow: hidden !important;  /* 혹시나 넘치는 글자는 일단 숨김 */
 }
 
-/* 보기 텍스트 정렬 및 줄바꿈 제약 */
 .opt-txt {
     flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;      
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.25;
-    word-break: keep-all;
-    font-size: 0.9rem;
+    display: block !important;    /* clamp(생략) 제거 */
+    white-space: normal;          /* 줄바꿈 허용 */
+    line-height: 1.1;             /* 줄 간격을 좁혀서 공간 확보 */
+    word-break: break-all;        /* 글자가 길면 무조건 줄바꿈 */
+    text-align: left;
+    /* transition을 주면 글자 크기가 바뀔 때 부드럽습니다 */
+    transition: font-size 0.2s ease; 
 }
 
 /* 폰트 자동 스케일링 클래스 (JS에서 부여) */
@@ -508,6 +507,11 @@ body.mode-one-by-one .option-btn {
     font-weight: 800;
     color: var(--accent-blue);
 }
+
+/* 폰트 크기 자동 조절 규격 */
+.option-btn.font-shrink-md .opt-txt { font-size: 0.85rem; }
+.option-btn.font-shrink-sm .opt-txt { font-size: 0.75rem; line-height: 1.0; }
+.option-btn.font-shrink-xs .opt-txt { font-size: 0.65rem; line-height: 0.9; }
 
 /* 마우스를 올렸을 때 (Hover) */
 .option-btn:hover:not(.selected) {

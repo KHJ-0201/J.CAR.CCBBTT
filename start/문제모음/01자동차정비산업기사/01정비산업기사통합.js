@@ -234,18 +234,22 @@ function generateQuestionHTML(q, idx, isInstant) {
             </div>
             <div class="options-fixed-area">
                 <div class="options-list">
-                    ${q.options.map((opt, i) => {
-                        let shrinkClass = "";
-                        if (opt.length > 40) shrinkClass = "font-shrink-xs";
-                        else if (opt.length > 25) shrinkClass = "font-shrink-sm";
-                        return `
-                            <button class="option-btn ${userAnswers[idx] === i ? 'selected' : ''} ${shrinkClass}" 
-                                id="opt-${idx}-${i}" onclick="selectAnswer(${idx}, ${i})">
-                                <span class="opt-num">${i + 1}.</span> 
-                                <span class="opt-txt">${opt}</span>
-                            </button>
-                        `;
-                    }).join('')}
+                
+${q.options.map((opt, i) => {
+    let shrinkClass = "";
+    // 글자 수에 따라 폰트 크기 단계를 나눕니다 (테스트 후 숫자 조절 가능)
+    if (opt.length > 50) shrinkClass = "font-shrink-xs";      /* 아주 긴 보기 */
+    else if (opt.length > 35) shrinkClass = "font-shrink-sm"; /* 약간 긴 보기 */
+    else if (opt.length > 20) shrinkClass = "font-shrink-md"; /* 보통 보기 */
+
+    return `
+        <button class="option-btn ${userAnswers[idx] === i ? 'selected' : ''} ${shrinkClass}" 
+            id="opt-${idx}-${i}" onclick="selectAnswer(${idx}, ${i})">
+            <span class="opt-num">${i + 1}.</span> 
+            <span class="opt-txt">${opt}</span>
+        </button>
+    `;
+}).join('')}
                 </div>
             </div>
             ${feedbackHTML}
