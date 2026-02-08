@@ -194,6 +194,7 @@ function renderQuestion() {
     const isInstant = document.getElementById('setting-instant-feedback').checked;
     if (isOneByOne) { display.innerHTML = generateQuestionHTML(questions[currentIdx], currentIdx, isInstant); }
     else { display.innerHTML = questions.map((q, i) => generateQuestionHTML(q, i, isInstant)).join(''); }
+    updateExpButtonVisibility();
     updateProgressDisplay();
     highlightOMRRow();
 }
@@ -252,56 +253,60 @@ function generateQuestionHTML(q, idx, isInstant) {
     `;
 }
 
+/* [Section Name] 문제 선택 및 해설 제어 엔진 (신규 설치) */
 function selectAnswer(qIdx, aIdx, isMoving = false) {
     const isInstant = document.getElementById('setting-instant-feedback').checked;
-    const isOneByOne = document.getElementById('setting-one-by-one').checked; // 한문제씩 모드 체크
+    const isOneByOne = document.getElementById('setting-one-by-one').checked;
     
+    // 이미 푼 문제인데 다시 누르는 경우 차단 (이동 중일 땐 허용)
     if (isInstant && userAnswers[qIdx] !== undefined && !isMoving) return;
     
+    // 정답 기록
     userAnswers[qIdx] = aIdx;
-    const block = document.getElementById(`q-block-${qIdx}`);
     
+    // 화면상의 버튼 선택 효과 (파란색 불 들어오게 하기)
+    const block = document.getElementById(`q-block-${qIdx}`);
     if (block) {
         block.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
         const target = block.querySelector(`#opt-${qIdx}-${aIdx}`);
         if(target) target.classList.add('selected');
         
-        if (isInstant) {
-            // [분기점] 한문제씩 풀기 모드가 활성화된 경우
-            if (isOneByOne) {
-                const panel = document.getElementById('instant-exp-overlay');
-                const content = document.getElementById('instant-exp-content');
-                const openBtn = document.getElementById('btn-open-exp');
-                const q = questions[qIdx];
-                const isCorrect = q.options[aIdx] === q.correctAnswerText;
+        // [핵심 배선] 즉시 해설 + 한문제씩 모드일 때만 하단 패널 작동
+        if (isInstant && isOneByOne) {
+            const panel = document.getElementById('instant-exp-overlay');
+            const content = document.getElementById('instant-exp-content');
+            const openBtn = document.getElementById('btn-open-exp');
+            const q = questions[qIdx];
+            const isCorrect = q.options[aIdx] === q.correctAnswerText;
 
-                content.innerHTML = `
-                    <div style="margin-bottom:12px; display:flex; align-items:center; gap:10px;">
-                        ${isCorrect ? '<span style="background:var(--success-green); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">✅ 정답</span>' : '<span style="background:var(--accent-red); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">❌ 오답</span>'}
-                        <span style="font-weight:bold; color:var(--text-primary);">Q${qIdx + 1}. 정답: ${q.correctAnswerText}</span>
-                    </div>
-                    <div style="background:rgba(37,99,235,0.05); padding:15px; border-radius:12px; border-left:4px solid var(--accent-blue);">
-                        <div style="font-size:1rem; line-height:1.6; color:var(--text-primary); word-break:keep-all;">${q.explain}</div>
-                    </div>`;
-                panel.classList.remove('hidden');
-                if (openBtn) openBtn.classList.add('hidden');
-            } 
-            // [분기점] 스크롤 모드(한문제씩 OFF)인 경우 -> 기존 방식 유지
-            else {
-                const feedback = block.querySelector(`#feedback-${qIdx}`);
-                const tag = block.querySelector(`#instant-tag-${qIdx}`);
-                if (feedback && tag) {
-                    const isCorrect = questions[qIdx].options[aIdx] === questions[qIdx].correctAnswerText;
-                    feedback.classList.remove('hidden');
-                    tag.innerHTML = isCorrect ? '<strong style="color:var(--success-green)">✅ 정답입니다!</strong>' : '<strong style="color:var(--accent-red)">❌ 틀렸습니다.</strong>';
-                }
+            content.innerHTML = `
+                <div style="margin-bottom:12px; display:flex; align-items:center; gap:10px;">
+                    ${isCorrect ? '<span style="background:var(--success-green); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">✅ 정답</span>' : '<span style="background:var(--accent-red); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">❌ 오답</span>'}
+                    <span style="font-weight:bold; color:var(--text-primary);">Q${qIdx + 1}. 정답: ${q.correctAnswerText}</span>
+                </div>
+                <div style="background:rgba(37,99,235,0.05); padding:15px; border-radius:12px; border-left:4px solid var(--accent-blue);">
+                    <div style="font-size:1rem; line-height:1.6; color:var(--text-primary); word-break:keep-all;">${q.explain}</div>
+                </div>`;
+            if (panel) panel.classList.remove('hidden');
+            if (openBtn) openBtn.classList.add('hidden');
+        } 
+        // 즉시 해설만 켜져 있고 스크롤 모드일 때 (문제 바로 밑 해설)
+        else if (isInstant && !isOneByOne) {
+            const feedback = block.querySelector(`#feedback-${qIdx}`);
+            const tag = block.querySelector(`#instant-tag-${qIdx}`);
+            if (feedback && tag) {
+                const isCorrect = questions[qIdx].options[aIdx] === questions[qIdx].correctAnswerText;
+                feedback.classList.remove('hidden');
+                tag.innerHTML = isCorrect ? '<strong style="color:var(--success-green)">✅ 정답입니다!</strong>' : '<strong style="color:var(--accent-red)">❌ 틀렸습니다.</strong>';
             }
         }
     }
+    
+    // OMR 카드 및 진행도 업데이트
     updateOMRMark(qIdx, aIdx);
     updateProgressDisplay();
     
-    // 자동 이동 로직 (즉시 해설 모드일 때는 자동 이동하지 않도록 선생님의 기존 조건 유지)
+    // 자동 이동 로직 (즉시해설 꺼져있을 때만)
     if (document.getElementById('setting-auto-scroll').checked && !isInstant && !isMoving) {
         setTimeout(() => {
             if (document.getElementById('setting-one-by-one').checked) { moveQuestion(1); }
@@ -434,9 +439,29 @@ function pushAllAnswers(answerIdx) {
 function moveQuestion(dir) {
     const next = currentIdx + dir;
     if (next >= 0 && next < questions.length) { 
-        currentIdx = next; renderQuestion(); 
-        if (userAnswers[currentIdx] !== undefined) { selectAnswer(currentIdx, userAnswers[currentIdx], true); } 
-        else { closeInstantExp(); }
+        currentIdx = next; 
+        renderQuestion(); 
+        
+        const openBtn = document.getElementById('btn-open-exp');
+        const isOneByOne = document.getElementById('setting-one-by-one').checked;
+        const isInstant = document.getElementById('setting-instant-feedback').checked; // [추가] 즉시 해설 체크
+
+        // 일단 버튼을 숨기고 시작 (PC 유령 현상 차단)
+        if (openBtn) openBtn.classList.add('hidden'); 
+        
+        if (userAnswers[currentIdx] !== undefined) {
+            // [보정] 즉시 해설이 켜져 있을 때만 답안 상태와 해설을 복구함
+            if (isInstant) {
+                selectAnswer(currentIdx, userAnswers[currentIdx], true); 
+            } else {
+                // 즉시 해설이 꺼져 있으면 답만 표시하고 버튼은 숨김 유지
+                const target = document.querySelector(`#opt-${currentIdx}-${userAnswers[currentIdx]}`);
+                if(target) target.classList.add('selected');
+            }
+        } else {
+            // 안 푼 문제라면 패널 닫기
+            closeInstantExp(); 
+        }
         window.scrollTo(0, 0); 
     }
 }
@@ -487,8 +512,15 @@ function highlightOMRRow() {
 
 function applyLeftHand(isOn) { document.getElementById('quiz-nav-group').classList.toggle('left-hand-mode-active', isOn); }
 function toggleViewMode() { if(questions.length > 0) launchQuiz(); }
-function syncInstantMode(el) { if(el.checked) document.getElementById('setting-one-by-one').checked = true; if(questions.length > 0) launchQuiz(); }
-
+function syncInstantMode(el) { 
+    if(el.checked) document.getElementById('setting-one-by-one').checked = true; 
+    
+    if(questions.length > 0) {
+        launchQuiz(); 
+        // [추가] 설정을 바꾸자마자 유령 버튼이 있는지 즉시 검사해서 치웁니다.
+        updateExpButtonVisibility(); 
+    }
+}
 function toggleWrongAccordion() {
     const body = document.getElementById('wrong-content-area');
     body.classList.toggle('hidden');
@@ -621,19 +653,61 @@ function closeStatsModal() { document.getElementById('modal-stats-overlay').clas
 
 function handleSecretReset() { if (++secretResetCount >= 5) { if (confirm("초기화하시겠습니까?")) { localStorage.removeItem('cbt_history_v4'); location.reload(); } secretResetCount = 0; } }
 
-function closeInstantExp() { const panel = document.getElementById('instant-exp-overlay'); if (panel) panel.classList.add('hidden'); }
-
 function closeInstantExp() { 
     const panel = document.getElementById('instant-exp-overlay'); 
     const openBtn = document.getElementById('btn-open-exp');
+    
+    // 1. 현재 설정 상태를 모두 체크합니다.
+    const isOneByOne = document.getElementById('setting-one-by-one').checked;
+    const isInstant = document.getElementById('setting-instant-feedback').checked;
+    
+    // 2. 패널은 무조건 닫습니다.
     if (panel) panel.classList.add('hidden'); 
-    // 문제를 새로 시작할 때는(userAnswers가 비었을 때) 열기 버튼도 숨겨야 함
-    if (openBtn) openBtn.classList.add('hidden'); 
+    
+    // 3. [완벽 배선] 모든 조건이 맞을 때만 버튼을 노출합니다.
+    // - 즉시 해설이 켜져 있고(isInstant)
+    // - 한문제씩 풀기 모드이며(isOneByOne)
+    // - 현재 문제를 이미 풀었을 때(userAnswers[currentIdx] !== undefined)
+    if (isInstant && isOneByOne && openBtn && userAnswers[currentIdx] !== undefined) {
+        openBtn.classList.remove('hidden'); 
+    } else {
+        // 위 조건 중 하나라도 맞지 않으면 유령 버튼이 생기지 않도록 확실히 숨깁니다.
+        if (openBtn) openBtn.classList.add('hidden');
+    }
 }
 
 function openInstantExp() {
     const panel = document.getElementById('instant-exp-overlay');
     const openBtn = document.getElementById('btn-open-exp');
+    const isOneByOne = document.getElementById('setting-one-by-one').checked;
+    
+    // [방어 코드] 스크롤 모드이거나 안 푼 문제에서 열기 시도 시 원천 차단
+    if (!isOneByOne || userAnswers[currentIdx] === undefined) {
+        if (openBtn) openBtn.classList.add('hidden');
+        if (panel) panel.classList.add('hidden');
+        return;
+    }
+
     if (panel) panel.classList.remove('hidden');
     if (openBtn) openBtn.classList.add('hidden');
+}
+
+/* [Section Name] 해설 버튼 가시성 정밀 제어 엔진 (PC 유령 방지용) */
+function updateExpButtonVisibility() {
+    const openBtn = document.getElementById('btn-open-exp');
+    // 현재 설정 상태를 실시간으로 읽어옵니다.
+    const isInstant = document.getElementById('setting-instant-feedback').checked;
+    const isOneByOne = document.getElementById('setting-one-by-one').checked;
+    const hasAnswer = (userAnswers[currentIdx] !== undefined);
+
+    if (openBtn) {
+        // [조건] 즉시해설 ON + 한문제씩 ON + 현재 문제 답을 골랐음
+        if (isInstant && isOneByOne && hasAnswer) {
+            // 이 조건일 때는 버튼이 보일 '자격'이 생깁니다. 
+            // 단, 패널이 닫혔을 때만 보여야 하므로 closeInstantExp()에게 판단을 맡깁니다.
+        } else {
+            // 그 외 모든 상황(즉시해설 OFF 등)에서는 유령이 생기지 않게 '즉시 소거' 합니다.
+            openBtn.classList.add('hidden');
+        }
+    }
 }

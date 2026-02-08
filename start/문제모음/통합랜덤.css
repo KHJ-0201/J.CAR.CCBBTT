@@ -23,11 +23,20 @@ body.dark-mode {
     --border-color: #334155;
 }
 
-/* 아래 코드를 다크모드 설정 바로 밑에 추가하세요 */
+/* 1. 다크모드 기본 버튼 (미선택 시) */
 body.dark-mode .option-btn {
-    background-color: #2d3748 !important; /* 어두운 회색 바탕으로 변경 */
-    color: #f8fafc !important;            /* 글자색을 밝은 흰색계열로 고정 */
-    border-color: #4a5568 !important;     /* 테두리도 어둡게 */
+    background-color: #2d3748 !important;
+    color: #f8fafc !important;
+    border-color: #4a5568 !important;
+}
+
+/* 2. [추가] 다크모드에서 버튼을 선택했을 때 (Selected) */
+/* 아래 코드를 바로 밑에 넣어주세요. 테두리뿐만 아니라 바탕도 파란색으로 강제 전환합니다. */
+body.dark-mode .option-btn.selected {
+    background-color: var(--accent-blue) !important; /* 바탕색을 파란색으로! */
+    color: white !important;                         /* 글자는 흰색으로! */
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);    /* 네온 효과도 유지 */
 }
 
 /* 마우스 올렸을 때나 선택되었을 때의 색상도 다크모드에 맞게 보정 */
@@ -1138,6 +1147,29 @@ body:not(.mode-one-by-one) .options-fixed-area {
     to { transform: translate(-50%, 0); opacity: 1; }
 }
 
+/* [수정 포인트] 패널 본체에 불투명 배경색(#ffffff) 강제 적용 */
+.instant-exp-panel {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1200px;
+    z-index: 2500;
+    
+    /* 기존 var(--card-bg) 대신 완전 불투명한 흰색으로 덮어쓰기 */
+    background: #ffffff !important; 
+    
+    border: 2px solid var(--accent-blue);
+    border-radius: 20px;
+    /* 그림자를 조금 더 진하게 해서 경계를 확실히 함 */
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25); 
+    padding: 20px;
+    max-height: 38vh;
+    overflow-y: auto;
+    animation: slideUpExp 0.3s ease-out;
+}
+
 /* 해설 접기 버튼 스타일 */
 .btn-close-exp {
     width: 100%;
@@ -1154,21 +1186,69 @@ body:not(.mode-one-by-one) .options-fixed-area {
 /* 해설 열기 버튼 (접었을 때 나타남) */
 .btn-open-exp-mini {
     position: fixed;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2450;
-    background: var(--navy-dark);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 15px 15px 0 0;
-    font-size: 0.75rem;
-    font-weight: 700;
-    border: none;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    cursor: pointer;
+    /* 모바일 네비바(70px) 바로 위에 안착 */
+    bottom: 80px !important; 
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    
+    /* 최상위 레이어 확보 */
+    z-index: 9999 !important; 
+    
+    background: var(--navy-dark, #1e293b);
+    color: white !important;
+    padding: 10px 24px !important;
+    border-radius: 20px 20px 0 0 !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.3) !important;
+    cursor: pointer !important;
+    display: block; /* JS에서 hidden으로 제어함 */
 }
 
-/* 다크모드 대응 */
-body.dark-mode .instant-exp-panel { background: #1e293b; }
+@media (min-width: 1025px) {
+    .btn-open-exp-mini {
+        left: calc(50% - 173px) !important;
+        bottom: 80px !important;
+        transform: translateX(-50%) !important;
+        z-index: 9999 !important;
+    }
+}
+
+/* 다크모드 대응 (다크모드에서도 불투명하게 고정) */
+body.dark-mode .instant-exp-panel { 
+    background: #1e293b !important; /* 다크모드 배경색도 불투명하게 */
+    border-color: var(--accent-blue);
+}
+
 body.dark-mode .btn-open-exp-mini { background: #334155; }
+
+/* PC 화면(1025px 이상) 해설창 위치 정밀 교정 */
+@media (min-width: 1025px) {
+    .instant-exp-panel {
+        /* 중앙에서 왼쪽으로 살짝 밀어 OMR 카드 공간(약 300px)을 확보합니다 */
+        left: calc(50% - 173px) !important; 
+        transform: translateX(-50%) !important;
+        
+        /* 보기 영역과 폭을 비슷하게 맞춤 (약 800px) */
+        width: 814px !important; 
+        max-width: 85vw;
+        max-height: 45vh !important;  /* 다이얼 A: 화면 높이의 40%까지만 커지도록 제한 */
+        padding: 25px !important;     /* 다이얼 B: 내부 여백을 줘서 글자가 답답하지 않게 조절 */
+        
+        bottom: 80px;
+        background: #ffffff !important;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 열기 버튼도 해설창 중앙에 맞춤 */
+    .btn-open-exp-mini {
+        left: calc(50% - 173px) !important;
+        transform: translateX(-50%) !important;
+        /* 레이어 우선순위를 JS의 hidden보다 낮게 유지하거나 display를 삭제해야 합니다 */
+        z-index: 9999 !important; 
+        bottom: 80px !important;
+        
+        /* display: block !important; <--- 이 줄을 삭제했습니다. */
+    }
+}

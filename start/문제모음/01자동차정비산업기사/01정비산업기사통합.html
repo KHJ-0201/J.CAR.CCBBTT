@@ -152,9 +152,14 @@
                 <button class="btn-nav-prev" id="btn-move-prev" onclick="moveQuestion(-1)">이전 문제</button>
                 <button class="btn-nav-next" id="btn-move-next" onclick="moveQuestion(1)">다음 문제</button>
             </footer>
-        </section>
 
-        <section id="result-screen" class="hidden">
+            <div id="instant-exp-overlay" class="instant-exp-panel no-drag hidden">
+                <div id="instant-exp-content"></div>
+                <button class="btn-close-exp" onclick="closeInstantExp()">해설 접기 ▼</button>
+            </div>
+            <button id="btn-open-exp" class="btn-open-exp-mini hidden" onclick="openInstantExp()">해설 열기 ▲</button>
+
+        </section> <section id="result-screen" class="hidden">
             <div class="result-summary-fixed no-drag">
                 <div class="res-fixed-inner glass-card">
                     <div class="res-score-line">
