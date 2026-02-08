@@ -158,6 +158,13 @@ function startExamProcess(sets, isBalanced) {
 function launchQuiz() {
     userAnswers = {};
     currentIdx = 0;
+    
+    // [추가 포인트] 새 시험 시 하단 패널과 열기 버튼을 리셋 (강제 숨김)
+    const panel = document.getElementById('instant-exp-overlay');
+    const openBtn = document.getElementById('btn-open-exp');
+    if (panel) panel.classList.add('hidden');
+    if (openBtn) openBtn.classList.add('hidden');
+
     const isInstant = document.getElementById('setting-instant-feedback').checked;
     const isOneByOne = document.getElementById('setting-one-by-one').checked;
     
@@ -191,20 +198,32 @@ function renderQuestion() {
     highlightOMRRow();
 }
 
-/* 수정 전 코드 >> 수정 후 코드 (콕핏 개조 반영) */
+/* [Section Name] 모드별 해설 노출 방식 분기 (수정 후 코드) */
+
 function generateQuestionHTML(q, idx, isInstant) {
     let feedbackContent = '';
     let feedbackHidden = 'hidden';
+    
+    // [보정] 즉시해설 모드일 때 정답 여부 판단
     if (isInstant && userAnswers[idx] !== undefined) {
         feedbackHidden = '';
         const isCorrect = q.options[userAnswers[idx]] === q.correctAnswerText;
         feedbackContent = isCorrect ? '<strong style="color:var(--success-green)">✅ 정답입니다!</strong>' : '<strong style="color:var(--accent-red)">❌ 틀렸습니다.</strong>';
     }
-    const wrongBadge = q.wrongCount ? `<span style="color:var(--accent-red); margin-left:10px; font-weight:bold;">(누적 오답: ${q.wrongCount}회)</span>` : '';
     
-    // [콕핏 개조] '한문제씩 풀기' 여부에 따라 레이아웃 클래스 결정
+    const wrongBadge = q.wrongCount ? `<span style="color:var(--accent-red); margin-left:10px; font-weight:bold;">(누적 오답: ${q.wrongCount}회)</span>` : '';
     const isOneByOne = document.getElementById('setting-one-by-one').checked;
     const containerClass = isOneByOne ? "question-container fixed-layout" : "question-container";
+
+    // [핵심 로직] 한문제씩 모드가 아닐 때만 기존 구형 해설창(feedback-box)을 생성함
+    const feedbackHTML = (!isOneByOne && isInstant) ? `
+            <div id="feedback-${idx}" class="feedback-box ${feedbackHidden}">
+                <div class="instant-result-tag" id="instant-tag-${idx}">${feedbackContent}</div>
+                <div class="explanation-content">
+                    <span class="ans-label">정답: ${q.correctAnswerText}</span>
+                    <p class="exp-text">해설: ${q.explain}</p>
+                </div>
+            </div>` : '';
 
     return `
         <div class="${containerClass}" id="q-block-${idx}">
@@ -212,15 +231,12 @@ function generateQuestionHTML(q, idx, isInstant) {
                 <span class="q-from">${q.originalRound}${wrongBadge}</span>
                 <p class="q-text"><strong>Q${idx + 1}.</strong> ${q.question}</p>
             </div>
-            
             <div class="options-fixed-area">
                 <div class="options-list">
                     ${q.options.map((opt, i) => {
-                        // 폰트 조절 로직: 25자 이상일 때 1차 축소, 40자 이상일 때 2차 축소
                         let shrinkClass = "";
                         if (opt.length > 40) shrinkClass = "font-shrink-xs";
                         else if (opt.length > 25) shrinkClass = "font-shrink-sm";
-
                         return `
                             <button class="option-btn ${userAnswers[idx] === i ? 'selected' : ''} ${shrinkClass}" 
                                 id="opt-${idx}-${i}" onclick="selectAnswer(${idx}, ${i})">
@@ -231,20 +247,15 @@ function generateQuestionHTML(q, idx, isInstant) {
                     }).join('')}
                 </div>
             </div>
-
-            <div id="feedback-${idx}" class="feedback-box ${feedbackHidden}">
-                <div class="instant-result-tag" id="instant-tag-${idx}">${feedbackContent}</div>
-                <div class="explanation-content">
-                    <span class="ans-label">정답: ${q.correctAnswerText}</span>
-                    <p class="exp-text">해설: ${q.explain}</p>
-                </div>
-            </div>
+            ${feedbackHTML}
         </div>
     `;
 }
 
 function selectAnswer(qIdx, aIdx, isMoving = false) {
     const isInstant = document.getElementById('setting-instant-feedback').checked;
+    const isOneByOne = document.getElementById('setting-one-by-one').checked; // 한문제씩 모드 체크
+    
     if (isInstant && userAnswers[qIdx] !== undefined && !isMoving) return;
     
     userAnswers[qIdx] = aIdx;
@@ -256,26 +267,41 @@ function selectAnswer(qIdx, aIdx, isMoving = false) {
         if(target) target.classList.add('selected');
         
         if (isInstant) {
-            const panel = document.getElementById('instant-exp-overlay');
-            const content = document.getElementById('instant-exp-content');
-            const openBtn = document.getElementById('btn-open-exp');
-            const q = questions[qIdx];
-            const isCorrect = q.options[aIdx] === q.correctAnswerText;
+            // [분기점] 한문제씩 풀기 모드가 활성화된 경우
+            if (isOneByOne) {
+                const panel = document.getElementById('instant-exp-overlay');
+                const content = document.getElementById('instant-exp-content');
+                const openBtn = document.getElementById('btn-open-exp');
+                const q = questions[qIdx];
+                const isCorrect = q.options[aIdx] === q.correctAnswerText;
 
-            content.innerHTML = `
-                <div style="margin-bottom:12px; display:flex; align-items:center; gap:10px;">
-                    ${isCorrect ? '<span style="background:var(--success-green); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">✅ 정답</span>' : '<span style="background:var(--accent-red); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">❌ 오답</span>'}
-                    <span style="font-weight:bold; color:var(--text-primary);">Q${qIdx + 1}. 정답: ${q.correctAnswerText}</span>
-                </div>
-                <div style="background:rgba(37,99,235,0.05); padding:15px; border-radius:12px; border-left:4px solid var(--accent-blue);">
-                    <div style="font-size:1rem; line-height:1.6; color:var(--text-primary); word-break:keep-all;">${q.explain}</div>
-                </div>`;
-            panel.classList.remove('hidden');
-            if (openBtn) openBtn.classList.add('hidden');
+                content.innerHTML = `
+                    <div style="margin-bottom:12px; display:flex; align-items:center; gap:10px;">
+                        ${isCorrect ? '<span style="background:var(--success-green); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">✅ 정답</span>' : '<span style="background:var(--accent-red); color:white; padding:4px 12px; border-radius:20px; font-weight:bold;">❌ 오답</span>'}
+                        <span style="font-weight:bold; color:var(--text-primary);">Q${qIdx + 1}. 정답: ${q.correctAnswerText}</span>
+                    </div>
+                    <div style="background:rgba(37,99,235,0.05); padding:15px; border-radius:12px; border-left:4px solid var(--accent-blue);">
+                        <div style="font-size:1rem; line-height:1.6; color:var(--text-primary); word-break:keep-all;">${q.explain}</div>
+                    </div>`;
+                panel.classList.remove('hidden');
+                if (openBtn) openBtn.classList.add('hidden');
+            } 
+            // [분기점] 스크롤 모드(한문제씩 OFF)인 경우 -> 기존 방식 유지
+            else {
+                const feedback = block.querySelector(`#feedback-${qIdx}`);
+                const tag = block.querySelector(`#instant-tag-${qIdx}`);
+                if (feedback && tag) {
+                    const isCorrect = questions[qIdx].options[aIdx] === questions[qIdx].correctAnswerText;
+                    feedback.classList.remove('hidden');
+                    tag.innerHTML = isCorrect ? '<strong style="color:var(--success-green)">✅ 정답입니다!</strong>' : '<strong style="color:var(--accent-red)">❌ 틀렸습니다.</strong>';
+                }
+            }
         }
     }
     updateOMRMark(qIdx, aIdx);
     updateProgressDisplay();
+    
+    // 자동 이동 로직 (즉시 해설 모드일 때는 자동 이동하지 않도록 선생님의 기존 조건 유지)
     if (document.getElementById('setting-auto-scroll').checked && !isInstant && !isMoving) {
         setTimeout(() => {
             if (document.getElementById('setting-one-by-one').checked) { moveQuestion(1); }
@@ -601,7 +627,8 @@ function closeInstantExp() {
     const panel = document.getElementById('instant-exp-overlay'); 
     const openBtn = document.getElementById('btn-open-exp');
     if (panel) panel.classList.add('hidden'); 
-    if (openBtn && userAnswers[currentIdx] !== undefined) openBtn.classList.remove('hidden'); 
+    // 문제를 새로 시작할 때는(userAnswers가 비었을 때) 열기 버튼도 숨겨야 함
+    if (openBtn) openBtn.classList.add('hidden'); 
 }
 
 function openInstantExp() {
