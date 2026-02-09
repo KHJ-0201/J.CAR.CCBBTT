@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script>
+        (function() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const targetUrl = window.location.href;
+
+            if (userAgent.match(/kakaotalk/i)) {
+                // 안드로이드 (삼성폰 등) : 크롬이나 삼성 인터넷으로 강제 실행
+                if (userAgent.match(/android/i)) {
+                    location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+                } 
+                // 아이폰 : 카카오톡 외부 브라우저 옵션 사용
+                else if (userAgent.match(/iphone|ipad|ipod/i)) {
+                    location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+                }
+            }
+        })();
+    </script>
     <title>버전 선택</title>
     <link rel="stylesheet" href="index.css"> 
 </head>
