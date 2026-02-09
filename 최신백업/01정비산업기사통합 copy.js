@@ -16,7 +16,6 @@ window.onpageshow = function(event) {
 let questions = []; 
 let userAnswers = {}; 
 let currentIdx = 0;
-let timeUpIdx = null;
 let timerInterval = null;
 let isMultiSelectMode = false;
 let secretResetCount = 0;
@@ -181,8 +180,6 @@ function startExamProcess(sets, isBalanced) {
 function launchQuiz() {
     userAnswers = {};
     currentIdx = 0;
-    timeUpIdx = null; // [추가] 시간 종료 시점 기록 초기화
-    questions.forEach(q => delete q.isOverTime);
     // [추가] 이제 시험을 시작할 때만 '안전벨트'를 매서 뒤로가기를 1회 방어합니다.
     window.history.pushState({ page: 'quiz' }, null, window.location.href);
     // [추가 포인트] 새 시험 시 하단 패널과 열기 버튼을 리셋 (강제 숨김)
@@ -292,15 +289,6 @@ function selectAnswer(qIdx, aIdx, isMoving = false) {
     
     // 정답 기록
     userAnswers[qIdx] = aIdx;
-    // [추가 로직] 만약 타이머가 종료된 상태(timeUpIdx가 기록됨)에서 푸는 문제라면?
-    if (timeUpIdx !== null) {
-    questions[qIdx].isOverTime = true;
-}
-
-    else {
-    // 시간 안에 풀었다면 혹시 남아있을지 모를 꼬리표를 확실히 제거
-    delete questions[qIdx].isOverTime; 
-}
     
     // 화면상의 버튼 선택 효과 (파란색 불 들어오게 하기)
     const block = document.getElementById(`q-block-${qIdx}`);
@@ -394,7 +382,6 @@ function handleFinishSubmit() {
 }
 
 function finalizeExam() {
-    console.log("채점 엔진 가동...");
     if(timerInterval) clearInterval(timerInterval);
     let scoreCount = 0;
     const reviewContainer = document.getElementById('review-list-container');
@@ -405,38 +392,20 @@ function finalizeExam() {
 
     questions.forEach((q, i) => {
         const userPickText = q.options[userAnswers[i]];
+        const isCorrect = userPickText === q.correctAnswerText;
+        if (isCorrect) { scoreCount++; } 
+        else { currentWrongs.push({...q, options: q.options}); }
         
-        // [핵심 판정] 정답이라도 시간 초과(isOverTime) 딱지가 붙어있으면 무조건 오답 처리!
-        const isCorrect = (userPickText === q.correctAnswerText) && !q.isOverTime;
-
-        if (isCorrect) { 
-            scoreCount++; 
-        } else { 
-            // 틀린 문제나 시간 초과 문제는 오답 노트로 보냅니다.
-            currentWrongs.push({...q, options: q.options}); 
-        }
-        
-        // 1. 결과 리스트 카드 생성 (6번 화면 중앙 리스트)
+        // 결과 리스트 카드 생성
         const card = document.createElement('div');
         card.className = `review-card glass-card ${isCorrect ? 'correct' : 'wrong'}`;
         card.id = `review-card-${i}`; // 이동을 위한 ID
         card.style.borderLeft = `10px solid ${isCorrect ? 'var(--success-green)' : 'var(--accent-red)'}`;
-        card.style.padding = '20px'; 
-        card.style.marginBottom = '15px';
-
-        // [신규] 시간 초과된 문제라면 빨간색 태그를 붙여줍니다.
-        const overTimeTag = q.isOverTime ? '<span style="color:var(--accent-red); font-weight:bold;">[시간초과]</span> ' : '';
-
-        // 카드 내용 삽입 (태그 적용)
-        card.innerHTML = `
-            <h4>${isCorrect ? '✅' : '❌'} ${overTimeTag}Q${i + 1}. ${q.question}</h4>
-            <p>나의 선택: ${userPickText || '미선택'}</p>
-            <p><strong>정답: ${q.correctAnswerText}</strong></p>
-            <p>해설: ${q.explain}</p>
-        `;
+        card.style.padding = '20px'; card.style.marginBottom = '15px';
+        card.innerHTML = `<h4>${isCorrect ? '✅' : '❌'} Q${i + 1}. ${q.question}</h4><p>나의 선택: ${userPickText || '미선택'}</p><p><strong>정답: ${q.correctAnswerText}</strong></p><p>해설: ${q.explain}</p>`;
         reviewContainer.appendChild(card);
 
-        // 2. 결과 화면 OMR 버튼 생성 (6번 화면 우측/하단 미니 맵)
+        // 결과 화면 OMR HTML 생성
         const num = (i + 1).toString().padStart(2, '0');
         resultOmrHtml += `
             <div class="omr-row-item ${isCorrect ? 'res-correct' : 'res-wrong'}" onclick="document.getElementById('review-card-${i}').scrollIntoView({behavior:'smooth', block:'center'})">
@@ -593,23 +562,13 @@ function jumpTo(idx) {
 function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
 
 function startTimer() { 
-    let time = 3600;
+    let time = 3600; 
     if(timerInterval) clearInterval(timerInterval);
-
     timerInterval = setInterval(() => { 
-        time--; 
-        let m = Math.floor(time/60); 
-        let s = time%60; 
+        time--; let m = Math.floor(time/60); let s = time%60; 
         const el = document.getElementById('timer-display');
-        
-        if(el) el.innerText = `${m}:${s < 10 ? '0' : ''}${s}`; 
-
-        // [수정 포인트] 시간이 종료되었을 때 단 한 번만 실행되도록 깔끔하게 정리했습니다.
-        if (time <= 0) {
-            clearInterval(timerInterval); // 시계 멈춤
-            timeUpIdx = "OVER";           // 시간 종료 스위치 ON
-            openConfirmBanner("time_up"); // 안내 배너 호출
-        } 
+        if(el) el.innerText = `${m}:${s<10?'0':''}${s}`; 
+        if(time<=0) finalizeExam(); 
     }, 1000); 
 }
 
@@ -926,9 +885,8 @@ function closeConfirmBanner() {
 
 // [신규] 진짜 제출 처리 (네, 제출합니다 버튼용)
 function realSubmit() {
-    console.log("실제 제출 프로세스 시작"); // 작동 확인용 로그
     closeConfirmBanner(); // 배너 닫기
-    finalizeExam();       // 실제 채점 함수 호출
+    finalizeExam();      // 213행에 있는 실제 채점 엔진 가동
 }
 
 // [신규] 전체화면 유지하며 메인으로 리셋하여 복귀
@@ -1037,48 +995,15 @@ else if (mode === "quit_result") {
         closeBtn.innerText = "유지하기";
     }
 
-    // ★ [신규 추가] 타이머 종료(시간 초과) 모드 ★
-    else if (mode === "time_up") {
-        pTag.innerHTML = `<strong style="color:var(--accent-red)">⏰ 시간초과. 계속 푸시겠습니까?</strong><br>시간 초과된 문제는 채점에서 제외됩니다.`;
-        
-        // [계속 풀기] 버튼 설정
-        submitBtn.innerText = "계속 풀기";
-        submitBtn.style.background = "var(--accent-blue)"; // 파란색으로 변경
-        submitBtn.onclick = function() { 
-            closeConfirmBanner(); 
-            // 닫기만 함. 이미 timeUpIdx가 기록되어 이후 마킹은 '시간초과' 꼬리표가 붙음
-        };
-
-        // [채점 확인] 버튼 설정
-        closeBtn.innerText = "채점 확인";
-        closeBtn.style.display = "block"; // 혹시 숨겨져 있다면 다시 보이게 함
-        closeBtn.onclick = function() {
-            closeConfirmBanner();
-            finalizeExam(); // 즉시 6번 화면으로 이동
-        };
-    }
-
     else {
         // [제출 모드]
         const unsolvedCount = questions.length - Object.keys(userAnswers).length;
         pTag.innerHTML = unsolvedCount > 0 
             ? `<strong style="color:var(--accent-red)">미풀이 문제가 ${unsolvedCount}개 있습니다.</strong><br>그래도 제출하시겠습니까?` 
             : `<strong>모든 문제를 다 푸셨나요?</strong><br>제출 후에는 정답과 해설이 표시됩니다.`;
-        
-        // 버튼 텍스트 및 시각 효과 리셋
         submitBtn.innerText = "네, 제출합니다";
-        submitBtn.style.background = "var(--accent-blue)";
-        
-        // [중요] 함수 연결 방식을 '직접 할당'으로 명확히 합니다.
-        submitBtn.onclick = function() {
-            realSubmit(); 
-        };
-
+        submitBtn.onclick = realSubmit;
         closeBtn.innerText = "취소";
-        closeBtn.style.display = "block";
-        closeBtn.onclick = function() {
-            closeConfirmBanner();
-        };
     }
 
     banner.classList.remove('hidden');
