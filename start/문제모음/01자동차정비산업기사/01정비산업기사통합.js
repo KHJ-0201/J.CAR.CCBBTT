@@ -25,6 +25,9 @@ let lastWrongAnswers = [];
 window.onload = () => {
     // [개조] 모바일 및 다양한 브라우저 환경에서도 작동하도록 로직 보강
     const autoFull = () => {
+        // [센서 추가] Go Live(127.0.0.1) 작업 중일 때는 전체화면을 실행하지 않습니다.
+        if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') return;
+
         if (!document.fullscreenElement && !document.webkitFullscreenElement) {
             const elem = document.documentElement;
             // 각 브라우저 엔진별 명령어 세트 (현대차, 기아차 공용 부품처럼 다 준비함)
