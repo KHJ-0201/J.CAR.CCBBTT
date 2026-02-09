@@ -5,11 +5,41 @@ chcp 65001 >nul
 REM 파일이 있는 위치로 이동
 cd /d "%~dp0"
 
-echo [1/4] 사용자 계정 설정 및 하이패스 가동...
-:: 실행할 때마다 선생님 성함으로 명찰을 바꿔 답니다.
+echo [1/4] 사용자 계정 보안 검사 및 설정...
+
+:: [계정 감지 센서] 현재 컴퓨터에 설정된 깃 이름을 확인합니다.
+set "CURRENT_GIT_USER="
+for /f "tokens=*" %%i in ('git config user.name') do set "CURRENT_GIT_USER=%%i"
+
+:: [판단 로직] 설정된 이름이 있고, 그 이름이 선생님(KHJ-0201)과 다를 경우 경고창 가동
+if defined CURRENT_GIT_USER (
+    if NOT "%CURRENT_GIT_USER%"=="KHJ-0201" (
+        echo.
+        echo ======================================================
+        echo [!] 경고: 타인의 깃허브 계정이 감지되었습니다.
+        echo 현재 설정된 이름: %CURRENT_GIT_USER%
+        echo 원하시는 이름: KHJ-0201
+        echo ======================================================
+        echo.
+        echo 다른 사람의 계정으로 기록이 남는 것을 방지하기 위해 
+        echo 자격 증명 삭제가 필요합니다.
+        echo.
+        echo [정비 지침]
+        echo 1. '제어판' -> '사용자 계정' -> '자격 증명 관리자' 이동
+        echo 2. 'Windows 자격 증명' 선택
+        echo 3. 'git:https://github.com' 또는 'github.com' 항목 [제거]
+        echo 4. 이 창을 닫고 다시 실행하여 본인 계정으로 로그인하세요.
+        echo.
+        echo ======================================================
+        pause
+        exit /b
+    )
+)
+
+:: 계정이 일치하거나 등록되지 않은 상태라면 정상 설정 진행
 git config user.name "KHJ-0201"
 git config user.email "ddsp0201@naver.com"
-:: 작업하는 동안 로그인을 유지하도록 설정 (윈도우 자격 증명 관리자 사용)
+:: 작업하는 동안 로그인을 유지하도록 설정
 git config credential.helper manager
 
 echo [2/4] 저장소 연결 및 최신화 (Pull)...
@@ -18,6 +48,7 @@ if not exist .git (
 )
 git remote remove origin 2>nul
 git remote add origin https://github.com/KHJ-0201/J.CAR.CCBBTT.git
+
 :: 충돌 방지를 위해 리베이스 방식으로 가져오기
 git pull origin master --rebase
 
@@ -31,7 +62,7 @@ git push origin master
 if errorlevel 1 (
     echo.
     echo [!] 전송 실패! 네트워크 상태나 권한을 확인하세요.
-    echo [팁] 다른 계정이 로그인되어 있다면 제어판의 '자격 증명 관리자'에서 삭제 후 다시 시도하세요.
+    echo [팁] 위 설명대로 '자격 증명 관리자'에서 기존 기록을 삭제해 보세요.
     pause
     exit /b
 )
