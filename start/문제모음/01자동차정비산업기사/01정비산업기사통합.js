@@ -1122,6 +1122,7 @@ else if (mode === "quit_result") {
 
 // [최종 수리] 보기 창 높이 조절 및 투명화/폰트 최적화 통합 엔진
 function updateOptHeight(val) {
+    
     // 1. 조절 시작 시 배너 즉시 투명화 (이 신호가 빠져있었습니다!)
     setBannerTransparent(true); 
 
