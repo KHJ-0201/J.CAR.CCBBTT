@@ -483,15 +483,18 @@ function moveQuestion(dir) {
     const next = currentIdx + dir;
     if (next >= 0 && next < questions.length) { 
         currentIdx = next; 
+
+        // [추가] 문제를 넘기자마자 해설창과 버튼을 일단 완전히 소거 (PC 유령 현상 차단)
+        const panel = document.getElementById('instant-exp-overlay');
+        const openBtn = document.getElementById('btn-open-exp');
+        if (panel) panel.classList.add('hidden');
+        if (openBtn) openBtn.classList.add('hidden');
+
         renderQuestion(); 
         
-        const openBtn = document.getElementById('btn-open-exp');
         const isOneByOne = document.getElementById('setting-one-by-one').checked;
-        const isInstant = document.getElementById('setting-instant-feedback').checked; // [추가] 즉시 해설 체크
+        const isInstant = document.getElementById('setting-instant-feedback').checked;
 
-        // 일단 버튼을 숨기고 시작 (PC 유령 현상 차단)
-        if (openBtn) openBtn.classList.add('hidden'); 
-        
         if (userAnswers[currentIdx] !== undefined) {
             // [보정] 즉시 해설이 켜져 있을 때만 답안 상태와 해설을 복구함
             if (isInstant) {
@@ -507,6 +510,41 @@ function moveQuestion(dir) {
         }
         window.scrollTo(0, 0); 
     }
+}
+
+// [신규 추가] 밀기 취소 엔진 (기존 풀이는 유지하고 밀기로 채워진 것만 삭제)
+let pushedIndices = []; // 밀기로 채워진 문항 번호 저장소
+
+// 기존 pushAllAnswers 함수를 아래와 같이 살짝 변경 (기록 기능 추가)
+function pushAllAnswers(answerIdx) {
+    pushedIndices = []; // 기록 초기화
+    questions.forEach((_, i) => { 
+        if (userAnswers[i] === undefined) { 
+            pushedIndices.push(i); // 안 푼 문제 번호만 기록
+            selectAnswer(i, answerIdx); 
+        } 
+    });
+}
+
+function undoPushAnswers() {
+    // 되돌릴 기록이 없을 때만 간단히 안내 (이건 아주 짧은 예외라 배너까지 안 가도 되지만, 원하시면 배너로 통합 가능합니다)
+    if (pushedIndices.length === 0) {
+        return; 
+    }
+
+    // 실제 취소 로직 수행
+    pushedIndices.forEach(idx => {
+        delete userAnswers[idx]; 
+        const row = document.getElementById(`omr-row-${idx}`);
+        if (row) {
+            row.classList.remove('solved');
+            row.querySelectorAll('.circle-dot').forEach(dot => dot.classList.remove('filled'));
+        }
+    });
+
+    pushedIndices = []; 
+    updateProgressDisplay(); 
+    renderQuestion(); 
 }
 
 function jumpTo(idx) {
@@ -888,8 +926,8 @@ function handleFinishSubmit() {
     openConfirmBanner("submit");
 }
 let pendingDeleteRound = ""; // [추가] 삭제할 회차명을 잠시 보관하는 장착대
-/* [Section Name] 배너 엔진 확장 (제출 / 중단 / 초기화 통합) */
-function openConfirmBanner(mode, param) { // [수정] param 추가
+// [수정 포인트] openConfirmBanner 함수 내부의 if-else 문에 아래 조건을 추가하세요.
+function openConfirmBanner(mode, param) {
     const banner = document.getElementById('confirm-banner');
     if (!banner) return;
     const pTag = banner.querySelector('.banner-body p');
@@ -924,6 +962,18 @@ function openConfirmBanner(mode, param) { // [수정] param 추가
             confirmDeleteRound(); // 아래에서 새로 만들 실제 삭제 함수
         };
         closeBtn.innerText = "취소";
+    }
+
+    // ★ [신규 추가] 번호 밀기 취소 모드 ★
+    else if (mode === "undo_push") {
+        pTag.innerHTML = `<strong style="color:var(--accent-blue)">번호 밀기를 취소하시겠습니까?</strong><br>직접 푸신 문제는 유지되고, 밀기로 채워진 답안만 삭제됩니다.`;
+        submitBtn.innerText = "네, 취소합니다";
+        submitBtn.style.background = "var(--accent-blue)"; // 파란색 버튼으로 강조
+        submitBtn.onclick = function() { 
+            closeConfirmBanner(); 
+            undoPushAnswers(); // 실제 취소 로직 실행
+        };
+        closeBtn.innerText = "유지하기";
     }
 
     else {
