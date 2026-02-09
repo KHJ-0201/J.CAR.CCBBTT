@@ -14,7 +14,7 @@
 
     <nav class="top-nav no-drag">
         <div class="nav-inner">
-            <h1 id="main-title" onclick="location.reload()" style="cursor:pointer">정비 산업기사</h1>
+            <h1 id="main-title" onclick="handleTitleClick()" style="cursor:pointer">◀ 정비 산업기사</h1>
             <div id="quiz-status-area" class="hidden status-group">
                 <span id="timer-display" class="status-badge">60:00</span>
                 <span id="progress-display" class="status-badge">
@@ -83,7 +83,7 @@
             </div>
             <div id="wrong-content-area" class="accordion-body hidden">
                 <div class="wrong-header-btns" style="display:flex; justify-content:space-between; align-items:center;">
-                    <button onclick="clearAllWrongs()" class="btn-danger-mini">전체 오답 초기화</button>
+                    <button onclick="openConfirmBanner('reset')" class="btn-danger-mini">전체 오답 초기화</button>
                     <button id="btn-wrong-multi-start" class="btn-wrong-multi hidden" onclick="startMultiWrongReview()">🚀 선택 회차 모아풀기</button>
                 </div>
                 <div class="wrong-scroll-container" style="max-height: 250px; overflow-y: auto; margin-top: 10px;">
@@ -129,11 +129,12 @@
                         <div class="omr-bulk-marking-pc">
                             <span class="bulk-lbl-pc">문제 밀기:</span>
                             <div class="bulk-btns-pc">
-                                <button onclick="pushAllAnswers(0)">1</button>
-                                <button onclick="pushAllAnswers(1)">2</button>
-                                <button onclick="pushAllAnswers(2)">3</button>
-                                <button onclick="pushAllAnswers(3)">4</button>
-                            </div>
+    <button onclick="pushAllAnswers(0)">1</button>
+    <button onclick="pushAllAnswers(1)">2</button>
+    <button onclick="pushAllAnswers(2)">3</button>
+    <button onclick="pushAllAnswers(3)">4</button>
+    <button onclick="undoPushAnswers()" style="background:#64748b; color:white; margin-left:5px; font-size:0.7rem;">밀기취소</button>
+</div>
                         </div>
                         <div id="omr-buttons-grid"></div>
                     </div>
@@ -156,24 +157,16 @@
                     <button class="btn-close-banner" onclick="toggleFontControl()">×</button>
                 </div>
                 <div class="banner-body">
-    <div class="slider-group">
-        <label>문제 크기 (<span id="val-q-size">1.20</span>rem)</label>
-        <input type="range" id="slider-q-size" min="0.5" max="3.0" step="0.01" value="1.2" 
-               oninput="updateFontSize('q', this.value)"
-               onmousedown="setBannerTransparent(true)" 
-               onmouseup="setBannerTransparent(false)"
-               ontouchstart="setBannerTransparent(true)" 
-               ontouchend="setBannerTransparent(false)">
-    </div>
-    <div class="slider-group">
-        <label>보기 크기 (<span id="val-opt-size">1.00</span>rem)</label>
-        <input type="range" id="slider-opt-size" min="0.5" max="2.5" step="0.01" value="1.0" 
-               oninput="updateFontSize('opt', this.value)"
-               onmousedown="setBannerTransparent(true)" 
-               onmouseup="setBannerTransparent(false)"
-               ontouchstart="setBannerTransparent(true)" 
-               ontouchend="setBannerTransparent(false)">
-                    </div>
+   <div class="slider-group">
+    <label>문제 글자 크기</label>
+    <input type="range" id="slider-q-size" min="0.5" max="3.5" step="0.01" oninput="updateFontSize('q', this.value)">
+    <span id="val-q-size">1.20</span>
+</div>
+<div class="slider-group">
+    <label>보기 창 크기 (높이)</label>
+    <input type="range" id="slider-opt-height" min="30" max="120" step="1" oninput="updateOptHeight(this.value)">
+    <span id="val-opt-height">55</span>
+</div>
                 </div>
             </div>
 
@@ -190,7 +183,7 @@
                         <strong id="final-result-score" class="score-highlight">0</strong>점
                     </div>
                     <div class="res-action-btns-mini">
-                        <button class="btn-res-sm home" onclick="location.reload()">메인</button>
+                        <button class="btn-res-sm home" onclick="goBackToMain()">메인</button>
                         <button class="btn-res-sm retry" onclick="retryCurrentExam(false)">전체 다시풀기</button>
                         <button class="btn-res-sm wrong" onclick="retryCurrentExam(true)">오답 다시풀기</button>
                     </div>
@@ -223,6 +216,24 @@
         </div>
     </div>
 
+
+    <div id="confirm-banner" class="modal-overlay hidden no-drag">
+    <div class="modal-window confirm-modal-window"> <div class="banner-header">
+            <span>⚠️ 시험 제출 확인</span>
+            <button class="btn-close-banner" onclick="closeConfirmBanner()">×</button>
+        </div>
+        <div class="banner-body">
+            <p>
+                <strong>모든 문제를 다 푸셨나요?</strong><br>
+                제출 후에는 정답과 해설이 표시됩니다.
+            </p>
+            <div class="banner-footer-btns">
+                <button class="btn-banner-submit" onclick="realSubmit()">네, 제출합니다</button>
+                <button class="btn-banner-close" onclick="closeConfirmBanner()">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
     <script src="01정비산업기사문제.js"></script> 
     <script src="01정비산업기사통합.js"></script>
 </body>

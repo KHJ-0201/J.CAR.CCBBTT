@@ -15,6 +15,17 @@
     --radius-md: 14px;
     --q-font-size: 1.2rem;
     --opt-font-size: 1.0rem;
+    --opt-padding-v: 12px; /* [신규] 보기 버튼의 위아래 여백 기본값 */
+    --opt-height: 55px; /* 보기 버튼의 세로 높이 기본값 */
+}
+
+
+
+
+/* 조절 배너 내 레이블 너비 조정 (텍스트가 길어지므로) */
+.control-row label {
+    width: 100px !important; 
+    font-size: 0.9rem;
 }
 
 body.dark-mode {
@@ -70,17 +81,18 @@ body {
     word-break: keep-all;
 }
 
-/* [수정] 보기 텍스트: 슬라이더 변수(--opt-font-size)와 연결 */
+/* [수정] 보기 텍스트: 창 크기에 맞춘 자동 최적화 엔진 적용 */
 .opt-txt {
     flex: 1;
-    display: block !important;
-    white-space: normal;
-    line-height: 1.1;
-    word-break: break-all;
-    text-align: left;
-    transition: font-size 0.2s ease;
-    /* ★ 기존 폰트 크기 설정을 이 변수로 대체합니다 ★ */
-    font-size: var(--opt-font-size) !important; 
+    display: flex !important;   /* 반드시 flex로 설정해야 세로 중앙 정렬이 먹힙니다 */
+    align-items: center;        /* 글자를 창의 세로 중앙에 배치 */
+    height: 100%;               /* 버튼 높이를 꽉 채움 */
+    line-height: 1.1;           /* 줄 간격을 살짝 좁혀서 가독성 확보 */
+    word-break: break-all;      /* 창 너비를 넘어가면 강제 줄바꿈 */
+    white-space: normal;        /* 줄바꿈 허용 */
+    text-align: left;           /* 왼쪽 정렬 */
+    transition: font-size 0.2s ease; /* 글자 크기 변할 때 부드럽게 애니메이션 */
+    /* font-size는 JS에서 계산해서 넣어줄 것이므로 여기서는 선언하지 않거나 기본값만 둡니다 */
 }
 
 /* 공통 버튼 효과 */
@@ -497,15 +509,7 @@ body.mode-one-by-one .question-container.fixed-layout {
     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-/* [콕핏 개조] 한문제씩 모드일 때 버튼 규격화 및 폰트 조절 */
-body.mode-one-by-one .option-btn {
-    height: 50px !important;      /* 버튼 높이 고정 (선생님 취향에 맞게 조절 가능) */
-    display: flex !important;
-    align-items: center;          /* 글자가 한 줄이든 두 줄이든 수직 중앙 정렬 */
-    justify-content: flex-start;
-    padding: 0 15px !important;
-    overflow: hidden !important;  /* 혹시나 넘치는 글자는 일단 숨김 */
-}
+
 
 .opt-txt {
     flex: 1;
@@ -549,7 +553,7 @@ body.mode-one-by-one .option-btn {
     transform: scale(1.02);        
 }
 
-/* [콕핏 개조] 하단 고정 보기 영역 - PC 가로폭 수정 반영 */
+/* [콕핏 개조] 하단 고정 보기 영역 - 기존 가로폭 설계 유지 */
 body.mode-one-by-one .options-fixed-area {
     position: fixed;
     bottom: 70px;               
@@ -563,7 +567,7 @@ body.mode-one-by-one .options-fixed-area {
     pointer-events: none;       
 }
 
-/* 내부 리스트에서 실제 배경과 패딩 처리 (사이드바 침범 방지용) */
+/* 내부 리스트 - 기존 너비(OMR 공간 확보) 유지 및 높이 유연화 */
 body.mode-one-by-one .options-list {
     width: calc((100% - 20px) * 2.5 / 3.5); 
     background: var(--card-bg);
@@ -572,10 +576,18 @@ body.mode-one-by-one .options-list {
     box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
     pointer-events: auto;       
     margin: 0;
-    border-radius: 20px 20px 0 0; /* 위쪽 양 옆만 둥글게 설정하는 예시 */                  
+    border-radius: 20px 20px 0 0;
+    
+    /* [수정] 고정 높이를 해제하여 내용물에 따라 늘어나게 함 */
+    height: auto !important; 
+    max-height: 60vh; /* 문제를 가리지 않을 마지노선 */
+    overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* 버튼 사이 간격 */
 }
 
-/* 스크롤 모드일 때는 보기가 평소처럼 배치되게 해제 */
+/* 스크롤 모드 설정 유지 */
 body:not(.mode-one-by-one) .options-fixed-area {
     position: static !important;
     transform: none !important;
@@ -584,11 +596,21 @@ body:not(.mode-one-by-one) .options-fixed-area {
     background: none;
 }
 
+/* 보기 버튼 공통 스타일 - 동기화를 위한 설정 */
 .options-list {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+}
+
+.option-btn {
+    display: flex !important;
+    align-items: center; /* 텍스트 세로 중앙 정렬 */
+    justify-content: flex-start;
+    height: auto; /* JS에서 제어할 것이므로 auto로 설정 */
+    min-height: 48px; /* 최소 터치 높이 */
+    padding: 10px 20px;
 }
 
 /* 해설 영역 튜닝 */
@@ -710,14 +732,15 @@ body:not(.mode-one-by-one) .options-fixed-area {
     .settings-flex {
         margin-top: 0 !important; 
     }
-    body:not(.mode-one-by-one) .option-btn {
-        padding: 5px 18px !important; 
-        font-size: 0.90rem !important; 
-        margin-bottom: 8px !important; 
-        border-width: 1.5px !important; 
-        border-radius: 12px !important;
-        width: 95% !important; 
-    }
+    /* [수리] 모바일에서도 사용자가 설정한 높이(--opt-height)가 무조건 적용되도록 너비만 남기고 높이 고정 해제 */
+body:not(.mode-one-by-one) .option-btn {
+    width: 95% !important; 
+    margin: 0 auto 8px auto !important;
+    height: var(--opt-height, 55px) !important; /* 고정값 대신 변수 사용 */
+    padding: 5px 18px !important;
+    border-width: 1.5px !important;
+    border-radius: 12px !important;
+}
     .quiz-quick-settings-fixed {
         padding: 6px 10px !important; 
     }
@@ -1320,14 +1343,22 @@ body.dark-mode .font-banner.is-adjusting { background: rgba(30, 41, 59, 0.2) !im
     border-radius: 50%; 
     cursor: pointer; 
 }
-.slider-group { margin-bottom: 18px; }
-.slider-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+.slider-group {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 20px !important;
+}
 
-/* 슬라이더(Range) 디자인 커스텀 */
-.slider-group input[type="range"] { 
-    width: 100%; 
-    cursor: pointer; 
-    accent-color: var(--accent-blue); /* 슬라이더 핸들 색상 */
+.slider-group input[type="range"] {
+    flex: 1 !important; /* 슬라이더가 남는 공간을 다 차지함 */
+    cursor: pointer;
+    height: 15px; /* 조작하기 편하게 두께 조절 */
+}
+
+.slider-group label {
+    width: 180px !important;
+    font-weight: 800;
 }
 
 /* --- 다크모드 전용 버튼 색상 정비 --- */
@@ -1428,3 +1459,35 @@ body.dark-mode .wrong-item-row:hover {
 
 /* 다크모드 대응 */
 body.dark-mode .confirm-modal-window { background: #1e293b !important; }
+
+/* [최종 통합] 모든 환경에서 보기 창 높이를 설정값으로 강제 고정 */
+.option-btn {
+    width: 100% !important;
+    height: var(--opt-height, 55px) !important; /* 설정한 높이로 박제 */
+    display: flex !important;
+    align-items: center !important; /* 글자를 세로 중앙으로 */
+    padding: 0 15px !important;
+    margin-bottom: 8px !important;
+    overflow: hidden !important; /* 글자가 넘쳐도 창 크기 유지 */
+    border: 2px solid var(--border-color) !important;
+    border-radius: 16px !important;
+    background: white !important;
+    box-sizing: border-box !important;
+}
+
+/* 다크모드 대응 고정 */
+body.dark-mode .option-btn {
+    background-color: #2d3748 !important;
+    color: #f8fafc !important;
+}
+
+/* 텍스트 영역 정렬 고정 */
+.opt-txt {
+    flex: 1 !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    word-break: break-all !important;
+    white-space: normal !important;
+    line-height: 1.1 !important;
+}
