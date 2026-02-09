@@ -219,14 +219,9 @@ function renderQuestion() {
     const isInstant = document.getElementById('setting-instant-feedback').checked;
     if (isOneByOne) { display.innerHTML = generateQuestionHTML(questions[currentIdx], currentIdx, isInstant); }
     else { display.innerHTML = questions.map((q, i) => generateQuestionHTML(q, i, isInstant)).join(''); }
-    
     updateExpButtonVisibility();
     updateProgressDisplay();
     highlightOMRRow();
-    
-    // [콕핏 개조] 문제를 새로 그릴 때마다 저장된 높이값으로 버튼들의 폰트 크기를 자동 최적화합니다.
-    const savedHeight = localStorage.getItem('user-opt-height') || '55';
-    updateOptHeight(savedHeight); 
 }
 
 /* [Section Name] 모드별 해설 노출 방식 분기 (수정 후 코드) */
@@ -880,78 +875,47 @@ function setBannerTransparent(isTransparent) {
     }
 }
 
-// [정상화] 1. 문제 글자 크기 조절 및 투명화 엔진
+// 3. 폰트 크기 업데이트 및 저장 (보기 저장 기능 정밀 수리)
 function updateFontSize(type, val) {
-    // 조절 시작 시 배너 투명화
-    setBannerTransparent(true); 
-    
     let numVal = parseFloat(val);
-    if (isNaN(numVal)) numVal = (type === 'q') ? 1.20 : 1.00;
-    const formattedVal = numVal.toFixed(2); // 소수점 2자리 정밀도
+    
+    // 값이 이상하면 각 타입에 맞는 기본값 할당
+    if (isNaN(numVal)) {
+        numVal = (type === 'q') ? 1.20 : 1.00;
+    }
+    
+    const formattedVal = numVal.toFixed(2);
 
     if (type === 'q') {
         document.documentElement.style.setProperty('--q-font-size', formattedVal + 'rem');
-        if (document.getElementById('val-q-size')) {
-            document.getElementById('val-q-size').innerText = formattedVal;
-        }
-        localStorage.setItem('user-q-size', formattedVal);
+        if (document.getElementById('val-q-size')) document.getElementById('val-q-size').innerText = formattedVal;
+        localStorage.setItem('user-q-size', formattedVal); // 문제 크기 저장 키
+    } else if (type === 'opt') {
+        document.documentElement.style.setProperty('--opt-font-size', formattedVal + 'rem');
+        if (document.getElementById('val-opt-size')) document.getElementById('val-opt-size').innerText = formattedVal;
+        localStorage.setItem('user-opt-size', formattedVal); // 보기 크기 저장 키
     }
-    
-    // 조작 중단 0.5초 후 복구
-    clearTimeout(window.fontOpacityTimer);
-    window.fontOpacityTimer = setTimeout(() => setBannerTransparent(false), 500);
-}
-
-// [정상화] 보기 창 높이 조절 엔진 (투명화 신호 강화 버전)
-function updateOptHeight(val) {
-    // 1. 배너를 즉시 투명하게 만듦 (범인 검거 포인트)
-    setBannerTransparent(true); 
-    
-    const heightVal = val + 'px';
-    document.documentElement.style.setProperty('--opt-height', heightVal);
-    
-    const btns = document.querySelectorAll('.option-btn');
-    btns.forEach(btn => {
-        const txt = btn.querySelector('.opt-txt');
-        if (txt) {
-            const charCount = txt.innerText.length;
-            let fontSize;
-            // 높이 대비 글자수 최적화 수식
-            if (charCount > 40) fontSize = (val * 0.25);
-            else if (charCount > 20) fontSize = (val * 0.3);
-            else fontSize = (val * 0.4);
-            txt.style.fontSize = fontSize + 'px';
-            
-            // 버튼 높이 강제 동기화
-            btn.style.height = heightVal;
-        }
-    });
-
-    if (document.getElementById('val-opt-height')) {
-        document.getElementById('val-opt-height').innerText = val;
-    }
-    localStorage.setItem('user-opt-height', val);
-
-    // 2. 조작 중단 0.5초 후 복구 (타이머 이름 통일)
-    clearTimeout(window.fontOpacityTimer);
-    window.fontOpacityTimer = setTimeout(() => {
-        setBannerTransparent(false);
-    }, 500);
 }
 
 // 4. 저장된 설정 불러오기 (시동 시 메모리 호출)
 function loadSavedFontSize() {
-    const savedQ = localStorage.getItem('user-q-size') || '1.20';
-    const savedOpt = localStorage.getItem('user-opt-size') || '1.00';
-    const savedHeight = localStorage.getItem('user-opt-height') || '55'; // 기본값 55px
-
-    updateFontSize('q', savedQ);
-    updateFontSize('opt', savedOpt);
-    updateOptHeight(savedHeight); // 저장된 높이 불러오기
-
-    if (document.getElementById('slider-q-size')) document.getElementById('slider-q-size').value = savedQ;
-    if (document.getElementById('slider-opt-size')) document.getElementById('slider-opt-size').value = savedOpt;
-    if (document.getElementById('slider-opt-height')) document.getElementById('slider-opt-height').value = savedHeight;
+    // 로컬 스토리지에서 각각의 키로 값을 가져옴
+    const savedQ = localStorage.getItem('user-q-size');
+    const savedOpt = localStorage.getItem('user-opt-size');
+    
+    // 가져온 값이 있으면 그 값을 쓰고, 없으면 기본값(1.20 / 1.00) 사용
+    const finalQ = (savedQ && savedQ !== "NaN") ? savedQ : '1.20';
+    const finalOpt = (savedOpt && savedOpt !== "NaN") ? savedOpt : '1.00';
+    
+    // 화면에 적용 (배선 연결)
+    updateFontSize('q', finalQ);
+    updateFontSize('opt', finalOpt);
+    
+    // 슬라이더 조절 바 위치도 저장된 값으로 동기화
+    const qSlider = document.getElementById('slider-q-size');
+    const optSlider = document.getElementById('slider-opt-size');
+    if (qSlider) qSlider.value = finalQ;
+    if (optSlider) optSlider.value = finalOpt;
 }
 
 // [신규] 제출 확인 배너 닫기 (취소 버튼용)
@@ -1118,46 +1082,4 @@ else if (mode === "quit_result") {
     }
 
     banner.classList.remove('hidden');
-}
-
-// [최종 수리] 보기 창 높이 조절 및 투명화/폰트 최적화 통합 엔진
-function updateOptHeight(val) {
-    // 1. 조절 시작 시 배너 즉시 투명화 (이 신호가 빠져있었습니다!)
-    setBannerTransparent(true); 
-
-    const heightVal = val + 'px';
-    // 모든 버튼의 기본 높이를 CSS 변수로 즉시 고정
-    document.documentElement.style.setProperty('--opt-height', heightVal);
-    
-    // 현재 화면에 보이는 버튼들의 폰트 크기를 한꺼번에 조절
-    const btns = document.querySelectorAll('.option-btn');
-    btns.forEach(btn => {
-        const txt = btn.querySelector('.opt-txt');
-        if (txt) {
-            const charCount = txt.innerText.trim().length;
-            let fontSize;
-            
-            // 수식 정밀 튜닝 (창 높이 대비 폰트 비율)
-            if (charCount > 40) fontSize = (val * 0.28); 
-            else if (charCount > 20) fontSize = (val * 0.35); 
-            else fontSize = (val * 0.45); 
-
-            fontSize = Math.max(12, Math.min(fontSize, 24));
-            txt.style.fontSize = fontSize + 'px';
-            
-            // 부모 버튼의 높이도 강제로 재확인
-            btn.style.height = heightVal;
-        }
-    });
-
-    if (document.getElementById('val-opt-height')) {
-        document.getElementById('val-opt-height').innerText = val;
-    }
-    localStorage.setItem('user-opt-height', val);
-
-    // 2. 조작 중단 0.5초 후 다시 불투명하게 복구
-    clearTimeout(window.fontOpacityTimer);
-    window.fontOpacityTimer = setTimeout(() => {
-        setBannerTransparent(false);
-    }, 500);
 }
