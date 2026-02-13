@@ -215,15 +215,27 @@ h1 {
 
     /* --- 모바일 보안 모달 정밀 확대 정비 --- */
     .auth-modal {
-        max-width: 92% !important;   
-        width: 450px !important;     /* 가로 폭 확대 */
-        min-height: 55vh !important; /* 세로 높이 대폭 확보 */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;    
-        padding: 60px 30px !important; 
-        border-radius: 50px !important; 
-    }
+    /* 1. 가로 제약 해제: 기존의 작은 폭(320px) 제한을 풀고 화면의 95%까지 쓰게 합니다. */
+    width: 95% !important;
+    max-width: 500px !important; 
+
+    /* 2. 세로 높이 확장: 화면 높이의 70%를 차지하게 하여 웅장하게 만듭니다. */
+    min-height: 70vh !important; 
+
+    /* 3. 내부 레이아웃 유지 및 확장 */
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    /* 4. 여백 및 디자인: 내부 여백을 늘려 덩치를 키웁니다. */
+    padding: 80px 40px !important; 
+    border-radius: 50px !important;
+    
+    /* 5. 기타 요소 고정 */
+    background: var(--card-bg) !important;
+    box-sizing: border-box !important;
+}
 
     .auth-modal h2 {
         font-size: 2.5rem !important;  

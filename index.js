@@ -1,5 +1,3 @@
-/* 00시작.js */
-
 // [보안 검문]
 (function checkSecurity() {
     // 출입증이 없으면 대문(index.html)으로 쫓아냄
