@@ -1,13 +1,38 @@
 <script>
     (function() {
-        // 출입증이 없는 경우에만 쫓아냅니다.
+        const redirectPath = 'lock.html'; 
+
+        // [보안 1] 출입증 확인
         if (sessionStorage.getItem('auth_status') !== 'verified') {
-            alert('보안 인증이 필요합니다.');
-            // 파일 위치에 따라 lock.html을 찾아가는 경로를 정확히 적어주세요.
-            // 예: 01자격증선택.html에서는 'lock.html'
-            // 예: 01정비산업기사통합.html에서는 '../../lock.html'
-            window.location.replace('lock.html'); 
+            window.location.replace(redirectPath);
+            return;
         }
+
+        // [보안 2] 정밀 추방 로직
+        const evict = () => window.location.replace(redirectPath);
+
+        // [보안 3] 메인 감시 엔진 (0.2초마다 순찰)
+        // 브라우저 메뉴로 들어오더라도 도구가 켜지면 debugger가 작동합니다.
+        setInterval(function() {
+            const start = Date.now();
+            debugger; // 도구가 꺼져있으면 0.001초만에 통과, 켜져있으면 여기서 멈춤
+            const end = Date.now();
+
+            // 0.1초 이상 지연되면 즉시 추방
+            if (end - start > 100) {
+                evict();
+            }
+        }, 200);
+
+        // [보안 4] 단축키 및 우클릭 원천 차단
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        window.addEventListener('keydown', function(e) {
+            // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && [73, 74].includes(e.keyCode)) || (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+                evict();
+            }
+        });
     })();
 </script>
 <!DOCTYPE html>

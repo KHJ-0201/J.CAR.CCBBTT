@@ -43,6 +43,7 @@
 </style>
 </head>
 <body>
+    <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false"></body>
     <div class="auth-overlay">
         <div class="auth-modal">
             <h2>보안 인증</h2>
@@ -53,23 +54,55 @@
         </div>
     </div>
     <script>
+        // [보안 상급] 개발자 도구가 켜지면 0.1초마다 실행을 일시정지시킴 (지뢰 매설)
+    setInterval(function() {
+        debugger;
+    }, 100);
         // 대문에 들어온 순간 이전 기록은 싹 지웁니다.
         sessionStorage.clear();
 
-        const SITE_PASSWORD = "0936";
         const pwInput = document.getElementById('pwInput');
-
-        function check() {
-            if (pwInput.value === SITE_PASSWORD) {
-                sessionStorage.setItem('auth_status', 'verified');
-                // replace를 써야 '앞으로 가기' 우회가 불가능해집니다.
-                window.location.replace('../index.html');
-            }
+        // 1. 키보드 단축키 차단 (복사, 붙여넣기, 전체선택, 소스보기, 저장)
+    window.addEventListener('keydown', function(e) {
+        // C(67), V(86), A(65), S(83), U(85)
+        if (e.ctrlKey && [65, 67, 83, 85, 86].includes(e.keyCode)) {
+            e.preventDefault();
+            e.stopPropagation(); // 신호가 더 이상 퍼지지 않게 차단
+            return false;
         }
-        pwInput.addEventListener('input', check);
-        document.getElementById('authBtn').addEventListener('click', () => {
-            if (pwInput.value !== SITE_PASSWORD) document.getElementById('errorMsg').style.display='block';
-        });
+    }, true); // 'true'를 넣어 브라우저가 다른 처리를 하기 전에 가장 먼저 가로챕니다.
+
+    // 2. 마우스 우클릭, 드래그, 복사, 붙여넣기 이벤트 자체를 무력화
+    ['contextmenu', 'selectstart', 'copy', 'paste', 'cut', 'dragstart'].forEach(event => {
+        document.addEventListener(event, e => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, true);
+    });
+
+function check() {
+    if (pwInput.value === String.fromCharCode(48, 57, 51, 54)) {
+        sessionStorage.setItem('auth_status', 'verified');
+        window.location.replace('../index.html');
+    }
+}
+// [보안 2단계] 마우스 우클릭 및 개발자 도구 차단 가드레일
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123) return false; // F12
+        if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) return false; // Ctrl+Shift+I/J
+        if (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83)) return false; // Ctrl+U/S
+    };
+       // 실시간 입력 감지
+    pwInput.addEventListener('input', check);
+
+    // 인증 버튼 클릭 시 (틀렸을 때만 에러 메시지 표시)
+    document.getElementById('authBtn').addEventListener('click', () => {
+        // 비밀번호가 틀렸을 때만 에러 출력 (여기서도 문자 코드로 비교하여 노출 방지)
+        if (pwInput.value !== String.fromCharCode(48, 57, 51, 54)) {
+            document.getElementById('errorMsg').style.display = 'block';
+        }
+    });
     </script>
 </body>
 </html>
