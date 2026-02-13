@@ -1,3 +1,15 @@
+<script>
+    (function() {
+        // 출입증이 없는 경우에만 쫓아냅니다.
+        if (sessionStorage.getItem('auth_status') !== 'verified') {
+            alert('보안 인증이 필요합니다.');
+            // 파일 위치에 따라 lock.html을 찾아가는 경로를 정확히 적어주세요.
+            // 예: 01자격증선택.html에서는 'lock.html'
+            // 예: 04보수도장통합.html에서는 '../../lock.html'
+            window.location.replace('../../lock.html'); 
+        }
+    })();
+</script>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -42,7 +54,9 @@
                     </div>
                     <div class="dashboard-btns" style="display: flex; gap: 8px; margin-top: 10px; width: 100%;">
                         <button class="btn-open-chart" style="flex: 1; padding: 12px 0;" onclick="openStatsModal()">성적통계</button>
-                        <button class="btn-open-link" style="flex: 1; padding: 12px 0; background: #6366f1; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: 'Pretendard';" onclick="window.open('https://www.q-net.or.kr', '_blank')">큐넷 가기</button>
+                        <button class="btn-open-link" 
+        style="flex: 1; padding: 12px 0; background: #6366f1; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: 'Pretendard';" 
+        onclick="window.open('https://www.q-net.or.kr', '_blank')">큐넷 가기</button>
                     </div>
                 </div>
             </div>
