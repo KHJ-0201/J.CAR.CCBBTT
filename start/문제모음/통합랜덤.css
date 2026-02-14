@@ -1511,7 +1511,7 @@ body.dark-mode .option-btn {
 }
 
 /* 2. 버튼 기본 설정 및 광택 효과 */
-button[onclick*="주관식통합.html"] {
+button[onclick*="location.href"] {
     animation: neon-pulse-purple 2.2s infinite ease-in-out !important;
     position: relative;
     overflow: hidden;
@@ -1521,7 +1521,7 @@ button[onclick*="주관식통합.html"] {
 
 /* 3. 모바일 전용 보정 (화면이 작을 때 효과를 더 진하게) */
 @media (max-width: 768px) {
-    button[onclick*="주관식통합.html"] {
+    button[onclick*="location.href"] {
         /* 모바일은 배터리 절약을 위해 애니메이션을 살짝 빠르게 하여 눈에 띄게 함 */
         animation-duration: 1.8s !important;
         /* 배경색 자체에 약간의 그라데이션을 주어 입체감 강화 */
@@ -1529,7 +1529,7 @@ button[onclick*="주관식통합.html"] {
     }
     
     /* 광택 효과 선명도 조절 */
-    button[onclick*="주관식통합.html"]::after {
+    button[onclick*="location.href"]::after {
         content: '';
         position: absolute;
         top: -50%;
@@ -1551,4 +1551,43 @@ button[onclick*="주관식통합.html"] {
     0% { left: -120%; }
     30% { left: 150%; }
     100% { left: 150%; }
+}
+
+/* 1. 네온 애니메이션 엔진 (모바일 호환성 강화 버전) */
+@keyframes neon-pulse-purple {
+    0% {
+        box-shadow: 0 0 3px rgba(99, 102, 241, 0.3);
+        transform: scale(1) translateZ(0); /* 하드웨어 가속 활성화 */
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.6), 0 0 30px rgba(99, 102, 241, 0.3);
+        transform: scale(1.01) translateZ(0); /* 모바일 인식률을 위해 1.005에서 1.01로 미세 상향 */
+    }
+    100% {
+        box-shadow: 0 0 3px rgba(99, 102, 241, 0.3);
+        transform: scale(1) translateZ(0);
+    }
+}
+
+/* 2. 설정 패널 영역 장착 */
+.settings-panel-slim.glass-card {
+    /* 모바일 브라우저 전용 접두사 추가 */
+    -webkit-animation: neon-pulse-purple 2.5s infinite ease-in-out !important;
+    animation: neon-pulse-purple 2.5s infinite ease-in-out !important;
+    
+    border: 1.5px solid rgba(99, 102, 241, 0.5) !important; /* 모바일 시인성을 위해 테두리 살짝 강화 */
+    
+    /* 모바일에서 렌더링을 강제하기 위한 속성 */
+    will-change: transform, box-shadow;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* 3. 모바일 환경 최적화 (768px 이하) */
+@media (max-width: 768px) {
+    .settings-panel-slim.glass-card {
+        /* 모바일에서는 프레임 드랍을 방지하기 위해 그림자 범위를 살짝 줄임 */
+        -webkit-animation-duration: 2s !important;
+        animation-duration: 2s !important;
+    }
 }
