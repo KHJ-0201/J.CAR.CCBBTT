@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>산업기사 주관식 마스터</title>
+    <link rel="stylesheet" href="주관식통합.css">
+</head>
+<body id="main-body">
+
+    <section id="home-screen">
+        <header class="main-header">
+            <h1 onclick="handleTitleClick()">◀ 산업기사 <small>주관식</small></h1>
+            <div class="header-btns">
+                <button id="theme-btn" onclick="toggleTheme()">🌙 다크</button>
+            </div>
+        </header>
+
+        <div class="dashboard glass-card">
+    <div class="stat-section-avg">
+        <span class="stat-label">평균 점수</span>
+        <div id="stat-avg" onclick="handleScoreReset()" style="cursor: pointer;">0</div>
+    </div>
+            <div class="stat-section-recent">
+                <span class="stat-label">최근 점수 (오른쪽이 최신)</span>
+                <div id="stat-recent-list"></div>
+            </div>
+        </div>
+
+        <div class="mode-selection glass-card">
+            <h3>학습 방식 선택</h3>
+            <div class="mode-button-group">
+                <button id="btn-mode-self" class="btn-mode-select active" onclick="changeExamMode('self')">스스로 판단하기</button>
+                <button id="btn-mode-input" class="btn-mode-select" onclick="changeExamMode('input')">직접 입력하기</button>
+            </div>
+        </div>
+
+        <div class="sub-controls-area">
+            <button id="btn-toggle-wrong" class="btn-sub-control" onclick="toggleWrongAccordion()">
+                📂 오답 노트 <span id="wrong-count-badge">0</span>
+            </button>
+            <button id="btn-toggle-multi" class="btn-sub-control" onclick="clickMultiToggle()">
+                <input type="checkbox" id="multi-mode-chk" style="display:none;"> 🔄 여러 회차 선택
+            </button>
+        </div>
+
+        <div id="multi-start-controls" class="hidden" style="margin-top:10px; margin-bottom:10px;">
+            <div class="combined-submit-btn btn-blue-color" onclick="startExam()">
+                <span class="btn-label">🚀 선택한 회차 시작</span>
+                <div class="count-adjuster" onclick="event.stopPropagation()">
+                    <span class="unit">최대</span>
+                    <div class="step-btn" onclick="adjustCount(event, 'multi-max-count', -1)">▼</div>
+                    <input type="number" id="multi-max-count" value="25" min="1" max="100" oninput="validateCount(this)">
+                    <div class="step-btn" onclick="adjustCount(event, 'multi-max-count', 1)">▲</div>
+                    <span class="unit">문항</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="wrong-content-area" class="hidden glass-card">
+            <div id="wrong-list-display"></div>
+            <div id="wrong-multi-controls" class="hidden" style="margin-top:15px; border-top:1px solid #ddd; padding-top:15px;">
+                <div class="combined-submit-btn btn-wrong-color" onclick="startSelectedWrongReview()">
+                    <span class="btn-label">선택한 오답 풀기</span>
+                    <div class="count-adjuster" onclick="event.stopPropagation()">
+                        <span class="unit">최대</span>
+                        <div class="step-btn" onclick="adjustCount(event, 'wrong-max-count', -1)">▼</div>
+                        <input type="number" id="wrong-max-count" value="20" min="1" max="100" oninput="validateCount(this)">
+                        <div class="step-btn" onclick="adjustCount(event, 'wrong-max-count', 1)">▲</div>
+                        <span class="unit">문항</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="round-select-area">
+            <div class="section-title"><h2>과목 선택</h2></div>
+            <div id="round-grid-display" class="round-grid"></div>
+        </div>
+    </section>
+
+    <section id="quiz-screen" class="hidden">
+        <nav class="quiz-nav">
+            <div class="nav-row-top">
+                <button class="btn-nav-small" onclick="goBackToMain()">🏠 홈으로</button>
+                <strong class="nav-title">주관식 문제</strong>
+                <button onclick="toggleFontControl()" class="btn-nav-small">⚙️ 글자크기</button>
+            </div>
+            <div class="nav-row-bottom">
+                <div id="progress-display">문항: 0 / 0</div>
+                <div id="timer-display">60:00</div>
+                <button class="btn-nav-small btn-nav-green" onclick="confirmFinalize()">📊 바로 제출</button>
+            </div>
+        </nav>
+        <div id="quiz-display-area"></div>
+    </section>
+
+    <section id="result-screen" class="hidden">
+        <div class="result-sticky-nav">
+            <div class="result-nav-content">
+                <div class="result-score-mini">
+                    <span id="final-result-score">0</span><small>점</small>
+                </div>
+                <div class="result-btn-group">
+                    <button onclick="retryCurrentExam(false)" class="btn-res-nav">다시 풀기</button>
+                    <button onclick="retryCurrentExam(true)" class="btn-res-nav btn-red">틀린 것만</button>
+                    <button onclick="goBackToMain()" class="btn-res-nav btn-gray">메인으로</button>
+                </div>
+            </div>
+        </div>
+        <div id="review-list-container" class="review-scroll-area"></div>
+    </section>
+
+    <div id="font-control-banner" class="modal-banner hidden">
+        <div class="banner-body glass-card">
+            <h4>글자 크기 정밀 설정</h4>
+            <div class="control-item">
+                <label>문제 크기: <span id="val-q-size">1.2</span>rem</label>
+                <input type="range" id="slider-q-size" min="0.8" max="2.5" step="0.1" oninput="updateFontSize('q', this.value)">
+            </div>
+            <div class="control-item" style="margin-top:20px;">
+                <label>해설/답변 크기: <span id="val-exp-size">1.0</span>rem</label>
+                <input type="range" id="slider-exp-size" min="0.8" max="2.5" step="0.1" oninput="updateFontSize('exp', this.value)">
+            </div>
+            <button onclick="toggleFontControl()" class="btn-primary" style="margin-top:20px;">설정 완료</button>
+        </div>
+    </div>
+
+    <script src="주관식문제.js"></script>
+    <script src="주관식통합.js"></script>
+</body>
+</html>
