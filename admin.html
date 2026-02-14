@@ -22,7 +22,7 @@
             --color-correct: #16a34a; 
             --color-wrong: #dc2626;   
 
-            /* 🕵️ 시크릿 정답 색상 (배경색과 비슷하게 설정) */
+            /* 🕵️ 시크릿 정답 색상 */
             --secret-ans-color: #f3f4f6; 
         }
         
@@ -48,41 +48,26 @@
         /* [수업용 카드 디자인] */
         .result-card { background: white; border-radius: 20px; padding: 35px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 2px solid #e2e8f0; }
         
-        /* 상단 헤더 영역 (배지 + 정답해설 나란히) */
         .card-top-row { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
 
         .q-number-badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 1rem;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: inline-block; padding: 6px 18px; border-radius: 50px;
+            font-weight: 900; font-size: 1rem; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .badge-correct { background-color: var(--color-correct); }
         .badge-wrong { background-color: var(--color-wrong); }
 
-        /* 🔍 정답 해설 (시크릿 모드 + 크기 1rem 고정) */
         .ans-correct-line { 
-            font-size: 1.3rem !important; /* 돋보기 무시하고 고정 */
-            color: var(--secret-ans-color); 
-            font-weight: 700;
-            user-select: text; -webkit-user-select: text; 
+            font-size: 1.3rem !important; color: var(--secret-ans-color); 
+            font-weight: 700; user-select: text; -webkit-user-select: text; 
         }
         .ans-correct-line::selection { background: var(--primary); color: white; }
 
-        /* 1. 문제 */
         .q-title { font-size: var(--modal-q-size); font-weight: 900; color: #000; margin-bottom: 25px; word-break: keep-all; }
-        
-        /* 2. 실제 보기 */
         .q-options-area { font-size: calc(var(--modal-q-size) * 0.85); color: #333; font-weight: 400; margin-bottom: 20px; border-top: 1px dashed #ddd; padding-top: 15px; }
         .option-item { margin-bottom: 8px; display: block; }
 
-        /* 3. 학생 답변 (고정 크기) */
         .student-ans-line { font-size: 1rem !important; color: #94a3b8; font-weight: 400; margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 10px; }
-
-        /* 문제 해설 박스 */
         .exp-box { font-size: var(--modal-exp-size); line-height: 1.7; background: #f8fafc; padding: 25px; border-radius: 15px; margin-top: 15px; color: #475569; border: 1px solid #e2e8f0; }
 
         /* 한 문제씩 보기 내비게이션 */
@@ -93,6 +78,37 @@
         .mode-active-one .result-card.active { display: block; animation: fadeIn 0.3s ease-in-out; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ============================================================
+           📱 모바일 최적화 (768px 이하) - 기존 표 방식 유지 버전
+           ============================================================ */
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; font-size: var(--admin-font-size); } /* 💡 변수 연동 */
+            header { flex-direction: column; align-items: flex-start !important; gap: 5px; margin-bottom: 15px; }
+            header h1 { font-size: 1rem !important; }
+
+            .admin-controls { padding: 10px; flex-direction: column; align-items: flex-start; gap: 10px; }
+            .admin-controls div { font-size: 14px; width: 100%; } /* 컨트롤러 라벨은 가독성을 위해 고정 */
+            .admin-controls button { width: 100%; font-size: 14px; padding: 8px; }
+
+            .date-header { padding: 12px 15px; font-size: 0.9rem; }
+            
+            /* 💡 핵심: 고정값(0.75rem) 대신 슬라이더 변수(--admin-font-size)를 기준으로 상대적 크기 조절 */
+            table { min-width: 480px; } 
+            th { padding: 8px 4px; font-size: calc(var(--admin-font-size) * 0.65); } /* 비율로 조절 */
+            td { padding: 8px 4px; font-size: calc(var(--admin-font-size) * 0.65); } 
+            
+            .btn-view { padding: 6px 10px; font-size: calc(var(--admin-font-size) * 0.7); }
+            .btn-del { padding: 6px 8px; font-size: calc(var(--admin-font-size) * 0.7); }
+
+            .modal-sticky-header { padding: 10px; flex-direction: column; gap: 8px; }
+            .modal-scroll-area { padding: 15px; }
+            .result-card { padding: 20px; }
+            .card-top-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+            
+            /* 정답 해설은 아까 요청하신 대로 1rem(또는 고정값) 유지 */
+            .ans-correct-line { font-size: 0.8rem !important; }
+        }
     </style>
 </head>
 <body>
@@ -180,10 +196,10 @@
             const groupSection = document.createElement('div');
             groupSection.className = 'date-group';
             groupSection.innerHTML = `
-                <div class="date-header" onclick="this.nextElementSibling.classList.toggle('collapsed')"><span>📅 ${date} 명단</span><span>총 ${students.length}명 응시 (최신순) ▼</span></div>
+                <div class="date-header" onclick="this.nextElementSibling.classList.toggle('collapsed')"><span>📅 ${date} 명단</span><span>총 ${students.length}명 ▼</span></div>
                 <div class="date-content"><table><thead><tr><th>시간</th><th>이름</th><th>과목</th><th>회차</th><th>점수</th><th>작업</th></tr></thead><tbody>
                 ${students.map(s => `<tr><td style="font-weight:700;">${formatTo24H(s.date)}</td><td><strong>${s.name}</strong></td><td>${s.subject}</td><td>${s.round}</td><td style="color:var(--primary); font-weight:900;">${s.score}점</td>
-                <td><button class="btn-view" onclick='showDetails(${JSON.stringify(s).replace(/'/g, "&apos;")})'>결과 리포트</button><button class="btn-del" onclick="deleteRecord('${s.key}')" style="margin-left:8px;">삭제</button></td></tr>`).join('')}
+                <td><button class="btn-view" onclick='showDetails(${JSON.stringify(s).replace(/'/g, "&apos;")})'>리포트</button><button class="btn-del" onclick="deleteRecord('${s.key}')" style="margin-left:4px;">삭제</button></td></tr>`).join('')}
                 </tbody></table></div>`;
             dashboard.appendChild(groupSection);
         });
@@ -214,12 +230,12 @@
                 <div class="result-card ${i === 0 ? 'active' : ''}" id="card-${i}">
                     <div class="card-top-row">
                         <div class="q-number-badge ${badgeClass}">${statusIcon} Question ${i+1}</div>
-                        <div class="ans-correct-line">정답 해설: ${item.correct}</div>
+                        <div class="ans-correct-line">정답 해설: ${item.correct} (드래그 시 보임)</div>
                     </div>
                     <div class="q-title">Q. ${item.q}</div>
                     ${optionsHtml}
                     <div class="student-ans-line">학생 답변 기록: ${item.user || '미입력'}</div>
-                    <div class="exp-box"><strong>📖해설</strong><br>${item.explain || '해설이 없습니다.'}</div>
+                    <div class="exp-box"><strong>📖 해설</strong><br>${item.explain || '해설이 없습니다.'}</div>
                 </div>
             `;
         }).join('');
