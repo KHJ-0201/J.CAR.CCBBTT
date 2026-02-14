@@ -50,7 +50,7 @@
                 <div class="count-adjuster" onclick="event.stopPropagation()">
                     <span class="unit">최대</span>
                     <div class="step-btn" onclick="adjustCount(event, 'multi-max-count', -1)">▼</div>
-                    <input type="number" id="multi-max-count" value="25" min="1" max="100" oninput="validateCount(this)">
+                    <input type="number" id="multi-max-count" value="30" min="1" max="100" oninput="validateCount(this)">
                     <div class="step-btn" onclick="adjustCount(event, 'multi-max-count', 1)">▲</div>
                     <span class="unit">문항</span>
                 </div>
@@ -101,11 +101,12 @@
                 <div class="result-score-mini">
                     <span id="final-result-score">0</span><small>점</small>
                 </div>
-                <div class="result-btn-group">
-                    <button onclick="retryCurrentExam(false)" class="btn-res-nav">다시 풀기</button>
-                    <button onclick="retryCurrentExam(true)" class="btn-res-nav btn-red">틀린 것만</button>
-                    <button onclick="goBackToMain()" class="btn-res-nav btn-gray">메인으로</button>
-                </div>
+ 
+<div class="result-btn-group">
+    <button type="button" onclick="event.preventDefault(); retryCurrentExam(false);" class="btn-res-nav">다시 풀기</button>
+    <button type="button" onclick="event.preventDefault(); retryCurrentExam(true);" class="btn-res-nav btn-red">틀린 것만</button>
+    <button type="button" onclick="event.preventDefault(); goBackToMain();" class="btn-res-nav btn-gray">메인으로</button>
+</div>
             </div>
         </div>
         <div id="review-list-container" class="review-scroll-area"></div>
@@ -125,6 +126,19 @@
             <button onclick="toggleFontControl()" class="btn-primary" style="margin-top:20px;">설정 완료</button>
         </div>
     </div>
+    <div id="confirm-banner" class="modal-overlay hidden">
+    <div class="confirm-modal-window glass-card">
+        <div class="banner-body">
+            <p style="text-align: center; line-height: 1.6; margin-bottom: 25px; font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">
+                안내 메시지
+            </p>
+            <div class="banner-footer-btns">
+                <button class="btn-banner-close" onclick="closeConfirmBanner()">취소</button>
+                <button class="btn-banner-submit">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="주관식문제.js"></script>
     <script src="주관식통합.js"></script>
