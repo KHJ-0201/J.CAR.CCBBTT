@@ -1491,3 +1491,53 @@ body.dark-mode .option-btn {
     white-space: normal !important;
     line-height: 1.1 !important;
 }
+
+/* 1. 주관식 버튼 전용 보라색 네온 애니메이션 */
+@keyframes neon-pulse-purple {
+    0% {
+        box-shadow: 0 0 5px rgba(99, 102, 241, 0.4), 0 0 10px rgba(99, 102, 241, 0.2);
+        transform: scale(1);
+    }
+    50% {
+        /* 보라색 광채가 엔진 폭발처럼 확 퍼지는 효과 */
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 40px rgba(99, 102, 241, 0.4);
+        transform: scale(1.03); /* 살짝 커짐 */
+        filter: brightness(1.2); /* 버튼 색이 더 화사해짐 */
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(99, 102, 241, 0.4), 0 0 10px rgba(99, 102, 241, 0.2);
+        transform: scale(1);
+    }
+}
+
+/* 2. 주관식 버튼 타겟팅 (클래스나 아이디가 없으므로 속성 선택자 사용) */
+button[onclick*="주관식통합.html"] {
+    animation: neon-pulse-purple 2.5s infinite ease-in-out !important;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 3. 버튼 위에 스쳐 지나가는 하이라이트 광택 (고급 도장 느낌) */
+button[onclick*="주관식통합.html"]::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(
+        to right, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.3) 50%, 
+        rgba(255,255,255,0) 100%
+    );
+    transform: rotate(30deg);
+    animation: shine-sweep 3s infinite;
+}
+
+@keyframes shine-sweep {
+    0% { left: -100%; }
+    20% { left: 150%; }
+    100% { left: 150%; }
+}
