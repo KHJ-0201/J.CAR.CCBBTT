@@ -1586,8 +1586,30 @@ button[onclick*="location.href"] {
 /* 3. 모바일 환경 최적화 (768px 이하) */
 @media (max-width: 768px) {
     .settings-panel-slim.glass-card {
-        /* 모바일에서는 프레임 드랍을 방지하기 위해 그림자 범위를 살짝 줄임 */
-        -webkit-animation-duration: 2s !important;
-        animation-duration: 2s !important;
+        /* 모바일에서 더 빠르게 움직여서 눈에 띄게 함 */
+        -webkit-animation-duration: 1.8s !important;
+        animation-duration: 1.8s !important;
+        
+        /* 모바일 전용 배경 그라데이션 (입체감 강화) */
+        background: linear-gradient(145deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.1)) !important;
+    }
+    
+    /* 패널 내부에도 살짝 지나가는 광택 효과 추가 */
+    .settings-panel-slim.glass-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -120%;
+        width: 70%;
+        height: 200%;
+        background: linear-gradient(
+            to right, 
+            rgba(255,255,255,0) 0%, 
+            rgba(255,255,255,0.3) 50%, 
+            rgba(255,255,255,0) 100%
+        );
+        transform: rotate(25deg);
+        animation: shine-sweep 3s infinite; /* 버튼보다 약간 느리게 설정하여 고급스럽게 */
+        pointer-events: none; /* 클릭 방해 금지 */
     }
 }
