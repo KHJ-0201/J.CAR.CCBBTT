@@ -365,16 +365,49 @@ function renderWrongNoteArea() {
     container.innerHTML = html;
 }
 function handleWrongCardClick(el) { if (isMultiSelectMode) { el.classList.toggle('selected'); const chk = el.querySelector('.wrong-check'); if (chk) chk.checked = el.classList.contains('selected'); updateWrongMultiButtonVisibility(); } }
-function startWrongReviewDirect(event, r) { event.stopPropagation(); startWrongReview(r); }
+/* --- 오답 노트 시작 함수들 수정 --- */
+
+// 1. 특정 회차 '다시풀기' 버튼 클릭 시
+function startWrongReviewDirect(event, r) { 
+    event.stopPropagation(); 
+    examMode = 'wrong'; // [추가] 오답 모드 센서 ON
+    startWrongReview(r); 
+}
+
+// 2. 선택한 오답들 한꺼번에 풀기 클릭 시
 function startSelectedWrongReview() {
-    const selected = document.querySelectorAll('.wrong-item-row.selected'); if (selected.length === 0) return;
-    const data = JSON.parse(localStorage.getItem('subj_wrong_v1') || '{}'); const max = parseInt(document.getElementById('wrong-max-count').value) || 20;
-    let pool = []; selected.forEach(el => { const r = el.getAttribute('data-round'); if (data[r]) pool.push(...data[r]); });
+    const selected = document.querySelectorAll('.wrong-item-row.selected'); 
+    if (selected.length === 0) return;
+    
+    examMode = 'wrong'; // [추가] 오답 모드 센서 ON
+    
+    const data = JSON.parse(localStorage.getItem('subj_wrong_v1') || '{}'); 
+    const max = parseInt(document.getElementById('wrong-max-count').value) || 20;
+    let pool = []; 
+    selected.forEach(el => { 
+        const r = el.getAttribute('data-round'); 
+        if (data[r]) pool.push(...data[r]); 
+    });
     startExamProcessFromPool(pool.sort(()=>Math.random()-0.5).slice(0, max));
+}
+
+// 3. 내부 실행 로직
+function startWrongReview(r) { 
+    examMode = 'wrong'; // [추가] 오답 모드 센서 ON
+    const d = JSON.parse(localStorage.getItem('subj_wrong_v1') || '{}'); 
+    if (d[r]) startExamProcessFromPool([...d[r]].sort(()=>Math.random()-0.5).slice(0, 20)); 
+}
+
+/* --- 추가로 메인으로 돌아갈 때 모드를 초기화해야 합니다 --- */
+function goBackToMain() {
+    if(timerInterval) clearInterval(timerInterval);
+    examMode = 'self'; // [추가] 메인 복귀 시 기본 모드로 리셋
+    showSection('home-screen');
+    history.replaceState({ page: 'home' }, '', '');
+    initApp();
 }
 function deleteWrongRound(event, r) { event.stopPropagation(); if(!confirm(`${r} 삭제?`)) return; let d = JSON.parse(localStorage.getItem('subj_wrong_v1') || '{}'); delete d[r]; localStorage.setItem('subj_wrong_v1', JSON.stringify(d)); renderWrongNoteArea(); updateWrongMultiButtonVisibility(); }
 function clearAllWrongs() { if(!confirm("전체 삭제?")) return; localStorage.removeItem('subj_wrong_v1'); renderWrongNoteArea(); updateWrongMultiButtonVisibility(); }
-function startWrongReview(r) { const d = JSON.parse(localStorage.getItem('subj_wrong_v1') || '{}'); if (d[r]) startExamProcessFromPool([...d[r]].sort(()=>Math.random()-0.5).slice(0, 20)); }
 function calcSim(s1, s2) {
     let longer = s1.length < s2.length ? s2 : s1, shorter = s1.length < s2.length ? s1 : s2; if (longer.length === 0) return 1.0;
     const costs = []; for (let i = 0; i <= longer.length; i++) { let last = i; for (let j = 0; j <= shorter.length; j++) { if (i === 0) costs[j] = j; else if (j > 0) { let n = costs[j - 1]; if (longer.charAt(i - 1) !== shorter.charAt(j - 1)) n = Math.min(Math.min(n, last), costs[j]) + 1; costs[j - 1] = last; last = n; } } if (i > 0) costs[shorter.length] = last; }
@@ -453,4 +486,26 @@ function handleScoreReset() {
             scoreClickCount = 0;
         }
     }
+}
+
+// [전체화면 엔진] 첫 클릭 시 전체화면 전환 (테스트 사이트 제외 조건 추가)
+function handleFirstClickFullScreen() {
+    // [센서] 현재 주소가 테스트 사이트(localhost, 127.0.0.1, 또는 로컬 파일 등)인지 확인
+    const isTestSite = window.location.hostname === "localhost" || 
+                       window.location.hostname === "127.0.0.1" || 
+                       window.location.protocol === "file:";
+
+    // 테스트 사이트가 아닐 때만 전체화면 실행
+    if (!isTestSite) {
+        const doc = document.documentElement;
+        if (doc.requestFullscreen) doc.requestFullscreen();
+        else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen(); // 사파리/크롬
+        else if (doc.msRequestFullscreen) doc.msRequestFullscreen(); // IE
+    } else {
+        console.log("테스트 사이트 감지: 전체화면 기능을 실행하지 않습니다.");
+    }
+    
+    // 실행 여부와 상관없이 한 번 클릭 후에는 센서를 제거하여 엔진 부하 방지
+    const mainBody = document.getElementById('main-body');
+    if (mainBody) mainBody.removeAttribute('onclick');
 }
