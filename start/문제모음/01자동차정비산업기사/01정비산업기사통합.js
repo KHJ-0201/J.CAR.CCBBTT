@@ -18,12 +18,11 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // 선생님 사물함으로 데이터를 쏘는 함수 (신규 배선)
-function sendDataToTeacher(score, roundName, wrongs) {
+function sendDataToTeacher(score, roundName, results) {
     const studentName = localStorage.getItem('studentName') || '익명학생';
     const now = new Date();
     const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
     
-    // 장부의 'exam_results' 칸에 기록을 남깁니다.
     const postRef = ref(database, 'exam_results');
     const newPostRef = push(postRef);
     
@@ -33,11 +32,15 @@ function sendDataToTeacher(score, roundName, wrongs) {
         round: roundName,
         score: score.toFixed(2),
         date: timeStr,
-        wrongCount: wrongs.length,
-        wrongList: wrongs.map(w => ({
-            q: w.question,
-            correct: w.correctAnswerText
-        }))
+        // 전체 문항 데이터 전송 (맞음/틀림/해설 포함)
+        wrongList: results.map(r => ({
+    q: r.q,
+    user: r.user,
+    correct: r.correct,
+    isCorrect: r.isCorrect,
+    explain: r.explain,
+    options: r.options // ★ 이제 보기 데이터가 선생님 사물함으로 발송됩니다!
+}))
     });
 }
 
@@ -206,15 +209,37 @@ function startExamProcess(sets, isBalanced) {
         });
     }
     
-    const initialPool = pool.map(q => {
-        const originalText = q.options[q.answer];
-        return { ...q, correctAnswerText: originalText, originalRound: q.fromRound || q.originalRound };
-    });
+    // [수정 후 - 배선 보강]
+const initialPool = pool.map(q => {
+    // 1. 현재 문제의 정답 텍스트를 미리 저장합니다.
+    const originalText = q.options[q.answer];
+    
+    // 2. 새로운 객체를 만들 때 'options' 배열을 확실하게 포함시킵니다.
+    return { 
+        ...q, 
+        options: [...q.options], // ★ 보기 배열을 복사해서 확실히 넣어줍니다.
+        correctAnswerText: originalText, 
+        originalRound: q.fromRound || q.originalRound 
+    };
+});
 
-    lastUsedExamData = JSON.parse(JSON.stringify(initialPool));
-    questions = initialPool.map(q => ({ ...q, options: shuffle([...q.options]) }));
-    questions = shuffle(questions);
-    launchQuiz();
+lastUsedExamData = JSON.parse(JSON.stringify(initialPool));
+
+questions = initialPool.map(q => {
+    // 1. 원본 보기 데이터를 백업용으로 따로 챙겨둡니다.
+    const originalOptions = [...q.options]; 
+    
+    return { 
+        ...q, 
+        // 2. 학생에게 보여줄 보기는 여기서 섞고,
+        options: shuffle([...q.options]), 
+        // 3. 나중에 선생님께 보낼 원본 보기는 'rawOptions'라는 이름으로 하나 더 담아둡니다.
+        rawOptions: originalOptions 
+    };
+});
+
+questions = shuffle(questions);
+launchQuiz();
 }
 
 function launchQuiz() {
@@ -413,47 +438,55 @@ function updateProgressDisplay() {
 function finalizeExam() {
     console.log("채점 엔진 가동...");
     if(timerInterval) clearInterval(timerInterval);
+    
     let scoreCount = 0;
     const reviewContainer = document.getElementById('review-list-container');
     reviewContainer.innerHTML = '';
-    const currentWrongs = [];
+    
+    const allResultsForTeacher = []; // 선생님께 보낼 전체 리스트
+    const currentWrongs = [];        // 오답노트용 (기존 기능 유지)
+    
     const resultOmrGrid = document.getElementById('result-omr-buttons-grid');
     let resultOmrHtml = '';
 
     questions.forEach((q, i) => {
-        const userPickText = q.options[userAnswers[i]];
-        
-        // [핵심 판정] 정답이라도 시간 초과(isOverTime) 딱지가 붙어있으면 무조건 오답 처리!
+        const userPickText = q.options[userAnswers[i]] || '미선택';
         const isCorrect = (userPickText === q.correctAnswerText) && !q.isOverTime;
 
         if (isCorrect) { 
             scoreCount++; 
         } else { 
-            // 틀린 문제나 시간 초과 문제는 오답 노트로 보냅니다.
             currentWrongs.push({...q, options: q.options}); 
         }
+
+        // [신규 배선] 모든 문제의 결과를 객체로 저장
+        allResultsForTeacher.push({
+    q: q.question,
+    user: userPickText,
+    correct: q.correctAnswerText,
+    isCorrect: isCorrect,
+    explain: q.explain,
+    options: q.rawOptions || q.options 
+});
         
         // 1. 결과 리스트 카드 생성 (6번 화면 중앙 리스트)
-        const card = document.createElement('div');
+const card = document.createElement('div');
         card.className = `review-card glass-card ${isCorrect ? 'correct' : 'wrong'}`;
-        card.id = `review-card-${i}`; // 이동을 위한 ID
+        card.id = `review-card-${i}`;
         card.style.borderLeft = `10px solid ${isCorrect ? 'var(--success-green)' : 'var(--accent-red)'}`;
         card.style.padding = '20px'; 
         card.style.marginBottom = '15px';
 
-        // [신규] 시간 초과된 문제라면 빨간색 태그를 붙여줍니다.
         const overTimeTag = q.isOverTime ? '<span style="color:var(--accent-red); font-weight:bold;">[시간초과]</span> ' : '';
 
-        // 카드 내용 삽입 (태그 적용)
         card.innerHTML = `
             <h4>${isCorrect ? '✅' : '❌'} ${overTimeTag}Q${i + 1}. ${q.question}</h4>
-            <p>나의 선택: ${userPickText || '미선택'}</p>
+            <p>나의 선택: ${userPickText}</p>
             <p><strong>정답: ${q.correctAnswerText}</strong></p>
             <p>해설: ${q.explain}</p>
         `;
         reviewContainer.appendChild(card);
 
-        // 2. 결과 화면 OMR 버튼 생성 (6번 화면 우측/하단 미니 맵)
         const num = (i + 1).toString().padStart(2, '0');
         resultOmrHtml += `
             <div class="omr-row-item ${isCorrect ? 'res-correct' : 'res-wrong'}" onclick="document.getElementById('review-card-${i}').scrollIntoView({behavior:'smooth', block:'center'})">
@@ -467,11 +500,15 @@ function finalizeExam() {
 
     if(resultOmrGrid) resultOmrGrid.innerHTML = resultOmrHtml;
     const finalScore = (scoreCount / questions.length) * 100;
-    lastUsedExamData = JSON.parse(JSON.stringify(questions)); 
-    lastWrongAnswers = JSON.parse(JSON.stringify(currentWrongs));
+
+    // 데이터 저장 및 전송
     saveScoreToHistory(finalScore, questions[0].originalRound);
     saveWrongNotes(currentWrongs);
-    sendDataToTeacher(finalScore, questions[0].originalRound, currentWrongs);
+    
+    // [중요] 기존 currentWrongs 대신 allResultsForTeacher를 보냅니다!
+    sendDataToTeacher(finalScore, questions[0].originalRound, allResultsForTeacher);
+
+    // 화면 전환 로직 (기존과 동일)
     document.getElementById('quiz-screen').classList.add('hidden');
     document.getElementById('quiz-status-area').classList.add('hidden');
     document.getElementById('result-screen').classList.remove('hidden');

@@ -15,8 +15,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// 선생님 사물함으로 데이터를 쏘는 함수
-function sendDataToTeacherSubj(score, roundName, wrongs) {
+// 선생님 사물함으로 데이터를 쏘는 함수 (전체 문항 리스트를 받도록 유지)
+function sendDataToTeacherSubj(score, roundName, results) {
     const studentName = localStorage.getItem('studentName') || '익명학생';
     const now = new Date();
     const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
@@ -30,10 +30,13 @@ function sendDataToTeacherSubj(score, roundName, wrongs) {
         round: roundName,
         score: score.toFixed(1),
         date: timeStr,
-        wrongCount: wrongs.length,
-        wrongList: wrongs.map(w => ({
-            q: w.question,
-            correct: w.answer // 주관식은 answer 필드가 정답입니다.
+        // [중요] 전체 문항 데이터 전송 (isCorrect 여부를 포함하여 관리자 페이지와 연동)
+        wrongList: results.map(r => ({
+            q: r.q,
+            user: r.user,
+            correct: r.correct,
+            isCorrect: r.isCorrect,
+            explain: r.explain
         }))
     });
 }
@@ -72,7 +75,6 @@ window.addEventListener('popstate', function(event) {
     const isResultActive = resultScreen && !resultScreen.classList.contains('hidden');
 
     if (isQuizActive || isResultActive) {
-        // [중요] 사용자가 뒤로 가려고 하면, 즉시 가짜 기록을 다시 밀어넣어 6번에 묶어둡니다.
         history.pushState({ page: 'internal' }, '', '');
         openConfirmBanner("exit_quiz"); 
     }
@@ -90,7 +92,6 @@ window.confirmFinalize = function() {
 // 2. 화면 전환 및 히스토리 관리 통합
 function navigateTo(pageId, stateName) {
     showSection(pageId);
-    // 기록을 쌓지 않고 현재 자리를 교체하여 히스토리 누수를 막습니다.
     history.replaceState({ page: stateName }, '', '');
 }
 
@@ -130,18 +131,12 @@ window.onload = () => {
     }, 100); 
 };
 
-// [수리 2] 메인 복귀 및 히스토리 완전 세척 엔진 (중복 제거 및 최적화본)
+// [수리 2] 메인 복귀 및 히스토리 완전 세척 엔진
 function goBackToMain() {
     if(timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-
-    // [최종 튜닝] 
-    // 1. 먼저 가짜 계단(internal)을 확실히 부수고 내려갑니다.
     if (history.state && history.state.page === 'internal') {
         history.back();
     }
-
-    // 2. 브라우저가 기록 한 칸을 완전히 지울 수 있도록 0.1초의 여유를 줍니다.
-    // 이 '기다림'이 있어야 메인 화면이 5번 바로 다음 칸으로 정렬됩니다.
     setTimeout(() => {
         showSection('home-screen');
         history.replaceState({ page: 'home' }, '', '');
@@ -211,7 +206,6 @@ function renderRoundCards() {
         const sel = document.querySelectorAll('.round-card.selected').length;
         document.getElementById('multi-start-controls').classList.toggle('hidden', sel === 0);
     } else if (!isMultiSelectMode) {
-        // 랜덤 셔플 로직이 추가된 정비 완료 버전입니다.
         startExamProcessFromPool(set.repairData.map(q => ({ ...q, originalRound: set.roundName })).sort(() => Math.random() - 0.5));
     }
 };
@@ -261,7 +255,6 @@ function startExam() {
             totalPool.push(...shuffled.slice(0, Math.min(take, shuffled.length)));
         }
     });
-    // 추출된 모든 문제를 한 번 더 무작위로 섞어서 엔진(시험장)으로 보냅니다.
     const finalShuffledPool = totalPool.sort(() => Math.random() - 0.5);
     startExamProcessFromPool(finalShuffledPool);
 }
@@ -272,19 +265,16 @@ function startExamProcessFromPool(pool) {
     lastUsedExamData = JSON.parse(JSON.stringify(questions));
     currentIdx = 0; 
     userAnswers = {};
-
-    // [핵심] 퀴즈용 가짜 계단(internal)이 이미 있다면 새로 만들지 않고 재사용(replace)합니다.
-    // 처음 시작할 때만 pushState로 계단을 딱 한 칸 만듭니다.
     if (history.state && history.state.page === 'internal') {
         history.replaceState({ page: 'internal' }, '', '');
     } else {
         history.pushState({ page: 'internal' }, '', '');
     }
-
     navigateTo('quiz-screen', 'quiz');
     renderQuestion(); 
     startTimer();
 }
+
 function renderQuestion() {
     const q = questions[currentIdx];
     const display = document.getElementById('quiz-display-area');
@@ -321,33 +311,21 @@ function revealAnswer() { document.getElementById('ans-feedback').classList.remo
 function checkAnswer() {
     const input = document.getElementById('answer-input'); 
     if(!input || input.disabled) return;
-    
-    // 1. 사용자 입력값 (공백 제거)
     const userInput = input.value.trim().replace(/\s/g, '').toLowerCase();
-    
-    // 2. 정답 후보들 분리 (슬래시 기준)
-    // "히트 펌프 / Heat Pump" -> ["히트펌프", "heatpump"]
     const correctAnswers = questions[currentIdx].answer.split('/').map(ans => 
         ans.trim().replace(/\s/g, '').toLowerCase()
     );
-
-    // 3. 후보들 중 하나라도 일치하거나 유사도가 높으면 정답 처리
     let maxSim = 0;
     correctAnswers.forEach(correctAns => {
         const currentSim = calcSim(userInput, correctAns);
         if (currentSim > maxSim) maxSim = currentSim;
     });
-
-    // 유사도 60% 이상이면 정답 (완전 일치 시 100%)
     const isCorrect = maxSim >= 0.6; 
     userAnswers[currentIdx] = input.value; 
     input.disabled = true;
-    
-    // 결과 표시 (가장 높은 유사도 출력)
     document.getElementById('result-tag').innerHTML = isCorrect 
         ? `<h3 style="color:var(--success-green); font-weight: 900; margin: 0; font-size: 1.4rem;">✅ 정답입니다! (${Math.round(maxSim*100)}%)</h3>` 
         : `<h3 style="color:var(--accent-red); font-weight: 900; margin: 0; font-size: 1.4rem;">❌ 오답입니다. (${Math.round(maxSim*100)}%)</h3>`;
-        
     document.getElementById('ans-feedback').classList.remove('hidden'); 
     document.getElementById('btn-input-check').classList.add('hidden'); 
     document.getElementById('btn-input-next').classList.remove('hidden');
@@ -359,9 +337,13 @@ function nextQuestion() { if (currentIdx < questions.length - 1) { currentIdx++;
 
 function prevQuestion() { if (currentIdx > 0) { currentIdx--; renderQuestion(); window.scrollTo(0,0); } }
 
+// [수리 완료] 기존 로직을 훼손하지 않고 전체 문항 데이터를 전송하도록 수정
 function finalizeExam() {
     const container = document.getElementById('review-list-container'); if(!container) return;
-    container.innerHTML = ''; let score = 0; let wrongs = [];
+    container.innerHTML = ''; 
+    let scoreCount = 0; 
+    let allResultsForTeacher = []; // 선생님 전송용 전체 리스트
+    let currentWrongs = [];        // 오답노트 보관용
     
     let displayTitle = "";
     if (examMode === 'wrong') {
@@ -375,9 +357,23 @@ function finalizeExam() {
     }
 
     questions.forEach((q, i) => {
-        let isCorrect = (examMode === 'input') ? calcSim(String(userAnswers[i]||"").replace(/\s/g,''), q.answer.replace(/\s/g,'')) >= 0.8 : userAnswers[i] === 'correct';
-        if(isCorrect) score++; else wrongs.push(q);
+        const studentAns = (userAnswers[i] || "").trim();
+        // 정답 판정
+        let isCorrect = (examMode === 'input') 
+            ? calcSim(studentAns.replace(/\s/g,''), q.answer.replace(/\s/g,'')) >= 0.6 
+            : userAnswers[i] === 'correct';
+
+        if(isCorrect) scoreCount++; else currentWrongs.push(q);
         
+        // [핵심] 전체 결과 객체화
+        allResultsForTeacher.push({
+            q: q.question,
+            user: studentAns || "미입력",
+            correct: q.answer,
+            isCorrect: isCorrect,
+            explain: q.explain
+        });
+
         container.innerHTML += `
     <div class="review-card glass-card" style="border-left:12px solid ${isCorrect ? 'var(--success-green)' : 'var(--accent-red)'}; padding: 0; overflow: hidden; margin-bottom: 20px;">
         <div style="padding: 20px; background: rgba(128,128,128,0.05); border-bottom: 1px solid var(--border);">
@@ -389,7 +385,7 @@ function finalizeExam() {
             </div>
         </div>
         <div style="padding: 15px 20px;">
-            <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: var(--text); opacity: 0.8; user-select: none;">내 답변: <span style="color: ${isCorrect ? 'var(--success-green)' : 'var(--accent-red)'}; font-weight: 700; user-select: text;">${userAnswers[i]||'미입력'}</span></p>
+            <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: var(--text); opacity: 0.8; user-select: none;">내 답변: <span style="color: ${isCorrect ? 'var(--success-green)' : 'var(--accent-red)'}; font-weight: 700; user-select: text;">${studentAns || '미입력'}</span></p>
             <p style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; user-select: text;"><span style="background: var(--accent-blue); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin-right: 10px; font-weight: 800; user-select: none;">정답</span><strong style="color: var(--accent-blue);">${q.answer}</strong></p>
         </div>
         <div style="margin: 0 20px 20px 20px; padding: 15px; background: rgba(128,128,128,0.08); border-radius: 10px; border: 1px solid var(--border); user-select: text;">
@@ -399,13 +395,15 @@ function finalizeExam() {
     </div>`;
     });
     
-    const final = (score / questions.length) * 100;
-    document.getElementById('final-result-score').innerText = final.toFixed(1);
-    lastWrongAnswers = wrongs;
-    saveScore(final, displayTitle); 
-    saveWrongNotes(wrongs);
-    // [추가] 주관식 데이터 전송!
-    sendDataToTeacherSubj(final, displayTitle, wrongs);
+    const finalPercent = (scoreCount / questions.length) * 100;
+    document.getElementById('final-result-score').innerText = finalPercent.toFixed(1);
+    lastWrongAnswers = currentWrongs;
+    saveScore(finalPercent, displayTitle); 
+    saveWrongNotes(currentWrongs);
+    
+    // [중요] 주관식 전체 데이터(allResultsForTeacher)를 전송!
+    sendDataToTeacherSubj(finalPercent, displayTitle, allResultsForTeacher);
+    
     navigateTo('result-screen', 'result');
     window.scrollTo(0,0);
 }
@@ -473,14 +471,8 @@ function startTimer() {
 
 function updateProgressDisplay() { const pd = document.getElementById('progress-display'); if(pd) pd.innerText = `문항: ${currentIdx + 1} / ${questions.length}`; }
 function retryCurrentExam(wrongOnly) {
-    // [보완] 다시 풀기 클릭 시 브라우저가 기록을 추가하지 못하도록 현재 위치에서 교체만 수행
     history.replaceState({ page: 'internal' }, '', '');
-    
-    // 재시험용 연료(문제)를 준비합니다.
     const retryPool = wrongOnly ? lastWrongAnswers : lastUsedExamData;
-    
-    // 중요: 다시 풀 때도 순서를 무작위로 뒤섞어(Shuffle) 뇌가 답의 위치를 외우지 못하게 합니다.
-    // 원본 데이터 보존을 위해 [...retryPool] 형식을 사용하여 복사본을 섞습니다.
     startExamProcessFromPool([...retryPool].sort(() => Math.random() - 0.5));
 }
 
@@ -561,7 +553,7 @@ function closeConfirmBanner() {
     if (banner) banner.classList.add('hidden');
 }
 
-// [주관식 모듈 통신 배선 연결] HTML 버튼들이 함수를 찾을 수 있게 길을 열어줍니다.
+// [주관식 모듈 통신 배선 연결] 
 window.handleTitleClick = handleTitleClick;
 window.toggleTheme = toggleTheme;
 window.handleScoreReset = handleScoreReset;
@@ -580,10 +572,10 @@ window.toggleFontControl = toggleFontControl;
 window.updateFontSize = updateFontSize;
 window.confirmFinalize = confirmFinalize;
 window.closeConfirmBanner = closeConfirmBanner;
-window.finalizeExam = finalizeExam; // 제출 버튼용
-window.retryCurrentExam = retryCurrentExam; // 다시풀기 버튼용
-window.revealAnswer = revealAnswer; // 정답 확인용
-window.checkAnswer = checkAnswer; // 주관식 입력 확인용
+window.finalizeExam = finalizeExam; 
+window.retryCurrentExam = retryCurrentExam; 
+window.revealAnswer = revealAnswer; 
+window.checkAnswer = checkAnswer; 
 window.submitSelf = submitSelf; 
 window.nextQuestion = nextQuestion;
 window.prevQuestion = prevQuestion;
