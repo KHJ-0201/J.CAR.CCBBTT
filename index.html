@@ -8,13 +8,10 @@
         (function() {
             const userAgent = navigator.userAgent.toLowerCase();
             const targetUrl = window.location.href;
-
             if (userAgent.match(/kakaotalk/i)) {
-                // 안드로이드 (삼성폰 등) : 크롬이나 삼성 인터넷으로 강제 실행
                 if (userAgent.match(/android/i)) {
                     location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
                 } 
-                // 아이폰 : 카카오톡 외부 브라우저 옵션 사용
                 else if (userAgent.match(/iphone|ipad|ipod/i)) {
                     location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
                 }
@@ -38,12 +35,65 @@
                     <p>스마트폰 화면에 최적화</p>
                 </div>
             </div>
-            <footer class="bottom-memo">
+            <footer class="bottom-memo" onclick="handleAdminClick()" style="cursor: default; user-select: none;">
                 <p>인터넷 설정 >> 홈화면에 현재 웹페이지 추가 시<br>더욱 최적의 환경에서 문제 풀이를 제공합니다.</p>
             </footer>
         </div>
     </div>
-    
+
+    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:15px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.5); width:300px;">
+            <h3 style="margin-bottom:20px; color:#2563eb;">관리자 인증</h3>
+            <input type="password" id="admin-pw-input" placeholder="비밀번호 입력" style="width:90%; padding:10px; font-size:1.2rem; border:2px solid #ddd; border-radius:8px; margin-bottom:20px; text-align:center;">
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button onclick="checkAdminPassword()" style="padding:10px 20px; background:#2563eb; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">확인</button>
+                <button onclick="closeAdminModal()" style="padding:10px 20px; background:#eee; color:#666; border:none; border-radius:8px; cursor:pointer;">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let adminClickCount = 0;
+        let adminClickTimer = null;
+
+        function handleAdminClick() {
+            adminClickCount++;
+            clearTimeout(adminClickTimer);
+            adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
+
+            if (adminClickCount >= 5) {
+                document.getElementById('admin-modal').style.display = 'flex';
+                document.getElementById('admin-pw-input').focus();
+                adminClickCount = 0;
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').style.display = 'none';
+            document.getElementById('admin-pw-input').value = '';
+        }
+
+        function checkAdminPassword() {
+            const pw = document.getElementById('admin-pw-input').value;
+            const _0x4f2 = (s) => s.split('').reverse().join('');
+            const _0x91a = parseInt(_0x4f2("8712351"));
+            const _0x22b = (Math.pow(10, 6) * 1.5) + 32178;
+
+            if (pw && Number(pw) === _0x91a && (Number(pw) ^ 0) === _0x22b) {
+                sessionStorage.setItem('admin_auth', 'granted');
+                location.href = "admin.html";
+            } else {
+                alert("인증에 실패했습니다.");
+                closeAdminModal();
+            }
+        }
+
+        // 입력창 엔터키 센서 (HTML이 그려진 후 연결)
+        document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAdminPassword();
+        });
+    </script>
+
     <script src="index.js"></script> 
 </body>
 </html>

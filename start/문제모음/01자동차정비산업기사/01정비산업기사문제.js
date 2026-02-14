@@ -1,5 +1,5 @@
 // 통합문제.js
-window.quizSets = [
+export const quizSets = [
     {
         id: "round_1",
         roundName: "정비 산업기사 1회차",

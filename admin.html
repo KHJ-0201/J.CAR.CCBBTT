@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT 관리자 관제 센터</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --accent-red: #ef4444;
+        }
+        body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h1 { margin: 0; font-weight: 900; color: var(--primary); }
+        
+        /* 통계 카드 */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--card); padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center; }
+        .stat-card span { display: block; font-size: 0.9rem; color: #64748b; }
+        .stat-card strong { font-size: 1.8rem; color: var(--primary); }
+
+        /* 테이블 스타일 */
+        .table-container { background: var(--card); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); margin-bottom: 40px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: var(--primary); color: white; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        tr:hover { background: #f1f5f9; }
+
+        /* 오답 분석 섹션 (빔 프로젝터용) */
+        .wrong-analysis { background: #fff1f1; padding: 25px; border-radius: 15px; border: 2px solid var(--accent-red); }
+        .wrong-title { color: var(--accent-red); font-weight: 900; font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .wrong-item { background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .count-badge { background: var(--accent-red); color: white; padding: 2px 10px; border-radius: 5px; margin-right: 10px; }
+        
+        .btn-excel { background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 성적 관제 센터 (관리자 전용)</h1>
+            <button class="btn-excel" onclick="downloadExcel()">엑셀 다운로드</button>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card"><span>오늘 제출 인원</span><strong id="total-students">0</strong></div>
+            <div class="stat-card"><span>평균 점수</span><strong id="avg-score">0</strong></div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>시간</th>
+                        <th>이름</th>
+                        <th>과목</th>
+                        <th>회차</th>
+                        <th>점수</th>
+                        <th>오답수</th>
+                    </tr>
+                </thead>
+                <tbody id="result-body">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="wrong-analysis">
+            <div class="wrong-title">🔥 집중 해설! 오답률 높은 문제 (TOP 5)</div>
+            <div id="top-wrong-list">
+                </div>
+        </div>
+    </div>
+
+    <script type="module">
+        (function() {
+    // index.html에서 비밀번호를 맞히고 온 경우만 허용하거나,
+    // 진입 시 다시 한번 물어볼 수 있습니다.
+    if (sessionStorage.getItem('admin_auth') !== 'granted') {
+        const pw = prompt("관리자 인증이 필요합니다:");
+        if (pw === "1234") {
+            sessionStorage.setItem('admin_auth', 'granted');
+        } else {
+            alert("접근 권한이 없습니다.");
+            location.replace("index.html");
+        }
+    }
+})();
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // 선생님의 Firebase 설정 (동일하게 유지)
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
+            authDomain: "khj-cbtbase.firebaseapp.com",
+            databaseURL: "https://khj-cbtbase-default-rtdb.firebaseio.com",
+            projectId: "khj-cbtbase",
+            storageBucket: "khj-cbtbase.firebasestorage.app",
+            messagingSenderId: "430706982133",
+            appId: "1:430706982133:web:d0bf4cb620f1c7d263d9bc"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // 실시간 데이터 수신
+        const examRef = ref(database, 'exam_results');
+        onValue(examRef, (snapshot) => {
+            const data = snapshot.val();
+            if (!data) return;
+
+            const results = Object.values(data).reverse(); // 최신순
+            renderTable(results);
+            calculateStats(results);
+            analyzeWrongs(results);
+        });
+
+        function renderTable(results) {
+            const body = document.getElementById('result-body');
+            body.innerHTML = results.map(r => `
+                <tr>
+                    <td>${r.date.split(' ')[1]}</td>
+                    <td><strong>${r.name}</strong></td>
+                    <td>${r.subject}</td>
+                    <td>${r.round}</td>
+                    <td style="color:var(--primary); font-weight:bold;">${r.score}점</td>
+                    <td>${r.wrongCount}개</td>
+                </tr>
+            `).join('');
+        }
+
+        function calculateStats(results) {
+            document.getElementById('total-students').innerText = results.length;
+            const avg = results.reduce((acc, cur) => acc + parseFloat(cur.score), 0) / results.length;
+            document.getElementById('avg-score').innerText = avg.toFixed(1);
+        }
+
+        function analyzeWrongs(results) {
+            const wrongMap = {};
+            results.forEach(r => {
+                if (r.wrongList) {
+                    r.wrongList.forEach(w => {
+                        const qText = w.q;
+                        wrongMap[qText] = (wrongMap[qText] || 0) + 1;
+                    });
+                }
+            });
+
+            // 많이 틀린 순서로 정렬
+            const sorted = Object.entries(wrongMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+            const list = document.getElementById('top-wrong-list');
+            list.innerHTML = sorted.map(([q, count]) => `
+                <div class="wrong-item">
+                    <span class="count-badge">${count}명 틀림</span>
+                    <strong>${q}</strong>
+                </div>
+            `).join('');
+        }
+
+        // 간단한 엑셀(CSV) 다운로드 함수
+        window.downloadExcel = () => {
+            const table = document.querySelector("table");
+            let csv = "\uFEFF"; // 한글 깨짐 방지 BOM
+            for (let row of table.rows) {
+                let rowData = [];
+                for (let cell of row.cells) rowData.push(cell.innerText);
+                csv += rowData.join(",") + "\n";
+            }
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "성적결과.csv";
+            link.click();
+        };
+    </script>
+</body>
+</html>

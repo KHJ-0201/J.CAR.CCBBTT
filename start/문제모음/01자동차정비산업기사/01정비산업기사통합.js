@@ -1,3 +1,46 @@
+// [데이터 송신기 설치]
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { quizSets } from './01정비산업기사문제.js';
+window.quizSets = quizSets;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
+  authDomain: "khj-cbtbase.firebaseapp.com",
+  databaseURL: "https://khj-cbtbase-default-rtdb.firebaseio.com",
+  projectId: "khj-cbtbase",
+  storageBucket: "khj-cbtbase.firebasestorage.app",
+  messagingSenderId: "430706982133",
+  appId: "1:430706982133:web:d0bf4cb620f1c7d263d9bc"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// 선생님 사물함으로 데이터를 쏘는 함수 (신규 배선)
+function sendDataToTeacher(score, roundName, wrongs) {
+    const studentName = localStorage.getItem('studentName') || '익명학생';
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
+    
+    // 장부의 'exam_results' 칸에 기록을 남깁니다.
+    const postRef = ref(database, 'exam_results');
+    const newPostRef = push(postRef);
+    
+    set(newPostRef, {
+        name: studentName,
+        subject: "객관식(산업기사)",
+        round: roundName,
+        score: score.toFixed(2),
+        date: timeStr,
+        wrongCount: wrongs.length,
+        wrongList: wrongs.map(w => ({
+            q: w.question,
+            correct: w.correctAnswerText
+        }))
+    });
+}
+
 // [보안 엔진] 내부 이동 중에 튕기지 않도록 'removeItem'을 제거했습니다.
 (function() {
     if (sessionStorage.getItem('auth_status') !== 'verified') {
@@ -46,14 +89,6 @@ window.onload = () => {
     document.addEventListener('click', autoFull, { once: true });
     document.addEventListener('touchstart', autoFull, { once: true });
 
-    const dataCheck = setInterval(() => {
-        if (window.quizSets) {
-            clearInterval(dataCheck);
-            initApp();
-            loadSavedFontSize();
-        }
-    }, 100);
-
    window.onpopstate = function(event) {
         const isQuiz = !document.getElementById('quiz-screen').classList.contains('hidden');
         const isResult = !document.getElementById('result-screen').classList.contains('hidden');
@@ -78,7 +113,11 @@ function initApp() {
     // [추가] 앱 시작 시 회차랜덤 시작 버튼을 무조건 숨깁니다.
     const startBtn = document.getElementById('btn-multi-start');
     if (startBtn) startBtn.classList.add('hidden');
-    updateFontSize(localStorage.getItem('cbt_font_size') || 'medium');
+    
+    // updateFontSize 호출 시 'q'와 기본값을 넘겨 초기화합니다.
+    const savedSize = localStorage.getItem('user-q-size') || '1.20';
+    updateFontSize('q', savedSize);
+
     if (localStorage.getItem('cbt_theme') === 'dark') {
         toggleTheme();
     }
@@ -371,33 +410,6 @@ function updateProgressDisplay() {
     else if (displayEl) { displayEl.textContent = solved + " / " + total; }
 }
 
-function handleFinishSubmit() {
-    // 1. 배너 본체 부품을 가져옵니다.
-    const banner = document.getElementById('confirm-banner');
-    
-    if (banner) {
-        // 2. 미풀이 문항 수를 계산합니다.
-        const unsolvedCount = questions.length - Object.keys(userAnswers).length;
-        
-        // 3. 메시지를 적을 p 태그를 찾습니다. (.banner-body p)
-        const pTag = banner.querySelector('.banner-body p');
-        
-        if (pTag) {
-            const msgText = unsolvedCount > 0 
-                ? `<strong style="color:var(--accent-red)">미풀이 문제가 ${unsolvedCount}개 있습니다.</strong><br>그래도 제출하시겠습니까?` 
-                : `<strong>모든 문제를 다 푸셨나요?</strong><br>제출 후에는 정답과 해설이 표시됩니다.`;
-            
-            pTag.innerHTML = msgText;
-        }
-
-        // 4. 마지막으로 배너를 화면에 표시합니다.
-        banner.classList.remove('hidden');
-    } else {
-        // 배너 부품 자체가 없을 때 개발자 도구에 기록을 남깁니다.
-        console.error("오류: 'confirm-banner' 아이디를 가진 HTML 요소를 찾을 수 없습니다.");
-    }
-}
-
 function finalizeExam() {
     console.log("채점 엔진 가동...");
     if(timerInterval) clearInterval(timerInterval);
@@ -459,6 +471,7 @@ function finalizeExam() {
     lastWrongAnswers = JSON.parse(JSON.stringify(currentWrongs));
     saveScoreToHistory(finalScore, questions[0].originalRound);
     saveWrongNotes(currentWrongs);
+    sendDataToTeacher(finalScore, questions[0].originalRound, currentWrongs);
     document.getElementById('quiz-screen').classList.add('hidden');
     document.getElementById('quiz-status-area').classList.add('hidden');
     document.getElementById('result-screen').classList.remove('hidden');
@@ -507,15 +520,6 @@ function updateOMRMark(qIdx, aIdx) {
     }
     const el = document.getElementById('omr-status-txt');
     if (el) { el.innerText = `${Object.keys(userAnswers).length} / ${questions.length}`; }
-}
-
-function pushAllAnswers(answerIdx) {
-    // 알림창 없이 즉시 미풀이 문제를 해당 번호로 채웁니다.
-    questions.forEach((_, i) => { 
-        if (userAnswers[i] === undefined) { 
-            selectAnswer(i, answerIdx); 
-        } 
-    });
 }
 
 function moveQuestion(dir) {
@@ -616,15 +620,6 @@ function startTimer() {
             openConfirmBanner("time_up"); // 안내 배너 호출
         } 
     }, 1000); 
-}
-
-function updateFontSize(size) {
-    const body = document.getElementById('main-body');
-    body.classList.remove('font-small', 'font-medium', 'font-large');
-    body.classList.add(`font-${size}`);
-    document.querySelectorAll('.btn-f-size').forEach(b => b.classList.remove('active'));
-    document.getElementById(`fs-${size}`).classList.add('active');
-    localStorage.setItem('cbt_font_size', size);
 }
 
 function toggleTheme() {
@@ -781,8 +776,8 @@ function clearAllWrongs() {
     }
     
     // 3. 메인 화면의 통계 수치도 0으로 갱신 (선택 사항)
-    if (typeof updateStats === 'function') {
-        updateStats();
+    if (typeof updateStatsDashboard === 'function') {
+        updateStatsDashboard();
     }
 
     console.log("오답 기록 초기화 완료");
@@ -917,9 +912,11 @@ function updateOptHeight(val) {
             const charCount = txt.innerText.length;
             let fontSize;
             // 높이 대비 글자수 최적화 수식
-            if (charCount > 40) fontSize = (val * 0.25);
-            else if (charCount > 20) fontSize = (val * 0.3);
-            else fontSize = (val * 0.4);
+            if (charCount > 40) fontSize = (val * 0.28); 
+            else if (charCount > 20) fontSize = (val * 0.35); 
+            else fontSize = (val * 0.45); 
+
+            fontSize = Math.max(12, Math.min(fontSize, 24));
             txt.style.fontSize = fontSize + 'px';
             
             // 버튼 높이 강제 동기화
@@ -942,15 +939,12 @@ function updateOptHeight(val) {
 // 4. 저장된 설정 불러오기 (시동 시 메모리 호출)
 function loadSavedFontSize() {
     const savedQ = localStorage.getItem('user-q-size') || '1.20';
-    const savedOpt = localStorage.getItem('user-opt-size') || '1.00';
     const savedHeight = localStorage.getItem('user-opt-height') || '55'; // 기본값 55px
 
     updateFontSize('q', savedQ);
-    updateFontSize('opt', savedOpt);
     updateOptHeight(savedHeight); // 저장된 높이 불러오기
 
     if (document.getElementById('slider-q-size')) document.getElementById('slider-q-size').value = savedQ;
-    if (document.getElementById('slider-opt-size')) document.getElementById('slider-opt-size').value = savedOpt;
     if (document.getElementById('slider-opt-height')) document.getElementById('slider-opt-height').value = savedHeight;
 }
 
@@ -1016,7 +1010,9 @@ function handleFinishSubmit() {
     // 제출 버튼을 눌렀을 때는 "제출 모드"로 배너 호출
     openConfirmBanner("submit");
 }
+
 let pendingDeleteRound = ""; // [추가] 삭제할 회차명을 잠시 보관하는 장착대
+
 // [수정 포인트] openConfirmBanner 함수 내부의 if-else 문에 아래 조건을 추가하세요.
 function openConfirmBanner(mode, param) {
     const banner = document.getElementById('confirm-banner');
@@ -1120,45 +1116,61 @@ else if (mode === "quit_result") {
     banner.classList.remove('hidden');
 }
 
-// [최종 수리] 보기 창 높이 조절 및 투명화/폰트 최적화 통합 엔진
-function updateOptHeight(val) {
-    
-    // 1. 조절 시작 시 배너 즉시 투명화 (이 신호가 빠져있었습니다!)
-    setBannerTransparent(true); 
+// [01정비산업기사통합.js 맨 아래에 추가/교체]
 
-    const heightVal = val + 'px';
-    // 모든 버튼의 기본 높이를 CSS 변수로 즉시 고정
-    document.documentElement.style.setProperty('--opt-height', heightVal);
-    
-    // 현재 화면에 보이는 버튼들의 폰트 크기를 한꺼번에 조절
-    const btns = document.querySelectorAll('.option-btn');
-    btns.forEach(btn => {
-        const txt = btn.querySelector('.opt-txt');
-        if (txt) {
-            const charCount = txt.innerText.trim().length;
-            let fontSize;
-            
-            // 수식 정밀 튜닝 (창 높이 대비 폰트 비율)
-            if (charCount > 40) fontSize = (val * 0.28); 
-            else if (charCount > 20) fontSize = (val * 0.35); 
-            else fontSize = (val * 0.45); 
+// 1. 시스템 초기화 및 화면 그리기 함수 노출
+window.initApp = initApp;
+window.renderRoundCards = renderRoundCards;
 
-            fontSize = Math.max(12, Math.min(fontSize, 24));
-            txt.style.fontSize = fontSize + 'px';
-            
-            // 부모 버튼의 높이도 강제로 재확인
-            btn.style.height = heightVal;
-        }
-    });
+// 2. 메인 화면 버튼들 연결
+window.startExam = startExam;
+window.toggleMultiMode = toggleMultiMode;
+window.handleFinishSubmit = handleFinishSubmit;
+window.toggleTheme = toggleTheme;
 
-    if (document.getElementById('val-opt-height')) {
-        document.getElementById('val-opt-height').innerText = val;
+// 3. 모달 및 배너 제어
+window.openStatsModal = openStatsModal;
+window.closeStatsModal = closeStatsModal;
+window.openConfirmBanner = openConfirmBanner;
+window.closeConfirmBanner = closeConfirmBanner;
+window.realSubmit = realSubmit;
+
+// 4. 오답노트 관련
+window.toggleWrongAccordion = toggleWrongAccordion;
+window.startMultiWrongReview = startMultiWrongReview;
+window.clearAllWrongs = clearAllWrongs;
+window.deleteWrongRound = deleteWrongRound;
+window.startWrongReview = startWrongReview;
+
+// 5. 문제 풀이 및 설정 관련
+window.selectAnswer = selectAnswer;
+window.moveQuestion = moveQuestion;
+window.jumpTo = jumpTo;
+window.pushAllAnswers = pushAllAnswers;
+window.undoPushAnswers = undoPushAnswers;
+window.toggleViewMode = toggleViewMode;
+window.syncInstantMode = syncInstantMode;
+window.applyLeftHand = applyLeftHand;
+
+// 6. 설정(글자 크기 등)
+window.toggleFontControl = toggleFontControl;
+window.updateFontSize = updateFontSize;
+window.updateOptHeight = updateOptHeight;
+
+// 7. 시스템 내비게이션
+window.goBackToMain = goBackToMain;
+window.handleTitleClick = handleTitleClick;
+window.retryCurrentExam = retryCurrentExam;
+
+// [그 자리에 아래 코드를 새로 붙여넣으세요]
+function forceStart() {
+    if (window.quizSets && window.quizSets.length > 0) {
+        console.log("데이터 확인 완료! 엔진 시동 합니다.");
+        initApp();
+        if (typeof loadSavedFontSize === 'function') loadSavedFontSize();
+    } else {
+        console.log("데이터 기다리는 중...");
+        setTimeout(forceStart, 100); // 데이터 올 때까지 계속 시도
     }
-    localStorage.setItem('user-opt-height', val);
-
-    // 2. 조작 중단 0.5초 후 다시 불투명하게 복구
-    clearTimeout(window.fontOpacityTimer);
-    window.fontOpacityTimer = setTimeout(() => {
-        setBannerTransparent(false);
-    }, 500);
 }
+forceStart(); // 시동 스위치 On

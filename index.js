@@ -1,7 +1,10 @@
 // [보안 검문]
 (function checkSecurity() {
-    // 출입증이 없으면 대문(index.html)으로 쫓아냄
-    if (sessionStorage.getItem('auth_status') !== 'verified') {
+    const isVerified = sessionStorage.getItem('auth_status') === 'verified';
+    const hasName = localStorage.getItem('studentName'); // 이름표가 있는지 확인
+
+    // 출입증이 없거나 이름표를 안 적었으면 다시 입구(lock.html)로 보냅니다.
+    if (!isVerified || !hasName) {
         window.location.replace('start/lock.html');
     }
 })();

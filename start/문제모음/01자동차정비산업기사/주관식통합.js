@@ -1,3 +1,43 @@
+// [데이터 송신기 설치]
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
+  authDomain: "khj-cbtbase.firebaseapp.com",
+  databaseURL: "https://khj-cbtbase-default-rtdb.firebaseio.com",
+  projectId: "khj-cbtbase",
+  storageBucket: "khj-cbtbase.firebasestorage.app",
+  messagingSenderId: "430706982133",
+  appId: "1:430706982133:web:d0bf4cb620f1c7d263d9bc"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// 선생님 사물함으로 데이터를 쏘는 함수
+function sendDataToTeacherSubj(score, roundName, wrongs) {
+    const studentName = localStorage.getItem('studentName') || '익명학생';
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
+    
+    const postRef = ref(database, 'exam_results');
+    const newPostRef = push(postRef);
+    
+    set(newPostRef, {
+        name: studentName,
+        subject: "주관식",
+        round: roundName,
+        score: score.toFixed(1),
+        date: timeStr,
+        wrongCount: wrongs.length,
+        wrongList: wrongs.map(w => ({
+            q: w.question,
+            correct: w.answer // 주관식은 answer 필드가 정답입니다.
+        }))
+    });
+}
+
 // [보안 엔진] 주관식통합 진입 시 인증 상태 확인 및 강제 이동
 (function() {
     if (sessionStorage.getItem('auth_status') !== 'verified') {
@@ -364,6 +404,8 @@ function finalizeExam() {
     lastWrongAnswers = wrongs;
     saveScore(final, displayTitle); 
     saveWrongNotes(wrongs);
+    // [추가] 주관식 데이터 전송!
+    sendDataToTeacherSubj(final, displayTitle, wrongs);
     navigateTo('result-screen', 'result');
     window.scrollTo(0,0);
 }
@@ -518,3 +560,30 @@ function closeConfirmBanner() {
     const banner = document.getElementById('confirm-banner');
     if (banner) banner.classList.add('hidden');
 }
+
+// [주관식 모듈 통신 배선 연결] HTML 버튼들이 함수를 찾을 수 있게 길을 열어줍니다.
+window.handleTitleClick = handleTitleClick;
+window.toggleTheme = toggleTheme;
+window.handleScoreReset = handleScoreReset;
+window.changeExamMode = changeExamMode;
+window.toggleWrongAccordion = toggleWrongAccordion;
+window.clickMultiToggle = clickMultiToggle;
+window.startExam = startExam;
+window.adjustCount = adjustCount;
+window.validateCount = validateCount;
+window.startSelectedWrongReview = startSelectedWrongReview;
+window.startWrongReviewDirect = startWrongReviewDirect;
+window.deleteWrongRound = deleteWrongRound;
+window.clearAllWrongs = clearAllWrongs;
+window.goBackToMain = goBackToMain;
+window.toggleFontControl = toggleFontControl;
+window.updateFontSize = updateFontSize;
+window.confirmFinalize = confirmFinalize;
+window.closeConfirmBanner = closeConfirmBanner;
+window.finalizeExam = finalizeExam; // 제출 버튼용
+window.retryCurrentExam = retryCurrentExam; // 다시풀기 버튼용
+window.revealAnswer = revealAnswer; // 정답 확인용
+window.checkAnswer = checkAnswer; // 주관식 입력 확인용
+window.submitSelf = submitSelf; 
+window.nextQuestion = nextQuestion;
+window.prevQuestion = prevQuestion;
