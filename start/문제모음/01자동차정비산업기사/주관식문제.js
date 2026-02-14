@@ -66,7 +66,7 @@ window.quizSets = [
 /* 30번 */ { "question": "급제동 시 비상등을 빠르게 점멸시켜 후방 차량에 위험을 알리는 기능은?", "answer": "ESS / 급제동 경보 시스템 / Emergency Stop Signal", "explain": "급감속 상황을 ABS 모듈이 감지하여 비상등을 자동으로 작동시켜 추돌 사고를 예방합니다." }]
   },
   {
-    roundName: "네트워크통신장치",
+    roundName: "네트워크통신",
     repairData: [/* 1번 */ { "question": "자동차에서 가장 널리 사용되는 통신 방식으로, 두 선의 전압 차를 이용해 데이터를 주고받는 직렬 통신 규격은?", "answer": "CAN 통신 / CAN / Controller Area Network", "explain": "CAN은 노이즈에 강하고 배선을 줄일 수 있어 자동차의 엔진, 변속기 등 주요 제어 장치 간 통신에 표준으로 사용됩니다." },
 /* 2번 */ { "question": "CAN 통신 회로 양 끝단에 설치되어 신호의 반사 현상을 막고 회로를 안정시키는 부품의 명칭은?", "answer": "종단 저항 / 터미네이션 저항 / Termination Resistor", "explain": "일반적으로 120Ω의 저항 2개가 병렬로 연결되어 전체 회로 저항이 약 60Ω이 되도록 유지합니다." },
 /* 3번 */ { "question": "저속 및 편의 장치 제어에 주로 사용되는 1선식 통신 방식으로, 마스터와 슬레이브 구조를 갖는 통신은?", "answer": "LIN 통신 / LIN / Local Interconnect Network", "explain": "LIN은 단선 통신으로 비용이 저렴하며 도어, 시트, 루프 등 복잡하지 않은 편의 장치 제어에 사용됩니다." },
