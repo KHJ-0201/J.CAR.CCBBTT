@@ -279,13 +279,34 @@ function renderQuestion() {
 function revealAnswer() { document.getElementById('ans-feedback').classList.remove('hidden'); document.getElementById('btn-reveal').classList.add('hidden'); document.getElementById('self-btns').classList.remove('hidden'); }
 
 function checkAnswer() {
-    const input = document.getElementById('answer-input'); if(!input || input.disabled) return;
-    const sim = calcSim(input.value.trim().replace(/\s/g, ''), questions[currentIdx].answer.replace(/\s/g, ''));
-    const isCorrect = sim >= 0.8; userAnswers[currentIdx] = input.value; input.disabled = true;
+    const input = document.getElementById('answer-input'); 
+    if(!input || input.disabled) return;
     
+    // 1. 사용자 입력값 (공백 제거)
+    const userInput = input.value.trim().replace(/\s/g, '').toLowerCase();
+    
+    // 2. 정답 후보들 분리 (슬래시 기준)
+    // "히트 펌프 / Heat Pump" -> ["히트펌프", "heatpump"]
+    const correctAnswers = questions[currentIdx].answer.split('/').map(ans => 
+        ans.trim().replace(/\s/g, '').toLowerCase()
+    );
+
+    // 3. 후보들 중 하나라도 일치하거나 유사도가 높으면 정답 처리
+    let maxSim = 0;
+    correctAnswers.forEach(correctAns => {
+        const currentSim = calcSim(userInput, correctAns);
+        if (currentSim > maxSim) maxSim = currentSim;
+    });
+
+    // 유사도 60% 이상이면 정답 (완전 일치 시 100%)
+    const isCorrect = maxSim >= 0.6; 
+    userAnswers[currentIdx] = input.value; 
+    input.disabled = true;
+    
+    // 결과 표시 (가장 높은 유사도 출력)
     document.getElementById('result-tag').innerHTML = isCorrect 
-        ? `<h3 style="color:var(--success-green); font-weight: 900; margin: 0; font-size: 1.4rem;">✅ 정답입니다! (${Math.round(sim*100)}%)</h3>` 
-        : `<h3 style="color:var(--accent-red); font-weight: 900; margin: 0; font-size: 1.4rem;">❌ 오답입니다. (${Math.round(sim*100)}%)</h3>`;
+        ? `<h3 style="color:var(--success-green); font-weight: 900; margin: 0; font-size: 1.4rem;">✅ 정답입니다! (${Math.round(maxSim*100)}%)</h3>` 
+        : `<h3 style="color:var(--accent-red); font-weight: 900; margin: 0; font-size: 1.4rem;">❌ 오답입니다. (${Math.round(maxSim*100)}%)</h3>`;
         
     document.getElementById('ans-feedback').classList.remove('hidden'); 
     document.getElementById('btn-input-check').classList.add('hidden'); 
