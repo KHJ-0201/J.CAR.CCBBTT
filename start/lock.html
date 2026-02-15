@@ -224,22 +224,26 @@
         const _0x22b = (Math.pow(10, 6) * 1.5) + 32178;
 
         if (pw && Number(pw) === _0x91a && (Number(pw) ^ 0) === _0x22b) {
-            // [수정 전 코드 >> 수정 후 코드] 
-            // 데이터 전송 완료 후 페이지 이동을 보장합니다.
-            sendAdminLog("SUCCESS", "").then(() => {
-                sessionStorage.setItem('admin_auth', 'granted');
-                window.location.href = "../admin.html";
-            }).catch(() => {
-                // 전송 실패 시에도 일단 이동은 시킵니다.
+            // [성공 시] 모바일 전송 누락 방지용 배선 보강
+            sendAdminLog("SUCCESS", "").then(function() {
+                // 0.2초 여유를 두어 모바일 무선망에서도 전송이 완료되도록 보장합니다.
+                setTimeout(function() {
+                    sessionStorage.setItem('admin_auth', 'granted');
+                    window.location.href = "../admin.html";
+                }, 200); 
+            }).catch(function() {
+                // 전송 에러 시에도 관리자 페이지 이동은 시켜줍니다.
                 sessionStorage.setItem('admin_auth', 'granted');
                 window.location.href = "../admin.html";
             });
         } else {
-            // 실패 시에도 로그가 서버에 닿을 시간을 준 뒤 알림을 띄웁니다.
-            sendAdminLog("FAIL", pw).then(() => {
-                alert("인증에 실패했습니다.");
-                closeAdminModal();
-            }).catch(() => {
+            // [실패 시] 로그 전송 대기 후 알림창을 띄웁니다.
+            sendAdminLog("FAIL", pw).then(function() {
+                setTimeout(function() {
+                    alert("인증에 실패했습니다.");
+                    closeAdminModal();
+                }, 200);
+            }).catch(function() {
                 alert("인증에 실패했습니다.");
                 closeAdminModal();
             });
