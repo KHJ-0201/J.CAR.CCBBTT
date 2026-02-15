@@ -6,60 +6,49 @@
     <link rel="stylesheet" href="../index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* [핵심 수리] index.css의 거대한 모바일 스타일을 억제하고 슬림하게 재조정합니다. */
+        /* [핵심 복구] index.css의 디자인을 방해하지 않도록 최소한의 배선만 추가합니다. */
         
-        /* 1. 외부 브라우저 안내 바: 세로 길이를 극한으로 줄인 캡슐 디자인 */
+        /* 1. 외부 브라우저 안내 바: 디자인을 해치지 않는 아주 얇은 텍스트 형태 */
         .external-link-section {
             display: none; 
             width: 100%;
-            background: #fee500; 
-            padding: 4px 12px !important; /* 세로 두께 최소화 */
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            flex-direction: row !important; /* 가로 한 줄 배치 */
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            height: 35px !important; /* 높이 강제 고정 */
+            margin-bottom: 15px; /* 인증창 제목과의 간격 */
         }
-        .external-link-section p {
-            margin: 0 !important;
-            font-size: 11px !important; /* 글자 크기 대폭 축소 */
-            color: #3c1e1e !important;
-            font-weight: 800 !important;
-        }
-        .external-btn-mini {
-            width: auto !important; 
-            height: 24px !important; /* 버튼 높이 아주 낮게 */
-            padding: 0 10px !important;
-            background: #3c1e1e !important;
-            color: white !important;
-            font-size: 10px !important;
-            border-radius: 6px !important;
-            border: none;
+        
+        .external-btn-text {
+            background: none !important;
+            border: none !important;
+            color: #64748b !important; /* 차분한 회색조 */
+            font-size: 12px !important;
+            text-decoration: underline; /* 클릭 가능한 링크 느낌 */
             cursor: pointer;
+            font-weight: 600;
         }
 
-        /* 2. 모바일에서 index.css의 거대한 크기를 강제로 정상화 */
+        /* 2. 모바일에서 index.css의 거대한 설정을 억제하고 '두 번째 사진'처럼 돌려놓는 가드레일 */
         @media (max-width: 768px) {
             .auth-modal {
-                min-height: auto !important; /* 70vh 삭제 */
-                padding: 25px 20px !important; /* 80px 패딩 삭제 */
-                width: 90% !important;
+                min-height: auto !important; /* 웅장한 높이 대신 적절한 높이로 복구 */
+                padding: 30px 20px !important;
                 border-radius: 25px !important;
             }
-            .auth-modal h2 { font-size: 1.4rem !important; } /* 2.5rem에서 축소 */
+            .auth-modal h2 { font-size: 1.5rem !important; margin-top: 5px !important; }
             .auth-modal p { font-size: 0.9rem !important; margin-bottom: 15px !important; }
+            
+            /* 입력창과 버튼을 두 번째 사진처럼 정상 크기로 복구 */
             .auth-modal input { 
-                height: 45px !important; /* 90px에서 45px로 복구 */
-                font-size: 1.1rem !important; 
-                margin-bottom: 12px !important;
+                height: 45px !important; 
+                font-size: 1rem !important; 
+                margin-bottom: 10px !important;
+                border-radius: 10px !important;
             }
             .auth-modal button#authBtn { 
-                height: 50px !important; /* 90px에서 50px로 복구 */
+                height: 50px !important; 
                 font-size: 1.1rem !important; 
+                border-radius: 10px !important;
             }
-            .class-label { padding: 10px 0 !important; font-size: 0.85rem !important; }
         }
     </style>
 </head>
@@ -67,8 +56,9 @@
     <div class="auth-overlay">
         <div class="auth-modal">
             <div class="external-link-section" id="kakaoOnly">
-                <p>⚠️ 카톡 이용 중이신가요?</p>
-                <button class="external-btn-mini" onclick="exitToExternal()">사파리/크롬 열기</button>
+                <button class="external-btn-text" onclick="exitToExternal()">
+                    카톡 이용 중이라면? 사파리/크롬으로 열기 ↗
+                </button>
             </div>
 
             <h2 onclick="handleAdminClick()">학생 인증</h2>
@@ -100,13 +90,13 @@
         }
     })();
 
-    // [아이폰 확실한 탈출] 카톡 파라미터를 사용한 강제 실행
     function exitToExternal() {
+        // [수정] 아이폰에서 로딩만 돌던 현상 해결을 위한 직통 주소 체계
         const targetUrl = window.location.href.split('/start/')[0] + '/index.html';
         const ua = navigator.userAgent.toLowerCase();
 
         if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1) {
-            // 아이폰 사파리 강제 호출 공식 파라미터
+            // 아이폰 전용 사파리 강제 탈출 스위치
             location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
         } else if (ua.indexOf('android') > -1) {
             location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
@@ -115,7 +105,7 @@
         }
     }
 
-    // [나머지 handleAuth, Firebase 등 기존 로직 그대로 유지]
+    // [handleAuth 및 나머지 원본 로직은 기존 파일 내용을 그대로 붙여넣어 주세요]
     </script>
 </body>
 </html>
