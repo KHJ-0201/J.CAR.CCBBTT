@@ -10,16 +10,14 @@
             const targetUrl = window.location.href;
             
             if (userAgent.match(/kakaotalk/i)) {
-                // 1. 안드로이드 처리 (크롬 강제 실행)
+                // 카톡이라면 보안 검사고 뭐고 일단 밖으로 튕겨냅니다.
                 if (userAgent.match(/android/i)) {
                     location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-                } 
-                // 2. 아이폰/아이패드 처리 (카카오톡 전용 외부 브라우저 옵션 사용)
-                else if (userAgent.match(/iphone|ipad|ipod/i)) {
-                    // 검색으로 빠지는 현상을 막기 위해 location.replace로 깔끔하게 전환합니다.
-                    const externalUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
-                    location.replace(externalUrl);
+                } else if (userAgent.match(/iphone|ipad|ipod/i)) {
+                    location.replace(targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1');
                 }
+                // 카톡 브라우저의 다음 코드 실행을 중단시킵니다.
+                return; 
             }
         })();
     </script>

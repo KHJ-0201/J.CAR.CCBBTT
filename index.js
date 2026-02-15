@@ -1,5 +1,11 @@
 // [보안 검문]
 (function checkSecurity() {
+    // 1. 현재 접속한 브라우저가 카카오톡인지 먼저 확인합니다.
+    const isKakao = navigator.userAgent.toLowerCase().match(/kakaotalk/i);
+    
+    // 2. 카카오톡일 때는 아래 보안 검사를 건너뜁니다. (index.html의 탈출 스크립트가 실행될 시간을 벌어줌)
+    if (isKakao) return;
+
     const isVerified = sessionStorage.getItem('auth_status') === 'verified';
     const hasName = localStorage.getItem('studentName'); // 이름표가 있는지 확인
 
