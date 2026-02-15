@@ -6,38 +6,41 @@
     <title>버전 선택</title>
     <link rel="stylesheet" href="index.css"> 
     <style>
-        /* 카톡 전용 안내 세션 스타일 */
-        .kakao-notice {
-            display: none; /* 평소엔 숨김 */
-            background: #fee500;
-            color: #3c1e1e;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .kakao-notice button {
-            background: #3c1e1e;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            cursor: pointer;
-            font-weight: bold;
+        /* [추가] 외부 브라우저 한 줄 버튼 스타일 */
+        .external-link-row {
             width: 100%;
+            max-width: 500px;
+            margin: 0 auto 15px auto;
+            text-align: center;
+        }
+        .external-btn-small {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background-color: #fee500; /* 카톡 노란색 */
+            color: #3c1e1e;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border: 1px solid #e6cf00;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .external-btn-small:active {
+            background-color: #fada00;
         }
     </style>
 </head>
 <body>
     <div id="pageContent">
         <div class="container">
-            <div id="kakaoNotice" class="kakao-notice">
-                ⚠️ 현재 카카오톡 앱으로 접속 중입니다.<br>
-                원활한 이용을 위해 아래 버튼을 눌러주세요.
-                <button onclick="exitToExternal()">크롬/사파리로 열기</button>
+            <div class="external-link-row">
+                <button class="external-btn-small" onclick="exitToExternal()">
+                    🚀 쾌적한 환경을 위해 외부 브라우저로 열기 (추천)
+                </button>
             </div>
 
             <h1>원하는 버전을 선택하세요</h1>
@@ -69,24 +72,18 @@
     </div>
 
     <script>
-        // 카톡 감지 및 수동 탈출 로직
-        (function() {
-            const ua = navigator.userAgent.toLowerCase();
-            if (ua.match(/kakaotalk/i)) {
-                document.getElementById('kakaoNotice').style.display = 'block';
-            }
-        })();
-
+        // 외부 브라우저 실행 로직
         function exitToExternal() {
             const targetUrl = window.location.href;
             const ua = navigator.userAgent.toLowerCase();
             if (ua.match(/android/i)) {
                 location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-            } else if (ua.match(/iphone|ipad|ipod/i)) {
+            } else {
                 location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
             }
         }
 
+        // 관리자 모드 로직 (원본 유지)
         let adminClickCount = 0;
         let adminClickTimer = null;
         function handleAdminClick() {
