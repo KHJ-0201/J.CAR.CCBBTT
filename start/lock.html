@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* [추가] 외부 브라우저 버튼 - 기존 디자인에 영향을 주지 않도록 절대 좌표로 띄웁니다. */
+        /* [추가] 외부 브라우저 버튼 스타일 */
         .external-link-btn {
             display: none;
             width: 100%;
@@ -14,13 +14,27 @@
             color: #3c1e1e;
             padding: 8px;
             border-radius: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 5px; /* 안내 문구와 붙이기 위해 조절 */
             text-align: center;
             font-size: 0.85rem;
             font-weight: bold;
             border: 1px solid #e6cf00;
             cursor: pointer;
             box-sizing: border-box;
+            text-decoration: none;
+            /* 아이폰에서 꾹 눌렀을 때 시스템 메뉴(링크 열기)가 잘 뜨도록 설정 */
+            -webkit-touch-callout: default !important; 
+        }
+
+        /* [추가] 아이폰 전용 안내 문구 디자인 */
+        #iphoneNotice {
+            display: none;
+            font-size: 0.75rem;
+            color: #ef4444; /* 강조를 위한 빨간색 */
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            word-break: keep-all;
         }
 
         /* 기존 디자인 유지 */
@@ -34,117 +48,34 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
         }
 
-        /* 교실 선택 레이아웃 */
-        .class-selector {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: center;
-            gap: 6px;
-            margin: 8px 0 15px 0;
-        }
-        .class-option {
-            flex: 0 0 calc(14% - 6px);
-            min-width: 45px; 
-            position: relative;
-        }
-        .class-option input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            width: 1px;
-            height: 1px;
-            top: 0;
-            left: 0;
-            margin: 0;
-            padding: 0;
-            pointer-events: none; /* 아이폰 클릭 간섭 방지 핵심 배선 */
-        }
-        .class-label {
-            display: block;
-            padding: 10px 0;
-            background: #f1f5f9;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        .class-option input:checked + .class-label {
-            background: #eff6ff;
-            border-color: #2563eb;
-            color: #2563eb;
-        }
-
-        /* 공통 입력창 스타일 */
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            height: 45px;
-            margin-bottom: 10px;
-            padding: 0 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            height: 50px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+        .class-selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 8px 0 15px 0; }
+        .class-option { flex: 0 0 calc(14% - 6px); min-width: 45px; position: relative; }
+        .class-option input { position: absolute; opacity: 0; cursor: pointer; width: 1px; height: 1px; top: 0; left: 0; margin: 0; padding: 0; pointer-events: none; }
+        .class-label { display: block; padding: 10px 0; background: #f1f5f9; border: 2px solid transparent; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; text-align: center; box-sizing: border-box; }
+        .class-option input:checked + .class-label { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
+        input[type="text"], input[type="password"] { width: 100%; height: 45px; margin-bottom: 10px; padding: 0 15px; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; }
+        button { width: 100%; height: 50px; background: #2563eb; color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
         @media (max-width: 768px) {
-            body { 
-                padding: 0; margin: 0; 
-                display: flex; 
-                align-items: flex-start;
-                justify-content: center; 
-                height: 100vh;
-                padding-top: 20px;
-            }
-            .auth-modal {
-                width: 90% !important;
-                padding: 20px 15px !important;
-            }
+            body { padding: 0; margin: 0; display: flex; align-items: flex-start; justify-content: center; height: 100vh; padding-top: 20px; }
+            .auth-modal { width: 90% !important; padding: 20px 15px !important; }
             .auth-modal h2 { font-size: 1.5rem !important; margin-top: 5px; }
             .auth-modal p { font-size: 0.9rem !important; margin-bottom: 10px !important; }
-            
-            .class-option {
-                flex: 0 0 calc(23% - 6px);
-                min-width: 60px; 
-                margin-bottom: 4px;
-            }
-            .class-label {
-                padding: 8px 0;
-                font-size: 0.95rem; 
-            }
-            
-            input[type="text"], input[type="password"] {
-                height: 42px !important;
-                font-size: 1rem !important;
-                margin-bottom: 8px !important;
-            }
-            button {
-                height: 48px !important;
-                font-size: 1.1rem !important;
-                margin-top: 5px;
-            }
+            .class-option { flex: 0 0 calc(23% - 6px); min-width: 60px; margin-bottom: 4px; }
+            .class-label { padding: 8px 0; font-size: 0.95rem; }
+            input[type="text"], input[type="password"] { height: 42px !important; font-size: 1rem !important; margin-bottom: 8px !important; }
+            button { height: 48px !important; font-size: 1.1rem !important; margin-top: 5px; }
         }
     </style>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div class="auth-overlay">
         <div class="auth-modal">
-            <div id="kakaoBtn" class="external-link-btn" onclick="exitToExternal()">
-                ⚠️ 카톡 이용 시 사파리/크롬 열기
-            </div>
+            <div id="iphoneNotice">아이폰은 위 노란 버튼을 1초간 꾹 눌러서<br>'링크 열기'를 클릭해 주세요!</div>
+
+            <a id="iosSafariLink" href="javascript:void(0);" class="external-link-btn" onclick="exitToExternal()">
+                ⚠️ 카톡 탈출 (사파리/크롬 열기)
+            </a>
 
             <h2 onclick="handleAdminClick()" style="user-select: none; cursor: default;">학생 인증</h2>
             <p>정보를 정확히 입력하세요.</p>
@@ -183,44 +114,42 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-    // [추가] 카톡 감지 및 탈출 함수
+    // [정비] 페이지 로드 시 카톡 여부 확인 및 아이폰 전용 롱탭 설정
     (function() {
-        if (navigator.userAgent.toLowerCase().indexOf('kakaotalk') > -1) {
-            document.getElementById('kakaoBtn').style.display = 'block';
+        const ua = navigator.userAgent.toLowerCase();
+        const targetBtn = document.getElementById('iosSafariLink');
+        const iphoneNotice = document.getElementById('iphoneNotice');
+        
+        if (ua.indexOf('kakaotalk') > -1) {
+            targetBtn.style.display = 'block';
+            
+            if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
+                iphoneNotice.style.display = 'block'; // 아이폰만 안내 문구 표시
+                
+                const targetUrl = window.location.href.replace('start/lock.html', 'index.html');
+                // 롱탭 시 열릴 주소를 미리 심어둡니다.
+                targetBtn.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+                
+                // [핵심] 롱탭 시 시스템 메뉴가 뜨는 것을 방해하는 '우클릭 방지'를 이 버튼에서만 해제합니다.
+                targetBtn.oncontextmenu = function(e) {
+                    e.stopPropagation(); // 부모 요소의 우클릭 방지 명령이 여기까지 못 오게 막음
+                };
+            }
         }
     })();
 
     function exitToExternal() {
-    // 1. 목적지 주소 설정
-    const currentHref = window.location.href;
-    const targetUrl = currentHref.split('/start/')[0] + '/index.html';
-    const ua = navigator.userAgent.toLowerCase();
+        const currentHref = window.location.href;
+        const targetUrl = currentHref.split('/start/')[0] + '/index.html';
+        const ua = navigator.userAgent.toLowerCase();
 
-    if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
-        // [아이폰 정밀 수리] 가상 앵커(Anchor)를 만들어 시스템이 '직접 클릭'으로 인식하게 합니다.
-        const safariUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
-        
-        // 투명한 가짜 링크를 하나 만듭니다.
-        const a = document.createElement('a');
-        a.href = safariUrl;
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        
-        // 아이폰 시스템에게 이 링크가 클릭되었다고 신호를 보냅니다.
-        a.click();
-        
-        // 사용 후 가짜 링크 제거
-        document.body.removeChild(a);
-
-    } else if (ua.indexOf('android') > -1) {
-        // [안드로이드 순정 유지] 선생님께서 검증하신 배선 그대로 유지
-        location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-    } else {
-        window.location.href = targetUrl;
+        if (ua.indexOf('android') > -1) {
+            location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+        }
+        // 아이폰은 롱탭 메뉴 유도 방식이므로 클릭 이벤트 시에는 시스템 팝업을 기다립니다.
     }
-}
 
-    // --- 이하 사장님 원본 로직 (수정 금지) ---
+    // --- 이하 선생님 원본 로직 (수정 금지) ---
     const firebaseConfig = {
         apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
         authDomain: "khj-cbtbase.firebaseapp.com",
@@ -241,22 +170,13 @@
         const studentClass = localStorage.getItem('studentClass') || '반미선택';
         const logRef = database.ref('admin_access_logs');
         const newLogRef = logRef.push();
-        return newLogRef.set({
-            date: timeStr,
-            name: studentName,
-            class: studentClass,
-            status: status,
-            attemptPw: status === "FAIL" ? inputPw : "****",
-            device: navigator.userAgent
-        });
+        return newLogRef.set({ date: timeStr, name: studentName, class: studentClass, status: status, attemptPw: status === "FAIL" ? inputPw : "****", device: navigator.userAgent });
     }
 
     setInterval(function() { debugger; }, 100);
     sessionStorage.clear();
 
-    let adminClickCount = 0;
-    let adminClickTimer = null;
-
+    let adminClickCount = 0; let adminClickTimer = null;
     function handleAdminClick() {
         adminClickCount++;
         clearTimeout(adminClickTimer);
@@ -268,11 +188,7 @@
         }
     }
 
-    function closeAdminModal() {
-        document.getElementById('admin-modal').style.display = 'none';
-        document.getElementById('admin-pw-input').value = '';
-    }
-
+    function closeAdminModal() { document.getElementById('admin-modal').style.display = 'none'; document.getElementById('admin-pw-input').value = ''; }
     function checkAdminPassword() {
         const pw = document.getElementById('admin-pw-input').value;
         const _0x4f2 = (s) => s.split('').reverse().join('');
@@ -280,24 +196,11 @@
         const _0x22b = (Math.pow(10, 6) * 1.5) + 32178;
         if (pw && Number(pw) === _0x91a && (Number(pw) ^ 0) === _0x22b) {
             sendAdminLog("SUCCESS", "").then(function() {
-                setTimeout(function() {
-                    sessionStorage.setItem('admin_auth', 'granted');
-                    window.location.href = "../admin.html";
-                }, 200); 
-            }).catch(function() {
-                sessionStorage.setItem('admin_auth', 'granted');
-                window.location.href = "../admin.html";
-            });
+                setTimeout(function() { sessionStorage.setItem('admin_auth', 'granted'); window.location.href = "../admin.html"; }, 200); 
+            }).catch(function() { sessionStorage.setItem('admin_auth', 'granted'); window.location.href = "../admin.html"; });
         } else {
-            sendAdminLog("FAIL", pw).then(function() {
-                setTimeout(function() {
-                    alert("인증에 실패했습니다.");
-                    closeAdminModal();
-                }, 200);
-            }).catch(function() {
-                alert("인증에 실패했습니다.");
-                closeAdminModal();
-            });
+            sendAdminLog("FAIL", pw).then(function() { setTimeout(function() { alert("인증에 실패했습니다."); closeAdminModal(); }, 200);
+            }).catch(function() { alert("인증에 실패했습니다."); closeAdminModal(); });
         }
     }
 
@@ -314,21 +217,12 @@
             localStorage.setItem('studentClass', userClass);
             sessionStorage.setItem('auth_status', 'verified');
             window.location.replace('../index.html');
-        } else {
-            document.getElementById('errorMsg').style.display = 'block';
-        }
+        } else { document.getElementById('errorMsg').style.display = 'block'; }
     }
 
-    document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') checkAdminPassword();
-    });
-
+    document.getElementById('admin-pw-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkAdminPassword(); });
     window.addEventListener('keydown', function(e) { 
-        if (e.key === 'Enter') {
-            if (document.getElementById('admin-modal').style.display !== 'flex') {
-                handleAuth();
-            }
-        }
+        if (e.key === 'Enter') { if (document.getElementById('admin-modal').style.display !== 'flex') { handleAuth(); } }
     });
 
     ['contextmenu', 'selectstart', 'copy', 'paste', 'cut', 'dragstart'].forEach(event => {
