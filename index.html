@@ -16,22 +16,17 @@
                 } 
                 // 2. 아이폰/아이패드 처리 (보완된 방식)
                 else if (userAgent.match(/iphone|ipad|ipod/i)) {
-                    // 아이폰 카카오톡에서 사파리를 강제로 깨우는 특수 주소 체계입니다.
-                    // 만약 이 방법이 막히더라도 '외부 브라우저 열기' 옵션을 중첩 적용합니다.
-                    const iosUrl = 'x-web-search://?' + targetUrl;
-                    
-                    // 약간의 지연 시간을 주어 실행력을 높입니다.
-                    setTimeout(function() {
-                        location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
-                    }, 100);
-                    
-                    location.href = iosUrl;
+                    // 구글 검색으로 빠지는 x-web-search 대신 카카오톡 전용 외부 브라우저 파라미터만 사용합니다.
+                    // 아이폰은 사용자의 '직접 클릭'이 없으면 강제 이동을 막는 경우가 많으므로
+                    // 파라미터를 붙여서 현재 페이지를 다시 불러오면 카카오톡이 외부 브라우저로 열어줍니다.
+                    const externalUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+                    location.replace(externalUrl);
                 }
             }
         })();
     </script>
     <title>버전 선택</title>
-    <link rel="stylesheet" href="index.css"> 
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div id="pageContent">
