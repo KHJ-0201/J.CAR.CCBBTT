@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <script>
-    // [1순위 정비] 엔진을 켜기 전에 차선부터 확인합니다.
-    (function() {
+   (function() {
         var ua = navigator.userAgent.toLowerCase();
         var targetUrl = window.location.href;
         
         if (ua.indexOf('kakaotalk') > -1) {
-            // 카카오톡 브라우저라면 화면을 그리거나 검문을 시작하기 전에 튕겨냅니다.
+            // [핵심] 카톡이라면 화면이 그려지지 않게 아예 하얗게 덮어버립니다.
+            document.documentElement.style.display = 'none';
+
             if (ua.indexOf('android') > -1) {
                 location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
             } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
