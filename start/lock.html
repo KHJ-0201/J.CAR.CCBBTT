@@ -6,39 +6,37 @@
     <link rel="stylesheet" href="../index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* [수정] 외부 브라우저 안내 바 - 글자 크기를 줄여 세로 길이를 확실히 압축 */
+        /* [수정] 세로 길이를 획기적으로 줄인 초슬림 안내 바 */
         .external-link-section {
             display: none; 
             width: 100%;
             background: #fee500; 
-            padding: 4px 10px; /* 세로 두께를 최소화 (4px) */
-            border-radius: 8px;
-            margin-bottom: 12px;
+            padding: 2px 10px; /* 세로 여백을 극한으로 줄임 */
+            border-radius: 6px;
+            margin-bottom: 10px;
             box-sizing: border-box;
             flex-direction: row; 
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            height: 32px; /* 전체 높이를 딱 고정 */
         }
         .external-link-section p {
             margin: 0 !important;
-            font-size: 0.7rem !important; /* 글자 크기 대폭 축소 */
+            font-size: 0.65rem !important; /* 글자 크기 대폭 축소 */
             color: #3c1e1e !important;
-            font-weight: 700 !important;
-            white-space: nowrap;
+            font-weight: 800 !important;
         }
         .external-btn-mini {
             width: auto; 
-            height: 22px !important; /* 버튼 높이를 22px로 초슬림하게 변경 */
+            height: 22px !important; /* 버튼 높이 아주 낮게 */
             padding: 0 8px !important;
             background: #3c1e1e !important;
             color: white !important;
-            font-size: 0.65rem !important; /* 버튼 안 글자 크기 축소 */
+            font-size: 0.6rem !important; /* 버튼 글자 아주 작게 */
             border-radius: 4px !important;
             border: none;
             font-weight: bold;
             cursor: pointer;
-            margin-left: 8px;
         }
 
         /* 기존 순정 디자인 유지 */
@@ -53,13 +51,12 @@
 
         @media (max-width: 768px) {
             body { padding: 0; margin: 0; display: flex; align-items: flex-start; justify-content: center; height: 100vh; padding-top: 20px; }
-            .auth-modal { width: 90% !important; padding: 20px 15px !important; }
-            .auth-modal h2 { font-size: 1.3rem !important; margin-top: 2px; } /* 제목 크기도 약간 조정 */
-            .auth-modal p { font-size: 0.85rem !important; margin-bottom: 8px !important; }
+            .auth-modal { width: 90% !important; padding: 15px 12px !important; }
+            .auth-modal h2 { font-size: 1.2rem !important; margin-top: 0; }
+            .auth-modal p { font-size: 0.8rem !important; margin-bottom: 5px !important; }
             .class-option { flex: 0 0 calc(23% - 6px); min-width: 60px; margin-bottom: 4px; }
-            .class-label { padding: 8px 0; font-size: 0.9rem; }
-            input[type="text"], input[type="password"] { height: 40px !important; font-size: 1rem !important; margin-bottom: 8px !important; }
-            button { height: 45px !important; font-size: 1.1rem !important; margin-top: 5px; }
+            input[type="text"], input[type="password"] { height: 38px !important; font-size: 0.95rem !important; }
+            button { height: 42px !important; font-size: 1rem !important; }
         }
     </style>
 </head>
@@ -68,7 +65,7 @@
         <div class="auth-modal">
             <div class="external-link-section" id="kakaoOnly">
                 <p>⚠️ 카톡 이용 중이신가요?</p>
-                <button class="external-btn-mini" onclick="exitToExternal()">외부앱 열기</button>
+                <button class="external-btn-mini" onclick="exitToExternal()">사파리/크롬 열기</button>
             </div>
 
             <h2 onclick="handleAdminClick()" style="user-select: none; cursor: default;">학생 인증</h2>
@@ -109,30 +106,27 @@
 
     <script>
     (function() {
-        const ua = navigator.userAgent.toLowerCase();
-        if (ua.indexOf('kakaotalk') > -1) {
+        if (navigator.userAgent.toLowerCase().indexOf('kakaotalk') > -1) {
             document.getElementById('kakaoOnly').style.display = 'flex';
         }
     })();
 
-    // [아이폰 확실한 대응] iOS 사파리 강제 탈출 로직 보강
+    // [아이폰 완벽 대응] iOS에서 사파리를 강제로 깨우는 최신 배선
     function exitToExternal() {
-        const currentHref = window.location.href;
-        const targetUrl = currentHref.split('/start/')[0] + '/index.html';
+        const targetUrl = window.location.href.split('/start/')[0] + '/index.html';
         const ua = navigator.userAgent.toLowerCase();
 
-        if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
-            // 아이폰: 사파리에서 열기 전용 파라미터 (iOS에서 가장 호환성 좋은 방식)
-            location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+        if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1) {
+            // [정비 핵심] 아이폰에서 로딩만 돌고 안 나갈 때는 이 공식 파라미터가 유일한 정답입니다.
+            location.href = 'kakaotalk://web/openExternalBrowser?url=' + encodeURIComponent(targetUrl);
         } else if (ua.indexOf('android') > -1) {
-            // 안드로이드: 크롬 앱 직접 실행
             location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
         } else {
-            window.open(targetUrl, '_blank');
+            window.location.href = targetUrl;
         }
     }
 
-    // --- 사장님 원본 스크립트 (Firebase/로그/관리자 기능 보존) ---
+    // --- 사장님 원본 스크립트 그대로 유지 ---
     const firebaseConfig = {
         apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
         authDomain: "khj-cbtbase.firebaseapp.com",
