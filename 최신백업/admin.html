@@ -83,19 +83,18 @@
            📱 모바일 최적화 (768px 이하) - 기존 표 방식 유지 버전
            ============================================================ */
         @media screen and (max-width: 768px) {
-            body { padding: 10px; font-size: var(--admin-font-size); } /* 💡 변수 연동 */
+            body { padding: 10px; font-size: var(--admin-font-size); } 
             header { flex-direction: column; align-items: flex-start !important; gap: 5px; margin-bottom: 15px; }
             header h1 { font-size: 1rem !important; }
 
             .admin-controls { padding: 10px; flex-direction: column; align-items: flex-start; gap: 10px; }
-            .admin-controls div { font-size: 14px; width: 100%; } /* 컨트롤러 라벨은 가독성을 위해 고정 */
+            .admin-controls div { font-size: 14px; width: 100%; }
             .admin-controls button { width: 100%; font-size: 14px; padding: 8px; }
 
             .date-header { padding: 12px 15px; font-size: 0.9rem; }
             
-            /* 💡 핵심: 고정값(0.75rem) 대신 슬라이더 변수(--admin-font-size)를 기준으로 상대적 크기 조절 */
             table { min-width: 480px; } 
-            th { padding: 8px 4px; font-size: calc(var(--admin-font-size) * 0.65); } /* 비율로 조절 */
+            th { padding: 8px 4px; font-size: calc(var(--admin-font-size) * 0.65); } 
             td { padding: 8px 4px; font-size: calc(var(--admin-font-size) * 0.65); } 
             
             .btn-view { padding: 6px 10px; font-size: calc(var(--admin-font-size) * 0.7); }
@@ -106,7 +105,6 @@
             .result-card { padding: 20px; }
             .card-top-row { flex-direction: column; align-items: flex-start; gap: 8px; }
             
-            /* 정답 해설은 아까 요청하신 대로 1rem(또는 고정값) 유지 */
             .ans-correct-line { font-size: 0.8rem !important; }
         }
     </style>
@@ -197,8 +195,8 @@
             groupSection.className = 'date-group';
             groupSection.innerHTML = `
                 <div class="date-header" onclick="this.nextElementSibling.classList.toggle('collapsed')"><span>📅 ${date} 명단</span><span>총 ${students.length}명 ▼</span></div>
-                <div class="date-content"><table><thead><tr><th>시간</th><th>이름</th><th>과목</th><th>회차</th><th>점수</th><th>작업</th></tr></thead><tbody>
-                ${students.map(s => `<tr><td style="font-weight:700;">${formatTo24H(s.date)}</td><td><strong>${s.name}</strong></td><td>${s.subject}</td><td>${s.round}</td><td style="color:var(--primary); font-weight:900;">${s.score}점</td>
+                <div class="date-content"><table><thead><tr><th>교실</th><th>시간</th><th>이름</th><th>과목</th><th>회차</th><th>점수</th><th>작업</th></tr></thead><tbody>
+                ${students.map(s => `<tr><td style="font-weight:700; color:var(--primary);">${s.class || '-'}호</td><td style="font-weight:700;">${formatTo24H(s.date)}</td><td><strong>${s.name}</strong></td><td>${s.subject}</td><td>${s.round}</td><td style="color:var(--primary); font-weight:900;">${s.score}점</td>
                 <td><button class="btn-view" onclick='showDetails(${JSON.stringify(s).replace(/'/g, "&apos;")})'>리포트</button><button class="btn-del" onclick="deleteRecord('${s.key}')" style="margin-left:4px;">삭제</button></td></tr>`).join('')}
                 </tbody></table></div>`;
             dashboard.appendChild(groupSection);
@@ -214,7 +212,10 @@
         if (!data.wrongList) { alert("상세 기록이 없습니다."); return; }
         totalSteps = data.wrongList.length; currentStep = 0;
 
-        let html = `<div id="student-report-header" style="background:var(--primary); color:white; padding:30px; border-radius:20px; margin-bottom:40px;"><div style="font-size:1.5rem; font-weight:900;">${data.name} 학생 분석 리포트 (${data.score}점)</div></div>`;
+        let html = `<div id="student-report-header" style="background:var(--primary); color:white; padding:30px; border-radius:20px; margin-bottom:40px;">
+            <div style="font-size:0.9rem; margin-bottom:5px; opacity:0.8;">[${data.class || '-'}호 교실]</div>
+            <div style="font-size:1.5rem; font-weight:900;">${data.name} 학생 분석 리포트 (${data.score}점)</div>
+        </div>`;
 
         html += data.wrongList.map((item, i) => {
             const isCorrect = item.isCorrect === true;
@@ -230,7 +231,7 @@
                 <div class="result-card ${i === 0 ? 'active' : ''}" id="card-${i}">
                     <div class="card-top-row">
                         <div class="q-number-badge ${badgeClass}">${statusIcon} Question ${i+1}</div>
-                        <div class="ans-correct-line">정답 해설: ${item.correct} (드래그 시 보임)</div>
+                        <div class="ans-correct-line">정답 해설: ${item.correct}</div>
                     </div>
                     <div class="q-title">Q. ${item.q}</div>
                     ${optionsHtml}

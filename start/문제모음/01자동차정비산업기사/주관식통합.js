@@ -17,7 +17,8 @@ const database = getDatabase(app);
 
 // 선생님 사물함으로 데이터를 쏘는 함수 (전체 문항 리스트를 받도록 유지)
 function sendDataToTeacherSubj(score, roundName, results) {
-    const studentName = localStorage.getItem('studentName') || '익명학생';
+    const studentClass = localStorage.getItem('studentClass') || '미기재'; 
+    const studentName = localStorage.getItem('studentName') || '익명학생';  
     const now = new Date();
     const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
     
@@ -25,12 +26,13 @@ function sendDataToTeacherSubj(score, roundName, results) {
     const newPostRef = push(postRef);
     
     set(newPostRef, {
-        name: studentName,
+        class: studentClass,  
+        name: studentName,   
         subject: "주관식",
         round: roundName,
-        score: score.toFixed(1),
+        score: score.toFixed(1), // 주관식은 기존 소수점 1자리 유지
         date: timeStr,
-        // [중요] 전체 문항 데이터 전송 (isCorrect 여부를 포함하여 관리자 페이지와 연동)
+        // [주관식 전용 배선] 주관식은 options 항목이 없으므로 제외하고 전송합니다.
         wrongList: results.map(r => ({
             q: r.q,
             user: r.user,
@@ -299,7 +301,7 @@ function renderQuestion() {
 
     if (examMode === 'input') contentHTML += `<div class="input-container"><input type="text" id="answer-input" class="short-input" placeholder="답안 입력 후 엔터" autocomplete="off"></div>`;
     
-    let navHTML = `<div class="bottom-nav"><div class="nav-container"><button onclick="prevQuestion()" class="btn-nav-prev" ${currentIdx === 0 ? 'disabled' : ''}>이전</button><div class="nav-center">${examMode === 'self' ? `<button id="btn-reveal" onclick="revealAnswer()" class="btn-nav-main">정답 확인</button><div id="self-btns" class="hidden nav-split"><button onclick="submitSelf('wrong')" class="btn-wrong">몰랐어요</button><button onclick="submitSelf('correct')" class="btn-correct">맞았어요</button></div>` : `<button onclick="checkAnswer()" id="btn-input-check" class="btn-nav-main">확인</button><button id="btn-input-next" onclick="nextQuestion()" class="btn-nav-main hidden" style="background:var(--success-green)">다음 ▶</button>`}</div></div></div>`;
+    let navHTML = `<div class="bottom-nav"><div class="nav-container"><button onclick="prevQuestion()" class="btn-nav-prev" ${currentIdx === 0 ? 'disabled' : ''}>이전</button><div class="nav-center">${examMode === 'self' ? `<button id="btn-reveal" onclick="revealAnswer()" class="btn-nav-main">정답 확인</button><div id="self-btns" class="hidden nav-split"><button onclick="submitSelf('wrong')" class="btn-wrong">몰랐어요</button><button onclick="submitSelf('correct')" class="btn-correct">맞았어요</button></div>` : `<button onclick="checkAnswer()" id="btn-input-check" class="btn-nav-main">확인</button><button id="btn-input-next" onclick="nextQuestion()" class="btn-nav-main hidden" style="background:var(--success-green)">다음(엔터) ▶</button>`}</div></div></div>`;
     
     display.innerHTML = contentHTML + navHTML;
     if (examMode === 'input') { const ipt = document.getElementById('answer-input'); if(ipt) ipt.focus(); }

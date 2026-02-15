@@ -19,7 +19,8 @@ const database = getDatabase(app);
 
 // 선생님 사물함으로 데이터를 쏘는 함수 (신규 배선)
 function sendDataToTeacher(score, roundName, results) {
-    const studentName = localStorage.getItem('studentName') || '익명학생';
+    const studentClass = localStorage.getItem('studentClass') || '미기재'; // 1. 교실 정보 먼저 챙기기
+    const studentName = localStorage.getItem('studentName') || '익명학생';  // 2. 성함 정보 챙기기
     const now = new Date();
     const timeStr = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
     
@@ -27,20 +28,21 @@ function sendDataToTeacher(score, roundName, results) {
     const newPostRef = push(postRef);
     
     set(newPostRef, {
-        name: studentName,
+        class: studentClass,  // 서버 저장 1순위: 교실
+        name: studentName,   // 서버 저장 2순위: 성함
         subject: "객관식",
         round: roundName,
         score: score.toFixed(2),
         date: timeStr,
         // 전체 문항 데이터 전송 (맞음/틀림/해설 포함)
         wrongList: results.map(r => ({
-    q: r.q,
-    user: r.user,
-    correct: r.correct,
-    isCorrect: r.isCorrect,
-    explain: r.explain,
-    options: r.options // ★ 이제 보기 데이터가 선생님 사물함으로 발송됩니다!
-}))
+            q: r.q,
+            user: r.user,
+            correct: r.correct,
+            isCorrect: r.isCorrect,
+            explain: r.explain,
+            options: r.options 
+        }))
     });
 }
 
