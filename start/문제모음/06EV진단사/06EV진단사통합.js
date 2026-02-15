@@ -445,8 +445,11 @@ function finalizeExam() {
     const reviewContainer = document.getElementById('review-list-container');
     reviewContainer.innerHTML = '';
     
+    // [수리 1] 오답통 비우기 (잔유 제거) - 매 채점 시 초기화하여 중복 누적 방지
+    lastWrongAnswers = []; 
+    
     const allResultsForTeacher = []; // 선생님께 보낼 전체 리스트
-    const currentWrongs = [];        // 오답노트용 (기존 기능 유지)
+    const currentWrongs = [];        // 오답노트 저장용
     
     const resultOmrGrid = document.getElementById('result-omr-buttons-grid');
     let resultOmrHtml = '';
@@ -458,22 +461,25 @@ function finalizeExam() {
         if (isCorrect) { 
             scoreCount++; 
         } else { 
-            currentWrongs.push({...q, options: q.options});
-            lastWrongAnswers.push(JSON.parse(JSON.stringify(q))); 
+            // [수리 2] 데이터 격리 (순정 부품 복사)
+            const deepCopyQ = JSON.parse(JSON.stringify(q));
+            
+            currentWrongs.push(deepCopyQ); 
+            lastWrongAnswers.push(deepCopyQ); 
         }
 
-        // [신규 배선] 모든 문제의 결과를 객체로 저장
+        // [신규 배선] 선생님 DB용 데이터 패키징
         allResultsForTeacher.push({
-    q: q.question,
-    user: userPickText,
-    correct: q.correctAnswerText,
-    isCorrect: isCorrect,
-    explain: q.explain,
-    options: q.rawOptions || q.options 
-});
+            q: q.question,
+            user: userPickText,
+            correct: q.correctAnswerText,
+            isCorrect: isCorrect,
+            explain: q.explain,
+            options: q.rawOptions || q.options 
+        });
         
-        // 1. 결과 리스트 카드 생성 (6번 화면 중앙 리스트)
-const card = document.createElement('div');
+        // 결과 카드 생성 로직
+        const card = document.createElement('div');
         card.className = `review-card glass-card ${isCorrect ? 'correct' : 'wrong'}`;
         card.id = `review-card-${i}`;
         card.style.borderLeft = `10px solid ${isCorrect ? 'var(--success-green)' : 'var(--accent-red)'}`;
@@ -490,6 +496,7 @@ const card = document.createElement('div');
         `;
         reviewContainer.appendChild(card);
 
+        // 결과 OMR 생성
         const num = (i + 1).toString().padStart(2, '0');
         resultOmrHtml += `
             <div class="omr-row-item ${isCorrect ? 'res-correct' : 'res-wrong'}" onclick="document.getElementById('review-card-${i}').scrollIntoView({behavior:'smooth', block:'center'})">
@@ -504,14 +511,14 @@ const card = document.createElement('div');
     if(resultOmrGrid) resultOmrGrid.innerHTML = resultOmrHtml;
     const finalScore = (scoreCount / questions.length) * 100;
 
-    // 데이터 저장 및 전송
-    saveScoreToHistory(finalScore, questions[0].originalRound);
-    saveWrongNotes(currentWrongs);
+    // [데이터 저장 및 전송]
+    saveScoreToHistory(finalScore, questions[0].originalRound); // 내 기록 저장
+    saveWrongNotes(currentWrongs);                             // 오답 노트 저장
     
-    // [중요] 기존 currentWrongs 대신 allResultsForTeacher를 보냅니다!
+    // [보강] 전송 함수 1회만 호출 (중복 제거)
     sendDataToTeacher(finalScore, questions[0].originalRound, allResultsForTeacher);
 
-    // 화면 전환 로직 (기존과 동일)
+    // 화면 전환 로직
     document.getElementById('quiz-screen').classList.add('hidden');
     document.getElementById('quiz-status-area').classList.add('hidden');
     document.getElementById('result-screen').classList.remove('hidden');
@@ -520,18 +527,23 @@ const card = document.createElement('div');
     window.scrollTo(0, 0);
 }
 
-function handleOverlayClick(e) { if (e.target.id === 'modal-stats-overlay') closeStatsModal(); }
-
 function retryCurrentExam(wrongOnly) {
     let targetList = [];
     if (wrongOnly) {
         if (lastWrongAnswers.length === 0) return alert("틀린 문제가 없습니다!");
+        // [수리 3] 목록 완전 교체 (독립된 복사본 사용)
         targetList = JSON.parse(JSON.stringify(lastWrongAnswers));
     } else {
         targetList = JSON.parse(JSON.stringify(lastUsedExamData));
     }
-    questions = targetList.map(q => ({ ...q, options: shuffle([...q.options]) }));
+    
+    // 문제를 다시 섞어서 새 판을 짭니다.
+    questions = targetList.map(q => ({ 
+        ...q, 
+        options: shuffle([...q.options]) 
+    }));
     questions = shuffle(questions);
+    
     document.getElementById('result-screen').classList.add('hidden');
     launchQuiz();
 }
