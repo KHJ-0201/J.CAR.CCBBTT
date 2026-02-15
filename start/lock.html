@@ -26,7 +26,7 @@
             margin: 8px 0 15px 0;
         }
         .class-option {
-            flex: 1 1 calc(14% - 6px); 
+            flex: 0 0 calc(14% - 6px); /* flex-grow를 0으로 설정하여 무분별한 확장을 방지 */
             min-width: 45px; 
             position: relative;
         }
@@ -34,10 +34,12 @@
             position: absolute;
             opacity: 0;
             cursor: pointer;
+            width: 0; /* 입력창이 차지하는 공간 제거 */
+            height: 0;
         }
         .class-label {
             display: block;
-            padding: 10px 0; /* 패딩 축소 */
+            padding: 10px 0;
             background: #f1f5f9;
             border: 2px solid transparent;
             border-radius: 10px;
@@ -46,6 +48,7 @@
             transition: all 0.2s;
             font-size: 0.85rem;
             text-align: center;
+            box-sizing: border-box; /* 테두리 포함 크기 계산 */
         }
         .class-option input:checked + .class-label {
             background: #eff6ff;
@@ -56,7 +59,7 @@
         /* 공통 입력창 스타일 */
         input[type="text"], input[type="password"] {
             width: 100%;
-            height: 45px; /* 높이 축소 */
+            height: 45px;
             margin-bottom: 10px;
             padding: 0 15px;
             border: 1px solid #e2e8f0;
@@ -79,29 +82,30 @@
             body { 
                 padding: 0; margin: 0; 
                 display: flex; 
-                align-items: flex-start; /* 중앙 대신 상단 정렬하여 키보드 대응 */
+                align-items: flex-start;
                 justify-content: center; 
                 height: 100vh;
-                padding-top: 20px; /* 상단 여백 최소화 */
+                padding-top: 20px;
             }
             .auth-modal {
                 width: 90% !important;
-                padding: 20px 15px !important; /* 내부 여백 대폭 축소 */
+                padding: 20px 15px !important;
             }
             .auth-modal h2 { font-size: 1.5rem !important; margin-top: 5px; }
             .auth-modal p { font-size: 0.9rem !important; margin-bottom: 10px !important; }
             
-            /* 모바일 버튼 사이즈 추가 축소 */
+            /* 모바일 버튼 클릭 영역 최적화 */
             .class-option {
-                flex: 1 1 calc(22% - 6px); 
+                flex: 0 0 calc(23% - 6px); /* 너비를 고정하여 빈 공간을 채우지 않도록 수정 */
                 min-width: 60px; 
+                margin-bottom: 4px; /* 줄 간격 여백 추가 */
             }
             .class-label {
                 padding: 8px 0;
                 font-size: 0.95rem; 
+                /* label 자체가 클릭 범위이므로 내부 여백만 조절 */
             }
             
-            /* 입력창 및 버튼 모바일 사이즈 축소 */
             input[type="text"], input[type="password"] {
                 height: 42px !important;
                 font-size: 1rem !important;
