@@ -6,52 +6,43 @@
     <link rel="stylesheet" href="../index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* [수정] 외부 브라우저 탈출 버튼 디자인 - 더 슬림하게 변경 */
+        /* [수정] 외부 브라우저 안내 바 - 아주 슬림한 디자인으로 변경 */
         .external-link-section {
             display: none; 
             width: 100%;
             background: #fee500; 
-            padding: 8px 15px; /* 세로 패딩 축소 */
-            border-radius: 12px; /* 곡률 조정 */
+            padding: 6px 12px; /* 세로 두께 대폭 축소 */
+            border-radius: 10px;
             margin-bottom: 15px;
             box-sizing: border-box;
-            flex-direction: row; /* 가로 배열로 변경하여 높이 축소 */
+            flex-direction: row; /* 가로 한 줄 배치 */
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .external-link-section p {
             margin: 0 !important;
-            font-size: 0.75rem !important; /* 글씨 크기 축소 */
+            font-size: 0.75rem !important; /* 글씨 작게 */
             color: #3c1e1e !important;
             font-weight: 800 !important;
             white-space: nowrap;
         }
         .external-btn-mini {
-            width: auto; /* 가로 꽉 채우지 않음 */
-            height: 28px !important; /* 높이 대폭 축소 */
-            padding: 0 12px !important;
+            width: auto; 
+            height: 26px !important; /* 버튼 높이 아주 낮게 */
+            padding: 0 10px !important;
             background: #3c1e1e !important;
             color: white !important;
-            font-size: 0.75rem !important;
-            border-radius: 6px !important;
+            font-size: 0.7rem !important;
+            border-radius: 5px !important;
             border: none;
             font-weight: bold;
             cursor: pointer;
             margin-left: 10px;
         }
 
-        /* 기존 디자인 유지 */
-        .auth-modal {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 25px;
-            text-align: center;
-            max-width: 420px;
-            width: 95%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-        }
-
+        /* 기존 디자인 유지 (사장님 원본 배선) */
+        .auth-modal { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 25px; text-align: center; max-width: 420px; width: 95%; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
         .class-selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 8px 0 15px 0; }
         .class-option { flex: 0 0 calc(14% - 6px); min-width: 45px; position: relative; }
         .class-option input { position: absolute; opacity: 0; cursor: pointer; width: 1px; height: 1px; pointer-events: none; }
@@ -117,7 +108,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-    // 카톡 감지
     (function() {
         const ua = navigator.userAgent.toLowerCase();
         if (ua.indexOf('kakaotalk') > -1) {
@@ -125,27 +115,26 @@
         }
     })();
 
-    // [핵심 수정] 아이폰 및 안드로이드 외부 브라우저 탈출 로직 보강
+    // [아이폰 완벽 대응] 사파리 강제 호출 로직 강화
     function exitToExternal() {
-        // 경로 계산: 현재 start/lock.html -> 상위 index.html
         const currentHref = window.location.href;
+        // start/lock.html을 떼고 최상위 index.html로 타겟 설정
         const targetUrl = currentHref.split('/start/')[0] + '/index.html';
         const ua = navigator.userAgent.toLowerCase();
 
-        if (ua.indexOf('android') > -1) {
-            // 안드로이드 크롬 유도
+        if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
+            // 아이폰 전용 사파리 강제 탈출 명령 (카톡 공식 URL 스킴 사용)
+            location.href = 'kakaotalk://web/openExternalBrowser?url=' + encodeURIComponent(targetUrl);
+        } else if (ua.indexOf('android') > -1) {
+            // 안드로이드 크롬 강제 실행 (사장님이 잘 된다고 하신 배선 그대로)
             location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-        } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
-            // 아이폰 사파리 유도 (가장 확실한 카톡 파라미터 방식)
-            const safariUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
-            location.href = safariUrl;
         } else {
-            // 기타 브라우저
+            // 그 외 환경은 새 창 열기
             window.open(targetUrl, '_blank');
         }
     }
 
-    // Firebase 및 기존 로직 (사장님 원본 보존)
+    // --- 사장님 원본 스크립트 (건드리지 않음) ---
     const firebaseConfig = {
         apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
         authDomain: "khj-cbtbase.firebaseapp.com",
@@ -171,17 +160,12 @@
     setInterval(function() { debugger; }, 100);
     sessionStorage.clear();
 
-    let adminClickCount = 0;
-    let adminClickTimer = null;
+    let adminClickCount = 0; let adminClickTimer = null;
     function handleAdminClick() {
         adminClickCount++;
         clearTimeout(adminClickTimer);
         adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
-        if (adminClickCount >= 5) {
-            document.getElementById('admin-modal').style.display = 'flex';
-            document.getElementById('admin-pw-input').focus();
-            adminClickCount = 0;
-        }
+        if (adminClickCount >= 5) { document.getElementById('admin-modal').style.display = 'flex'; document.getElementById('admin-pw-input').focus(); adminClickCount = 0; }
     }
     function closeAdminModal() { document.getElementById('admin-modal').style.display = 'none'; document.getElementById('admin-pw-input').value = ''; }
     function checkAdminPassword() {
