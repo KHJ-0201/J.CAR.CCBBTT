@@ -191,19 +191,24 @@
     })();
 
     function exitToExternal() {
-    // 1. 목적지 주소 설정 (현재 start/lock.html에서 상위 index.html로)
-    const targetUrl = window.location.href.replace('start/lock.html', 'index.html');
+    // 1. 목적지 주소 설정
+    const currentHref = window.location.href;
+    const targetUrl = currentHref.split('/start/')[0] + '/index.html';
     const ua = navigator.userAgent.toLowerCase();
 
     if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
-        // [아이폰 정밀 수리] 카톡 앱 자체에 명령을 내려 사파리를 강제로 깨우는 직통 배선입니다.
-        // 이 방식은 카톡 공식 지원 방식으로, 로딩만 돌고 멈추는 현상을 해결합니다.
-        location.href = 'kakaotalk://web/openExternalBrowser?url=' + encodeURIComponent(targetUrl);
+        // [아이폰 정밀 수리] 
+        // 1순위: 가장 충돌 없는 파라미터 방식 (버튼 먹통 방지)
+        // 2순위: 0.1초 뒤에 스킴 방식 시도 (이중 안전장치)
+        location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+        
+        setTimeout(function() {
+            location.href = 'kakaotalk://web/openExternalBrowser?url=' + encodeURIComponent(targetUrl);
+        }, 100);
     } else if (ua.indexOf('android') > -1) {
-        // 안드로이드 크롬 강제 실행 (사장님이 잘 된다고 하신 배선 유지)
+        // 안드로이드 크롬 강제 실행 (사장님이 검증하신 배선)
         location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
     } else {
-        // 그 외 환경
         window.location.href = targetUrl;
     }
 }
