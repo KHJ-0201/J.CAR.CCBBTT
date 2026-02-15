@@ -20,7 +20,7 @@
     <script>
         function exitTo(os) {
             // 현재 주소에서 '휴대폰기종선택.html'만 떼고 'index.html'로 보냅니다.
-            const targetUrl = window.location.href.replace('기종선택.html', 'index.html');
+            const targetUrl = window.location.href.replace('start/기종선택.html', 'index.html');
             if (os === 'android') {
                 location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
             } else {
