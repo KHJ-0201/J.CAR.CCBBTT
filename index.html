@@ -3,25 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script>
-        (function() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const targetUrl = window.location.href;
-            if (userAgent.match(/kakaotalk/i)) {
-                if (userAgent.match(/android/i)) {
-                    location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-                } 
-                else if (userAgent.match(/iphone|ipad|ipod/i)) {
-                    location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
-                }
-            }
-        })();
-    </script>
     <title>버전 선택</title>
     <link rel="stylesheet" href="index.css"> 
+    <style>
+        /* [추가] 카톡 전용 탈출 화면 디자인 */
+        #kakao-exit-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff; z-index: 99999; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+        }
+        .exit-btn {
+            width: 80%; max-width: 320px; padding: 20px; margin: 10px;
+            border: none; border-radius: 15px; color: white;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .android-btn { background: #34a853; }
+        .ios-btn { background: #000000; }
+    </style>
 </head>
 <body>
+    <div id="kakao-exit-screen">
+        <h2 style="margin-bottom: 10px; color: #1e293b;">외부 브라우저 실행</h2>
+        <p style="margin-bottom: 30px; color: #64748b; line-height: 1.5;">
+            카카오톡 내부에서는 보안상 이용이 제한됩니다.<br>아래 본인의 기기를 선택해 주세요.
+        </p>
+        <button class="exit-btn android-btn" onclick="exitToExternal('android')">삼성/안드로이드 클릭</button>
+        <button class="exit-btn ios-btn" onclick="exitToExternal('ios')">아이폰/Safari 클릭</button>
+    </div>
+
     <div id="pageContent">
         <div class="container">
             <h1>원하는 버전을 선택하세요</h1>
@@ -35,7 +45,7 @@
                     <p>스마트폰 화면에 최적화</p>
                 </div>
             </div>
-            <footer class="bottom-memo" _onclick="handleAdminClick()" style="cursor: default; user-select: none;">
+            <footer class="bottom-memo" onclick="handleAdminClick()" style="cursor: default; user-select: none;">
                 <p>인터넷 설정 >> 홈화면에 현재 웹페이지 추가 시<br>더욱 최적의 환경에서 문제 풀이를 제공합니다.</p>
             </footer>
         </div>
@@ -53,32 +63,50 @@
     </div>
 
     <script>
+        // [수정] 카톡 감지 및 수동 탈출 로직
+        (function() {
+            const ua = navigator.userAgent.toLowerCase();
+            const isKakao = ua.indexOf('kakaotalk') > -1;
+            const targetUrl = window.location.href;
+
+            if (isKakao) {
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.getElementById('kakao-exit-screen').style.display = 'flex';
+                    document.getElementById('pageContent').style.display = 'none';
+                });
+            }
+
+            window.exitToExternal = function(os) {
+                if (os === 'android') {
+                    location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+                } else {
+                    location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+                }
+            };
+        })();
+
+        // 관리자 클릭 등 기존 스크립트 그대로 유지
         let adminClickCount = 0;
         let adminClickTimer = null;
-
         function handleAdminClick() {
             adminClickCount++;
             clearTimeout(adminClickTimer);
             adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
-
             if (adminClickCount >= 5) {
                 document.getElementById('admin-modal').style.display = 'flex';
                 document.getElementById('admin-pw-input').focus();
                 adminClickCount = 0;
             }
         }
-
         function closeAdminModal() {
             document.getElementById('admin-modal').style.display = 'none';
             document.getElementById('admin-pw-input').value = '';
         }
-
         function checkAdminPassword() {
             const pw = document.getElementById('admin-pw-input').value;
             const _0x4f2 = (s) => s.split('').reverse().join('');
             const _0x91a = parseInt(_0x4f2("8712351"));
             const _0x22b = (Math.pow(10, 6) * 1.5) + 32178;
-
             if (pw && Number(pw) === _0x91a && (Number(pw) ^ 0) === _0x22b) {
                 sessionStorage.setItem('admin_auth', 'granted');
                 location.href = "admin.html";
@@ -87,13 +115,10 @@
                 closeAdminModal();
             }
         }
-
-        // 입력창 엔터키 센서 (HTML이 그려진 후 연결)
         document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkAdminPassword();
         });
     </script>
-
     <script src="index.js"></script> 
 </body>
 </html>

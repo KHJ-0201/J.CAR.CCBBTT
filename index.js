@@ -1,9 +1,15 @@
 // [보안 검문]
 (function checkSecurity() {
-    const isVerified = sessionStorage.getItem('auth_status') === 'verified';
-    const hasName = localStorage.getItem('studentName'); // 이름표가 있는지 확인
+    // 1. 카톡인지 먼저 확인합니다.
+    const isKakao = navigator.userAgent.toLowerCase().match(/kakaotalk/i);
+    
+    // 2. 카톡일 때는 보안 검사(lock.html 이동)를 중단합니다. 
+    // 그래야 탈출 버튼 화면이 정상적으로 보입니다.
+    if (isKakao) return;
 
-    // 출입증이 없거나 이름표를 안 적었으면 다시 입구(lock.html)로 보냅니다.
+    const isVerified = sessionStorage.getItem('auth_status') === 'verified';
+    const hasName = localStorage.getItem('studentName');
+
     if (!isVerified || !hasName) {
         window.location.replace('start/lock.html');
     }
@@ -13,21 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const pcBanner = document.getElementById('pcBanner');
     const mobileBanner = document.getElementById('mobileBanner');
 
-    // 내부 이동 시에는 아무 제약 없이 이동합니다.
-    pcBanner.addEventListener('click', () => {
-        localStorage.setItem('userDevice', 'pc'); 
-        window.location.href = 'start/01자격증선택.html';
-    });
+    if (pcBanner) {
+        pcBanner.addEventListener('click', () => {
+            localStorage.setItem('userDevice', 'pc'); 
+            window.location.href = 'start/01자격증선택.html';
+        });
+    }
 
-    mobileBanner.addEventListener('click', () => {
-        localStorage.setItem('userDevice', 'mobile'); 
-        window.location.href = 'start/01자격증선택.html';
-    });
+    if (mobileBanner) {
+        mobileBanner.addEventListener('click', () => {
+            localStorage.setItem('userDevice', 'mobile'); 
+            window.location.href = 'start/01자격증선택.html';
+        });
+    }
 });
 
-// [핵심] 밖(구글)으로 완전히 나갔을 때를 대비한 처리
 window.onpageshow = function(event) {
-    // 만약 '앞으로 가기'로 들어오거나 캐시로 들어오면 보안을 위해 새로고침
     if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         window.location.reload();
     }
