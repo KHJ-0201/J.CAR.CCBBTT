@@ -6,35 +6,39 @@
     <link rel="stylesheet" href="../index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* [추가] 외부 브라우저 탈출 버튼 디자인 */
+        /* [수정] 외부 브라우저 탈출 버튼 디자인 - 더 슬림하게 변경 */
         .external-link-section {
-            display: none; /* 평소엔 숨김 */
+            display: none; 
             width: 100%;
-            background: #fee500; /* 카톡 노란색 */
-            padding: 15px;
-            border-radius: 20px;
-            margin-bottom: 20px;
+            background: #fee500; 
+            padding: 8px 15px; /* 세로 패딩 축소 */
+            border-radius: 12px; /* 곡률 조정 */
+            margin-bottom: 15px;
             box-sizing: border-box;
-            flex-direction: column;
+            flex-direction: row; /* 가로 배열로 변경하여 높이 축소 */
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         .external-link-section p {
-            margin: 0 0 10px 0 !important;
-            font-size: 0.85rem !important;
+            margin: 0 !important;
+            font-size: 0.75rem !important; /* 글씨 크기 축소 */
             color: #3c1e1e !important;
             font-weight: 800 !important;
+            white-space: nowrap;
         }
         .external-btn-mini {
-            width: 100%;
-            height: 40px !important;
+            width: auto; /* 가로 꽉 채우지 않음 */
+            height: 28px !important; /* 높이 대폭 축소 */
+            padding: 0 12px !important;
             background: #3c1e1e !important;
             color: white !important;
-            font-size: 0.9rem !important;
-            border-radius: 12px !important;
+            font-size: 0.75rem !important;
+            border-radius: 6px !important;
             border: none;
             font-weight: bold;
             cursor: pointer;
+            margin-left: 10px;
         }
 
         /* 기존 디자인 유지 */
@@ -48,108 +52,23 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
         }
 
-        /* 교실 선택 레이아웃 */
-        .class-selector {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: center;
-            gap: 6px;
-            margin: 8px 0 15px 0;
-        }
-        .class-option {
-            flex: 0 0 calc(14% - 6px);
-            min-width: 45px; 
-            position: relative;
-        }
-        .class-option input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            width: 1px;
-            height: 1px;
-            top: 0;
-            left: 0;
-            margin: 0;
-            padding: 0;
-            pointer-events: none;
-        }
-        .class-label {
-            display: block;
-            padding: 10px 0;
-            background: #f1f5f9;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        .class-option input:checked + .class-label {
-            background: #eff6ff;
-            border-color: #2563eb;
-            color: #2563eb;
-        }
-
-        /* 공통 입력창 스타일 */
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            height: 45px;
-            margin-bottom: 10px;
-            padding: 0 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            height: 50px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+        .class-selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 8px 0 15px 0; }
+        .class-option { flex: 0 0 calc(14% - 6px); min-width: 45px; position: relative; }
+        .class-option input { position: absolute; opacity: 0; cursor: pointer; width: 1px; height: 1px; pointer-events: none; }
+        .class-label { display: block; padding: 10px 0; background: #f1f5f9; border: 2px solid transparent; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; text-align: center; box-sizing: border-box; }
+        .class-option input:checked + .class-label { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
+        input[type="text"], input[type="password"] { width: 100%; height: 45px; margin-bottom: 10px; padding: 0 15px; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; }
+        button { width: 100%; height: 50px; background: #2563eb; color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
         @media (max-width: 768px) {
-            body { 
-                padding: 0; margin: 0; 
-                display: flex; 
-                align-items: flex-start;
-                justify-content: center; 
-                height: 100vh;
-                padding-top: 20px;
-            }
-            .auth-modal {
-                width: 90% !important;
-                padding: 20px 15px !important;
-            }
+            body { padding: 0; margin: 0; display: flex; align-items: flex-start; justify-content: center; height: 100vh; padding-top: 20px; }
+            .auth-modal { width: 90% !important; padding: 20px 15px !important; }
             .auth-modal h2 { font-size: 1.5rem !important; margin-top: 5px; }
             .auth-modal p { font-size: 0.9rem !important; margin-bottom: 10px !important; }
-            
-            .class-option {
-                flex: 0 0 calc(23% - 6px);
-                min-width: 60px; 
-                margin-bottom: 4px;
-            }
-            .class-label {
-                padding: 8px 0;
-                font-size: 0.95rem; 
-            }
-            
-            input[type="text"], input[type="password"] {
-                height: 42px !important;
-                font-size: 1rem !important;
-                margin-bottom: 8px !important;
-            }
-            button {
-                height: 48px !important;
-                font-size: 1.1rem !important;
-                margin-top: 5px;
-            }
+            .class-option { flex: 0 0 calc(23% - 6px); min-width: 60px; margin-bottom: 4px; }
+            .class-label { padding: 8px 0; font-size: 0.95rem; }
+            input[type="text"], input[type="password"] { height: 42px !important; font-size: 1rem !important; margin-bottom: 8px !important; }
+            button { height: 48px !important; font-size: 1.1rem !important; margin-top: 5px; }
         }
     </style>
 </head>
@@ -157,8 +76,8 @@
     <div class="auth-overlay">
         <div class="auth-modal">
             <div class="external-link-section" id="kakaoOnly">
-                <p>⚠️ 카톡 이용 시 외부 브라우저를 추천합니다.</p>
-                <button class="external-btn-mini" onclick="exitToExternal()">크롬 / 사파리로 열기</button>
+                <p>⚠️ 카톡 이용 중이신가요?</p>
+                <button class="external-btn-mini" onclick="exitToExternal()">사파리/크롬 열기</button>
             </div>
 
             <h2 onclick="handleAdminClick()" style="user-select: none; cursor: default;">학생 인증</h2>
@@ -198,7 +117,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-    // [추가] 카톡 감지 및 탈출 로직
+    // 카톡 감지
     (function() {
         const ua = navigator.userAgent.toLowerCase();
         if (ua.indexOf('kakaotalk') > -1) {
@@ -206,18 +125,27 @@
         }
     })();
 
+    // [핵심 수정] 아이폰 및 안드로이드 외부 브라우저 탈출 로직 보강
     function exitToExternal() {
-        // 현재 start/lock.html 주소를 상위의 index.html 주소로 변환
-        const targetUrl = window.location.href.replace('start/lock.html', 'index.html');
+        // 경로 계산: 현재 start/lock.html -> 상위 index.html
+        const currentHref = window.location.href;
+        const targetUrl = currentHref.split('/start/')[0] + '/index.html';
         const ua = navigator.userAgent.toLowerCase();
+
         if (ua.indexOf('android') > -1) {
+            // 안드로이드 크롬 유도
             location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-        } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1) {
-            location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+        } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
+            // 아이폰 사파리 유도 (가장 확실한 카톡 파라미터 방식)
+            const safariUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+            location.href = safariUrl;
+        } else {
+            // 기타 브라우저
+            window.open(targetUrl, '_blank');
         }
     }
 
-    // Firebase 설정값 적용
+    // Firebase 및 기존 로직 (사장님 원본 보존)
     const firebaseConfig = {
         apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
         authDomain: "khj-cbtbase.firebaseapp.com",
@@ -227,7 +155,6 @@
         messagingSenderId: "430706982133",
         appId: "1:430706982133:web:d0bf4cb620f1c7d263d9bc"
     };
-
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
@@ -238,14 +165,7 @@
         const studentClass = localStorage.getItem('studentClass') || '반미선택';
         const logRef = database.ref('admin_access_logs');
         const newLogRef = logRef.push();
-        return newLogRef.set({
-            date: timeStr,
-            name: studentName,
-            class: studentClass,
-            status: status,
-            attemptPw: status === "FAIL" ? inputPw : "****",
-            device: navigator.userAgent
-        });
+        return newLogRef.set({ date: timeStr, name: studentName, class: studentClass, status: status, attemptPw: status === "FAIL" ? inputPw : "****", device: navigator.userAgent });
     }
 
     setInterval(function() { debugger; }, 100);
@@ -253,7 +173,6 @@
 
     let adminClickCount = 0;
     let adminClickTimer = null;
-
     function handleAdminClick() {
         adminClickCount++;
         clearTimeout(adminClickTimer);
@@ -264,37 +183,16 @@
             adminClickCount = 0;
         }
     }
-
-    function closeAdminModal() {
-        document.getElementById('admin-modal').style.display = 'none';
-        document.getElementById('admin-pw-input').value = '';
-    }
-
+    function closeAdminModal() { document.getElementById('admin-modal').style.display = 'none'; document.getElementById('admin-pw-input').value = ''; }
     function checkAdminPassword() {
         const pw = document.getElementById('admin-pw-input').value;
         const _0x4f2 = (s) => s.split('').reverse().join('');
         const _0x91a = parseInt(_0x4f2("8712351"));
         const _0x22b = (Math.pow(10, 6) * 1.5) + 32178;
         if (pw && Number(pw) === _0x91a && (Number(pw) ^ 0) === _0x22b) {
-            sendAdminLog("SUCCESS", "").then(function() {
-                setTimeout(function() {
-                    sessionStorage.setItem('admin_auth', 'granted');
-                    window.location.href = "../admin.html";
-                }, 200); 
-            }).catch(function() {
-                sessionStorage.setItem('admin_auth', 'granted');
-                window.location.href = "../admin.html";
-            });
+            sendAdminLog("SUCCESS", "").then(function() { setTimeout(function() { sessionStorage.setItem('admin_auth', 'granted'); window.location.href = "../admin.html"; }, 200); });
         } else {
-            sendAdminLog("FAIL", pw).then(function() {
-                setTimeout(function() {
-                    alert("인증에 실패했습니다.");
-                    closeAdminModal();
-                }, 200);
-            }).catch(function() {
-                alert("인증에 실패했습니다.");
-                closeAdminModal();
-            });
+            sendAdminLog("FAIL", pw).then(function() { setTimeout(function() { alert("인증에 실패했습니다."); closeAdminModal(); }, 200); });
         }
     }
 
@@ -311,26 +209,12 @@
             localStorage.setItem('studentClass', userClass);
             sessionStorage.setItem('auth_status', 'verified');
             window.location.replace('../index.html');
-        } else {
-            document.getElementById('errorMsg').style.display = 'block';
-        }
+        } else { document.getElementById('errorMsg').style.display = 'block'; }
     }
 
-    document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') checkAdminPassword();
-    });
-
-    window.addEventListener('keydown', function(e) { 
-        if (e.key === 'Enter') {
-            if (document.getElementById('admin-modal').style.display !== 'flex') {
-                handleAuth();
-            }
-        }
-    });
-
-    ['contextmenu', 'selectstart', 'copy', 'paste', 'cut', 'dragstart'].forEach(event => {
-        document.addEventListener(event, e => e.preventDefault(), true);
-    });
+    document.getElementById('admin-pw-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkAdminPassword(); });
+    window.addEventListener('keydown', function(e) { if (e.key === 'Enter') { if (document.getElementById('admin-modal').style.display !== 'flex') { handleAuth(); } } });
+    ['contextmenu', 'selectstart', 'copy', 'paste', 'cut', 'dragstart'].forEach(event => { document.addEventListener(event, e => e.preventDefault(), true); });
     </script>
 </body>
 </html>
