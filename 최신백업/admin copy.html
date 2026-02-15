@@ -13,10 +13,16 @@
             --card: #ffffff; 
             --text: #1e293b; 
             --admin-font-size: 16px; 
+
+            /* 🔍 돋보기 조절 대상 (문제/보기/해설) */
             --modal-q-size: 1.5rem;   
             --modal-exp-size: 1.2rem; 
+
+            /* 🎨 정답/오답 배지 색상 */
             --color-correct: #16a34a; 
             --color-wrong: #dc2626;   
+
+            /* 🕵️ 시크릿 정답 색상 */
             --secret-ans-color: #f3f4f6; 
         }
         
@@ -24,6 +30,7 @@
         .container { max-width: 1400px; margin: 0 auto; }
         .admin-controls { background: var(--card); padding: 15px 25px; border-radius: 12px; display: flex; gap: 20px; align-items: center; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         
+        /* 🏫 보기 모드 버튼 스타일 추가 */
         .view-mode-selector { display: flex; gap: 8px; }
         .mode-btn { 
             padding: 8px 16px; border-radius: 8px; border: 2px solid #e2e8f0; 
@@ -31,6 +38,7 @@
         }
         .mode-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
+        /* 🛡️ 관리자 로그 탭 전용 스타일 */
         .tab-selector { display: flex; gap: 10px; margin-bottom: 20px; }
         .tab-btn { 
             flex: 1; padding: 15px; border-radius: 12px; border: none; 
@@ -48,14 +56,13 @@
         td { padding: 15px; border-bottom: 1px solid #f1f5f9; text-align: center; }
         .btn-view { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .btn-del { background: #fee2e2; color: #ef4444; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        
-        /* [추가] 다중 삭제 버튼 전용 */
-        .btn-multi-del { background: #ef4444; color: white; display: none; margin-left: 10px; }
 
+        /* 상태 배지 */
         .status-badge { padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.85rem; }
         .status-success { background: #dcfce7; color: #166534; }
         .status-fail { background: #fee2e2; color: #991b1b; }
 
+        /* 결과 보기 모달 (Full Screen) */
         #result-modal { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:10000; }
         .modal-body { background: white; width: 100vw; height: 100vh; margin: 0; display: flex; flex-direction: column; overflow: hidden; }
         .modal-sticky-header { background: #ffffff; padding: 15px 40px; border-bottom: 3px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
@@ -119,8 +126,6 @@
             <button id="mode-date" class="mode-btn active" onclick="updateViewMode('date')">📅 요일별</button>
             <button id="mode-class" class="mode-btn" onclick="updateViewMode('class')">🏫 교실별</button>
         </div>
-        <button id="btn-multi-delete" class="btn-view btn-multi-del" onclick="deleteSelectedRecords()">🗑️ 선택 삭제 (<span id="selected-count">0</span>)</button>
-        
         <div style="display:flex; align-items:center; gap:15px;"><span style="font-weight:700;">🖥️ 메인 폰트:</span><input type="range" min="14" max="24" value="16" oninput="updateAdminStyle('size', this.value)"><span id="admin-size-val">16px</span></div>
         <div style="margin-left:auto;"><button class="btn-view" style="background:#10b981;" onclick="location.reload()">🔄 데이터 새로고침</button></div>
     </div>
@@ -176,25 +181,29 @@
 
     if (sessionStorage.getItem('admin_auth') !== 'granted') location.replace('index.html');
 
-    let currentMainTab = 'exam'; 
+    let currentMainTab = 'exam'; // 'exam' 또는 'log'
     let rawExamData = null;
     let rawLogData = null;
     let viewMode = 'date';
 
+    // 🚀 메인 탭 전환 엔진
     window.switchMainTab = (tab) => {
         currentMainTab = tab;
         document.getElementById('tab-exam').classList.toggle('active', tab === 'exam');
         document.getElementById('tab-log').classList.toggle('active', tab === 'log');
         document.getElementById('exam-controls').style.display = tab === 'exam' ? 'flex' : 'none';
         document.getElementById('log-controls').style.display = tab === 'log' ? 'flex' : 'none';
+        
         refreshDashboard();
     };
 
+    // 데이터 감시 (시험 결과)
     onValue(ref(database, 'exam_results'), (snapshot) => {
         rawExamData = snapshot.val();
         if (currentMainTab === 'exam') refreshDashboard();
     });
 
+    // 데이터 감시 (관리자 접속 로그)
     onValue(ref(database, 'admin_access_logs'), (snapshot) => {
         rawLogData = snapshot.val();
         if (currentMainTab === 'log') refreshDashboard();
@@ -205,7 +214,7 @@
         else renderLogDashboard(rawLogData);
     }
 
-    // [1] 학생 시험 기록 렌더링
+    // [1] 학생 시험 기록 렌더링 (기존 로직 보존)
     function renderExamDashboard(data) {
         const dashboard = document.getElementById('dashboard-content');
         dashboard.innerHTML = '';
@@ -237,14 +246,10 @@
                 </div>
                 <div class="date-content">
                     <table>
-                        <thead><tr>
-                            <th><input type="checkbox" onclick="toggleAllInGroup(this)"></th>
-                            <th>교실</th><th>시간</th><th>이름</th><th>과목</th><th>회차</th><th>점수</th><th>작업</th>
-                        </tr></thead>
+                        <thead><tr><th>교실</th><th>시간</th><th>이름</th><th>과목</th><th>회차</th><th>점수</th><th>작업</th></tr></thead>
                         <tbody>
                         ${students.map(s => `
                             <tr>
-                                <td><input type="checkbox" class="row-check" value="exam_results/${s.key}" onchange="updateMultiDelCount()"></td>
                                 <td style="font-weight:700; color:var(--primary);">${s.class || '-'}호</td>
                                 <td style="font-weight:700;">${formatTo24H(s.date)}</td>
                                 <td><strong>${s.name}</strong></td>
@@ -261,10 +266,9 @@
                 </div>`;
             dashboard.appendChild(groupSection);
         });
-        updateMultiDelCount(); // 체크상태 초기화
     }
 
-    // [2] 관리자 접속 로그 렌더링
+    // [2] 관리자 접속 로그 렌더링 (신규 추가)
     function renderLogDashboard(data) {
         const dashboard = document.getElementById('dashboard-content');
         dashboard.innerHTML = '';
@@ -300,33 +304,7 @@
         dashboard.appendChild(logSection);
     }
 
-    // [다중 삭제 로직 추가]
-    window.toggleAllInGroup = (headerChk) => {
-        const table = headerChk.closest('table');
-        const checkboxes = table.querySelectorAll('.row-check');
-        checkboxes.forEach(chk => chk.checked = headerChk.checked);
-        updateMultiDelCount();
-    };
-
-    window.updateMultiDelCount = () => {
-        const checkedBoxes = document.querySelectorAll('.row-check:checked');
-        const count = checkedBoxes.length;
-        const btn = document.getElementById('btn-multi-delete');
-        document.getElementById('selected-count').innerText = count;
-        btn.style.display = count > 0 ? 'block' : 'none';
-    };
-
-    window.deleteSelectedRecords = async () => {
-        const checkedBoxes = document.querySelectorAll('.row-check:checked');
-        if (confirm(`⚠️ 선택한 ${checkedBoxes.length}개의 기록을 모두 삭제하시겠습니까?`)) {
-            for (let chk of checkedBoxes) {
-                await remove(ref(database, chk.value));
-            }
-            alert("삭제 완료되었습니다.");
-            updateMultiDelCount();
-        }
-    };
-
+    // 🏫 공용 도구 함수들
     window.updateViewMode = (mode) => {
         viewMode = mode;
         document.getElementById('mode-date').classList.toggle('active', mode === 'date');
@@ -346,6 +324,7 @@
     window.deleteRecord = (path) => { if(confirm("이 기록을 삭제하시겠습니까?")) remove(ref(database, path)); };
     window.clearAdminLogs = () => { if(confirm("⚠️ 모든 접속 기록을 삭제하시겠습니까? 학생 기록은 유지됩니다.")) remove(ref(database, 'admin_access_logs')); };
 
+    // --- 이하 상세 리포트 및 스타일 관련 함수 (기존 코드와 동일) ---
     let currentStep = 0; let totalSteps = 0; let isOneByOneMode = false;
 
     window.showDetails = (data) => {
