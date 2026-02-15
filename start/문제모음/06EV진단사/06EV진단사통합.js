@@ -458,7 +458,8 @@ function finalizeExam() {
         if (isCorrect) { 
             scoreCount++; 
         } else { 
-            currentWrongs.push({...q, options: q.options}); 
+            currentWrongs.push({...q, options: q.options});
+            lastWrongAnswers.push(JSON.parse(JSON.stringify(q))); 
         }
 
         // [신규 배선] 모든 문제의 결과를 객체로 저장
