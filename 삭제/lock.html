@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>보안 인증</title>
+    <link rel="stylesheet" href="../index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* 기존 디자인 유지 */
+        .auth-modal {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 0; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; }
+            .auth-modal {
+                width: 85% !important;
+                max-width: 400px !important;
+                min-height: 45vh !important;
+                padding: 50px 25px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                border-radius: 40px !important;
+            }
+            .auth-modal h2 { font-size: 2rem !important; margin-bottom: 15px !important; }
+            .auth-modal p { font-size: 1.1rem !important; margin-bottom: 25px !important; }
+            .auth-modal input { height: 60px !important; font-size: 1.3rem !important; margin-bottom: 12px !important; }
+            .auth-modal button { height: 65px !important; font-size: 1.4rem !important; font-weight: 700 !important; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+    <div class="auth-overlay">
+        <div class="auth-modal">
+            <h2>학생 인증</h2>
+            <p>성함과 비밀번호를 입력하세요.</p>
+            
+            <input type="text" id="userNameInput" placeholder="성함 (예: 홍길동)">
+            
+            <input type="password" id="pwInput" placeholder="Password">
+            
+            <button id="authBtn" onclick="handleAuth()">인증 및 시작하기</button>
+            
+            <p id="errorMsg" style="display:none; color:red; margin-top:10px;">정보가 올바르지 않습니다.</p>
+        </div>
+    </div>
+
+    <script>
+        // [보안 지뢰] 개발자 도구 차단
+        setInterval(function() { debugger; }, 100);
+        
+        sessionStorage.clear();
+
+        // [핵심 함수] 인증 버튼을 눌렀을 때 실행되는 엔진
+        function handleAuth() {
+            const userName = document.getElementById('userNameInput').value.trim();
+            const pwInput = document.getElementById('pwInput').value;
+
+            // 성함을 입력했는지 먼저 확인 (출석부 확인)
+            if (userName === "") {
+                alert("성함을 입력해 주세요.");
+                return;
+            }
+
+            // 비밀번호 확인 (선생님의 기존 아스키 코드 0936)
+            if (pwInput === String.fromCharCode(48, 57, 51, 54)) {
+                // 1. 이름을 '비밀 서랍'에 저장 (나중에 Firebase로 보낼 때 꺼내 씀)
+                localStorage.setItem('studentName', userName);
+                
+                // 2. 인증 상태 저장
+                sessionStorage.setItem('auth_status', 'verified');
+                
+                // 3. 메인 화면으로 이동
+                window.location.replace('../index.html');
+            } else {
+                // 틀렸을 경우
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        // 키보드 엔터 키를 누르면 바로 인증되게 하는 센서
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                handleAuth();
+            }
+        });
+
+        // 기존 보안 코드 (우클릭 차단 등)
+        window.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && [65, 67, 83, 85, 86].includes(e.keyCode)) {
+                e.preventDefault();
+                return false;
+            }
+        }, true);
+
+        ['contextmenu', 'selectstart', 'copy', 'paste', 'cut', 'dragstart'].forEach(event => {
+            document.addEventListener(event, e => e.preventDefault(), true);
+        });
+    </script>
+</body>
+</html>

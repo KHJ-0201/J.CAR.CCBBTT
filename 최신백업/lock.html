@@ -4,105 +4,236 @@
     <meta charset="UTF-8">
     <title>보안 인증</title>
     <link rel="stylesheet" href="../index.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
         /* 기존 디자인 유지 */
         .auth-modal {
             background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 30px;
+            padding: 30px;
+            border-radius: 25px;
             text-align: center;
-            max-width: 320px;
-            width: 90%;
+            max-width: 420px;
+            width: 95%;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
         }
 
+        /* 교실 선택 레이아웃 */
+        .class-selector {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 6px;
+            margin: 8px 0 15px 0;
+        }
+        .class-option {
+            flex: 0 0 calc(14% - 6px);
+            min-width: 45px; 
+            position: relative;
+        }
+        .class-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            width: 0;
+            height: 0;
+        }
+        .class-label {
+            display: block;
+            padding: 10px 0;
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .class-option input:checked + .class-label {
+            background: #eff6ff;
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        /* 공통 입력창 스타일 */
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            height: 45px;
+            margin-bottom: 10px;
+            padding: 0 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            height: 50px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
         @media (max-width: 768px) {
-            body { padding: 0; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; }
-            .auth-modal {
-                width: 85% !important;
-                max-width: 400px !important;
-                min-height: 45vh !important;
-                padding: 50px 25px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                border-radius: 40px !important;
+            body { 
+                padding: 0; margin: 0; 
+                display: flex; 
+                align-items: flex-start;
+                justify-content: center; 
+                height: 100vh;
+                padding-top: 20px;
             }
-            .auth-modal h2 { font-size: 2rem !important; margin-bottom: 15px !important; }
-            .auth-modal p { font-size: 1.1rem !important; margin-bottom: 25px !important; }
-            .auth-modal input { height: 60px !important; font-size: 1.3rem !important; margin-bottom: 12px !important; }
-            .auth-modal button { height: 65px !important; font-size: 1.4rem !important; font-weight: 700 !important; }
+            .auth-modal {
+                width: 90% !important;
+                padding: 20px 15px !important;
+            }
+            .auth-modal h2 { font-size: 1.5rem !important; margin-top: 5px; }
+            .auth-modal p { font-size: 0.9rem !important; margin-bottom: 10px !important; }
+            
+            .class-option {
+                flex: 0 0 calc(23% - 6px);
+                min-width: 60px; 
+                margin-bottom: 4px;
+            }
+            .class-label {
+                padding: 8px 0;
+                font-size: 0.95rem; 
+            }
+            
+            input[type="text"], input[type="password"] {
+                height: 42px !important;
+                font-size: 1rem !important;
+                margin-bottom: 8px !important;
+            }
+            button {
+                height: 48px !important;
+                font-size: 1.1rem !important;
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div class="auth-overlay">
         <div class="auth-modal">
-            <h2>학생 인증</h2>
-            <p>성함과 비밀번호를 입력하세요.</p>
+            <h2 onclick="handleAdminClick()" style="user-select: none; cursor: default;">학생 인증</h2>
+            <p>정보를 정확히 입력하세요.</p>
             
+            <div style="text-align:left; font-size:0.8rem; font-weight:700; color:#64748b; margin-bottom:5px; margin-left:5px;">교실 선택</div>
+            <div class="class-selector">
+                <label class="class-option"><input type="radio" name="classSelect" value="501"><span class="class-label">501</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="601"><span class="class-label">601</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="602"><span class="class-label">602</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="603"><span class="class-label">603</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="701"><span class="class-label">701</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="702"><span class="class-label">702</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="703"><span class="class-label">703</span></label>
+            </div>
+
             <input type="text" id="userNameInput" placeholder="성함 (예: 홍길동)">
-            
             <input type="password" id="pwInput" placeholder="Password">
             
             <button id="authBtn" onclick="handleAuth()">인증 및 시작하기</button>
-            
-            <p id="errorMsg" style="display:none; color:red; margin-top:10px;">정보가 올바르지 않습니다.</p>
+            <p id="errorMsg" style="display:none; color:red; margin-top:5px; font-size:0.85rem;">정보가 올바르지 않습니다.</p>
+        </div>
+    </div>
+
+    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:15px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.5); width:300px;">
+            <h3 style="margin-bottom:20px; color:#2563eb;">관리자 인증</h3>
+            <input type="password" id="admin-pw-input" placeholder="비밀번호 입력" style="width:90%; padding:10px; font-size:1.2rem; border:2px solid #ddd; border-radius:8px; margin-bottom:20px; text-align:center;">
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button onclick="checkAdminPassword()" style="padding:10px 20px; background:#2563eb; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">확인</button>
+                <button onclick="closeAdminModal()" style="padding:10px 20px; background:#eee; color:#666; border:none; border-radius:8px; cursor:pointer;">취소</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // [보안 지뢰] 개발자 도구 차단
-        setInterval(function() { debugger; }, 100);
-        
-        sessionStorage.clear();
+    setInterval(function() { debugger; }, 100);
+    sessionStorage.clear();
 
-        // [핵심 함수] 인증 버튼을 눌렀을 때 실행되는 엔진
-        function handleAuth() {
-            const userName = document.getElementById('userNameInput').value.trim();
-            const pwInput = document.getElementById('pwInput').value;
+    // --- 관리자 비밀 로직 ---
+    let adminClickCount = 0;
+    let adminClickTimer = null;
 
-            // 성함을 입력했는지 먼저 확인 (출석부 확인)
-            if (userName === "") {
-                alert("성함을 입력해 주세요.");
-                return;
-            }
+    function handleAdminClick() {
+        adminClickCount++;
+        clearTimeout(adminClickTimer);
+        // 2초 내에 5번 클릭해야 함
+        adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
 
-            // 비밀번호 확인 (선생님의 기존 아스키 코드 0936)
-            if (pwInput === String.fromCharCode(48, 57, 51, 54)) {
-                // 1. 이름을 '비밀 서랍'에 저장 (나중에 Firebase로 보낼 때 꺼내 씀)
-                localStorage.setItem('studentName', userName);
-                
-                // 2. 인증 상태 저장
-                sessionStorage.setItem('auth_status', 'verified');
-                
-                // 3. 메인 화면으로 이동
-                window.location.replace('../index.html');
-            } else {
-                // 틀렸을 경우
-                document.getElementById('errorMsg').style.display = 'block';
-            }
+        if (adminClickCount >= 5) {
+            document.getElementById('admin-modal').style.display = 'flex';
+            document.getElementById('admin-pw-input').focus();
+            adminClickCount = 0;
         }
+    }
 
-        // 키보드 엔터 키를 누르면 바로 인증되게 하는 센서
-        window.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
+    function closeAdminModal() {
+        document.getElementById('admin-modal').style.display = 'none';
+        document.getElementById('admin-pw-input').value = '';
+    }
+
+    function checkAdminPassword() {
+        const pw = document.getElementById('admin-pw-input').value;
+        const _0x4f2 = (s) => s.split('').reverse().join('');
+        const _0x91a = parseInt(_0x4f2("8712351"));
+        const _0x22b = (Math.pow(10, 6) * 1.5) + 32178;
+
+        if (pw && Number(pw) === _0x91a && (Number(pw) ^ 0) === _0x22b) {
+            sessionStorage.setItem('admin_auth', 'granted');
+            window.location.href = "../admin.html";
+        } else {
+            alert("인증에 실패했습니다.");
+            closeAdminModal();
+        }
+    }
+
+    // --- 학생 인증 로직 ---
+    function handleAuth() {
+        const userName = document.getElementById('userNameInput').value.trim();
+        const pwInput = document.getElementById('pwInput').value;
+        const classRadio = document.querySelector('input[name="classSelect"]:checked');
+        const userClass = classRadio ? classRadio.value : "";
+
+        if (userClass === "") { alert("교실을 선택해 주세요."); return; }
+        if (userName === "") { alert("성함을 입력해 주세요."); return; }
+        if (pwInput === "") { alert("비밀번호를 입력해 주세요."); return; }
+
+        if (pwInput === String.fromCharCode(48, 57, 51, 54)) {
+            localStorage.setItem('studentName', userName);
+            localStorage.setItem('studentClass', userClass);
+            sessionStorage.setItem('auth_status', 'verified');
+            window.location.replace('../index.html');
+        } else {
+            document.getElementById('errorMsg').style.display = 'block';
+        }
+    }
+
+    // 이벤트 리스너 설정
+    document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkAdminPassword();
+    });
+
+    window.addEventListener('keydown', function(e) { 
+        if (e.key === 'Enter') {
+            // 관리자 모달이 열려있으면 관리자 체크, 아니면 학생 인증
+            if (document.getElementById('admin-modal').style.display === 'flex') {
+                checkAdminPassword();
+            } else {
                 handleAuth();
             }
-        });
+        }
+    });
 
-        // 기존 보안 코드 (우클릭 차단 등)
-        window.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && [65, 67, 83, 85, 86].includes(e.keyCode)) {
-                e.preventDefault();
-                return false;
-            }
-        }, true);
-
-        ['contextmenu', 'selectstart', 'copy', 'paste', 'cut', 'dragstart'].forEach(event => {
-            document.addEventListener(event, e => e.preventDefault(), true);
-        });
+    ['contextmenu', 'selectstart', 'copy', 'paste', 'cut', 'dragstart'].forEach(event => {
+        document.addEventListener(event, e => e.preventDefault(), true);
+    });
     </script>
 </body>
 </html>

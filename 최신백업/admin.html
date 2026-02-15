@@ -29,6 +29,15 @@
         body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; font-size: var(--admin-font-size); line-height: 1.6; }
         .container { max-width: 1400px; margin: 0 auto; }
         .admin-controls { background: var(--card); padding: 15px 25px; border-radius: 12px; display: flex; gap: 20px; align-items: center; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        
+        /* 🏫 보기 모드 버튼 스타일 추가 */
+        .view-mode-selector { display: flex; gap: 8px; }
+        .mode-btn { 
+            padding: 8px 16px; border-radius: 8px; border: 2px solid #e2e8f0; 
+            background: #ffffff; color: #64748b; font-weight: 700; cursor: pointer; transition: 0.2s;
+        }
+        .mode-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
         .date-group { margin-bottom: 15px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .date-header { background: var(--primary); color: white; padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: 700; }
         .date-content { background: white; overflow-x: auto; }
@@ -117,6 +126,11 @@
         <button class="btn-del" style="background:#475569; color:white;" onclick="logout()">로그아웃</button>
     </header>
     <div class="admin-controls">
+        <div class="view-mode-selector">
+            <button id="mode-date" class="mode-btn active" onclick="updateViewMode('date')">📅 요일별</button>
+            <button id="mode-class" class="mode-btn" onclick="updateViewMode('class')">🏫 교실별</button>
+        </div>
+
         <div style="display:flex; align-items:center; gap:15px;"><span style="font-weight:700;">🖥️ 메인 폰트:</span><input type="range" min="14" max="24" value="16" oninput="updateAdminStyle('size', this.value)"><span id="admin-size-val">16px</span></div>
         <div style="margin-left:auto;"><button class="btn-view" style="background:#10b981;" onclick="location.reload()">🔄 데이터 새로고침</button></div>
     </div>
@@ -167,10 +181,27 @@
     if (sessionStorage.getItem('admin_auth') !== 'granted') location.replace('index.html');
 
     const examRef = ref(database, 'exam_results');
+    
+    // 전역 변수 설정 (새로고침 없이 모드 전환용)
+    let rawExamData = null;
+    let viewMode = 'date'; // 'date' 또는 'class'
+
     onValue(examRef, (snapshot) => {
         const data = snapshot.val();
-        if (data) renderDashboard(data);
+        if (data) {
+            rawExamData = data;
+            renderDashboard(data);
+        }
     });
+
+    // 🏫 보기 모드 변경 함수
+    window.updateViewMode = (mode) => {
+        viewMode = mode;
+        // 버튼 활성화 스타일 제어
+        document.getElementById('mode-date').classList.toggle('active', mode === 'date');
+        document.getElementById('mode-class').classList.toggle('active', mode === 'class');
+        if (rawExamData) renderDashboard(rawExamData);
+    };
 
     function formatTo24H(dateStr) {
         if (!dateStr) return "00시 00분";
@@ -184,21 +215,66 @@
         const dashboard = document.getElementById('dashboard-content');
         dashboard.innerHTML = '';
         const groups = {};
+
         Object.entries(data).forEach(([key, val]) => {
-            const dateOnly = val.date.split(' ')[0];
-            if (!groups[dateOnly]) groups[dateOnly] = [];
-            groups[dateOnly].push({ key, ...val });
+            // [분류 핵심] 요일별은 날짜로, 교실별은 교실번호로 묶음
+            const groupKey = (viewMode === 'date') ? val.date.split(' ')[0] : (val.class || '미기재');
+            if (!groups[groupKey]) groups[groupKey] = [];
+            groups[groupKey].push({ key, ...val });
         });
-        Object.keys(groups).sort((a, b) => new Date(b) - new Date(a)).forEach(date => {
-            const students = groups[date].sort((a, b) => new Date(b.date.replace(/-/g, '/')) - new Date(a.date.replace(/-/g, '/')));
+
+        // 대시보드 상단 그룹 제목 정렬 (날짜는 최신순, 교실은 숫자순)
+        const sortedKeys = Object.keys(groups).sort((a, b) => {
+            if (viewMode === 'date') return new Date(b) - new Date(a);
+            return a.localeCompare(b, undefined, {numeric: true});
+        });
+
+        sortedKeys.forEach(groupTitle => {
+            // 그룹 내부 학생 목록 정렬 (어느 모드든 항상 시간순)
+            const students = groups[groupTitle].sort((a, b) => new Date(b.date.replace(/-/g, '/')) - new Date(a.date.replace(/-/g, '/')));
+            
             const groupSection = document.createElement('div');
             groupSection.className = 'date-group';
+            
+            // 모드에 따른 헤더 문구 결정
+            const headerIcon = (viewMode === 'date') ? '📅' : '🏫';
+            const headerSuffix = (viewMode === 'date') ? '명단' : '호 교실 명단';
+
             groupSection.innerHTML = `
-                <div class="date-header" onclick="this.nextElementSibling.classList.toggle('collapsed')"><span>📅 ${date} 명단</span><span>총 ${students.length}명 ▼</span></div>
-                <div class="date-content"><table><thead><tr><th>교실</th><th>시간</th><th>이름</th><th>과목</th><th>회차</th><th>점수</th><th>작업</th></tr></thead><tbody>
-                ${students.map(s => `<tr><td style="font-weight:700; color:var(--primary);">${s.class || '-'}호</td><td style="font-weight:700;">${formatTo24H(s.date)}</td><td><strong>${s.name}</strong></td><td>${s.subject}</td><td>${s.round}</td><td style="color:var(--primary); font-weight:900;">${s.score}점</td>
-                <td><button class="btn-view" onclick='showDetails(${JSON.stringify(s).replace(/'/g, "&apos;")})'>리포트</button><button class="btn-del" onclick="deleteRecord('${s.key}')" style="margin-left:4px;">삭제</button></td></tr>`).join('')}
-                </tbody></table></div>`;
+                <div class="date-header" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+                    <span>${headerIcon} ${groupTitle}${headerSuffix}</span>
+                    <span>총 ${students.length}명 ▼</span>
+                </div>
+                <div class="date-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>교실</th>
+                                <th>시간</th>
+                                <th>이름</th>
+                                <th>과목</th>
+                                <th>회차</th>
+                                <th>점수</th>
+                                <th>작업</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ${students.map(s => `
+                            <tr>
+                                <td style="font-weight:700; color:var(--primary);">${s.class || '-'}호</td>
+                                <td style="font-weight:700;">${formatTo24H(s.date)}</td>
+                                <td><strong>${s.name}</strong></td>
+                                <td>${s.subject}</td>
+                                <td>${s.round}</td>
+                                <td style="color:var(--primary); font-weight:900;">${s.score}점</td>
+                                <td>
+                                    <button class="btn-view" onclick='showDetails(${JSON.stringify(s).replace(/'/g, "&apos;")})'>리포트</button>
+                                    <button class="btn-del" onclick="deleteRecord('${s.key}')" style="margin-left:4px;">삭제</button>
+                                </td>
+                            </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>`;
             dashboard.appendChild(groupSection);
         });
     }
