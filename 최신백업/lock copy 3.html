@@ -14,7 +14,7 @@
             color: #3c1e1e;
             padding: 8px;
             border-radius: 12px;
-            margin-bottom: 5px;
+            margin-bottom: 5px; /* 안내 문구와 붙이기 위해 조절 */
             text-align: center;
             font-size: 0.85rem;
             font-weight: bold;
@@ -22,6 +22,7 @@
             cursor: pointer;
             box-sizing: border-box;
             text-decoration: none;
+            /* 아이폰에서 꾹 눌렀을 때 시스템 메뉴(링크 열기)가 잘 뜨도록 설정 */
             -webkit-touch-callout: default !important; 
         }
 
@@ -29,7 +30,7 @@
         #iphoneNotice {
             display: none;
             font-size: 0.75rem;
-            color: #ef4444;
+            color: #ef4444; /* 강조를 위한 빨간색 */
             font-weight: 800;
             margin-bottom: 10px;
             line-height: 1.4;
@@ -113,6 +114,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
+    // [정비] 페이지 로드 시 카톡 여부 확인 및 아이폰 전용 롱탭 설정
     (function() {
         const ua = navigator.userAgent.toLowerCase();
         const targetBtn = document.getElementById('iosSafariLink');
@@ -120,11 +122,18 @@
         
         if (ua.indexOf('kakaotalk') > -1) {
             targetBtn.style.display = 'block';
+            
             if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
-                iphoneNotice.style.display = 'block';
+                iphoneNotice.style.display = 'block'; // 아이폰만 안내 문구 표시
+                
                 const targetUrl = window.location.href.replace('start/lock.html', 'index.html');
+                // 롱탭 시 열릴 주소를 미리 심어둡니다.
                 targetBtn.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
-                targetBtn.oncontextmenu = function(e) { e.stopPropagation(); };
+                
+                // [핵심] 롱탭 시 시스템 메뉴가 뜨는 것을 방해하는 '우클릭 방지'를 이 버튼에서만 해제합니다.
+                targetBtn.oncontextmenu = function(e) {
+                    e.stopPropagation(); // 부모 요소의 우클릭 방지 명령이 여기까지 못 오게 막음
+                };
             }
         }
     })();
@@ -133,11 +142,14 @@
         const currentHref = window.location.href;
         const targetUrl = currentHref.split('/start/')[0] + '/index.html';
         const ua = navigator.userAgent.toLowerCase();
+
         if (ua.indexOf('android') > -1) {
             location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
         }
+        // 아이폰은 롱탭 메뉴 유도 방식이므로 클릭 이벤트 시에는 시스템 팝업을 기다립니다.
     }
 
+    // --- 이하 선생님 원본 로직 (수정 금지) ---
     const firebaseConfig = {
         apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
         authDomain: "khj-cbtbase.firebaseapp.com",
@@ -201,9 +213,6 @@
         if (userName === "") { alert("성함을 입력해 주세요."); return; }
         if (pwInput === "") { alert("비밀번호를 입력해 주세요."); return; }
         if (pwInput === String.fromCharCode(48, 57, 51, 54)) {
-            // [정비 핵심] 여기에 도달했다는 것은 '인증 및 시작하기' 버튼을 누른 것입니다.
-            // 이제 학생의 정보가 localStorage에 안전하게 담겼으므로, 
-            // 이후 문제 풀이 완료 시 '이 이름'을 참조하여 DB에 저장하게 됩니다.
             localStorage.setItem('studentName', userName);
             localStorage.setItem('studentClass', userClass);
             sessionStorage.setItem('auth_status', 'verified');
