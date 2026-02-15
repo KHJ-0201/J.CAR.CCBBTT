@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<script>
-   (function() {
-        var ua = navigator.userAgent.toLowerCase();
-        var targetUrl = window.location.href;
-        
-        if (ua.indexOf('kakaotalk') > -1) {
-            // [핵심] 카톡이라면 화면이 그려지지 않게 아예 하얗게 덮어버립니다.
-            document.documentElement.style.display = 'none';
-
-            if (ua.indexOf('android') > -1) {
-                location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-            } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
-                location.replace(targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1');
-            }
-        }
-    })();
-</script>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script>
+        (function() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const targetUrl = window.location.href;
+            if (userAgent.match(/kakaotalk/i)) {
+                if (userAgent.match(/android/i)) {
+                    location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+                } 
+                else if (userAgent.match(/iphone|ipad|ipod/i)) {
+                    location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+                }
+            }
+        })();
+    </script>
     <title>버전 선택</title>
     <link rel="stylesheet" href="index.css"> 
 </head>
@@ -37,7 +35,7 @@
                     <p>스마트폰 화면에 최적화</p>
                 </div>
             </div>
-            <footer class="bottom-memo" onclick="handleAdminClick()" style="cursor: default; user-select: none;">
+            <footer class="bottom-memo" _onclick="handleAdminClick()" style="cursor: default; user-select: none;">
                 <p>인터넷 설정 >> 홈화면에 현재 웹페이지 추가 시<br>더욱 최적의 환경에서 문제 풀이를 제공합니다.</p>
             </footer>
         </div>
@@ -90,6 +88,7 @@
             }
         }
 
+        // 입력창 엔터키 센서 (HTML이 그려진 후 연결)
         document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkAdminPassword();
         });
