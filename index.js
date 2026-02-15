@@ -1,10 +1,8 @@
 // [보안 검문]
-(function checkSecurity() {
-    // 1. 카톡인지 먼저 확인합니다.
+function checkSecurity() {
     const isKakao = navigator.userAgent.toLowerCase().match(/kakaotalk/i);
     
-    // 2. 카톡일 때는 보안 검사(lock.html 이동)를 중단합니다. 
-    // 그래야 탈출 버튼 화면이 정상적으로 보입니다.
+    // 카톡이면 보안 검사를 아예 수행하지 않음 (lock.html로 튕기는 것 방지)
     if (isKakao) return;
 
     const isVerified = sessionStorage.getItem('auth_status') === 'verified';
@@ -13,9 +11,14 @@
     if (!isVerified || !hasName) {
         window.location.replace('start/lock.html');
     }
-})();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 1초 뒤에 검사 시작 (탈출 화면이 먼저 나오게 보장)
+    setTimeout(() => {
+        checkSecurity();
+    }, 1000);
+
     const pcBanner = document.getElementById('pcBanner');
     const mobileBanner = document.getElementById('mobileBanner');
 

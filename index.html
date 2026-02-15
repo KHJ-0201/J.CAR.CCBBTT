@@ -6,7 +6,7 @@
     <title>버전 선택</title>
     <link rel="stylesheet" href="index.css"> 
     <style>
-        /* [추가] 카톡 전용 탈출 화면 디자인 */
+        /* 카톡 전용 탈출 화면 */
         #kakao-exit-screen {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #ffffff; z-index: 99999; flex-direction: column;
@@ -63,7 +63,6 @@
     </div>
 
     <script>
-        // [수정] 카톡 감지 및 수동 탈출 로직
         (function() {
             const ua = navigator.userAgent.toLowerCase();
             const isKakao = ua.indexOf('kakaotalk') > -1;
@@ -85,7 +84,6 @@
             };
         })();
 
-        // 관리자 클릭 등 기존 스크립트 그대로 유지
         let adminClickCount = 0;
         let adminClickTimer = null;
         function handleAdminClick() {
