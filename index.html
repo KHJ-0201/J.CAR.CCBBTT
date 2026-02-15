@@ -10,15 +10,13 @@
             const targetUrl = window.location.href;
             
             if (userAgent.match(/kakaotalk/i)) {
-                // 1. 안드로이드 처리 (기존과 동일 - 잘 작동함)
+                // 1. 안드로이드 처리 (크롬 강제 실행)
                 if (userAgent.match(/android/i)) {
                     location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
                 } 
-                // 2. 아이폰/아이패드 처리 (보완된 방식)
+                // 2. 아이폰/아이패드 처리 (카카오톡 전용 외부 브라우저 옵션 사용)
                 else if (userAgent.match(/iphone|ipad|ipod/i)) {
-                    // 구글 검색으로 빠지는 x-web-search 대신 카카오톡 전용 외부 브라우저 파라미터만 사용합니다.
-                    // 아이폰은 사용자의 '직접 클릭'이 없으면 강제 이동을 막는 경우가 많으므로
-                    // 파라미터를 붙여서 현재 페이지를 다시 불러오면 카카오톡이 외부 브라우저로 열어줍니다.
+                    // 검색으로 빠지는 현상을 막기 위해 location.replace로 깔끔하게 전환합니다.
                     const externalUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
                     location.replace(externalUrl);
                 }
@@ -26,7 +24,7 @@
         })();
     </script>
     <title>버전 선택</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css"> 
 </head>
 <body>
     <div id="pageContent">
@@ -42,7 +40,7 @@
                     <p>스마트폰 화면에 최적화</p>
                 </div>
             </div>
-            <footer class="bottom-memo" _onclick="handleAdminClick()" style="cursor: default; user-select: none;">
+            <footer class="bottom-memo" onclick="handleAdminClick()" style="cursor: default; user-select: none;">
                 <p>인터넷 설정 >> 홈화면에 현재 웹페이지 추가 시<br>더욱 최적의 환경에서 문제 풀이를 제공합니다.</p>
             </footer>
         </div>
@@ -95,7 +93,6 @@
             }
         }
 
-        // 입력창 엔터키 센서 (HTML이 그려진 후 연결)
         document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkAdminPassword();
         });
