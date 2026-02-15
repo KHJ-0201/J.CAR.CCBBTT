@@ -3,24 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script>
-        // [수정] 카톡 감지 시 즉시 다른 페이지로 이동 (최우선 순위)
-        (function() {
-            const ua = navigator.userAgent.toLowerCase();
-            if (ua.indexOf('kakaotalk') > -1) {
-                // index.js가 실행되기 전에 즉시 기종선택 페이지로 보냅니다.
-                window.location.replace('start/기종선택.html');
-            }
-        })();
-    </script>
-
     <title>버전 선택</title>
     <link rel="stylesheet" href="index.css"> 
+    <style>
+        /* 카톡 전용 안내 세션 스타일 */
+        .kakao-notice {
+            display: none; /* 평소엔 숨김 */
+            background: #fee500;
+            color: #3c1e1e;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .kakao-notice button {
+            background: #3c1e1e;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <div id="pageContent">
         <div class="container">
+            <div id="kakaoNotice" class="kakao-notice">
+                ⚠️ 현재 카카오톡 앱으로 접속 중입니다.<br>
+                원활한 이용을 위해 아래 버튼을 눌러주세요.
+                <button onclick="exitToExternal()">크롬/사파리로 열기</button>
+            </div>
+
             <h1>원하는 버전을 선택하세요</h1>
             <div class="banner-wrapper">
                 <div id="pcBanner" class="banner pc-color">
@@ -50,33 +69,45 @@
     </div>
 
     <script>
-        // 관리자 모드 로직 (원본 유지)
+        // 카톡 감지 및 수동 탈출 로직
+        (function() {
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/kakaotalk/i)) {
+                document.getElementById('kakaoNotice').style.display = 'block';
+            }
+        })();
+
+        function exitToExternal() {
+            const targetUrl = window.location.href;
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/android/i)) {
+                location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+            } else if (ua.match(/iphone|ipad|ipod/i)) {
+                location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+            }
+        }
+
         let adminClickCount = 0;
         let adminClickTimer = null;
-
         function handleAdminClick() {
             adminClickCount++;
             clearTimeout(adminClickTimer);
             adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
-
             if (adminClickCount >= 5) {
                 document.getElementById('admin-modal').style.display = 'flex';
                 document.getElementById('admin-pw-input').focus();
                 adminClickCount = 0;
             }
         }
-
         function closeAdminModal() {
             document.getElementById('admin-modal').style.display = 'none';
             document.getElementById('admin-pw-input').value = '';
         }
-
         function checkAdminPassword() {
             const pw = document.getElementById('admin-pw-input').value;
             const _0x4f2 = (s) => s.split('').reverse().join('');
             const _0x91a = parseInt(_0x4f2("8712351"));
             const _0x22b = (Math.pow(10, 6) * 1.5) + 32178;
-
             if (pw && Number(pw) === _0x91a && (Number(pw) ^ 0) === _0x22b) {
                 sessionStorage.setItem('admin_auth', 'granted');
                 location.href = "admin.html";
@@ -85,12 +116,10 @@
                 closeAdminModal();
             }
         }
-
         document.getElementById('admin-pw-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkAdminPassword();
         });
     </script>
-
     <script src="index.js"></script> 
 </body>
 </html>
