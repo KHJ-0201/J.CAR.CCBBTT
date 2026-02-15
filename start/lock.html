@@ -6,41 +6,30 @@
     <link rel="stylesheet" href="../index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* [수정] 세로 길이를 획기적으로 줄인 초슬림 안내 바 */
+        /* [수정] 디자인 대개조: 세로 길이에 영향을 주지 않는 초슬림 버튼 */
         .external-link-section {
             display: none; 
             width: 100%;
-            background: #fee500; 
-            padding: 2px 10px; /* 세로 여백을 극한으로 줄임 */
-            border-radius: 6px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            flex-direction: row; 
-            align-items: center;
-            justify-content: space-between;
-            height: 32px; /* 전체 높이를 딱 고정 */
-        }
-        .external-link-section p {
-            margin: 0 !important;
-            font-size: 0.65rem !important; /* 글자 크기 대폭 축소 */
-            color: #3c1e1e !important;
-            font-weight: 800 !important;
+            justify-content: center;
+            margin-bottom: 10px; /* 인증창과 간격 최소화 */
         }
         .external-btn-mini {
-            width: auto; 
-            height: 22px !important; /* 버튼 높이 아주 낮게 */
-            padding: 0 8px !important;
-            background: #3c1e1e !important;
-            color: white !important;
-            font-size: 0.6rem !important; /* 버튼 글자 아주 작게 */
-            border-radius: 4px !important;
-            border: none;
-            font-weight: bold;
+            background: #fee500 !important; /* 카톡 노란색 */
+            color: #3c1e1e !important;
+            border: 1px solid #e6cf00 !important;
+            padding: 5px 12px !important;
+            border-radius: 20px !important; /* 둥근 캡슐 모양 */
+            font-size: 11px !important; /* 글자 크기 최소화 */
+            font-weight: 800 !important;
             cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            line-height: 1 !important;
+            height: auto !important; /* 높이 고정 해제 */
+            width: auto !important;
         }
 
         /* 기존 순정 디자인 유지 */
-        .auth-modal { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 25px; text-align: center; max-width: 420px; width: 95%; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
+        .auth-modal { background: rgba(255, 255, 255, 0.9); padding: 25px; border-radius: 25px; text-align: center; max-width: 420px; width: 95%; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
         .class-selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 8px 0 15px 0; }
         .class-option { flex: 0 0 calc(14% - 6px); min-width: 45px; position: relative; }
         .class-option input { position: absolute; opacity: 0; cursor: pointer; width: 1px; height: 1px; pointer-events: none; }
@@ -51,12 +40,9 @@
 
         @media (max-width: 768px) {
             body { padding: 0; margin: 0; display: flex; align-items: flex-start; justify-content: center; height: 100vh; padding-top: 20px; }
-            .auth-modal { width: 90% !important; padding: 15px 12px !important; }
-            .auth-modal h2 { font-size: 1.2rem !important; margin-top: 0; }
-            .auth-modal p { font-size: 0.8rem !important; margin-bottom: 5px !important; }
+            .auth-modal { width: 90% !important; padding: 20px 15px !important; }
+            .auth-modal h2 { font-size: 1.3rem !important; margin-top: 0; }
             .class-option { flex: 0 0 calc(23% - 6px); min-width: 60px; margin-bottom: 4px; }
-            input[type="text"], input[type="password"] { height: 38px !important; font-size: 0.95rem !important; }
-            button { height: 42px !important; font-size: 1rem !important; }
         }
     </style>
 </head>
@@ -64,8 +50,7 @@
     <div class="auth-overlay">
         <div class="auth-modal">
             <div class="external-link-section" id="kakaoOnly">
-                <p>⚠️ 카톡 이용 중이신가요?</p>
-                <button class="external-btn-mini" onclick="exitToExternal()">사파리/크롬 열기</button>
+                <button class="external-btn-mini" onclick="exitToExternal()">Safari/Chrome 열기 ↗</button>
             </div>
 
             <h2 onclick="handleAdminClick()" style="user-select: none; cursor: default;">학생 인증</h2>
@@ -111,22 +96,23 @@
         }
     })();
 
-    // [아이폰 완벽 대응] iOS에서 사파리를 강제로 깨우는 최신 배선
+    // [아이폰/안드로이드 통합] 외부 브라우저 호출 로직 최적화
     function exitToExternal() {
         const targetUrl = window.location.href.split('/start/')[0] + '/index.html';
         const ua = navigator.userAgent.toLowerCase();
 
         if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1) {
-            // [정비 핵심] 아이폰에서 로딩만 돌고 안 나갈 때는 이 공식 파라미터가 유일한 정답입니다.
-            location.href = 'kakaotalk://web/openExternalBrowser?url=' + encodeURIComponent(targetUrl);
+            // 아이폰: 사파리 강제 호출을 위한 표준 파라미터 적용
+            location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
         } else if (ua.indexOf('android') > -1) {
+            // 안드로이드: 크롬 강제 실행
             location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
         } else {
             window.location.href = targetUrl;
         }
     }
 
-    // --- 사장님 원본 스크립트 그대로 유지 ---
+    // --- 사장님 원본 Firebase/로그/관리자 기능 보존 ---
     const firebaseConfig = {
         apiKey: "AIzaSyB3lciTRWoJ1aXQQJH6JgNC4aJnXj6Ewog",
         authDomain: "khj-cbtbase.firebaseapp.com",
