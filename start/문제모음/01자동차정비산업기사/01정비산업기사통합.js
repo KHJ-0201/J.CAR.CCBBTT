@@ -28,7 +28,7 @@ function sendDataToTeacher(score, roundName, results) {
     
     set(newPostRef, {
         name: studentName,
-        subject: "객관식(산업기사)",
+        subject: "객관식",
         round: roundName,
         score: score.toFixed(2),
         date: timeStr,

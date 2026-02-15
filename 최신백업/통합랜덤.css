@@ -1491,3 +1491,125 @@ body.dark-mode .option-btn {
     white-space: normal !important;
     line-height: 1.1 !important;
 }
+
+/* 1. 주관식 버튼 전용 네온 애니메이션 (광채 두께 강화) */
+@keyframes neon-pulse-purple {
+    0% {
+        box-shadow: 0 0 5px rgba(99, 102, 241, 0.6);
+        transform: scale(1);
+    }
+    50% {
+        /* 모바일에서도 보이도록 그림자 반경을 60px까지 확장 */
+        box-shadow: 0 0 25px rgba(99, 102, 241, 0.9), 0 0 50px rgba(99, 102, 241, 0.5);
+        transform: scale(1.04); 
+        filter: brightness(1.3);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(99, 102, 241, 0.6);
+        transform: scale(1);
+    }
+}
+
+/* 2. 버튼 기본 설정 및 광택 효과 */
+button[onclick*="location.href"] {
+    animation: neon-pulse-purple 2.2s infinite ease-in-out !important;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.5) !important; /* 테두리를 더 굵게 */
+    z-index: 1;
+}
+
+/* 3. 모바일 전용 보정 (화면이 작을 때 효과를 더 진하게) */
+@media (max-width: 768px) {
+    button[onclick*="location.href"] {
+        /* 모바일은 배터리 절약을 위해 애니메이션을 살짝 빠르게 하여 눈에 띄게 함 */
+        animation-duration: 1.8s !important;
+        /* 배경색 자체에 약간의 그라데이션을 주어 입체감 강화 */
+        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+    }
+    
+    /* 광택 효과 선명도 조절 */
+    button[onclick*="location.href"]::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -100%;
+        width: 60%; /* 광택 폭을 더 넓게 */
+        height: 200%;
+        background: linear-gradient(
+            to right, 
+            rgba(255,255,255,0) 0%, 
+            rgba(255,255,255,0.5) 50%, /* 광택 투명도를 0.3에서 0.5로 강화 */
+            rgba(255,255,255,0) 100%
+        );
+        transform: rotate(30deg);
+        animation: shine-sweep 2.5s infinite; /* 광택 주기도 단축 */
+    }
+}
+
+@keyframes shine-sweep {
+    0% { left: -120%; }
+    30% { left: 150%; }
+    100% { left: 150%; }
+}
+
+/* 1. 네온 애니메이션 엔진 (모바일 호환성 강화 버전) */
+@keyframes neon-pulse-purple {
+    0% {
+        box-shadow: 0 0 3px rgba(99, 102, 241, 0.3);
+        transform: scale(1) translateZ(0); /* 하드웨어 가속 활성화 */
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.6), 0 0 30px rgba(99, 102, 241, 0.3);
+        transform: scale(1.01) translateZ(0); /* 모바일 인식률을 위해 1.005에서 1.01로 미세 상향 */
+    }
+    100% {
+        box-shadow: 0 0 3px rgba(99, 102, 241, 0.3);
+        transform: scale(1) translateZ(0);
+    }
+}
+
+/* 2. 설정 패널 영역 장착 */
+.settings-panel-slim.glass-card {
+    /* 모바일 브라우저 전용 접두사 추가 */
+    -webkit-animation: neon-pulse-purple 2.5s infinite ease-in-out !important;
+    animation: neon-pulse-purple 2.5s infinite ease-in-out !important;
+    
+    border: 1.5px solid rgba(99, 102, 241, 0.5) !important; /* 모바일 시인성을 위해 테두리 살짝 강화 */
+    
+    /* 모바일에서 렌더링을 강제하기 위한 속성 */
+    will-change: transform, box-shadow;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* 3. 모바일 환경 최적화 (768px 이하) */
+@media (max-width: 768px) {
+    .settings-panel-slim.glass-card {
+        /* 모바일에서 더 빠르게 움직여서 눈에 띄게 함 */
+        -webkit-animation-duration: 1.8s !important;
+        animation-duration: 1.8s !important;
+        
+        /* 모바일 전용 배경 그라데이션 (입체감 강화) */
+        background: linear-gradient(145deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.1)) !important;
+    }
+    
+    /* 패널 내부에도 살짝 지나가는 광택 효과 추가 */
+    .settings-panel-slim.glass-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -120%;
+        width: 70%;
+        height: 200%;
+        background: linear-gradient(
+            to right, 
+            rgba(255,255,255,0) 0%, 
+            rgba(255,255,255,0.3) 50%, 
+            rgba(255,255,255,0) 100%
+        );
+        transform: rotate(25deg);
+        animation: shine-sweep 3s infinite; /* 버튼보다 약간 느리게 설정하여 고급스럽게 */
+        pointer-events: none; /* 클릭 방해 금지 */
+    }
+}
