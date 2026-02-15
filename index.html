@@ -1,26 +1,24 @@
 <!DOCTYPE html>
+<script>
+    // [1순위 정비] 엔진을 켜기 전에 차선부터 확인합니다.
+    (function() {
+        var ua = navigator.userAgent.toLowerCase();
+        var targetUrl = window.location.href;
+        
+        if (ua.indexOf('kakaotalk') > -1) {
+            // 카카오톡 브라우저라면 화면을 그리거나 검문을 시작하기 전에 튕겨냅니다.
+            if (ua.indexOf('android') > -1) {
+                location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+            } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
+                location.replace(targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1');
+            }
+        }
+    })();
+</script>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script>
-        (function() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const targetUrl = window.location.href;
-            
-            if (userAgent.match(/kakaotalk/i)) {
-                // 카톡이라면 보안 검사고 뭐고 일단 밖으로 튕겨냅니다.
-                if (userAgent.match(/android/i)) {
-                    location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
-                } else if (userAgent.match(/iphone|ipad|ipod/i)) {
-                    location.replace(targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1');
-                }
-                // 카톡 브라우저의 다음 코드 실행을 중단시킵니다.
-                return; 
-            }
-        })();
-    </script>
     <title>버전 선택</title>
     <link rel="stylesheet" href="index.css"> 
 </head>
