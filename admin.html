@@ -30,12 +30,9 @@
         .container { max-width: 1400px; margin: 0 auto; }
 
         /* [신규] 📊 데이터 관제 모니터 스타일 */
-        .usage-monitor { 
-            background: #1e293b; color: white; padding: 15px 25px; border-radius: 12px; 
-            display: flex; gap: 30px; align-items: center; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .usage-item { display: flex; flex-direction: column; gap: 4px; }
-        .usage-label { font-size: 0.8rem; color: #94a3b8; font-weight: 700; }
+        .usage-monitor { background: #1e293b; color: white; padding: 15px 25px; border-radius: 12px; display: flex; gap: 30px; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .usage-item { display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; flex: 1; }
+        .usage-label { font-size: 0.8rem; color: #94a3b8; font-weight: 700; line-height: 1.3; }
         .usage-value { font-size: 1.1rem; font-weight: 900; color: #f8fafc; }
         .usage-bar-bg { width: 150px; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; margin-top: 5px; }
         .usage-bar-fill { height: 100%; background: #38bdf8; width: 0%; transition: 0.8s ease-out; }
@@ -103,8 +100,13 @@
             body { padding: 10px; font-size: var(--admin-font-size); } 
             header { flex-direction: column; align-items: flex-start !important; gap: 5px; margin-bottom: 15px; }
             header h1 { font-size: 1rem !important; }
-            .usage-monitor { flex-direction: column; gap: 15px; padding: 15px; } /* 모바일 모니터 조절 */
-            .usage-bar-bg { width: 100%; }
+            /* 📊 모바일 베너 최적화 (제목 2줄 + 가운데 정렬 버전) */
+            .usage-monitor { flex-direction: row; gap: 8px; padding: 10px; margin-bottom: 10px; justify-content: space-between; align-items: stretch; }
+            .usage-item { flex: 1; gap: 2px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; }
+            .usage-label { font-size: 0.6rem; line-height: 1.2; word-break: keep-all; height: 1.6rem; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 700; }
+            .usage-value { font-size: 0.75rem; white-space: nowrap; font-weight: 900; color: #f8fafc; }
+            .usage-bar-bg { width: 100%; height: 5px; margin-top: 2px; }
+          
             .admin-controls { padding: 10px; flex-direction: column; align-items: flex-start; gap: 10px; }
             .admin-controls div { font-size: 14px; width: 100%; }
             .admin-controls button { width: 100%; font-size: 14px; padding: 8px; }
@@ -130,14 +132,14 @@
 
     <div class="usage-monitor">
         <div class="usage-item">
-            <span class="usage-label">📦 저장 데이터 실시간 용량 (최대 1GB)</span>
+            <span class="usage-label">📦 저장 데이터 실시간 용량<br>(최대 1GB)</span>
             <div style="display:flex; align-items:center; gap:10px;">
                 <div class="usage-bar-bg"><div id="usage-bar" class="usage-bar-fill"></div></div>
                 <span id="usage-percent" class="usage-value">0% (0MB)</span>
             </div>
         </div>
         <div class="usage-item">
-            <span class="usage-label">📅 트래픽 초기화 디데이 (매월 1일)</span>
+            <span class="usage-label">📅 트래픽 초기화 디데이<br>(매월 1일)</span>
             <span id="reset-dday" class="usage-value">D-?</span>
         </div>
         <div class="usage-item">
