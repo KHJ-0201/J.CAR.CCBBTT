@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script>
+        (function() {
+            // [보안 1] 경로 설정 (관리자 페이지가 폴더 밖에 있다면 'start/lock.html')
+            // 현재 위치에서 start 폴더 안의 lock.html을 찾아가도록 설정합니다.
+            const redirectPath = 'start/lock.html'; 
+
+            // [보안 2] 출입증 확인 (관리자 인증 키인 'admin_auth'로 검사)
+            if (sessionStorage.getItem('admin_auth') !== 'granted') {
+                window.location.replace(redirectPath);
+                return;
+            }
+
+            const evict = () => window.location.replace(redirectPath);
+
+            // [보안 3] 메인 감시 엔진 (실시간 디버거 감시)
+            setInterval(function() {
+                const start = Date.now();
+                debugger; 
+                if (Date.now() - start > 100) {
+                    evict();
+                }
+            }, 200);
+
+            // [보안 4] 단축키 및 우클릭 원천 차단
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            window.addEventListener('keydown', function(e) {
+                // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U 차단
+                if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && [73, 74].includes(e.keyCode)) || (e.ctrlKey && e.keyCode === 85)) {
+                    e.preventDefault();
+                    evict();
+                }
+            });
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 관제 센터 - 오답 풀이 수업 모드</title>
