@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기종 선택</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f8fafc; }
+        .btn { width: 80%; max-width: 300px; padding: 20px; margin: 10px; border: none; border-radius: 15px; color: white; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
+        .android { background: #34a853; }
+        .ios { background: #000000; }
+    </style>
+</head>
+<body>
+    <h2>📱 기종을 선택해주세요</h2>
+    <p>외부 브라우저에서 안전하게 시작합니다.</p>
+    <button class="btn android" onclick="exitTo('android')">삼성/안드로이드</button>
+    <button class="btn ios" onclick="exitTo('ios')">아이폰/Safari</button>
+
+    <script>
+        function exitTo(os) {
+            // 현재 주소에서 '휴대폰기종선택.html'만 떼고 'index.html'로 보냅니다.
+            const targetUrl = window.location.href.replace('start/기종선택.html', 'index.html');
+            if (os === 'android') {
+                location.href = 'intent://' + targetUrl.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+            } else {
+                location.href = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'open_external_browser=1';
+            }
+        }
+    </script>
+</body>
+</html>
