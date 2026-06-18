@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>자동차CBT시험</title>
+    <link rel="stylesheet" href="../index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        /* [추가] 외부 브라우저 버튼 스타일 */
+        .external-link-btn { display: none; width: 100%; background: #fee500; color: #3c1e1e; padding: 8px; border-radius: 12px; margin-bottom: 5px; text-align: center; font-size: 0.85rem; font-weight: bold; border: 1px solid #e6cf00; cursor: pointer; box-sizing: border-box; text-decoration: none; -webkit-touch-callout: default !important; }
+
+        /* [추가] 아이폰 전용 안내 문구 디자인 */
+        #iphoneNotice { display: none; font-size: 0.75rem; color: #ef4444; font-weight: 800; margin-bottom: 10px; line-height: 1.4; word-break: keep-all; }
+
+        /* 기존 디자인 유지 */
+        .auth-modal { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 25px; text-align: center; max-width: 420px; width: 95%; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
+        .class-selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 8px 0 15px 0; }
+        .class-option { flex: 0 0 calc(14% - 6px); min-width: 45px; position: relative; }
+        .class-option input { position: absolute; opacity: 0; cursor: pointer; width: 1px; height: 1px; top: 0; left: 0; margin: 0; padding: 0; pointer-events: none; }
+        .class-label { display: block; padding: 10px 0; background: #f1f5f9; border: 2px solid transparent; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; text-align: center; box-sizing: border-box; }
+        .class-option input:checked + .class-label { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
+        input[type="text"], input[type="password"], input.pw-mask { width: 100%; height: 45px; margin-bottom: 10px; padding: 0 15px; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; }
+        .pw-mask {
+            -webkit-text-security: disc;
+            text-security: disc;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.08em;
+        }
+        .class-option-wide { flex: 0 0 calc(28% - 6px); min-width: 72px; }
+        .class-option-wide .class-label { font-size: 0.78rem; padding-left: 4px; padding-right: 4px; }
+        button { width: 100%; height: 50px; background: #2563eb; color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+
+        @media (max-width: 768px) {
+            body { padding: 0; margin: 0; display: flex; align-items: flex-start; justify-content: center; height: 100vh; padding-top: 20px; }
+            .auth-modal { width: 90% !important; padding: 20px 15px !important; }
+            .auth-modal h2 { font-size: 1.5rem !important; margin-top: 5px; }
+            .auth-modal p { font-size: 0.9rem !important; margin-bottom: 10px !important; }
+            .class-option { flex: 0 0 calc(23% - 6px); min-width: 60px; margin-bottom: 4px; }
+            .class-label { padding: 8px 0; font-size: 0.95rem; }
+            input[type="text"], input[type="password"], input.pw-mask { height: 42px !important; font-size: 1rem !important; margin-bottom: 8px !important; }
+            .class-option-wide { flex: 0 0 calc(46% - 6px); min-width: 100px; }
+            .class-option-wide .class-label { font-size: 0.88rem; }
+            button { height: 48px !important; font-size: 1.1rem !important; margin-top: 5px; }
+        }
+
+        .external-school-btn { display: block; width: 95%; max-width: 420px; background: #f8fafc; color: #1e40af; padding: 12px; border-radius: 12px; margin: 0 auto 20px auto; text-align: center; font-size: 1rem; font-weight: 800; border: 2px solid #e2e8f0; text-decoration: none; box-sizing: border-box; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); }
+        .external-school-btn:hover { background: #f1f5f9; border-color: #2563eb; }
+    </style>
+</head>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+    <div class="auth-overlay" style="display: flex; flex-direction: column; align-items: center; padding-top: 40px;">
+        
+        <a href="https://khj-0201.github.io/Busan.teacher.Work/" class="external-school-btn">
+            🏛️ 부산자동차직업학교 바로가기
+        </a>
+
+        <div class="auth-modal">
+            <div id="iphoneNotice">아이폰은 위 노란 버튼을 1초간 꾹 눌러서...</div>
+            <a id="iosSafariLink" href="javascript:void(0);" class="external-link-btn" onclick="exitToExternal()">
+                ⚠️ 카톡 탈출 (사파리/크롬 열기)
+            </a>
+            
+            <h2 onclick="handleAdminClick()" style="user-select: none; cursor: default;">학생 인증</h2>
+            <p>정보를 정확히 입력하세요.</p>
+            
+            <div style="text-align:left; font-size:0.8rem; font-weight:700; color:#64748b; margin-bottom:5px; margin-left:5px;">교실 선택</div>
+            <div class="class-selector">
+                <label class="class-option"><input type="radio" name="classSelect" value="501"><span class="class-label">501</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="601"><span class="class-label">601</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="602"><span class="class-label">602</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="603"><span class="class-label">603</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="701"><span class="class-label">701</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="702"><span class="class-label">702</span></label>
+                <label class="class-option"><input type="radio" name="classSelect" value="703"><span class="class-label">703</span></label>
+                <label class="class-option class-option-wide"><input type="radio" name="classSelect" value="수료생"><span class="class-label">수료생</span></label>
+            </div>
+
+            <input type="text" id="userNameInput" placeholder="성함 (예: 홍길동)" autocomplete="name">
+            <div id="reservedNamePwWrap" style="display:none; text-align:left; margin-bottom:8px;">
+                <div style="font-size:0.78rem; font-weight:700; color:#7c3aed; margin:0 0 5px 5px;">관리자 전용 이름 · 추가 비밀번호 필요</div>
+                <input type="text" id="reservedNamePwInput" class="pw-mask" placeholder="관리자 추가 비밀번호" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+            </div>
+            <input type="text" id="pwInput" class="pw-mask" placeholder="Password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="4" autocorrect="off" autocapitalize="off" spellcheck="false">
+            
+            <button id="authBtn" onclick="handleAuth()">인증 및 시작하기</button>
+            <p id="errorMsg" style="display:none; color:red; margin-top:5px; font-size:0.85rem;">정보가 올바르지 않습니다.</p>
+        </div>
+    </div>
+
+    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:15px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.5); width:300px;">
+            <h3 style="margin-bottom:20px; color:#2563eb;">관리자 인증</h3>
+            <input type="text" id="admin-pw-input" class="pw-mask" placeholder="비밀번호 입력" style="width:90%; padding:10px; font-size:1.2rem; border:2px solid #ddd; border-radius:8px; margin-bottom:20px; text-align:center;" inputmode="numeric" pattern="[0-9]*" maxlength="20" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button onclick="checkAdminPassword()" style="padding:10px 20px; background:#2563eb; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">확인</button>
+                <button onclick="closeAdminModal()" style="padding:10px 20px; background:#eee; color:#666; border:none; border-radius:8px; cursor:pointer;">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script src="lock.js"></script>
+</body>
+</html>

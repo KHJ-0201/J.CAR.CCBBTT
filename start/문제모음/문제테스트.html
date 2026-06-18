@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제 유형 테스트 (4지선다 · O/X · 줄긋기)</title>
+    <link rel="stylesheet" href="./문제테스트.css">
+</head>
+<body>
+    <div class="app">
+        <header class="top-bar">
+            <h1>문제 유형 테스트</h1>
+            <p class="subtitle">4지선다 2 · O/X 2 · 줄긋기 2 — Go Live 확인용</p>
+        </header>
+
+        <section id="intro-screen" class="screen">
+            <div class="card intro-card">
+                <h2>데모 시험</h2>
+                <ul class="intro-list">
+                    <li><span class="badge badge-mc">4지선다</span> 2문항</li>
+                    <li><span class="badge badge-ox">O/X</span> 2문항</li>
+                    <li><span class="badge badge-match">줄긋기</span> 2문항</li>
+                </ul>
+                <p class="hint">줄긋기: 왼쪽 클릭 → 오른쪽에 마우스를 올리면 점선 미리보기 → 오른쪽 클릭으로 고정. 고정된 오른쪽을 다시 클릭하면 왼쪽만 활성화된 채 선이 마우스를 따라갑니다.</p>
+                <button type="button" id="btn-start" class="btn primary">시작하기</button>
+            </div>
+        </section>
+
+        <section id="quiz-screen" class="screen hidden">
+            <div class="progress-wrap">
+                <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+                <span id="progress-text" class="progress-text">1 / 6</span>
+            </div>
+
+            <div id="type-tag" class="type-tag">4지선다</div>
+            <div id="question-area" class="card question-card"></div>
+
+            <nav class="nav-row">
+                <button type="button" id="btn-prev" class="btn ghost" disabled>이전</button>
+                <button type="button" id="btn-next" class="btn primary">다음</button>
+            </nav>
+        </section>
+
+        <section id="result-screen" class="screen hidden">
+            <div class="card result-card">
+                <h2>채점 결과</h2>
+                <p id="score-summary" class="score-summary"></p>
+                <div id="result-list" class="result-list"></div>
+                <button type="button" id="btn-retry" class="btn primary">다시 풀기</button>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="./문제테스트.js"></script>
+</body>
+</html>
