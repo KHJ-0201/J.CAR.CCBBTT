@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360">
+  <rect width="720" height="360" fill="#ffffff"/>
+  <text x="360" y="26" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="700" fill="#1e293b">릴레이 회로</text>
+  <rect x="40" y="70" width="64" height="110" rx="6" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+  <line x1="54" y1="92" x2="90" y2="92" stroke="#334155" stroke-width="3"/>
+  <line x1="58" y1="152" x2="86" y2="152" stroke="#334155" stroke-width="3"/>
+  <text x="72" y="128" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#1e293b">12V</text>
+  <rect x="250" y="80" width="200" height="160" rx="10" fill="#fff" stroke="#1e293b" stroke-width="2"/>
+  <text x="350" y="108" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1e293b">RELAY</text>
+  <circle cx="290" cy="150" r="16" fill="none" stroke="#334155" stroke-width="2"/>
+  <circle cx="410" cy="150" r="16" fill="none" stroke="#334155" stroke-width="2"/>
+  <path d="M306,150 Q350,128 394,150" fill="none" stroke="#334155" stroke-width="2"/>
+  <line x1="290" y1="200" x2="410" y2="200" stroke="#334155" stroke-width="2"/>
+  <line x1="350" y1="188" x2="350" y2="212" stroke="#334155" stroke-width="2"/>
+  <text x="270" y="255" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13" font-weight="700" fill="#1e293b">S1</text>
+  <text x="430" y="255" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13" font-weight="700" fill="#1e293b">S2</text>
+  <text x="270" y="72" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13" font-weight="700" fill="#1e293b">B</text>
+  <text x="430" y="72" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13" font-weight="700" fill="#1e293b">L</text>
+  <line x1="104" y1="92" x2="290" y2="92" stroke="#334155" stroke-width="2"/>
+  <line x1="290" y1="92" x2="290" y2="134" stroke="#334155" stroke-width="2"/>
+  <line x1="410" y1="92" x2="410" y2="70" stroke="#334155" stroke-width="2"/>
+  <line x1="410" y1="70" x2="560" y2="70" stroke="#334155" stroke-width="2"/>
+  <circle cx="600" cy="70" r="18" fill="#fff" stroke="#2563eb" stroke-width="2"/>
+  <line x1="588" y1="58" x2="612" y2="82" stroke="#2563eb" stroke-width="2"/>
+  <line x1="612" y1="58" x2="588" y2="82" stroke="#2563eb" stroke-width="2"/>
+  <text x="640" y="76" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#334155">부하</text>
+  <line x1="618" y1="70" x2="680" y2="70" stroke="#334155" stroke-width="2"/>
+  <line x1="680" y1="70" x2="680" y2="300" stroke="#334155" stroke-width="2"/>
+  <line x1="72" y1="152" x2="72" y2="300" stroke="#334155" stroke-width="2"/>
+  <line x1="72" y1="300" x2="680" y2="300" stroke="#334155" stroke-width="2"/>
+  <text x="140" y="318" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#64748b">차체 접지</text>
+  <line x1="290" y1="166" x2="290" y2="230" stroke="#334155" stroke-width="2"/>
+  <line x1="410" y1="166" x2="410" y2="230" stroke="#334155" stroke-width="2"/>
+  <g transform="translate(500,200)">
+    <circle cx="0" cy="0" r="16" fill="#fff" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="-10" y1="-10" x2="10" y2="10" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="10" y1="-10" x2="-10" y2="10" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="0" y1="16" x2="0" y2="50" stroke="#334155" stroke-width="2"/>
+    <line x1="-10" y1="50" x2="10" y2="50" stroke="#334155" stroke-width="3"/>
+  </g>
+  <text x="500" y="270" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#b45309">테스트 램프</text>
+  <line x1="484" y1="200" x2="430" y2="150" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 3"/>
+</svg>
