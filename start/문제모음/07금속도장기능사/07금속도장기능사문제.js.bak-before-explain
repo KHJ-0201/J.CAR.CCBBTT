@@ -1,0 +1,4048 @@
+// 통합문제.js
+export const pageConfig = {
+    pageTitle: '금속도장기능사 마스터 CBT',
+    headerTitle: '◀ 금속도장기능사',
+    linkButton: {
+        label: '문제출처',
+        href: 'https://www.comcbt.com',
+    },
+};
+
+// 회차 그룹 틀 (quizSets 순서 1부터). from 비우면 해당 그룹은 표시 안 됨.
+// 예) { title: "시판 문제", from: 1, to: 10 }
+export const roundGroups = [
+    { title: "시판 문제 유형" },
+    { title: "AI 문제 유형" },
+    { title: "옛날 문제 유형", from: 1 },
+];
+
+export const quizSets = [
+    {
+        id: "old_16년01월",
+        "roundName": "금속도장기능사\n16년01월",
+    // #region 금속도장기능사n16년01월 repairData
+    "repairData": [
+        {
+            "question": "보기에서 설명한 특수 도료는 무엇인가 ?<img src=\"data:image/jpeg;base64,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eXv4vmf+aI/pI2DBl7+L5n/miP6SNgwFRh6pUqsVwpoFQmsy5iH2XozsYJKenZbIIW6lQOptXpi347UfdOtfFh/Xw8wYBH47UfdOtfFh/XweO1H3TrXxYf18PMGAR+O1H3TrXxYf18HjtR90618WH9fDzBgEfjtR90618WH9fB47UfdOtfFh/Xw8wYBH47UfdOtfFh/XweO1H3TrXxYf18PMGAR+O1H3TrXxYf18HjtR90618WH9fDzBgEfjtR90618WH9fB47UfdOtfFh/Xw8wYBH47UfdOtfFh/XweO1H3TrXxYf18PMGAR+O1H3TrXxYf18HjtR90618WH9fDzBgEfjtR90618WH9fB47UfdOtfFh/Xw8wYBH47UfdOtfFh/XweO1H3TrXxYf18PMGAR+O1H3TrXxYf18HjtR90618WH9fDzBgEfjtR90618WH9fB47UfdOtfFh/Xw8wYBH47UfdOtfFh/XweO1H3TrXxYf18PMGAR+O1H3TrXxYf18HjtR90618WH9fDzBgEfjtR90618WH9fB47UfdOtfFh/Xw8wYBH47UfdOtfFh/XweO1H3TrXxYf18PMGAR+O1H3TrXxYf18HjtR90618WH9fDzBgEuW2JaXavNmRHIhnzQ+2w6tCloSGGm/NoKk3JbJ4J4I9eAYdYMB/9k=\" alt=\"1번 문제 이미지\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:12px 0;\">",
+            "options": [
+                "선저 도료",
+                "징크리치 페인트",
+                "하이빌드 도료",
+                "스트리퍼블 페인트"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "래커 프라이머 특성에 관한 설명으로 틀린 것은 ?",
+            "options": [
+                "내후성이 좋다 .",
+                "건조성이 좋다 .",
+                "부착성이 떨어진다 .",
+                "래커를 전색제로 사용한 프라이머이다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "에멀션탈지의 특징을 설명한 것으로 틀린 것은 ?",
+            "options": [
+                "냉수로는 완전히 세정이 불가능하다 .",
+                "탈지력은 중간 정도로 때가 많은 것은 제거하기 어렵다 .",
+                "알카리 세척제를 가열하여 유지를 제거하는데 사용한다 .",
+                "탈지가 끝난 뒤에는 온수로 씻어 남은 유화제나 때를 제 거한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "도장 시 용제가 증발하며 주위에 습기를 흡수하여 도막에 안 개 낀 것 같은 모양이 발생하는 것을 방지하기 위한 대책이 아닌 것은 ?",
+            "options": [
+                "전처리를 충분히 한다 .",
+                "지건성 신너를 사용한다 .",
+                "피도면을 예열하여 습기를 제거한다 .",
+                "습도가 높은 상황에서 작업하지 않는다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "주로 방청을 목적으로 사용되는 도료는 ?",
+            "options": [
+                "수성페인트 도료",
+                "합성수지 도료",
+                "에나멜 도료",
+                "광명단 도료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도장에서 콤파운드의 사용 용도로 옳은 것은 ?",
+            "options": [
+                "탈지",
+                "광택",
+                "샌딩",
+                "박리"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "백색 안료가 아닌 것은 ?",
+            "options": [
+                "리토폰",
+                "아연화",
+                "백색티탄",
+                "산화크롬"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "내산 및 내열성을 현저히 증대시키며 보일러 , 요업 등의 부품 으로 사용하는 것은 ?",
+            "options": [
+                "알루미늄 주철",
+                "티탄 주철",
+                "합금 주철",
+                "니켈 주철"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도료용 안료가 갖추어야 할 특성이 아닌 것은 ?",
+            "options": [
+                "분산성이 없을 것",
+                "독성이 없을 것",
+                "은폐력 , 착색력이 좋을 것",
+                "내광성 , 내후성 , 내수성 , 내용제성이 좋을 것"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "철강의 산세에 사용하는 산의 종류 중 산화물을 용해시키는 능력이 크고 산세 속도가 빠른 것은 ?",
+            "options": [
+                "염산",
+                "황산",
+                "인산",
+                "질산"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도료에 사용되는 합성수지 중 열경화성 수지가 아닌 것은 ?",
+            "options": [
+                "스티롤수지",
+                "멜라민수지",
+                "폴리우레탄수지",
+                "에폭시수지"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "유성도료의 특징이 아닌 것은 ?",
+            "options": [
+                "건조 시간이 빠르다 .",
+                "도장이 용이하며 특히 붓 작업이 쉽다 .",
+                "피도장물과의 부착성이 좋다 .",
+                "도료의 휘발성이 적어 도막의 살오름이 좋다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "보일류와 안료를 혼합하여 만든 도료는 ?",
+            "options": [
+                "주정 도료",
+                "유성 페인트",
+                "에멀션 도료",
+                "비닐수지 도료"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "용제에 대한 설명으로 틀린 것은 ?",
+            "options": [
+                "비점이 150 ℃ 이상인 것을 고비점 용제라 한다 .",
+                "비점이 100 ℃ 이하인 것을 저비점 용제라 한다 .",
+                "전용제를 단독 사용해선 수지를 용해하기 어렵다 .",
+                "희석제를 첨가하여 도료의 점도를 조절할 수 있다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "피도물의 재료 중 알루미늄에 관한 설명으로 틀린 것은 ?",
+            "options": [
+                "은백색의 경금속으로 전기 전도도가 좋다 .",
+                "전연성이 좋으며 판으로 용이하게 가공할 수 있다 .",
+                "도료의 밀착성이 매우 좋아 전처리가 필요 없다 .",
+                "이온화 경향이 커서 표면이 산화되기 쉽다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "금속 또는 비철금속 표면에 있는 유지류를 제거할 목적으로 사용하는 것은 ?",
+            "options": [
+                "박리제",
+                "탈지제",
+                "첨가제",
+                "중화제"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "이산화티타늄 (TiO 2 ) 으로 코팅된 운모조각으로 이루어진 안료 이며 , 도막에 진주와 같은 느낌을 주는 것은 ?",
+            "options": [
+                "방청안료",
+                "체질안료",
+                "마이카안료",
+                "메탈릭안료"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "전기적 기능을 가진 도료가 아닌 것은 ?",
+            "options": [
+                "전계완화도료",
+                "대전방지도료",
+                "전파흡수도료",
+                "탄성외장도료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "안정장비인 보호구에 해당되지 않는 것은 ?",
+            "options": [
+                "방독마스크",
+                "스틸 울",
+                "보안면",
+                "보안경"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "붓에 주로 많이 사용되는 재료와의 연결이 틀린 것은 ?",
+            "options": [
+                "페인트 붓 - 말털 , 돼지털",
+                "바니시 붓 - 말털 , 양털",
+                "래커 붓 - 돼지털 ",
+                "수성 붓 - 양털"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "균열현상 ( 갈라짐 ) 의 원인 중 틀린 것은 ?",
+            "options": [
+                "약한 하도에 용해력이 강한 상도 도장을 할 경우",
+                "하도 건조가 불충분할 때 상도 도장을 할 경우",
+                "거친 사포로 연마작업을 할 경우",
+                "건조 목재가 수분을 함유하고 있거나 팽창 계수가 큰 금 속에 도장을 할 경우"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "롤러 브러시 도장의 특징으로 틀린 것은 ?",
+            "options": [
+                "면적이 넓은 평면도장에 능률적이다 .",
+                "도장작업의 시간이 단축된다 .",
+                "주위 환경을 오염시키지 않는다 .",
+                "높고 , 구석진 부분도 칠하기 쉽다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "에어 트랜스포머에 대한 설명으로 틀린 것은 ?",
+            "options": [
+                "교반 날개에 의해 도료를 교반하여 항상 균일한 도료를 사용하기 위해 필요하다 .",
+                "에어를 임의의 압력으로 조절하고 또 압축 공기 중의 수 분 , 유분 등의 오물을 제거한다 .",
+                "스프레이건의 가까운 곳에 트랜스포머를 설치하는 것이 좋다 .",
+                "에어 프랜스포머는 공기 청정부 , 공기 감압밸브 , 압력게 이지 등으로 구성된다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "미스트 (mist) 도료의 설명으로 옳은 것은 ?",
+            "options": [
+                "건을 통해 분무된 도료가 피도물에 도착되지 않고 상당 량이 무화되어 도료 입자가 흩어지는 것을 말한다 .",
+                "알코올계 용제애 수지류를 용해하여 용제 휘발에 의해 도막을 형성하는 도료를 말한다 .",
+                "도료가 유기 용제를 포함하고 있지 않는 도료를 말한다 .",
+                "수용성 무용제형 도료를 말한다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "흡상식 스프레이 건으로 도장 작업 중 조절할 수 없는 것 은 ?",
+            "options": [
+                "도료 토출량 조절",
+                "공기랍력 조절",
+                "도료 패턴 조절",
+                "건의 노즐 조절"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "보기와 같은 특성을 가진 도료는 ?<img src=\"data:image/jpeg;base64,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ycZrU6lgO3XTl1t0dSEvS4bzDanCQkKWgpBOATjJ+FW1w2FzmZqm8yWWltNryeELKCoY8cltH/H8zROhRbhFXFnxmZUZzG9l9sLQrByMg8HkA/0oEUO8X96+OWx+z2xvoNMvvOIubisNuKcSNoLAyodJXBIHjnzilqh5SrygPz32HoYEi3swYDsspUUqSXXwhBwk5cbCcjI3kK3Y2Nf7maV/92rL/wDsGv8A/NWblYYFylCU+JTb4QGy5FmPR1KSCSAotqTuAJOM5xk48mgxi0rlRLhdnJqgiVe7b1YHTKUMOByGlW4ONIdCvcOM4BQpJ25NXNS4/vDcMYzmw5x+oOVqolkt0WC/CTG6seQoqfTJWp8vEgA71OElXAA5J4AHgV4Z0/Z48TtItsixo5fbkFuM0GgXG1JWhR24yQpCf+MHigZ1n5zntPVFtjRcKbtTi5Ut0DIQ4WlNoa+G4peUs+oCU5Hvg1oKrwYMS3RkxbfFYix0ZKWmGwhCcnJwBx5oOdxmZMn+z3Sqp8iNADLLHa9BEuS86e3AQUBhbS0q2F3ckbxjJzgGr2lYq3Lm5HXepTgcjrDkeRGucZ1bZwCptUiQcEKKcqSkkZAyNwNat2wW1y1xLYWXERYSUJjdJ9xtbO1O1O1xKgsHaSM5yQSD5NFtsMC2yjKYEpx8oLYclTHpCkpJBISXFK2gkDOMZwM+BQZLRSXV3K0SZMh5xFytq7gw2LhLWI4HSGxYceWlzh/8W1OCjOORg0KuUr+5veMstY068Guk8XN7f+CwpWUp2qPOUjIHxNbOFabbb3334FviRnpBy84wwlCnTknKiBk8k+fjVd3TVjfgwoUq0wpUaC0GoyJTKXukgADAK8nwkf74FBQuy5SdcWPs2WXcwJgd6rxb2N9WLlScJVuUOMJOAfiK0lLYFgtFtfbetttiw1tpcQkRmw2nCygrylOASek3yRn3atwIbFvgx4UNvpxozSWmkZJ2oSAAMnk8AeaBVp7831P+qI/aRqKNPfm+p/1RH7SNRQRm0XqNcrlJtd1t7TM59L6mpNuW6pCg023gKS8gEYbB8etSdrqr5zZfpDv3NFFAdrqr5zZfpDv3NHa6q+c2X6Q79zRRQHa6q+c2X6Q79zR2uqvnNl+kO/c0UUB2uqvnNl+kO/c0drqr5zZfpDv3NFFAdrqr5zZfpDv3NHa6q+c2X6Q79zRRQHa6q+c2X6Q79zR2uqvnNl+kO/c0UUB2uqvnNl+kO/c0drqr5zZfpDv3NFFAdrqr5zZfpDv3NHa6q+c2X6Q79zRRQHa6q+c2X6Q79zR2uqvnNl+kO/c0UUB2uqvnNl+kO/c0drqr5zZfpDv3NFFAdrqr5zZfpDv3NHa6q+c2X6Q79zRRQHa6q+c2X6Q79zR2uqvnNl+kO/c0UUB2uqvnNl+kO/c0drqr5zZfpDv3NFFAdrqr5zZfpDv3NHa6q+c2X6Q79zRRQHa6q+c2X6Q79zR2uqvnNl+kO/c0UUB2uqvnNl+kO/c0drqr5zZfpDv3NFFAdrqr5zZfpDv3NHa6q+c2X6Q79zRRQHa6q+c2X6Q79zR2uqvnNl+kO/c0UUFmx2x+3ia7MlNyZc2R13ltMlpAIbQ2AlJUogbW0+VHnP8AsCiig//Z\" alt=\"26번 문제 이미지\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:12px 0;\">",
+            "options": [
+                "비닐수지 도료",
+                "비닐졸 도료",
+                "에멀션 도료",
+                "주정 도료"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "도장 전기기기설비 화재 진화에 가장 좋은 방법은 ?",
+            "options": [
+                "물로 진화한다 .",
+                "건조한 모래살포로 진화한다 .",
+                "이불 및 거적 등을 사용하여 진화한다 .",
+                "이산화탄소 및 할로겐화합물 소화기로 진화한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "용제 취급 중 용제가 피부에 묻었을 때의 조치로 가장 좋은 방법은 ?",
+            "options": [
+                "비눗물로 씻는다 .",
+                "그대로 건조 시킨다 .",
+                "다른 용제로 씻는다 .",
+                "크림을 바른다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "등유 (Kerosene) 의 인화점으로 옳은 것은 ?",
+            "options": [
+                "0~10 ℃",
+                "11~20 ℃",
+                "21~70 ℃",
+                "71~100 ℃"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "스프레이건을 사용하여 도장할 때의 설명으로 틀린 것은 ?",
+            "options": [
+                "피도장물과 스프레이건의 거리가 멀면 도막이 처진다 .",
+                "스프레이건은 도장면과 수직이 되도록 하고 평행하게 움 직여야 한다 .",
+                "소형 스프레이건으로 작업할 때 , 일반적으로 도장 간격 은 15~20cm 가 적당하다 .",
+                "스프레이건의 방아쇠는 2 단으로 되어 있어 , 1 단에서 공 기만 나오고 , 2 단 에서는 도료가 분출된다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "하도용 도료 중 티탄 화이트 , 무수규산 등을 안료로 사용하 는 것은 ?",
+            "options": [
+                "아미노 알키트 퍼티",
+                "폴리에스테르 퍼티",
+                "래커 퍼티",
+                "오일 퍼티"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "유기용제의 위험성과 가장 관계가 없는 것은 ?",
+            "options": [
+                "인화점",
+                "폭발한계",
+                "발화점",
+                "비중"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "탈지방법에 속하지 않는 것은 ?",
+            "options": [
+                "에멀션",
+                "알칼리",
+                "용제",
+                "정전기"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "유출식 점도계가 아닌 것은 ?",
+            "options": [
+                "스토머 점도계",
+                "레드우드 점도계",
+                "포드컵 점도계",
+                "오스왈드 점도계"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "중도 도장의 목적이 아닌 것은 ?",
+            "options": [
+                "금속면의 방청",
+                "피도면의 평활성 부여",
+                "하도와 상도간의 밀착성 부여",
+                "퍼티의 상도흡수 방치로 인해 광택저하 방지"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "건식 부스의 특징을 설명한 것으로 틀린 것은 ?",
+            "options": [
+                "도착 효율이 높다 .",
+                "페수처리 설비가 필요 없다 .",
+                "구조가 간단하고 소량의 도장에 유리하다 .",
+                "연속적으로 많은 양을 도장할 수 있다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도장작업 도중이나 건조 과정에서 발생하는 결함이 아닌 것 은 ?",
+            "options": [
+                "백악화",
+                "오랜지 필",
+                "블리딩",
+                "분화구 "
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "일반적인 도장의 공정별 순서로 옳은 것은 ?",
+            "options": [
+                "바탕조정 → 하도 → 퍼티 및 연마 → 중도 → 상도 → 광택",
+                "퍼티 및 연마 → 하도 → 바탕조정 → 중도 → 상도 → 광택",
+                "퍼티 및 연마 → 바탕조정 → 하도 → 중도 → 상도 → 광택",
+                "하도 → 바탕조정 → 퍼티 및 연마 → 중도 → 상도 → 광택"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "쇼트 블라스트 작업의 설명으로 틀린 것은 ?",
+            "options": [
+                "작업 비용이 저렴하다 .",
+                "일반적으로 원심력 투사법이 사용된다 .",
+                "처리 속도가 빠르나 분진의 비산이 있다 .",
+                "탈청 효과가 높고 대량 처리가 가능하다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "조작이 간단하여 투명 도료나 수지 용액의 점측정에 사용되 는 것은 ?",
+            "options": [
+                "모세관 점도계",
+                "기포 점도계",
+                "스토머 점도계",
+                "B 형 점도계"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "오일 퍼티에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "사용 전색제는 유성 바니시 등을 사용한다 .",
+                "사용 안료는 제질안료 , 아연화 등이 있다 .",
+                "오일 퍼티의 두께는 0.2~0.4mm 정도가 표준이다 .",
+                "내후성은 좋으나 부착성이 좋지 않다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "휘발건조형 도료는 무엇인가 ?",
+            "options": [
+                "불포화 폴리에스테르 수지도료",
+                "고형에폭시 수지도료",
+                "고형폴리에틸렌 도료",
+                "래커비닐수지 도료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도장 작업 후 도막에 밀감 껍질 모양의 요철이 발생한 결함 은 ?",
+            "options": [
+                "곰보 자국",
+                "핀홀",
+                "오렌지 필",
+                "기포"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "불포화 폴리에스테르 수지 도료의 설명으로 틀린 것은 ?",
+            "options": [
+                "정화될 때 체적 수축이 크고 부착성이 좋지 못하다 .",
+                "도막은 유연성이 좋고 내후성이 뛰어나다 .",
+                "무용제형 도료이기 때문에 1 회 도장으로 두꺼운 도막을 얻을 수 있다 .",
+                "주로 목재 도장 및 퍼티로 이용되고 FRP, 탱크 라이닝용 등으로 이용되기도 한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "숩식부스의 워터 커튼으로 사용하지 않는 것은 ?",
+            "options": [
+                "아연판",
+                "알루미늄판",
+                "강철판",
+                "스테인리스판"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "메탈릭 도장을 두껍게 도포하면 은분이 자유로이 운동하여 금속분이 무늬를 만들어 외관상 얼룩이 발생하는데 , 이를 방지하는 방법으로 틀린 것은 ?",
+            "options": [
+                "규정된 점도로 작업한다 .",
+                "건의 운행 속도를 느리게 한다 .",
+                "피도면과의 거리를 멀리하여 도장한다 .",
+                "규정된 신나를 사용하여 배합 비율을 맞춘다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 탈지제 중 알칼리 세척제가 아닌 것은 ?",
+            "options": [
+                "수산화나트륨",
+                "탄산나트륨",
+                "염화나트륨",
+                "산인산나트륨"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "열풍대류 건조 장치의 설명으로 틀린 것은 ?",
+            "options": [
+                "열 공기를 매체로 한다 .",
+                "직접 가열식과 간접 가열식이 있다 .",
+                "중유 , 경유 등 액체 연료만 사용한다 .",
+                "전도 및 대류 현상을 응용한 건조 장치이다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "눈의 망막에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "안구벽은 섬유막 , 혈관막 , 신경막의 세 겹의 막으로 이루 어져 있다 .",
+                "망막은 얇고 투명한 막으로 카메라의 조리개와 같은 기 능을 한다 .",
+                "간상세포는 망막의 주변부에 분포하여 형태와 명암을 인 지하는 역할을 한다 .",
+                "원추세포는 망막의 중앙부인 중심과 부근에 분포하여 형 태와 색체를 인지하는 역할을 한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "빨강 드레스를 입고 무대 출연을 하려고 할 때 드레스 색이 좀 더 깨끗하고 맑게 보이려면 무대 배경을 무슨 색의 천으 로 꾸미면 좋은가 ?",
+            "options": [
+                "주황",
+                "청록",
+                "노랑",
+                "파랑"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "색의 조화를 설명한 것으로 틀린 것은 ?",
+            "options": [
+                "색상을 한색계로 하면 서늘하고 정적이다 .",
+                "명도가 높은 색을 주로 하면 밝고 경쾌하다 .",
+                "색상과 명도를 같게 하면 동적이고 활기가 있다 .",
+                "채도가 높은 색을 주로 하면 화려하고 자극적이다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 현색계의 가장 대표적인 색체계는 어느 것인가 ?",
+            "options": [
+                "CIE 표준 색체계",
+                "XYZ 색체계",
+                "NCS 색체계",
+                "먼셀 색체계"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 색체와 미각의 연결이 가장 바르게 된 것은 ?",
+            "options": [
+                "단맛 - 연두색 , 초록색의 배색",
+                "신맛 - 연두색 , 노란색의 배색",
+                "쓴맛 - 연녹색 , 회색 , 연파랑 , 회색의 배색",
+                "짠맛 - 빨간색 , 주황색 , 노란색의 배색"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "색체는 대표적인 시각 현상이지만 , 인간의 다른 감각들과 공통되는 특성이 있다 . 이들 감각 기관과의 교류 현상은 ?",
+            "options": [
+                "색의 심리작용",
+                "색의 상징",
+                "색의 연상",
+                "색의 공감각"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "색입체에 대한 설명 중 옳은 것은 ?",
+            "options": [
+                "색의 3 속성을 3 차원의 공간 속에 계통적으로 배열한 것 이다 .",
+                "색상은 직선으로 , 명도는 방사선으로 , 채도는 원으로 나 타낸다 .",
+                "색상은 직선으로 , 명도는 원으로 , 채도는 방사선으로 나 타낸다 . ",
+                "색상은 방사선으로 , 명도는 원으로 , 채도는 직선으로 배 열한 것이다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 먼셀 색체계의 기준색이 아닌 것은 ?",
+            "options": [
+                "Red",
+                "Orange",
+                "Yellow",
+                "Blue"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "색료의 3 원색이 아닌 것은 ?",
+            "options": [
+                "red",
+                "Yellow",
+                "cyan",
+                "magenta"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 그림에서 색체의 팽창과 수축현상을 비교한 설명으로 옳은 것은 ?<img src=\"data:image/jpeg;base64,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\" alt=\"58번 문제 이미지\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:12px 0;\">",
+            "options": [
+                "A 의 빨강은 팽창되고 B 의 파랑은 수축되어 보인다 .",
+                "A, B 의 빨강과 파랑은 모두 수축되어 보인다 .",
+                "A, B 의 빨강과 파랑은 모두 팽창되어 보인다 .",
+                "A 의 빨강은 수축되고 B 의 파랑은 팽창되어 보인다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 색의 혼합에 대한 설명으로 틀린 것은 ?",
+            "options": [
+                "1 차색끼리의 혼합은 2 차색이 된다 .",
+                "색의 혼합은 가법혼합과 감산혼합 , 중간혼합 등이 있다 .",
+                "색의 혼합은 서로 다른 색이 섞이는 것을 말한다 .",
+                "혼합하기 전의 원색을 3 차색이라 하고 가장 중요하게 다 룬다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "면적 비례에 따른 배색 시 주조색 , 보조색 , 강조색의 면적비 로 가장 옳은 것은 ? ( 단 , 주조색 : 보조색 : 강조색 순서 )",
+            "options": [
+                "30:20:50",
+                "40:30:30",
+                "50:40:10",
+                "70:20:10 "
+            ],
+            "answer": 3,
+            "explain": ""
+        }
+    ]
+    // #endregion
+},
+    {
+        id: "round_2",
+        "roundName": "금속도장기능사\n11년02월",
+    // #region 금속도장기능사n11년02월 repairData
+    "repairData": [
+        {
+            "question": "불포화 폴리에스테르와 용제의 역할을 하는 스티렌모노머가 중합 개시제나 촉매의 작용으로 화학반응을 일으켜서 경화되 므로 거의 100% 가 도막이 되는 퍼티는 ?",
+            "options": [
+                "래커 퍼티",
+                "오일 퍼티",
+                "폴리에스테르 퍼티",
+                "아미노알키드 퍼티"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "가소제는 도료의 조성분류 중 어디에 속하는가 ?",
+            "options": [
+                "도막형성 주요소",
+                "도막형성 부요소",
+                "합성수지류",
+                "안료"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "내산 및 내열성을 현저히 증대시키며 보일러 , 요업 등의 부품 으로 사용하는 주철은 ?",
+            "options": [
+                "알루미늄 주철",
+                "티탄 주철",
+                "합금 주철",
+                "니켈 주철"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "제청 공정에 대한 설명이다 . 옳지 않은 것은 ?",
+            "options": [
+                "불산 등을 사용하는 산세법은 화학적 제청이다 .",
+                "경질의 두꺼운 녹은 동력공구법이 효과적이다 .",
+                "열팽창 계수의 차이를 이용한 샌드 블라스트법이 있다 .",
+                "다량의 녹을 제거 할 때는 수공구법은 적당하지 않다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "스테인리스강은 연강에 약 몇 % 의 크롬이 함유된 것인가 ?",
+            "options": [
+                "6~10%",
+                "12~14%",
+                "18~20%",
+                "22~24%"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "인산아연 피막에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "형성된 피막은 결정성이다 .",
+                "처리액의 주성분은 인산과 제 1 인산아연이다 .",
+                "호페이트와 포스포필라이트가 화성 된다 .",
+                "피막의 중량은 0.3~0.7g/m 2 으로 회흑색이다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "용제의 휘발만으로 도막을 형성하는 도료는 ?",
+            "options": [
+                "비닐 수지 도료",
+                "에멀션 도료",
+                "크실렌",
+                "래커"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "페놀수지 도료에 관한 사항 중 틀린 것은 ?",
+            "options": [
+                "나무와 철재면에 적합하다 .",
+                "용제로서 미네럴스피릿이 사용된다 .",
+                "내수성 , 내약품성이 유성계 도료에 비하여 나쁘다 .",
+                "주로 브러시 도장이나 스프레이 도장을 한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 1 액형 폴리우레탄수지 도료가 아닌 것은 ?",
+            "options": [
+                "유변성형 폴리우레탄수지 도료",
+                "폴리올 경화형 폴리우레탄 수지 도료",
+                "습기 경화형 폴리우레탄수지 도료",
+                "블록 이소시아네트 경화형 폴리우레탄수지 도료"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "알칼리 탈지제가 가져야 할 구비조건으로 틀린 것은 ?",
+            "options": [
+                "표면장력이 높아야 한다 .",
+                "수세성이 양호하여야 한다 .",
+                "알칼리 함유량이 지속적으로 유지되어야 한다 .",
+                "유지를 용해할 수 있을 뿐 아니라 pH 8.3 이상의 용액 이어야 한다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 안료 중 방청안료는 ?",
+            "options": [
+                "탄산칼슘",
+                "황산바륨",
+                "아연말",
+                "크레이"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 열경화성 수지가 아닌 것은 ?",
+            "options": [
+                "에폭시 수지",
+                "아크릴 수지",
+                "요소 수지",
+                "페놀 수지"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 콤파운드 사용 목적으로 가장 좋은 것은 ?",
+            "options": [
+                "광택증진",
+                "색상부여",
+                "경도향상",
+                "투명효과"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 래커에나멜의 장점이 아닌 것은 ?",
+            "options": [
+                "속건성이다 .",
+                "광택이 우수하다 .",
+                "내수성이 , 부착성이 우수하다 .",
+                "도막이 두껍고 밀착성이 좋다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "정전 도장에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "피도물은 항상 접지할 것",
+                "노즐 청소시에는 금속제 솔을 사용할 것",
+                "도장 보스 내에 들어가는 사람은 모두 통전화를 신을 것",
+                "고압 발생기에는 파일럿 램프에 불이 켜지는지를 확인할 것"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 탄화수소계 ( 방향쪽 ) 용제가 아닌 것은 ?",
+            "options": [
+                "톨루엔",
+                "아세톤",
+                "크실렌",
+                "솔벤트나프타"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 용제를 설명한 것으로 틀린 것은 ?",
+            "options": [
+                "건조속도를 조절한다 .",
+                "작업성을 좋게 한다 .",
+                "도막에 평활성 ( 유동성 ) 을 부여하는 성분은 없다 .",
+                "일반적으로 유기용제를 사용하나 물을 사용할 때도 있 다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "래커 서페이서에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "건조속도가 빠르다 .",
+                "살붙임이 좋다 .",
+                "전색제는 래커이다 .",
+                "아연화 , 도토 ( 陶土 ) 등을 사용한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "근적외선 건조로에서 보통 전구와 피도물의 거리는 ?",
+            "options": [
+                "램프와 램프 간격의 1.0 배",
+                "램프와 램프 간격의 1.5 배",
+                "램프와 램프 간격의 2.5 배",
+                "램프와 램프 간격의 3.5 배"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "일반적인 샌드블라스트 작업에 관한 설명으로 틀린 것은 ?",
+            "options": [
+                "건식법과 습식법이 있다 .",
+                "모개 , 강철 알갱이 , 기타의 연마재를 사용한다 .",
+                "압축공기 등으로 금속표면에 분사시킨다 . ",
+                "충격력이나 마찰력으로 탈지하는 방법이다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "에어 스프레이 작업시 건의 운행속도로 가장 좋은 것은 ?",
+            "options": [
+                "30~60cm/sec",
+                "80~90cm/sec",
+                "100~120cm/sec",
+                "130~150cm/sec"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "알칼리 탐지에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "기름 이외의 오물도 제거된다 .",
+                "전해법을 이용하면 완전탈지가 가능하다 .",
+                "액을 자주 교환해주어야 하므로 비경제적이다 .",
+                "수세가 불충분하면 화성피막에 나쁜 영향을 준다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 기계적인 제청법이 아닌 것은 ?",
+            "options": [
+                "화성처리법",
+                "샌드블라스트법",
+                "불꽃제청법",
+                "동력공구법"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도막의 물리적 성질에 관한 시험법으로 틀린 것은 ?",
+            "options": [
+                "도막의 상태 시험",
+                "부착성 시험",
+                "내굴곡성 시험",
+                "침전 시험"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "폴리셔 (polisher) 는 어느 경우에 사용하는 공구인가 ?",
+            "options": [
+                "유지분을 닦는데",
+                "나무의 송질을 제거하는데",
+                "철면의 부식을 털어내는데",
+                "면을 연마하여 광택을 내는데"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "에어 컴프레셔 관련 기기 중 혼탁액인 드레인을 제거하는 것은 ?",
+            "options": [
+                "공기청정기",
+                "공기감압밸브",
+                "공기탱크",
+                "배관"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "안전 ㆍ 보건표지의 종류와 색상이 잘못 연결된 것은 ?",
+            "options": [
+                "금지표지 - 빨강",
+                "정지표지 - 노랑",
+                "안내표지 - 녹색",
+                "지시표지 - 청색"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도막의 내구성 시험기로 옳은 것은 ?",
+            "options": [
+                "묘화 시험기",
+                "염수분무 시험기",
+                "에릭센 시험기",
+                "크로스 커트 시험기"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "붓도장 작업의 장점으로 틀린 것은 ?",
+            "options": [
+                "누구나 손쉽게 취급할 수 있다 .",
+                "용구의 뒤처리가 쉽다 .",
+                "피도물을 임의로 골고루 도장할 수 있다 .",
+                "균일한 도막을 얻을 수 있다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도장설비에서 공기의 압력을 일정하게 유지시키고 공기를 정화하여 수분 및 유분 등의 이물질을 제거하는 것은 ?",
+            "options": [
+                "에어 클리너",
+                "에어 트랜스포머",
+                "공기 건조기",
+                "에어 레귤레이터"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도료 손실이 가장 많은 도장 방법은 ?",
+            "options": [
+                "에어 스프레이 도장",
+                "에어리스 스프레이 도장",
+                "정전 스프레이 도장",
+                "붓 도장 및 로울러 도장"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도장의 목적과 가장 관련이 없는 것은 ?",
+            "options": [
+                "물체보호",
+                "중량감소",
+                "색채조절",
+                "안전표시"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도장의 결함에 대한 설명 중 잘못된 것은 ?",
+            "options": [
+                "주름 현상 (wrinkling) 은 하도의 건조가 불충분할 때에 생 긴다 .",
+                "피막 현상 (skinning) 이 생기면 증발이 빠르고 용해력이 약한 용제를 사용한다 .",
+                "부품을 현상 (blistering) 에는 규정된 온도로 가열을 충분 히 한다 .",
+                "얼룩 현상 (gloss shitting) 시에는 균일하게 도장을 한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음은 전착도장의 장 ㆍ 단점에 대한 설명이다 . 옳은 것은 ?",
+            "options": [
+                "가열 온도가 낮고 중복 도장이 가능하다 .",
+                "도전성이 피도물이 아니면 도장이 곤란하다 .",
+                "금속 용출에 대한 공해 대책이 필요하지 않다 .",
+                "고점도 , 고농도의 도료를 사용하기 때문에 도료의 도착 효율이 좋다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도막형성 후에 일어나는 결함 중에 메탈릭 얼룩이 발생하는 원인과 가장 관계없는 것은 ?",
+            "options": [
+                "도장 점도가 낮을 때",
+                "신너의 증발이 너무 빠를 때",
+                "도료의 퍼짐성이 너무 많을 때",
+                "한 번에 너무 두껍게 도장했을 때"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "은폐력과 착색력을 가졌으며 , 색상을 부여하고 , 유기와 무기 안료로 구분되는 것은 ?",
+            "options": [
+                "방청안료",
+                "특수안료",
+                "착색안료",
+                "체질안료"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "도료의 물성을 좌우하는 인자로 거리가 먼 것은 ?",
+            "options": [
+                "원료의 종류",
+                "도장횟수",
+                "배합비",
+                "경화조건"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "열풍건조로 중 직접식에 대한 설명으로 적합하지 않은 사항 은 ?",
+            "options": [
+                "열교환기가 설치되어 있다 .",
+                "배기가스 연돌이 필요하다 .",
+                "열효율은 보통 90~95% 정도이다 .",
+                "일반적으로 하도건조에 사용된다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "분체도료의 도장에 대한 설명 중 옳지 않은 것은 ?",
+            "options": [
+                "무용제 도장법이다 .",
+                "저장이나 수송이 불편하다 .",
+                "유기용제로 인한 중독이 없는 저공해 도료이다 .",
+                "파도물에 도착시켜 가열하면 융해와 경화의 과정을 거쳐 도막이 만들어 진다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도료를 너무 묽게 하거나 , 너무 두껍게 도장했을 때 일어나  기 쉬운 불량은 ?",
+            "options": [
+                "겔화",
+                "곰보",
+                "줄무늬",
+                "흐름"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 연마기 사용시 사용 방향이 다른 것은 ?",
+            "options": [
+                "싱글 액션 샌더",
+                "더블 액션 샌더",
+                "오비탈 샌더",
+                "스트레이트 샌더"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "유기용제의 영향으로 나타나는 현상이 아닌 것은 ?",
+            "options": [
+                "혈액장해",
+                "간장장해",
+                "협착사고",
+                "마취작용"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "상도도장 작업이 끝난 후 40~80 ℃ 로 강제 건조하고자 할 때 가장 좋은 가열시간은 ?",
+            "options": [
+                "10 분 이하",
+                "20~30 분",
+                "40~50 분",
+                "1 시간 이상"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "금속의 전처리 과정에 속하지 않는 것은 ?",
+            "options": [
+                "탈지",
+                "프라이머",
+                "제철",
+                "화성피막"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "가스 중독시 조치할 사항으로 틀린 것은 ?",
+            "options": [
+                "신선한 공기가 있는 장소로 이동한다 .",
+                "추위를 느끼지 않도록 보온한다 .",
+                "머리를 높게 하여 바르게 눕게 한다 .",
+                "심한 경우 인공호흡이나 산소호흡을 시킨다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "도장작업 화재 진화에 가장 적합하지 않는 소화 설비는 ?",
+            "options": [
+                "포말소화설비",
+                "분말소화설비",
+                "수소소화설비",
+                "이산화탄소 및 할로겐 화합물 소화설비"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "에어 스프레이로 분무도장 작업시에 도료가 균일하게 나오 지 않을 경우의 원인이 아닌 것은 ?",
+            "options": [
+                "도료 점도가 낮다 .",
+                "도료 조인트의 풀림 또는 파손되었다 .",
+                "도료 용기의 공기구멍이 막혔다 .",
+                "도료 통로로 공기가 들어간다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "퍼티 도포작업에 대한 설명으로 틀린 것은 ?",
+            "options": [
+                "퍼티 도막을 1 회에 과도하게 작업하지 않도록 한다 .",
+                "주제와 경화제를 경우에 따라 자유로이 변화시켜 사용해 야 한다 .",
+                "핸드 블록은 퍼티를 수연마를 할 경우에 사용하는 공구 이다 .",
+                "퍼티 사용 전에 침전된 퍼티를 믹싱주걱을 이용해 충분 히 저어 혼합해서 사용한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "먼셀계의 색채 측정 중 종이띠를 만들어 휘어서 둥근테를 만들었을 때의 원둘레는 ?",
+            "options": [
+                "색상",
+                "순도",
+                "채도",
+                "명도"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 보기와 같은 연상을 일으키는 색은 ?<img src=\"data:image/jpeg;base64,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\" alt=\"50번 문제 이미지\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:12px 0;\">",
+            "options": [
+                "흰색",
+                "회색",
+                "검정",
+                "보라"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "안전색체 사용통칙 중 녹색의 표시 사항은 ?",
+            "options": [
+                "위험",
+                "주의",
+                "진행",
+                "멈춤"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 사항은 색채조절의 기본형을 설명한 것이다 . 잘못 설 명된 것은 ?",
+            "options": [
+                "사무실은 냉정하고 어두운 느낌",
+                "아동실은 따뜩하고 발랄한 느낌",
+                "화장실은 청결하고 산뜻한 느낌",
+                "거실은 안정감 , 침착성이 있는 느낌"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "보기는 가법혼색에 대한 내용이다 . () 안에 들어갈 순서로 옳 은 것은 ?<img src=\"data:image/jpeg;base64,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\" alt=\"53번 문제 이미지\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:12px 0;\">",
+            "options": [
+                "시안 - 마젠타 - 노랑 - 흰색",
+                "시안 - 녹색 - 주황 - 흰색",
+                "시안 - 노랑 - 마젠타 - 검정",
+                "시안 - 마젠타 - 노랑 - 검정"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "빨강의 물감 혼합에서 일어나는 현상으로 옳은 것은 ?",
+            "options": [
+                "검정을 섞으면 색상은 변하나 채도는 변하지 않는다 .",
+                ", 순색의 파랑을 섞으면 빨강보다 명도가 높은 보라가 된다 .",
+                "순색의 연두를 섞으면 회색이 되므로 두색은 보색 관계 이다 .",
+                "흰색과 검정을 섞으면 색상은 변하지 않으며 빨강의 탁 색이 된다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 수축색 ( 후퇴색 ) 은 ?",
+            "options": [
+                "명도가 높은 색",
+                "채도가 높은 색",
+                "한색과 명도가 낮은 색",
+                "난색과 채도가 높은 색"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 주목성이 큰 조건과 거리가 먼 것은 ?",
+            "options": [
+                "고명도의 색",
+                "고채도의 색",
+                "중성색과 한색",
+                "순색 , 원색"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "우리 눈으로 볼 수 있는 가시광선의 범위는 380nm~780nm 이다 . 600nm 에서 확인할 수 있는 색명은 ?",
+            "options": [
+                "청색",
+                "청록",
+                "황색 기미의 초록색",
+                "적색 기미의 주황색 "
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "배색할 때의 주의할 점과 거리가 먼 것은 ?",
+            "options": [
+                "전체에 공통적인 부분을 남긴다 .",
+                "색의 경중감을 이용한다 .",
+                "환경의 밝고 어두움을 고려한다 .",
+                "색상의 수를 될 수 있는 한 많이 한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "명시도에 대한 설명으로 옳은 것은 ?",
+            "options": [
+                "난색보다 한색의 명시도가 높다 .",
+                "난색보다 중성색이 명시도가 높다 .",
+                "고채도보다 저채도의 색이 명시도가 높다 .",
+                "저명도보다 고명도의 색이 명시도가 높다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "옛날부터 전해오는 습관적인 색 이름이나 지명 , 장소 , 식물 , 동물 등의 고유한 이름으로 붙여 놓은 색명은 ?",
+            "options": [
+                "기본색명",
+                "일반색명",
+                "관용색명",
+                "계통색명 "
+            ],
+            "answer": 2,
+            "explain": ""
+        }
+    ]
+    // #endregion
+},
+    {
+        id: "round_3",
+        "roundName": "금속도장기능사\n10년10월",
+    // #region 금속도장기능사n10년10월 repairData
+    "repairData": [
+        {
+            "question": "다음 중 에폭시수지 도료의 특징이라고 할 수 없는 것은 ?",
+            "options": [
+                "내열성이 좋다 .",
+                "방식성이 우수하다 .",
+                "소지에 대한 부착이 양호하다 .",
+                "상온 건조형은 경화제가 필요 없다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 에멀션 도료의 용제로 사용하는 것은 ?",
+            "options": [
+                "지방족 탄화수소계",
+                "방향족 탄화수소계",
+                "물",
+                "케톤류계"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 체질안료가 아닌 것은 ?",
+            "options": [
+                "클레이",
+                "규조토",
+                "티탄백",
+                "황산바륨"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 일반적으로 보수도장시 중도 연마작업에 사용되는 샌드페이퍼로 가장 적당한 것은 ?",
+            "options": [
+                "#40",
+                "#80",
+                "#180",
+                "#400"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 방청안료에 속하지 않는 것은 ?",
+            "options": [
+                "광명단",
+                "아연말",
+                "아산화동",
+                "아산화연"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "산세법에 사용되는 산 중 다른 산에 비하여 값이 싸고 , 철의 바탕 일부를 녹여서 수소 가스를 발생하며 , 녹을 철 표면으로 부터 제거시키며 5~11% 정도의 농도로 사용하는 산은 ?",
+            "options": [
+                "황산",
+                "인산",
+                "염산",
+                "질산"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도료용 합성수지 중 열경화성수지가 아닌 것은 ?",
+            "options": [
+                "아크릴수지",
+                "에폭시수지",
+                "요소수지",
+                "폐놀수지"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "우레탄퍼티의 일반적인 특성에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "내수성 , 경도가 좋다 .",
+                "1 액형과 2 액형이 있다 .",
+                "내약품성이 나쁘다 .",
+                "부착성 , 내충격성이 좋다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도료가 구비해야 할 조건으로 틀린 것은 ?",
+            "options": [
+                "속건성 또는 저온 경화성이라야 한다 .",
+                "평활하고 광택있는 고막을 형성해야 한다 .",
+                "도막은 내후성 화학적 저항성이 작아야 한다 .",
+                "도막은 단단하고 한편 유연하면 부착성이 좋아야 한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "탈지 용제의 사용 조건으로 틀린 것은 ?",
+            "options": [
+                "인화성이 작을 것",
+                "화학적으로 안전할 것",
+                "인체에 무해하고 가격이 저렴할 것",
+                "휘발성으로 금속표면에 남아 있을 것"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음을 설명하는 파도장물의 재료로 옳은 것은 ?",
+            "options": [
+                "주석",
+                "아연",
+                "구리",
+                "알루미늄"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "클리어 래커에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "연마성 , 살갖임이 좋다 .",
+                "불휘발분이 적고 도막은 연하다 .",
+                "산가가 낮은 클리어 래커는 금속의 변색 방지에 적합하 다 .",
+                "단독으로 외부에 사용하면 내후성이 좋지 않기 때문에 애커 에나멜에 혼합하여 사용한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 금속재료 중 철금속이 아닌 것은 ?",
+            "options": [
+                "주석",
+                "연철",
+                "강철",
+                "희선철"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "마스킹 테이프 중 수지 부품의 차열용으로 적당한 것은 ?",
+            "options": [
+                "플라스틱 테이프",
+                "메탈 테이프",
+                "철 테이프",
+                "종이 테이프"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "프라이머에 대한 특징 중 옳지 않은 것은 ?",
+            "options": [
+                "금속소지에 직접 도장된다 .",
+                "서페이서에 대한 부착성이 좋다 .",
+                "수분의 투과성이 좋다 .",
+                "온도변화에 순응성이 좋다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 중도용 도료에 관한 설명으로 틀린 것은 ?",
+            "options": [
+                "하도와 상도의 부착을 좋게 한다 .",
+                "보통 마무리 칠색과 다른 색을 사용한다 .",
+                "상도를 아름답게 하기 위하여 도장한다 .",
+                "퍼티의 흡입을 방지할 목적으로 사용한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "알칼리 탈지제가 구비하여야 할 조건이 아닌 것은 ?",
+            "options": [
+                "부식성이 없을 것",
+                "표면장력이 낮을 것",
+                "알칼리 함유량이 없을 것",
+                "pH 8.3 이상의 용액이 될 수 있을 것"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 마스킹 테이프의 선택 기준 설명으로 틀린 것은 ?",
+            "options": [
+                "내열성이 없을 것",
+                "내 ( 耐 ) 용제성이 강할 것",
+                "떼어내기 쉽고 , 접착제가 남지 않을 것",
+                "접착력이 안정하고 , 접착성이 양호할 것"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 보호구의 보관방법에 대한 설명으로 틀린 것은 ?",
+            "options": [
+                "광선이 잘 들고 통풍이 잘되는 장소에 보관할 것",
+                "발열성 물질을 보관하는 장소 주변에 가까이 두지 않을 것",
+                "모래 , 진흙 등이 묻은 경우는 깨끗이 씻고 그능에 건조 할 것 ",
+                "부식성 , 유해성 , 인화성 액체 , 기름 , 산 등과 혼합하여 보관하지 않을 것"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "에어리스 스프레이 도장 장치의 피스톤 펌프에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "압축 공기에 의해 왕복 운동을 한다 .",
+                "펌프의 배율이 일반적으로 1:20~1:40 이다 .",
+                "에어 모터와 피스톤 본체로 이루어진다 .",
+                "도료에 저압력을 가하게 한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "금속도장 작업시 온도의 한계를 32 ℃ 로 정하고 있다 . 작업 장 온도가 32 ℃ 이상일 때 제일 먼저 발생되는 도막의 결함 은 ?",
+            "options": [
+                "흐름 현상",
+                "광택 손실",
+                "불완전 경화",
+                "핀홀 현상"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "주로 유류 등에 사용되는 액상 또는 기체상의 연료성 화재 는 ?",
+            "options": [
+                "A 급 화재",
+                "B 급 화재",
+                "C 급 화재",
+                "D 급 화재"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도장의 기능에 대한 내용으로 틀린 것은 ?",
+            "options": [
+                "배 및 등에 수중 생물의 부착 및 생육을 억제한다 .",
+                "열 , 음파 , 전기 등의 전도성을 변화시키지 못한다 .",
+                "피도장물의 표면의 마찰 계수를 변화시킨다 .",
+                "피도장물의 표면을 보호하여 녹과 부식 등을 억제한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "금속도장에서 표면처리 목적과 가장 관계가 없는 것은 ?",
+            "options": [
+                "부착",
+                "외관",
+                "내구성",
+                "기능성"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "적외선 건조로의 장점에 해당되지 않는 것은 ?",
+            "options": [
+                "위생적이다 .",
+                "취급이 용이하다 .",
+                "열효율이 좋고 건조가 빠르다 .",
+                "물체의 형상에 영향을 주지 않는다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "에어 컴프레셔 (air compressor) 취급 시 꼭 지켜야 할 사항 은 ?",
+            "options": [
+                "매일 1 회 이상 V 밸트를 새 것으로 교환한다 .",
+                "매일 1 회 이상 압력계를 분해 소제한다 .",
+                "매일 1 회 이상 에어탱크를 온수로 세척 및 부족한 온수 를 보충한다 .",
+                "공기탱크의 배기밸브를 열어 1 일 1 회 이상 드레인을 배 출한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "정전 고장 보스 내에 착용하는 신발은 ?",
+            "options": [
+                "고무창",
+                "가죽전화",
+                "합성수지창",
+                "통전화"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "에어리스 스프레이 도장작업에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "적은 동력으로 대량 분사가 가능하다 .",
+                "더스트의 날림이 적고 도료의 손실 및 도장실의 오염이 적다 .",
+                "건의 내부에서 압축 공기를 이용하여 도료를 미립화하는 방법으로 도장한다 .",
+                "도료에 직접 압력을 가해 아주 작은 노즐로 미립화하는 방법으로 도장한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "도막의 표면이 가루가 되어 광택을 잃고 손으로 가볍게 문 지르면 가루가 묻어나는 현상은 ?",
+            "options": [
+                "가스 체킹",
+                "얼룩",
+                "백악화",
+                "블리딩"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "퍼티 (putty) 의 목적으로 가장 옳은 것은 ?",
+            "options": [
+                "소지조정에 있다 .",
+                "색상을 선명하게 하기 위함이다 .",
+                "접착력을 좋게 하기 위함이다 .",
+                "메탈릭 도장의 효과를 높이기 위함이다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "에어 탱크의 공기 압력이 규정 이상 되면 컴프레서를 공회 전 시켜 모터나 컴프레서의 과부하를 방지하여 연속가동케 하는 장치는 ?",
+            "options": [
+                "에어밸브",
+                "흡기구",
+                "언로더",
+                "벨트"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "금속도장의 화성처리 목적으로 틀린 것은 ?",
+            "options": [
+                "금속 표면의 부식 증가",
+                "도장의 내구력을 증가",
+                "도료의 부착성 향상",
+                "도장의 미관 손상을 방지"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "유기용제의 종류별 특정색 표시가 옳은 것은 ?",
+            "options": [
+                "제 1 종 : 파랑",
+                "제 2 종 : 노랑",
+                "제 3 종 : 빨강",
+                "제 4 종 : 보라"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "붓의 관리에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "방충제가 든 상자에 넣어 보관한다 .",
+                "붓은 사용 후 비눗물에 삶아 깨끗이 씻어낸다 .",
+                "유성도료를 사용한 붓은 미네럴 스피릿으로 씻는다 .",
+                "셀락 니스를 사용한 붓은 알코올로 씻어낸다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "백악화 (chalking) 결함의 설명 중 틀린 것은 ?",
+            "options": [
+                "자외선에 약한 안료를 사용할 때 발생한다 .",
+                "동절기보다 자외선이 강한 하절기에 많이 발생한다 .",
+                "전색제에 비해 안료가 많은 경우에 발생한다 .",
+                "금속에 직접 수성 도료를 도장하였을 때 발생한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도장 중독의 예방과 관계 깊은 기기 및 설비는 ?",
+            "options": [
+                "진공청소기",
+                "부스",
+                "샌더 수연 ( 水硏 )",
+                "방폭등"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "수세식 부스의 수류판에 물을 순환시키는 이유는 ?",
+            "options": [
+                "물을 절약하기 위하여",
+                "냄새를 제거하기 위하여",
+                "혼합된 도료에 먼지를 막기 위하여",
+                "비산된 도료를 수조에 떨어뜨리기 위하여 "
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "작업 종료 후 에어스프레이건을 정비하여고 한다 . 꼭 해체 하여야 할 부분은 ?",
+            "options": [
+                "공기 캡",
+                "도료 조정 장치",
+                "공기 조정 장치",
+                "패턴 조정 장치"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도막의 내구성 시험기가 아닌 것은 ?",
+            "options": [
+                "촉진내후성 시험기",
+                "염수분무 시험기",
+                "가드너 시험기",
+                "낙사마모 시험기"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "상도 도장작업 전에 점검해야 될 사항이 아닌 것은 ?",
+            "options": [
+                "피도면이 거칠지 않고 평활한지 확인한다 .",
+                "경도와 밀착성이 우수한지 확인한다 .",
+                "왁스나 유분이 남아 있는지 확인한다 .",
+                "연마 가루나 지문이 남아 있지 않은지 확인한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "방청 효과가 크고 고도의 방청 처리가 필요한 철구조물 , 선 박 , 차량 등에 사용되며 , 아연말을 주체로 한 프라이머는 ?",
+            "options": [
+                "오일 프라이머",
+                "광명단 프라이머",
+                "합성수지 프라이머",
+                "징크리치 프라이머"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음의 도료 시험법 중 회전식 점도계는 ?",
+            "options": [
+                "오스왈드 점도계 (Ostwald viscometer)",
+                "레드우스 점도계 (Red wood viscometer)",
+                "스토머 점도계 (Stormer viscometer)",
+                "포드컵 점도계 (Ford cop viscometer)"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "녹을 제거시키는 제정방법 중 기계적 방법이 아닌 것은 ?",
+            "options": [
+                "스케링 해머법",
+                "프레임 크리너법",
+                "분사법",
+                "산세법"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도료 순환장치의 분류 중 순환 형식의 분류에 해당 하지 않는 것은 ?",
+            "options": [
+                "서브라인형",
+                "모노플로형",
+                "브랜치라인형",
+                "폴리플로형"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 탈청과 등시에 철강면에 얇은 층을 만들어 수세후 에도 철강면에 산화물이나 수산화물을 만들지 않는 것은 ?",
+            "options": [
+                "황산",
+                "염산",
+                "인산",
+                "질산"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "상도 도장 후 도막에 먼지나 티 등의 이물질이 부착되어 있 을 경우 제거하는데 가장 좋은 연마지는 ?",
+            "options": [
+                "#100~#300",
+                "#320~#400",
+                "#400~#600",
+                "#800~#1200"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 주걱의 재료로 가장 부적당한 것은 ?",
+            "options": [
+                "대나무",
+                "플라스틱",
+                "고무",
+                "비닐"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "포리셔의 취급 방법에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "회전운동으로 연마한다 .",
+                "평면 연마에 알맞다 .",
+                "적당한 압력으로 연마한다 .",
+                "모서리 등에 많이 사용한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 원색의 명도차가 가장 큰 것은 ?",
+            "options": [
+                "남색 - 노랑",
+                "빨강 - 연두",
+                "파랑 - 자주",
+                "보라 - 주황"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "먼셀 표색계 (Munsell) 에서 완전한 순백색의 명도는 ?",
+            "options": [
+                "0",
+                "5",
+                "10",
+                "14"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "명도 9 의 노랑과 명도 4 의 파랑을 반반씩 붙인 회전판을 돌 려서 나타나는 색의 명도는 ?",
+            "options": [
+                "명도 4 보다 낮게 된다 .",
+                "명도 9 보다 높게 된다 .",
+                "명도 9 와 같게 된다 .",
+                "명도 9 와 4 의 중간 명도가 된다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 가장 후퇴 , 수축의 성격을 띤 색은 ?",
+            "options": [
+                "다홍 , 연두 , 자주",
+                "노랑 , 주황 , 연두",
+                "빨강 , 보라 , 자주",
+                "청록 , 파랑 , 검정"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "안전 , 피난 , 진행 등에 사용하는 안전색은 ?",
+            "options": [
+                "빨강",
+                "주황",
+                "파랑",
+                "녹색"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "색채와 심리에서 빨간색을 설명한 것으로 틀린 것은 ?",
+            "options": [
+                "자극성과 활성이 강하고 흥분이 된다 .",
+                "불안을 초래하고 , 신경을 긴장시킨다 .",
+                "이 색을 장시간동안 보고 있으면 생리작용의 혼란이 온 다 .",
+                "식욕을 증진시키는 효과가 있어서 식당에서 많이 사용된 다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 색의 유사조화에 대한 설명으로 옳은 것은 ?",
+            "options": [
+                "색상의 차이를 크게 배색하였을 때에 얻어지는 조화를 말한다 .",
+                "색상환에서 거리가 가장 먼 보색끼리 배색하여 얻어지는 조화를 말한다 .",
+                "명도가 비슷한 인접 색상을 동시에 배색하였을 때 얻어 지는 색의 조화를 말한다 .",
+                "같은 색상에서 명도의 차이를 극단적으로 벌어지게 배색 할 때에 얻어지는 조화를 말한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "색 감각에 의해 나타나는 잔상과 가장 관계가 깊은 색상은 ?",
+            "options": [
+                "원래감각의 인근 유사 색상",
+                "원래감각과 보색관계에 있는 색상",
+                "원래감각에서 약간 둔화 된 밝기나 색상",
+                "원래감각에서 강화된 질의 밝기나 색상"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 색광혼색의 3 원색으로 옳은 것은 ?",
+            "options": [
+                "R, G, B",
+                "R, G, Y",
+                "M, Y, C",
+                "M, W, C"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "해링의 반대색설과 관계없는 것은 ? ",
+            "options": [
+                "흰색 - 검정",
+                "노랑 - 파랑",
+                "빨강 - 초록",
+                "연두 - 보라"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "먼셀 표색계의 표기 5R 4/14 에서 14 에 해당하는 것은 ?",
+            "options": [
+                "색상",
+                "채도",
+                "색명",
+                "명도"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 가장 따뜻한 느낌을 주는 색은 ?",
+            "options": [
+                "연두 , 보라 , 자주",
+                "빨강 , 자주 , 파랑",
+                "노랑 , 초록 , 남색",
+                "주황 , 노랑 , 다홍 "
+            ],
+            "answer": 3,
+            "explain": ""
+        }
+    ]
+    // #endregion
+},
+    {
+        id: "round_4",
+        "roundName": "금속도장기능사\n09년01월",
+    // #region 금속도장기능사n09년01월 repairData
+    "repairData": [
+        {
+            "question": "다음 중 감법혼색의 3 원색이 아닌 것은 ?",
+            "options": [
+                "Magenta",
+                "Yellow",
+                "Cyan",
+                "Green"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "먼셀 표준 20 색상환에서 자주색의 색명 기호는 ?",
+            "options": [
+                "RP",
+                "GY",
+                "YR",
+                "PB"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "먼셀 표색계에서 색입체의 설명으로 옳은 것은 ?",
+            "options": [
+                "색채를 사용하여 만든 등색상 삼각형",
+                "색을 속성에 따라 분류하고 , 그것을 계통적으로 배열한 것",
+                "색상에 따라 색환을 만들고 , 그것을 기하학적으로 배열한 것",
+                "여러 가지 색을 차례대로 늘어놓은 둥근 원"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 중간혼합이 아닌 것은 ?",
+            "options": [
+                "병치혼합",
+                "회전혼합",
+                "색팽이혼합",
+                "색잉크혼합"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "감법혼합에서 3 원색을 혼색하면 무슨 색이 되는가 ?",
+            "options": [
+                "검정색",
+                "흰색",
+                "밤색",
+                "자주색"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 색상환의 보색 관계로 틀린 것은 ?",
+            "options": [
+                "주황 - 파랑",
+                "자주 - 초록",
+                "빨강 - 파랑",
+                "연두 - 보라"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 동시대비와 가장 거리가 먼 것은 ?",
+            "options": [
+                "색상대비",
+                "면적대비",
+                "보색대비",
+                "명도대비"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "보기는 가법혼색에 대한 내용이다 . ( ) 안에 들어갈 순서로 옳 은 것은 ?<img src=\"data:image/jpeg;base64,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\" alt=\"8번 문제 이미지\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:12px 0;\">",
+            "options": [
+                "청록 - 자주 - 노랑 - 검정",
+                "청록 - 녹색 - 주황 - 흰색",
+                "청록 - 노랑 - 자주 - 검정",
+                "청록 - 자주 - 노랑 - 흰색"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 그림의 A 부분을 잘 나타나게 하려면 어느색이 가장 적 당한가 ?",
+            "options": [
+                "보라색",
+                "자주색",
+                "노랑색",
+                "파랑색"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "색의 수반감정 ( 隨班感情 ) 중 온도감에 대한 설명으로 옳은 것 은 ?",
+            "options": [
+                "온도감은 명도에는 관계가 있으나 채도와는 관계가 없 다 .",
+                "단파장쪽의 색이 따뜻하고 , 장파장 쪽의 색은 차다 .",
+                "무채색의 경우에는 명도가 높으면 따뜻하고 명도가 낮으 면 차갑다 .",
+                "온도감은 색상에 의한 효과가 대단히 크다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "색채의 종류와 표시 사항이 잘못 나열된 것은 ?",
+            "options": [
+                "초록 : 안전유도 , 피난방법",
+                "흰색 : 추가정보",
+                "빨강 : 화재안전 , 소화전",
+                "파랑 : 경고 / 주의"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "촉각은 시각을 보조하여 색의 특성이나 재료감 등을 더욱 증가 시키는 역할을 한다 . 촉각으로 느끼는 감각이 잘못 연 결된 것은 ?",
+            "options": [
+                "건조한 느낌 - 난색 계열",
+                "촉촉한 느낌 - 파랑과 청록 등의 한색 계열",
+                "부드러운 느낌 - 밝은 핑크 , 밝은 하늘색 , 밝은 노랑",
+                "강하고 딱딱한 느낌 - 상대적으로 어둡고 채도가 높은 색채"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "화학적 세정방법 중 알칼리 세정법은 검화작용에 의해 금속 표면의 유지분을 제거한다 . 다음 중 pH 가 가장 높은 알칼리 세정액에서 침식이 일어나는 금속은 ?",
+            "options": [
+                "주석",
+                "아연",
+                "알루미늄",
+                "규소철"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "인산계 처리에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "처리액을 희석하면 산비가 높아진다 .",
+                "유리인산의 농도가 증가하면 스파클이많아진다",
+                "스파클이 많아지면 인산철의 함유량이증가한다",
+                "인산철의 함유량이 증가되면 내식성이저하된다"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "내열성 , 전기절연성 등이 특히 우수하여 석유난로 , 보일러 등에 많이 사용되고 있는 도료는 ?",
+            "options": [
+                "멜라민 수지도료",
+                "프탈산 수지도료",
+                "열경화성 아크릴 수지도료",
+                "실리콘 수리도료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 페인트 도막 충진제로 사용하는 안료는 ?",
+            "options": [
+                "방청안료",
+                "알루미늄안료",
+                "유기안료",
+                "체질안료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "샌드블라스트에 사용되는 가장 적합한 모래의 이산화규소 함유량은 ?",
+            "options": [
+                "35% 이하 포함",
+                "50~60% 포함",
+                "70~80% 포함",
+                "95% 이상 포함"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도료가 구비해야 할 일반적인 조건으로 틀린것은 ? ",
+            "options": [
+                "도막은 내후성 , 화학적 저항성이 커야 한다 .",
+                "평활하고 광택 있는 도막을 형성해야 한다 .",
+                "도막은 단단하고 유연하며 , 충격이나 굽힘 등에 박리되 지 않아야 한다 .",
+                "속 건성 또는 고온경화성이라야 한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "중도 도료에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "하도와 상도의 중간에 도장하는 도료이다 .",
+                "상도면의 표면을 평활하게 하기 위한 것이다 .",
+                "하도면을 보호하는 역할을 한다 .",
+                "보통 상도면의 칠색과 유사한 것을 사용하지 않는다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "경도 , 부착성 , 가소성 , 내약품성이 우수하지만 폭로 ( 暴露 ) 에 의한 광택 소실 등의 내후성이 떨어지는 도료는 ?",
+            "options": [
+                "아크릴 수지도료",
+                "아미노 알키드 수지도료",
+                "에폭시 수지도료",
+                "유변성 폴리우레탄 수지도료"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "안료를 함유한 도료 중 전색제가 아닌 것은 ?",
+            "options": [
+                "티탄백",
+                "페놀수지",
+                "송진",
+                "아크릴수지"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 알칼리 세척제로서 구비하여야 할 조건 중 틀린 것 은 ?",
+            "options": [
+                "pH 8.3 이상의 용액이어야 한다 .",
+                "유지를 용해할 수 있어야 한다 .",
+                "표면장력이 높아야 한다 .",
+                "부식성이 심하지 않아야 한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "일반적으로 산세의 속도가 가장 빠른 산의 종료는 ?",
+            "options": [
+                "염산",
+                "황산",
+                "인산",
+                "질산"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 비철금속이 아닌 것은 ?",
+            "options": [
+                "구리",
+                "니켈",
+                "주석",
+                "연철"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 도료 중 열경화성수지에 해당 되지 않는 것은 ?",
+            "options": [
+                "멜라민수지",
+                "스티렌수지",
+                "페놀수지",
+                "에폭시수지"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 열경화성 아크릴 수지도료의 특성으로 틀린 것은 ?",
+            "options": [
+                "내후성이 우수하다 .",
+                "색상 보유력이 좋다 .",
+                "부착성 , 내오염성이 좋다 .",
+                "가열온도가 100 ℃ 이하이다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 건축물 , 선반 , 차량 , 교량의 내외부에 많이 사용되 는 도료는 ?",
+            "options": [
+                "실리콘 수지도료",
+                "래커계 도료",
+                "유성 도료",
+                "아크릴 수지도료"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "도료제조 공정에서 필요하지 않는 설비는 ?",
+            "options": [
+                "분산장치",
+                "침투장치",
+                "용해장치",
+                "여과장치"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도막에 유연성 , 부착성 , 내한성 , 내충격성 등을 부여할 목적 으로 첨가되어지는 것은 ?",
+            "options": [
+                "가소제",
+                "소포제",
+                "난연제",
+                "소광제"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "프라이머의 방청기능과 서페이서의 충전기능을 겸한 중도도 료는 ?",
+            "options": [
+                "오일 서페이서",
+                "래커 서페이서",
+                "아크릴 서페이서",
+                "아미노 알키드 퍼세이서"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "형상이 복잡한 피도물에 가장 적합한 도장 방법은 ?",
+            "options": [
+                "에어리스 도장법",
+                "전착 도장법",
+                "분체 도장법",
+                "정전 도장법"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도장 작업시 주의 사항이 틀린 것은 ?",
+            "options": [
+                "저온 다습을 피한다 .",
+                "바탕의 조정에 정성을 들인다 .",
+                "도료의 성능 성질에 적합한 도장 용구를 쓰며 항상 정비 해 둔다 .",
+                "도막을 두껍게 칠한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "액체 호닝장치의 설명으로 옳은 것은 ?",
+            "options": [
+                "압축공기의 물을 분사하는 장치이다 .",
+                "물과 모래를 수압에 의하여 혼합 분사하는 장치이다 .",
+                "모래를 압축공기로 분사하는 장치이다 .",
+                "물과 모래를 혼합하여 중력으로 분사하는 장치이다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "스프레이 건 분무 도장시 한쪽으로 굽는 활꼴 패턴의 원인 과 관계가 없는 것은 ?",
+            "options": [
+                "노즐의 한편에 먼지가 끼어 있다 .",
+                "도료의 점도가 낮다 .",
+                "공기 캡 중앙의 구멍과 도료 노즐 사이에 한곳이 막혔 다 .",
+                "공기 캡 또는 도료 노즐의 어느 면에 흠이 생겼다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "쇼트 블라스트 장치에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "장치가 밀폐식이어서 분진 분산이 없다 .",
+                "형식에는 수평식과 수직식이 있다 .",
+                "연소재를 전동날개의 원심력으로 투사하여 강재 표면의 흑피 등을 제거한다 .",
+                "6mm 이하의 강판에 적합한 작업이다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "알칼리 탈지법에 해당 되지 않는 것은 ?",
+            "options": [
+                "침적 세척법",
+                "분산 세척법",
+                "전해 세척법",
+                "에멀션 세척법"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "상도 페인트 1 회 도포량의 두께로 가장 적합한 것은 ?",
+            "options": [
+                "5~8 ㎛",
+                "10~15 ㎛ ",
+                "45~60 ㎛",
+                "30~35 ㎛"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "서페이서를 도포하는 목적과 직접적인 관계가 없는 것은 ?",
+            "options": [
+                "도막의 내후성을 강화하기 위하여",
+                "도면의 평활도를 조정하기 위하여",
+                "외적 충격에서 하지를 보호하기 위하여",
+                "상도 도료의 용제 침투를 막기 위하여"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 기공구 중 수연마 (wet sanding) 에 가장 적당한 것은 ?",
+            "options": [
+                "에어 샌더",
+                "유니버설 샌더",
+                "벨트 샌더",
+                "로터리 샌더"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "작은 구면이나 도막의 광택제거에 가장 적합한 연마제는 ?",
+            "options": [
+                "스틸 울",
+                "경석",
+                "숫돌",
+                "연마지"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 적외선전구 건조장치의 페인트 표면에 대한 적외선 전구 방사 흡수율이 가장 높은 색은 ?",
+            "options": [
+                "노란색",
+                "검정색",
+                "흰색",
+                "적갈색"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "열풍건저로의 특징과 가장 관련이 없는 것은 ?",
+            "options": [
+                "대류 열기이므로 형태에 구애받지 않는다 .",
+                "노 내의 온도 분포가 균일하다 .",
+                "색상에 따라 온도차가 없다 .",
+                "온도 관리가 불편하다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "붓의 종류와 그 붓에 주로 많이 사용되는 털 재료와의 연결 이 틀린 것은 ?",
+            "options": [
+                "페인트 붓 - 말털 , 돼지털",
+                "바니시 붓 - 말털 , 양털",
+                "래커 붓 - 돼지털",
+                "수성 붓 - 양털"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "공기 트랜스포머의 설명 중 틀린 것은 ?",
+            "options": [
+                "압축공기의 압력을 조절하는 장치이다 .",
+                "기름기를 여과시키는 장치이다 .",
+                "물기를 여과시키는 장치이다 .",
+                "도료를 여과하는 장치이다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "커튼 플로 코팅 도장의 설명으로 틀린 것은 ?",
+            "options": [
+                "평면상 물체를 연속적으로 도장하는데 적합하다 .",
+                "도막이 두꺼운 도장이 가능하고 균일한 도막 상태를 얻 을 수 있다 .",
+                "희석제가 비교적 많이 필요하다 .",
+                "수직면이나 복잡한 형상을 도장하는데 적합하다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "농도가 짙은 도료의 점도 측정용으로 적합한 것은 ?",
+            "options": [
+                "모세관 점도계",
+                "가드너 기포 점도계",
+                "스토머 점도계",
+                "침입 점도계"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "수연 작업시 사용한 물 ( 수분 ) 을 완전히 제거하지 않고 도장 했을 때 주로 발생되는 불량은 ?",
+            "options": [
+                "크래킹",
+                "핀홀",
+                "블리스터",
+                "엘로우잉"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "오일 프라이머를 도포하고 1 시간 건조시킨 후 래커 도료를 도포하였더니 결함이 발생하였다면 , 그 결함은 ?",
+            "options": [
+                "핀홀",
+                "번짐",
+                "오렌지필",
+                "블리스터"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "샌드 블라스트 작업에 따른 주된 위험 질병은 ?",
+            "options": [
+                "규폐증",
+                "중이염",
+                "일사병",
+                "백혈병"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도장작업 중 중독자에 대한 응급처치 사항으로 틀린 것은 ?",
+            "options": [
+                "통풍이 잘 되는 곳에서 안정시킨다 .",
+                "피복 등 신체의 압박을 제거한다 .",
+                "가스를 흡입한 것으로 판단되면 기도를 개방하고 상태를 조사한다 .",
+                "옷을 벗겨 체온을 내리게 한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "용제 취급 중 용제가 피부에 묻었을 때의 조치로 가장 적합 한 것은 ?",
+            "options": [
+                "비눗물로 씻는다 .",
+                "그대로 건조 시킨다 .",
+                "다른 용제로 씻는다 .",
+                "크림을 바른다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "재해의 발생 형태별 종류에 대한 설명으로 틀린것은 ?",
+            "options": [
+                "전도 : 사람이 평면상으로 넘어지는 사고",
+                "협착 : 전기 접촉 등으로 사람이 충격을 받는 사고",
+                "추락 : 사람이 비계 등에서 떨어진 사고",
+                "붕괴 : 비계가 무너진 사고"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "유기용제에 의한 예방 대책으로 틀린 것은 ?",
+            "options": [
+                "체내에 흡입을 방지한다 .",
+                "피부와의 접촉을 방지한다 .",
+                "안전모를 꼭 착용한다 .",
+                "유기용제용 안전마스크를 착용한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 가전제품의 상도용 도료로 많이 사용되는 도료는 ?",
+            "options": [
+                "페놀 수지도료",
+                "비닐 수지도료",
+                "아크릴 수지도료",
+                "에폭시 수지도료"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 퍼티 바르기 작업시 굴곡이 심한 부분의 도장에 가 장 적합한 주걱은 ?",
+            "options": [
+                "쇠 주걱",
+                "고무 주걱",
+                "나무 주걱",
+                "플라스틱 주걱"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "에어 컴프레서의 압력이 오르지 않는 경우의 원인은 ?",
+            "options": [
+                "흡입구가 막혀 있을 때",
+                "피스톤에 카본이 고여 있을 때",
+                "크랭크 케이스의 기름 부족",
+                "윤활유의 순환이 나쁠 때"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "굴곡 시험기의 주된 용도로 옳은 것은 ?",
+            "options": [
+                "유동성 측정",
+                "건조성 측정 ",
+                "부착성 측정",
+                "내구성 측정"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 메탈릭 얼룩 현상의 원인으로 볼 수 없는 것은 ?",
+            "options": [
+                "풍속이 느리고 온도가 낮다 .",
+                "스프레이 압력이 낮고 도막이 두껍다 .",
+                "도장의 점도가 낮다 .",
+                "스프레이 건 구경이 작다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도장 방법별 분류에 대한 설명 중 틀린것은 ?",
+            "options": [
+                "분체도장",
+                "전착도장",
+                "금속도장",
+                "정전도장"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "붓 도장의 장점으로 틀린 것은 ?",
+            "options": [
+                "누구나 쉽게 도장 할 수가 있다 .",
+                "옥내 · 외를 불문하고 , 피도장물의 대소에 관계없이 칠할 수 있다 .",
+                "소재의 구석구석까지 칠할 수 있다 .",
+                "속 건성 도장이 쉽다 . "
+            ],
+            "answer": 3,
+            "explain": ""
+        }
+    ]
+    // #endregion
+},
+    {
+        id: "round_5",
+        "roundName": "금속도장기능사\n08년02월",
+    // #region 금속도장기능사n08년02월 repairData
+    "repairData": [
+        {
+            "question": "다음 중 채도와 관련 없는 것은 ?",
+            "options": [
+                "순색",
+                "맑은 색",
+                "탁색",
+                "밝은 색"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 중간 혼합에 해당되는 것은 ?",
+            "options": [
+                "감산 혼합",
+                "회전 혼합",
+                "가산 혼합",
+                "색광 혼합"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 가장 후퇴 및 수축해 보이는 색은 ?",
+            "options": [
+                "고채도 , 고명도색",
+                "저채도 , 저명도색",
+                "저채도 , 고명도색",
+                "중채도 , 중명도색"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 색의 유사조화에 대한 설명으로 옳은 것은 ?",
+            "options": [
+                "빨강과 연두와 같은 배색조화를 말한다 .",
+                "같은 색상에서 명도의 차이를 극단적으로 벌어지게 배색 할 때에 얻어지는 조화를 말한다 .",
+                "서로 반대되는 배색끼리의 조화를 말한다 .",
+                "명도가 비슷한 인접 색상을 동시에 배색하였을 때 얻어지 는 색의 조화를 말한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "파랑 순색에 회색의 혼입량이 단계적으로 많아지면 ?",
+            "options": [
+                "청색이 되며 채도가 점점 낮아진다 .",
+                "청색이 되며 채도가 점점 높아진다 .",
+                "탁색이 되며 채도가 점점 낮아진다 .",
+                "탁색이 되며 채도가 점점 높아진다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 색 중 자동차를 가장 크게 보이도록 하는 색은 ?",
+            "options": [
+                "노랑",
+                "파랑",
+                "연두",
+                "검정"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 채도가 가장 높은 색은 ?",
+            "options": [
+                "흰색",
+                "녹색",
+                "청록",
+                "자주"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 명시도가 가장 높은 배색은 ?",
+            "options": [
+                "빨강 - 노랑",
+                "검정 - 노랑",
+                "녹색 - 흰색",
+                "파랑 - 회색"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "흰색의 상징으로 옳은 것은 ?",
+            "options": [
+                "신성",
+                "활동",
+                "애정",
+                "용기"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "빨강색을 주시하다가 흰색 바탕을 보았을 때 나타나는 색 은 ?",
+            "options": [
+                "청록",
+                "노랑",
+                "보라",
+                "파랑"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "여름철 의상에 가장 어울리는 배색은 ?",
+            "options": [
+                "빨강 바탕에 회색 무늬",
+                "흰색 바탕에 빨강 무늬",
+                "흰색 바탕에 파랑 무늬",
+                "빨강 바탕에 파랑 무늬"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "먼셀 표색계의 색상환에서 중성색에 속하는 색은 ?",
+            "options": [
+                "청록",
+                "연두",
+                "빨강",
+                "파랑"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "산화촉진성을 갖고 있으며 , 도막의 표면효과에 가장 효과가 있는 건조제는 ?",
+            "options": [
+                "고발트 (Co) 건조제",
+                "아연 (Zn) 건조제",
+                "납 (Pb) 건조제",
+                "망간 (Mn) 건조제"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "상도도료 중 내열성이 가장 우수한 것은 ?",
+            "options": [
+                "아크릴 수지도료",
+                "애폭시 수지도료",
+                "실리콘 수지도료",
+                "알키드 수지도료"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 비철금속재료 중 전기전도도 , 열전도율이 높으며 전성 과 연성이 가장 좋은 것은 ?",
+            "options": [
+                "구리",
+                "니켈",
+                "황동",
+                "단동"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "유성 바니시 (varnish) 를 전색제로 한 프라이머는 ?",
+            "options": [
+                "합성수지 프라이머",
+                "광명단 프라이머",
+                "래커 프라이머",
+                "오일 프라이머"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "프탈산 수지라고도 부르며 , 상온 건조용 및 가열 건조용 합 성수지 도료의 도막 형성 요소로서 현재 많이 사용되는 도 료용 합성수지는 ?",
+            "options": [
+                "페놀 수지",
+                "아미노 수지",
+                "알키드 수지",
+                "아크릴 수지"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 용제 중 래커용 진용제가 아닌 것은 ?",
+            "options": [
+                "케톤류",
+                "알콜류",
+                "에스테르류",
+                "에테르류"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "퍼티 작업시 안료의 농도가 높은 경우 발생하는 결함으로 틀린 것은 ?",
+            "options": [
+                "금이 간다 .",
+                "터진다 .",
+                "탄성이 높아진다 .",
+                "광택이 소실된다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "마스킹 테이프에 관한 설명으로 틀린 것은 ?",
+            "options": [
+                "접착력이 강해야 한다 .",
+                "내용제성을 가져야 한다 .",
+                "내열성을 가져야 한다 .",
+                "접착제가 도막에 남아야 한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "분말 수지를 가소제에 분산시킨 비닐졸 도료는 ?",
+            "options": [
+                "에멀션 (emulsion) 도료",
+                "주정 (spirit) 도료",
+                "오르가노졸 (organosol) 도료",
+                "플라스티졸 (plastisol) 도료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 탈지용제가 아닌 것은 ?",
+            "options": [
+                "미네랄 스피릿 (mineral spirit)",
+                "산화철 (iron oxide) ",
+                "톨루엔 (toluene)",
+                "트리클로로에틸렌 (trichloroethylene)"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도막의 부착성이 좋고 내약품성이 ( 특히 내알칼리성 ) 이 좋은 도료는 ?",
+            "options": [
+                "에폭시 수지도료",
+                "요소 수지도료",
+                "페놀 수지도료",
+                "아크릴 수지도료"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "아미노 알키드수지 도료에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "산촉매로의 자연 건조형도 있지만 일반적으로 금속에는 가열형이 사용된다 .",
+                "도장방법은 에어 스프레이 정전도장이 사용된다 .",
+                "가열온도는 일반적으로 저온룔과 고온용이 많이 사용된 다 .",
+                "신나는 고온에서 위험성이 없는 전용 신나를 사용한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "도료용 식물유 중 건성유가 아닌 것은 ?",
+            "options": [
+                "아마인유",
+                "들기름",
+                "오동유",
+                "피마자유"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "녹을 제거시키는 방법 중 기계적인 방법이 아닌 것은 ?",
+            "options": [
+                "와이어 브러시법",
+                "스케링 해머법",
+                "분사법 ( 브라스트법 )",
+                "프레임 크리너법"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "화성 피막처리의 설명으로 옳은 것은 ?",
+            "options": [
+                "화학처리로 피막형성 , 방식성을 부여하고 도료의 부착성 을 높인다 .",
+                "화학처리로 피막형성 , 방식성을 부여하고 금속면의 유지 류를 제거시킨다 .",
+                "화학처리로 피막형성 , 방식성을 부여하고 금속면의 산화 물을 제거시킨다 .",
+                "화학처리로 피막형성 , 방식성을 부여하고 내약품성을 감 소시킨다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "약한 방사선을 내는 성분이 있어서 밤에 빝을 받지 않아도 선명하게 보이는 특수안료는 ?",
+            "options": [
+                "형광안료",
+                "축광안료",
+                "시온안료",
+                "발광안료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "금속 또는 비철금속 표면에 있는 유지류를 제거할 목적을 사용하는 것은 ?",
+            "options": [
+                "박리제",
+                "탈지제",
+                "첨가제",
+                "중화제"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 열가소성 수지가 아닌 것은 ?",
+            "options": [
+                "스티롤 수지",
+                "아크릴 수지",
+                "비닐 수지",
+                "페놀 수지"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도장 공정에 의한 도료의 종류에 해당되는 것은 ?",
+            "options": [
+                "투명도료 , 중도용 도료 , 상도용 도료",
+                "하도용 도료 , 중도용 도료 , 상도용 도료",
+                "용제건조형 도료 , 반응건조형 도료 , 가열건조형 도료",
+                "목공용 도료 , 자동차용 도료 , 건축용 도료"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도막 형성 후에 일어나는 결함이 아닌 것은 ?",
+            "options": [
+                "핀홀",
+                "황변",
+                "백화",
+                "부풀음"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "좋은 붓의 조건이 아닌 것은 ?",
+            "options": [
+                "털에 광택이 있고 , 촉감이 좋으며 꺽이지 않아야 한다 .",
+                "털끝이 가지런하고 정돈되어야 한다 .",
+                "털이 빠지지 않아야 한다 .",
+                "굵은 털이 많이 섞여 있고 , 털의 허리부분이 탄성을 가 져야 한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "정전 도장시 발생하는 크레이터링 (cratering) 현상이란 ?",
+            "options": [
+                "도료를 도장한 도면에 바늘 구멍이 생기는 현상",
+                "도막에 2 색 이상의 안료가 분리해서 도면에 나타나는 현 상",
+                "도막에 귤 껍질과 같은 요철 모양이 생기는 현상",
+                "도막에 분화구상의 구멍이 생기는 현상"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 도장 공정별 분류가 아닌 것은 ?",
+            "options": [
+                "프라이머 (primer)",
+                "서페이서 (surfacer)",
+                "해머톤 (hammaton)",
+                "상도 (top coating)"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "유기용제의 위험성과 가장 관계 없는 것은 ?",
+            "options": [
+                "인화점",
+                "폭발한계",
+                "발화점",
+                "비중"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "에어 스프레이 도장 시 얼룩이 생기는 경우가 아닌 것은 ?",
+            "options": [
+                "도료가 완전히 혼합되지 않았을 때",
+                "도료가 지나치게 묽을 때",
+                "금속 안료가 정전력에 의해 뭉칠 때",
+                "건을 도장 표면에서 멀리 할 때"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "에어 스프레이 도장에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "너무 멀리 떨어져 분무하면 표면이 거칠게 된다 .",
+                "너무 가까이서 분무하면 균일한 도막의 두께를 가질 수 가 없다 .",
+                "도료의 패턴을 조절하여 작업하면 균일한 두께의 도막을 얻을 수 없다 .",
+                "압력이 높으면 도료의 손실이 많아진다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "주걱도장시에 사용되는 나무주걱의 재료로 가장 많이 사용 되는 것은 ?",
+            "options": [
+                "단풍나무",
+                "옻나무",
+                "버드나무",
+                "노송나무"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "노들 1.2mm 의 에어 스프레이 건을 사용할 때 컴프레서의 안전밸브 압력을 몇 kg/cm 2 로 조절하는 것이 가장 적합한 가 ?",
+            "options": [
+                "2kg/cm 2",
+                "5kg/cm 2",
+                "8kg/cm 2",
+                "11kg/cm 2"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도료 시험법 중 유출식 점도계에 속하지 않는 것은 ?",
+            "options": [
+                "오스왈드 점도계 (Ostwald viscometer)",
+                "레드우드 점도계 (Red wood viscometer)",
+                "포드컵 점도계 (Ford cup viscometer) ",
+                "스토머 점도계 (Stormer viscometer)"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도막 형성 후에 일어나는 결함으로 도막에 금이 가서 갈라 지는 현상은 ?",
+            "options": [
+                "균열",
+                "핀홀",
+                "주름",
+                "얼룩"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "정전도장 시 도막의 결함 중 흐름의 원인으로 틀린 것은 ?",
+            "options": [
+                "도착량이 많을 때",
+                "용제의 증발속도가 빠른 것을 사용",
+                "도료 점도가 낮은 경우",
+                "정전 도장기의 조정 불량"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "은폐력과 착색력을 가졌으며 , 색상을 부여하고 , 유기와 무기 안료로 구분되는 안료는 ?",
+            "options": [
+                "방청안료",
+                "특수안료",
+                "체질안료",
+                "착색안료"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도료와 도장에 종사하는 작업자의 안전수칙 중 틀린 것은 ?",
+            "options": [
+                "흡연은 지정된 장소에서만 한다 .",
+                "용제의 처리나 도료의 도장은 반드시 열이 있는 표면에 행한다 .",
+                "밀폐된 장소에서 도장할 경우 반드시 환기 장치를 설비 한다 .",
+                "규정된 안전 방비를 사용한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "운반차의 사용시 적절치 못한 사항은 ?",
+            "options": [
+                "과다하게 적재치 말 것",
+                "너무 급히 이송하지 말 것",
+                "구르기 쉬운 물건은 고정 시킬 것",
+                "가벼운 물건을 아래에 실을 것"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "수용성 도료 탱크 속에 피도물을 양극 또는 음극으로 하여 침지시키고 , 피도물과 그 반대극 사이에 직류 전류를 통하 여 피도물의 표면에 전기적으로 도막을 석출시켜 도장하는 방법은 ?",
+            "options": [
+                "전착도장",
+                "침지도장",
+                "분체도장",
+                "정전도장"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "용제 세척에 사용되는 용제의 구비조건이 아닌 것은 ?",
+            "options": [
+                "동 ㆍ 식물유 , 광물류에 대한 용해력이 없을 것",
+                "휘발성이며 표면에 남지 않은 것",
+                "인화성이 적을 것",
+                "금속면에 대한 부식성이 없고 화학적으로 안정할 것"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 산화물의 용해 능력이 크고 , 산세의 속도가 가장 빠른 산은 ?",
+            "options": [
+                "인산",
+                "질산",
+                "황산",
+                "염산"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "방진 마스크가 갖추어야 할 조건이 아닌 것은 ?",
+            "options": [
+                "여과 효율이 좋을 것",
+                "중량이 무거울 것",
+                "배기성이 좋을 것",
+                "안면에 밀착성이 좋을 것"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "전처리의 목적으로 틀린 것은 ?",
+            "options": [
+                "소지면을 불활성화하여 내식성을 향상시킨다 .",
+                "소지면과 도료의 친화력과 습윤성을 준다 .",
+                "소지면에 부착 , 생성된 이물질을 완전히 제거하여 도료 의 밀착성을 낮춘다 .",
+                "소지면의 돌출부를 제거하여 소지면을 평탄하게 한다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "피도물을 도료와 같이 회전 용기 안에 넣고 회전시켜 도장 하는 도장법은 ?",
+            "options": [
+                "텀블링 도장",
+                "에어레스 스프레이 도장",
+                "T.F.S 도장",
+                "플로우 도장"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "래기계 도료의 정도에 관한 설명 중 옳은 것은 ?",
+            "options": [
+                "살붙임이 좋고 금속면과의 부착도 좋다 .",
+                "건조가 늦고 먼지가 잘 타는 단점이 있다 .",
+                "단단하고 광택이 있는 도막을 얻을 수 있다 .",
+                "붓도장에 가장 적합하다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "보호구를 사용할 때 유의사항으로 틀린 것은 ?",
+            "options": [
+                "작업장에는 필요한 수량의 보호구를 비치한다 .",
+                "보호구를 사용하는데 불편이 있더라도 사용이 불가능할 때까지 계속 사용한다 .",
+                "작업에 적절한 보호구를 설정한다 .",
+                "작업자에게 올바른 사용방법을 빠짐없이 가르친다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "광 에너지로 도료 분사 중에 연쇄반응을 활발하게 하는 분 자를 발생시켜 중합 반응으로부터 고분자간의 가교가 진행 되어 경화시키는 건조 장치는 ?",
+            "options": [
+                "적외선 건조장치",
+                "원 적외선 건조장치",
+                "자외선 건조장치",
+                "열풍대류 건조장치"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "제청작업시 산세에 사용되는 산이 염산일 경우 사용온도가 보통 30~40 ℃ 이하일 때 가장 적합한 농도는 ?",
+            "options": [
+                "1~5%",
+                "10~15%",
+                "60~75%",
+                "80~95%"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "래커 프라이머에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "속건성이다 .",
+                "내후성이 우수하다 .",
+                "부착성이 낮다 .",
+                "전색제는 래커이다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "에어 컴프레서 (air compressor) 의 취급시 지켜야 할 사항 은 ?",
+            "options": [
+                "매일 1 회 이상 V 벨트를 새 것으로 교환한다 .",
+                "매일 1 회 이상 압력계를 분해 소제한다 .",
+                "매일 1 회 이상 에어탱크의 배출구를 열어 수분과 유분을 배출시킨다 .",
+                "매일 1 회 이상 에어탱크를 온수로 세척해야 한다"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 무용제 도장에 해당 되는 것은 ?",
+            "options": [
+                "정전도장",
+                "분체도장",
+                "롤러 브러시도장",
+                "분무도장 금속도장기능사 ◐ 2008 년 02 월 03 일 필기 기출문제 ◑"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 에어 스프레이 부스 내의 공기 흐름 속도로 가장 적당한 것은 ?",
+            "options": [
+                "0.1m/sec",
+                "0.6m/sec",
+                "1.5m/sec",
+                "5m/sec "
+            ],
+            "answer": 1,
+            "explain": ""
+        }
+    ]
+    // #endregion
+},
+    {
+        id: "round_6",
+        "roundName": "금속도장기능사\n07년09월",
+    // #region 금속도장기능사n07년09월 repairData
+    "repairData": [
+        {
+            "question": "먼셀 (Munsell) 의 주요 5 원색은 ?",
+            "options": [
+                "빨강 , 노랑 , 녹색 , 파랑 , 보라",
+                "빨강 , 주황 , 녹색 , 남색 , 보라",
+                "빨강 , 노랑 , 청록 , 남색 , 자주",
+                "빨강 , 주황 , 녹색 , 파랑 , 자주"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 동시대비와 가장 거리가 먼 것은 ?",
+            "options": [
+                "색상대비",
+                "명도대비",
+                "보색대비",
+                "면적대비"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "먼셀 (Munsell) 표색계 표기가 5R 4/14 인 경우 , 채도를 나타 내는 것은 ?",
+            "options": [
+                "5",
+                "R",
+                "4",
+                "14"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 가산혼합에 대한 설명으로 바른 것은 ?",
+            "options": [
+                "색료를 혼합할 때 색 수가 많을수록 혼합 결과의 명도는 낮아진다 .",
+                "컬러영화필름 , 색채사진 등이 가산혼합의 예이다 .",
+                "가산혼합의 3 원색은 마젠타 , 노랑 , 시안이다 .",
+                "2 가지 이상의 색광을 혼합할 때 혼합 결과의 명도가 높아 진다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "색채 조화가 잘 되도록 하기 위한 계획으로 틀린 것은 ?",
+            "options": [
+                "동화된 분위기를 얻기 위하여 동색상의 조화를 실시한다 .",
+                "주제와 배경과의 대비를 생각한다 .",
+                "색의 차고 따뜻한 느낌을 이용한다 .",
+                "무채색의 사용은 되도록 피하는 것이 좋다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "저명도와 저채도의 설명 중 옳은 것은 ?",
+            "options": [
+                "저명도는 어둡고 저채도는 맑다 .",
+                "저명도는 어둡고 저채도는 탁하다 .",
+                "저명도는 밝고 저채도는 맑다 .",
+                "저명도는 밝고 저채도는 탁하다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 색 중 명도가 가장 낮은 것은 ?",
+            "options": [
+                "주황",
+                "보라",
+                "노랑",
+                "연두"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 그림은 색의 3 속성을 나타낸 것이다 . 여기서 A 에 해당 되는 요소는 무엇인가 ?<img src=\"data:image/jpeg;base64,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\" alt=\"8번 문제 이미지\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:12px 0;\">",
+            "options": [
+                "색상",
+                "명도",
+                "채도",
+                "명시도"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 배색 중 가장 따뜻한 느낌의 배색은 ?",
+            "options": [
+                "파랑과 녹색",
+                "노랑과 녹색",
+                "주황과 노랑",
+                "빨강과 파랑"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "색료혼합의 결과로 옳은 것은 ?",
+            "options": [
+                "파랑 (B) + 빨강 (R) = 자주 (M)",
+                "노랑 (Y) + 청록 (C) = 파랑 (B)",
+                "자주 (M) + 노랑 (Y) = 빨강 (R)",
+                "자주 (M) + 청록 (C) = 검정 (BL)"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "흰색에 대하여 추상적으로 연상되는 감정이 아닌 것은 ?",
+            "options": [
+                "청결",
+                "순수",
+                "침묵",
+                "소박"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "회색을 흰색 바탕 위에 놓으면 회색이 더욱 어둡게 보이는 현상은 ?",
+            "options": [
+                "색상대비",
+                "명도대비",
+                "채도대비",
+                "보색대비"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "녹막이도료에 관한 설명으로 틀린 것은 ?",
+            "options": [
+                "공기 , 수분 , 유해가스의 접촉을 막는다 .",
+                "화학적 , 물리적으로 녹을 막는 작용을 한다 .",
+                "중도 다음에 칠한다 .",
+                "안료는 크롬산염을 사용하고 있다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "퍼티 연마의 마무리를 할 때 사용하는 가장 적합한 연마지 는 ?",
+            "options": [
+                "#60 ∼ 80",
+                "#240 ∼ 320",
+                "#400 ∼ 500",
+                "#600 ∼ 1000"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "인산염 화성처리의 장점은 ?",
+            "options": [
+                "피막이 두터워서 외력 ( 外力 ) 을 가하여도 견디는 힘이 강 하다 .",
+                "굴곡 , 강도에 강하기 때문에 화성처리 후의 변형 가공이 쉽다 .",
+                "금속 피도물과 도료의 부착성이 증대된다 .",
+                "화성처리 후 장시간 노출시키면 결정피막의 내식성이 증 가된다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 착색안료가 아닌 것은 ?",
+            "options": [
+                "징크 크로메이드",
+                "아연화",
+                "황연",
+                "카본블랙"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "방청안료 중 가장 독성이 적은 안료는 ?",
+            "options": [
+                "아연말",
+                "징크 크로메이트",
+                "염기성 크롬산 연",
+                "광명단"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "주정도료에 관한 설명 중 틀린 것은 ?",
+            "options": [
+                "내후성과 내열성이 나쁘다 .",
+                "용제가 증발하여 수지가 도막으로 된다 .",
+                "용제로서는 주로 휘발유를 사용한다 .",
+                "목재에는 적합하나 경금속 , 모르타르에는 부적합하다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 철강의 검은 녹과 관계없는 것은 ?",
+            "options": [
+                "이삼산화철 (Fe 2 O 3 )",
+                "산화철 (FeO) ",
+                "삼사산화철 (Fe 3 O 4 )",
+                "산화알루미늄 (Al 2 O 3 )"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "난연성과 내약품성 및 내수성이 우수한 특징은 있으나 부착 성이 나빠서 부착성이 좋은 프라이머를 필요로 하는 도료 는 ?",
+            "options": [
+                "염화비닐수지 도료",
+                "유성 도료",
+                "비닐졸 도료",
+                "에멀션 도료"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "프라이머 중 연단이 주성분이며 , 연단 이외에도 산화연을 함유시킨 것으로 철강의 방청을 목적으로 한 녹방지 도료 는 ?",
+            "options": [
+                "광명단 프라이머",
+                "징크 크로메이트 프라이머",
+                "래커 프라이머",
+                "오일 프라이머"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 특수 안료 중 온도에 따라 색상이 변화하는 안료는 ?",
+            "options": [
+                "형광안료",
+                "시온안료",
+                "발광안료",
+                "축광안료"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "알루미늄 피막 처리법에 해당 되지 않는 것은 ?",
+            "options": [
+                "양극 산화 피막 처리법",
+                "인산염 처리법",
+                "크로메이트 처리법",
+                "블라스트 처리법"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "용제의 휘발만으로 도막을 형성하는 도료는 ?",
+            "options": [
+                "비닐수지도료",
+                "에멀젼도료",
+                "주정도료",
+                "래커"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 폴리싱 콤파운드 (Polishing compound) 의 주된 용 도는 ?",
+            "options": [
+                "연마제",
+                "건조제",
+                "백화방지제",
+                "방부제"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 내알칼리성이 가장 좋은 도료는 ?",
+            "options": [
+                "에폭시수지 도료",
+                "에멀션 도료",
+                "유성 도료",
+                "비닐졸 도료"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "탈지의 방법 중 물리 , 기계적 탈지방법이 아닌 것은 ?",
+            "options": [
+                "스크레이퍼법",
+                "에멀션 세척법",
+                "블라스트법",
+                "고온가열법"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "크롬과 니켈의 합금으로 구성되어 있는 비철금속은 ?",
+            "options": [
+                "냉연강판",
+                "함석판",
+                "브론즈메탈 (Bronze metal)",
+                "스테인레스 강판"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "도료용 용제의 구비조건으로 틀린 것은 ?",
+            "options": [
+                "도료 또는 전색제에 대한 용해성이 좋을 것",
+                "불휘발 유분을 남기지 않고 전부가 증발 할 것",
+                "휘발분은 악취가 없고 독성이 없을 것",
+                "진한색을 갖고 있을 것"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "열경화성 아크릴수지 도료의 특징이 아닌 것은 ?",
+            "options": [
+                "내후성이 우수하며 광택이 좋다 .",
+                "아미노 알키노 수지에 비해 소부온도가 낮다 .",
+                "내약품성 , 부착성 , 내오염성이 좋다 .",
+                "색상 보유력이 우수하다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "조작이 간단하여 투명 도료나 수지 용액의 점도 측정에 사 용되는 점도계는 ?",
+            "options": [
+                "모세관 점도계",
+                "기포 점도계",
+                "스토머 점도계",
+                "B 형 점도계"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도장작업 중 기본적인 주의사항이 아닌 것은 ?",
+            "options": [
+                "속건성 도료의 도장은 햇빛을 이용한 건조가 좋다 .",
+                "저온 다습을 피한다 .",
+                "바탕의 조성에 정성을 들인다 .",
+                "도료의 품질을 조사하여 사용법에 주의한다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "실내의 천장이나 벽 등 넓고 평활한 면을 도장하는데 능률 적이며 , 작업성도 붓 작업보다 대단히 뛰어난 도장은 ?",
+            "options": [
+                "주걱도장",
+                "전착도장",
+                "롤러 브러쉬도장",
+                "정전도장"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "중도용 도료에 대한 설명으로 틀린 것은 ?",
+            "options": [
+                "하도와 상도의 부착을 좋게 하고 상도를 아름답게 하기 위하여 도장하는 것이다 .",
+                "용제의 휘발만으로 도막을 형성하는 도료이다 .",
+                "퍼티의 흡입을 방지할 목적으로 사용한다 .",
+                "중간 도장을 두꺼운 도막으로 하고 연마지로 그 대부분 을 연마하여 평탄한 면을 만들기 위한 것이다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "도막에 녹 , 부풀음이 발생하는가를 시험하는 것은 ?",
+            "options": [
+                "가열시험",
+                "염수분무시험",
+                "침전시험",
+                "내습시험"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "피도물에 도료를 흘려 내려서 도장하는 방법은 ?",
+            "options": [
+                "플로우 도장",
+                "T.F.S 도장",
+                "텀블링 도장",
+                "분체 도장"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "전처리 작업의 중요한 목적으로 틀린 것은 ?",
+            "options": [
+                "소지면과 도료의 친화력과 습윤성을 없앤다 .",
+                "소지면을 안정화하여 내식성을 향상시킨다 .",
+                "소지면에 부착 , 생성된 이물질을 완전히 제거한다 .",
+                "소지면의 돌출부를 제거하여 소지면을 평탄하게 한다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "금속의 작은 입자를 분사시켜 제청하는 방법은 ?",
+            "options": [
+                "샌드 블라스트법",
+                "쇼트 블라스트법",
+                "원심 블라스트법",
+                "위트 블라스트법"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "분무 도장시 스프레이 건의 패턴 형상이 그림과 같은 형태가 되었다면 그 원인은?<img src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMjQwIiB2aWV3Qm94PSIwIDAgMjQwIDI0MCI+CiAgPHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNmOGY5ZmEiIHN0cm9rZT0iI2QxZDVkYiIgc3Ryb2tlLXdpZHRoPSIxIiByeD0iOCIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyMCwgMTIwKSI+CiAgICA8cGF0aCBkPSJNIDAsLTkwIEMgNjAsLTcwIDgwLC0xMCA3MCw0MCBDIDYwLDgwIDIwLDkwIC0xMCw5MCBDIC0yMCw5MCAtMTUsNzAgLTEwLDQwIEMgLTUsMTAgLTQwLC0xMCAtNDAsLTQwIEMgLTQwLC03MCAtMjAsLTg1IDAsLTkwIFoiIGZpbGw9IiM0YjU1NjMiLz4KICAgIDxwYXRoIGQ9Ik0gMTAsLTcwIEMgNTAsLTUwIDU1LC01IDQ1LDMwIEMgMzUsNjAgMTUsNjUgMCw2NSBDIC01LDY1IDAsNDAgNSwyMCBDIDgsMCAtMjAsLTE1IC0yMCwtMzUgQyAtMjAsLTU1IC01LC02NSAxMCwtNzAgWiIgZmlsbD0iIzFmMjkzNyIvPgogIDwvZz4KPC9zdmc+\" alt=\"스프레이 건 한쪽 쏠림 왜곡 패턴\" class=\"pdf-q-image\" style=\"display:block;max-width:100%;height:auto;margin:8px 0;\">",
+            "options": [
+                "도료의 분출량이 과다하다.",
+                "도료의 점도가 높다.",
+                "스프레이 공기캡에 측면 구멍이나 보조 구멍의 일부가 막혔다.",
+                "분무압력이 높다."
+            ],
+            "answer": 2,
+            "explain": "스프레이 건의 에어 캡(공기 캡) 측면 구멍(혼 에어 홀) 또는 보조 공기 구멍 중 한쪽이 막히면, 양쪽 분출 압력의 균형이 깨지면서 공기압이 약한(구멍이 막힌) 쪽으로 패턴이 비대칭하게 쏠리고 휘어지는 왜곡 현상이 발생합니다."
+        },
+        {
+            "question": "유기용제에 의한 재해요소가 아닌 것은 ?",
+            "options": [
+                "화재",
+                "감전",
+                "중독",
+                "폭발"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "적외선 건조 장치에서 건조에 사용되는 열에너지 형태는 ?",
+            "options": [
+                "대류열",
+                "복사열",
+                "전도열",
+                "간접열"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "세척법 중 효능은 작지만 사용방법이 간단하여 많이 사용되 는 것으로 , 심한 상태의 오염물을 제거하기 위한 효과적인 탈지 방법의 보조적인 방법으로 주로 사용되는 것은 ?",
+            "options": [
+                "산세척법",
+                "알칼리세척법",
+                "용제세척법",
+                "에멀션세척법"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "건성유를 주성분으로 한 것으로 도장이 용이하며 , 특히 , 붓 작업이 쉽고 휘발성이 적기 때문에 1 회에 두꺼운 도막이 가 능한 도료는 ?",
+            "options": [
+                "유성 도료",
+                "비닐졸 도료",
+                "에멀션 도료",
+                "주정 도료"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "정전 도장시 발생하는 백화 (blushing) 현상의 원인이 아닌 것은 ?",
+            "options": [
+                "하도 도막이 두꺼울 때",
+                "도장 환경이 고온 다습한 경우",
+                "피도물이 젖어 있을 때",
+                "사용 용제의 증발 속도가 빠를 때"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "안전 , 보건표지의 종류와 색상이 잘못 연결된 것은 ?",
+            "options": [
+                "금지표지 - 빨강",
+                "정지표지 - 노랑",
+                "안내표지 - 녹색",
+                "지시표지 - 파랑"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "다음 중 안료의 역할이 아닌 것은 ?",
+            "options": [
+                "도장시 건조 속도를 조절한다 .",
+                "도료에 유동성을 준다 .",
+                "도막에 내구력 , 기계적 강도를 보강해 준다 .",
+                "도막에 색채를 부여한다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "일반적인 도장 공정 순서로 옳은 것은 ?",
+            "options": [
+                "하도 → 바탕조정 → 퍼티 및 연마 → 광택 마무리 → 중도 → 상도",
+                "바탕조정지 → 하도 → 퍼티 및 연마 → 중도 → 상도 → 광택 마무리",
+                "바탕조정 → 퍼티 및 연마 → 중도 → 광택 마무리 → 수연 → 상도",
+                "바탕조정 → 상도 → 퍼티 및 연마 → 중도 → 하도 → 광택 마무리"
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "전착도장의 단점 설명으로 틀린 것은 ?",
+            "options": [
+                "부착성이 우수하지 않다 .",
+                "전력의 소비가 많으며 설비비가 많이 든다 .",
+                "피도물이 도전성이 없으면 도장이 곤란하다 .",
+                "가열 온도가 높고 색의 교환은 거의 불가능하다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "도료를 보관하는 곳으로 가장 적합한 장소는 ?",
+            "options": [
+                "어둡고 , 밀폐된 창고",
+                "햇빛이 잘 드는 밀폐된 창고",
+                "통풍이 잘 되고 차광을 알맞게 한 내화구조의 창고",
+                "습기가 많은 내화구조의 창고"
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "열풍 대류 건조 장치 중 오븐의 구성 형식이 건조로에 해당 되지 않는 것은 ?",
+            "options": [
+                "터널로",
+                "사다리꼴로",
+                "캐비넷형로",
+                "열풍 발생로"
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "스프레이 건의 구조를 설명한 것 중 틀린 것은 ?",
+            "options": [
+                "공기 캡은 주 중심 구멍 , 측면 공기 구멍 , 보조 공기 구 멍으로 구성되어 있다 .",
+                "일반 도료용은 내부 혼합식이 사용되고 , 고점도나 특수 도료는 외부 혼합식이 사용된다 .",
+                "조절부는 공기량 조절 장치 , 도료 분출량 조절 장치 , 패 턴 조절 장치로 이루어져 있다 .",
+                "도료 노즐은 도료 통로와 공기 통로로 이루어져 있고 열 처리된 강철계 합금으로 만들어진다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "인산염 피막 특징 설명으로 틀린 것은 ?",
+            "options": [
+                "설비가 간단하여 대량 생산에 부적합하다 .",
+                "내식성이 있고 마모성이 강하다 .",
+                "피막은 전기를 통하지 않고 녹이 번지는 것을 막는다 .",
+                "재질이나 목적에 따라 여러 가지 품종을 선택할 수 있 다 ."
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "스프레이 건을 사용한 후의 일반적인 손질 방법으로 잘못된 것은 ?",
+            "options": [
+                "세척액을 도료용기에 넣어 세척액을 분산시켜 도료 통로 를 세척시킨다 .",
+                "공기 캡 , 도료 노즐 , 기타 몸체를 물로 깨끗이 닦는다 .",
+                "도료 노즐 , 기타 니들 , 당김쇠 등의 마찰 부분에는 기름 칠을 한다 .",
+                "니들 조정 패킹 , 공기 조정 패킹 등의 패킹 부위부터 새 는 데가 없나 점검한다 ."
+            ],
+            "answer": 1,
+            "explain": ""
+        },
+        {
+            "question": "스크레이퍼 탈청 작업 중 이물질이 눈에 들어갔을 때 가장 올바른 치료방법은 ?",
+            "options": [
+                "핀셋으로 하나하나 집어낸다 .",
+                "에어로 불어낸다 .",
+                "수건이나 비눗물로 닦아 낸다 .",
+                "전문의의 조치를 받는다 . "
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "크레이터링 (cratering) 현상에 대한 대책으로 틀린 것은 ?",
+            "options": [
+                "중간에 필터를 부착시킨다 .",
+                "에어로 불어낸다 .",
+                "상도 도료에 알코올을 첨가하여 도장한다 .",
+                "용해성이 양호한 용제를 사용하여 유동성을 높인다 ."
+            ],
+            "answer": 2,
+            "explain": ""
+        },
+        {
+            "question": "에어 컴프레서 관련 기기 중 혼탁액인 드레인을 제거하는 것은 ?",
+            "options": [
+                "공기 청정기",
+                "공기 감압밸브",
+                "공기 탱크",
+                "배관"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "정전 도장 작업시 주의사항으로 틀린 것은 ?",
+            "options": [
+                "건 (gun) 을 시너 속에 담글 것",
+                "고압 발생기는 접지할 것",
+                "고압 발생기는 도장 부스 내에 설치하지 않을 것",
+                "필터는 정기적으로 청소 할 것"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "붓 도장에 사용하는 붓 중 건조가 빠른 도료는 붓 사용시 충분히 적셔 주어야 하며 , 끝이 부드러운 것을 필요로 하는 붓은 ?",
+            "options": [
+                "래커 붓",
+                "페인트 붓",
+                "바니시 붓",
+                "수성 붓"
+            ],
+            "answer": 0,
+            "explain": ""
+        },
+        {
+            "question": "나무주걱에 대한 설명 중 틀린 것은 ?",
+            "options": [
+                "노송나무의 곧은 결이나 벚나무 등으로 만든다 .",
+                "반죽이나 바탕 붙임 , 버팀 붙임 등에 사용된다 .",
+                "도장 작업자에 따라서 직접 제작이 가능하다 .",
+                "주로 원형으로 만들어서 사용한다 ."
+            ],
+            "answer": 3,
+            "explain": ""
+        },
+        {
+            "question": "다염기산과 다가알콜을 주로 한 에스테르를 각종 오일 (oil) 또는 지방산으로 변성한 합성수지로 내구성이 우수하고 안 료의 분산이 쉬운 특성을 가진 도료는 ?",
+            "options": [
+                "비닐 수지 도료",
+                "알키드 수지 도료",
+                "에폭시 수지 도료",
+                "폴리우레탄 수지 도료 "
+            ],
+            "answer": 1,
+            "explain": ""
+        }
+    ]
+    // #endregion
+},
+    {
+        id: "round_7",
+        roundName: "회차7",
+        repairData: []
+    },
+    {
+        id: "round_8",
+        roundName: "회차8",
+        repairData: []
+    },
+    {
+        id: "round_9",
+        roundName: "회차9",
+        repairData: []
+    },
+    {
+        id: "round_10",
+        roundName: "회차10",
+        repairData: []
+    }
+];

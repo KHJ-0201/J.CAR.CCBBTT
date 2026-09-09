@@ -1,0 +1,443 @@
+{
+  "generatedAt": "2026-09-09T02:37:53.994Z",
+  "sourceAnswer": "기능장 실기 작업 순서.xlsx",
+  "mappingMethod": "excel-row-order (drawing anchors between title rows)",
+  "summary": {
+    "headers": 52,
+    "images": 155,
+    "matched": 52,
+    "unmatchedAnswer": 0,
+    "missingListImages": 0
+  },
+  "sampleOrder": [
+    {
+      "title": "흡기 매니폴드 진공도 측정",
+      "images": [
+        "bin-001.png",
+        "bin-002.png"
+      ]
+    },
+    {
+      "title": "연료펌프 작동전류 및 공급 압력 측정",
+      "images": [
+        "bin-003.png",
+        "bin-004.png",
+        "bin-005.png"
+      ]
+    },
+    {
+      "title": "캠 양정 및 오일컨트롤 밸브 저항 측정",
+      "images": [
+        "bin-006.png",
+        "bin-007.png"
+      ]
+    },
+    {
+      "title": "공기흐름센서 출력 전압 및 산소센서 출력전압 측정",
+      "images": [
+        "bin-008.png",
+        "bin-009.png",
+        "bin-010.png"
+      ]
+    },
+    {
+      "title": "엔진오일 압력 및 오일압력 스위치 전압 측정",
+      "images": [
+        "bin-011.png",
+        "bin-012.png",
+        "bin-013.png"
+      ]
+    },
+    {
+      "title": "연료탱크 압력센서 및 연료펌프 구동 전류 측정",
+      "images": [
+        "bin-014.png",
+        "bin-015.png"
+      ]
+    },
+    {
+      "title": "MLA 밸브 간극 및 OCV 유량조절밸브 저항 측정",
+      "images": [
+        "bin-016.png",
+        "bin-017.png"
+      ]
+    },
+    {
+      "title": "점화파형 측정",
+      "images": [
+        "bin-018.png",
+        "bin-019.png",
+        "bin-020.png",
+        "bin-021.png"
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "listId": "engine-07",
+      "listTitle": "흡기 매니폴드 진공도 측정",
+      "answerTitle": "흡기 매니폴드 진공도 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "engine-08",
+      "listTitle": "연료펌프 작동전류 및 공급 압력 측정",
+      "answerTitle": "연료펌프 작동전류 및 공급 압력 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "engine-09",
+      "listTitle": "캠 양정 및 오일컨트롤 밸브 저항 측정",
+      "answerTitle": "캠 양정 및 오일컨트롤 밸브 저항 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "engine-10",
+      "listTitle": "공기흐름센서 출력 전압 및 산소센서 출력전압 측정",
+      "answerTitle": "공기흐름센서 출력 전압 및 산소센서 출력전압 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "engine-11",
+      "listTitle": "엔진오일 압력 및 오일압력 스위치 전압 측정",
+      "answerTitle": "엔진오일 압력 및 오일압력 스위치 전압 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "engine-12",
+      "listTitle": "연료탱크 압력센서 및 연료펌프 구동 전류 측정",
+      "answerTitle": "연료탱크 압력센서 및 연료펌프 구동 전류 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "engine-13",
+      "listTitle": "MLA 밸브 간극 및 OCV 유량조절밸브 저항 측정",
+      "answerTitle": "MLA 밸브 간극 및 OCV 유량조절밸브 저항 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "engine-14",
+      "listTitle": "점화파형 측정",
+      "answerTitle": "점화파형 측정",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "engine-15",
+      "listTitle": "디젤 인젝터 전압 및 전류파형 측정",
+      "answerTitle": "디젤 인젝터 전압 및 전류파형 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "engine-16",
+      "listTitle": "가솔린 인젝터 전압 및 전류파형 측정",
+      "answerTitle": "가솔린 인젝터 전압 및 전류파형 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "engine-17",
+      "listTitle": "가변밸브 타이밍기구 파형측정",
+      "answerTitle": "가변밸브 타이밍기구 파형측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "engine-18",
+      "listTitle": "배기가스 측정",
+      "answerTitle": "배기가스 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "engine-19",
+      "listTitle": "연료압력조절밸브 듀티값 측정",
+      "answerTitle": "연료압력조절밸브 듀티값 측정",
+      "score": 100,
+      "images": 6
+    },
+    {
+      "listId": "engine-20",
+      "listTitle": "공기유량센서 및 TPS 출력전압 측정",
+      "answerTitle": "공기유량센서 및 TPS 출력전압 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "engine-bujo",
+      "listTitle": "시동 및 부조",
+      "answerTitle": "시동 및 부조",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "electric-10",
+      "listTitle": "부하시험 측정",
+      "answerTitle": "부하시험 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "electric-11",
+      "listTitle": "냉매 압력과 토출온도 측정",
+      "answerTitle": "냉매 압력과 토출온도 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "electric-12",
+      "listTitle": "블로어 모터 전압/전류 측정",
+      "answerTitle": "블로어 모터 전압/전류 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "electric-13",
+      "listTitle": "암전류 및 발전전류 측정",
+      "answerTitle": "암전류 및 발전전류 측정",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "electric-14",
+      "listTitle": "라디에이터 팬 모터 전압/전류 측정",
+      "answerTitle": "라디에이터 팬 모터 전압/전류 측정",
+      "score": 100,
+      "images": 5
+    },
+    {
+      "listId": "electric-15",
+      "listTitle": "충전전압 및 전류 측정",
+      "answerTitle": "충전전압 및 전류 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "electric-16",
+      "listTitle": "와이퍼 작동 시 전압 측정",
+      "answerTitle": "와이퍼 작동 시 전압 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "electric-17",
+      "listTitle": "도어 액추에이터 작동 시 전압 측정",
+      "answerTitle": "도어 액추에이터 작동 시 전압 측정",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "electric-18",
+      "listTitle": "파워윈도/전조등/와이퍼 회로점검",
+      "answerTitle": "파워윈도/전조등/와이퍼 회로점검",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "electric-19",
+      "listTitle": "에어컨 및 공조/방향지시등/블로어모터 회로점검",
+      "answerTitle": "에어컨 및 공조/방향지시등/블로어모터 회로점검",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "electric-20",
+      "listTitle": "정지등/실내등/사이드 미러 회로점검",
+      "answerTitle": "정지등/실내등/사이드 미러 회로점검",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "electric-21",
+      "listTitle": "도난방지/경음기/뒷유리열선 회로점검",
+      "answerTitle": "도난방지/경음기/뒷유리열선 회로점검",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "electric-22",
+      "listTitle": "안전벨트/에어백/미등 회로점거",
+      "answerTitle": "안전벨트/에어백/미등 회로점거",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "electric-23",
+      "listTitle": "CAN통신파형 측정",
+      "answerTitle": "CAN통신파형 측정",
+      "score": 100,
+      "images": 8
+    },
+    {
+      "listId": "electric-24",
+      "listTitle": "LIN통신파형 측정",
+      "answerTitle": "LIN통신파형 측정",
+      "score": 100,
+      "images": 5
+    },
+    {
+      "listId": "electric-25",
+      "listTitle": "파워윈도 전압과 전류파형 측정",
+      "answerTitle": "파워윈도 전압과 전류파형 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "electric-26",
+      "listTitle": "안전벨트 차임밸 타이머 파형 측정",
+      "answerTitle": "안전벨트 차임밸 타이머 파형 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "electric-27",
+      "listTitle": "감광식 룸램프 작동파형 측정",
+      "answerTitle": "감광식 룸램프 작동파형 측정",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "electric-28",
+      "listTitle": "유해가스감지센서(AQS) 출력전압/핀 서모센서 저항 및 출력전압 측정",
+      "answerTitle": "유해가스감지센서(AQS) 출력전압/핀 서모센서 저항 및 출력전압 측정",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "electric-29",
+      "listTitle": "도어 S/W 및 도어록 액추에이터 작동전압 시 전압",
+      "answerTitle": "도어 S/W 및 도어록 액추에이터 작동전압 시 전압",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "electric-30",
+      "listTitle": "CAN라인 저항 및 경음기 소음 측정",
+      "answerTitle": "CAN라인 저항 및 경음기 소음 측정",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "electric-31",
+      "listTitle": "전조등 관도 및 진폭",
+      "answerTitle": "전조등 광도 및 진폭",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "electric-32",
+      "listTitle": "외기온도센서 저항/출력전압 및 에어컨 냉매 압력",
+      "answerTitle": "외기온도센서 저항/출력전압 및 에어컨 냉매 압력",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "chassis-14",
+      "listTitle": "제동력 측정",
+      "answerTitle": "제동력 측정",
+      "score": 100,
+      "images": 7
+    },
+    {
+      "listId": "chassis-15",
+      "listTitle": "사이드 슬립량 측정 및 타이어 점검",
+      "answerTitle": "사이드 슬립량 측정 및 타이어 점검",
+      "score": 100,
+      "images": 6
+    },
+    {
+      "listId": "chassis-16",
+      "listTitle": "변속기오일 온도센서 저항 및 인히비터 스위치 점검",
+      "answerTitle": "변속기오일 온도센서 저항 및 인히비터 스위치 점검",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "chassis-17",
+      "listTitle": "회전반경 측정",
+      "answerTitle": "회전반경 측정",
+      "score": 100,
+      "images": 1
+    },
+    {
+      "listId": "chassis-18",
+      "listTitle": "파워스티어링 펌프 압력 및 핸들 유격 측정",
+      "answerTitle": "파워스티어링 펌프 압력 및 핸들 유격 측정",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "chassis-19",
+      "listTitle": "MDPS 모터 전류파형",
+      "answerTitle": "MDPS 모터 전류파형",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "chassis-20",
+      "listTitle": "ABS 휠 스피드센서 파형",
+      "answerTitle": "ABS 휠 스피드센서 파형",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "chassis-21",
+      "listTitle": "자동변속기 입(출)력 센서 파형",
+      "answerTitle": "자동변속기 입(출)력 센서 파형",
+      "score": 100,
+      "images": 3
+    },
+    {
+      "listId": "chassis-22",
+      "listTitle": "레인지 변환 시(N-D) 유압제어 솔레노이드 파형",
+      "answerTitle": "레인지 변환 시(N-D) 유압제어 솔레노이드 파형",
+      "score": 100,
+      "images": 7
+    },
+    {
+      "listId": "chassis-23",
+      "listTitle": "EPS 솔레노이드 밸브 파형",
+      "answerTitle": "EPS 솔레노이드 밸브 파형",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "chassis-24",
+      "listTitle": "오일펌프 배출압력 및 유량제어 솔레노이드 저항",
+      "answerTitle": "오일펌프 배출압력 및 유량제어 솔레노이드 저항",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "chassis-25",
+      "listTitle": "후륜 토 및 캠버",
+      "answerTitle": "후륜 토 및 캠버",
+      "score": 100,
+      "images": 4
+    },
+    {
+      "listId": "chassis-26",
+      "listTitle": "브레이크 디스크 런 아웃 및 휠 스피드센서 에어 갭",
+      "answerTitle": "브레이크 디스크 런 아웃 및 휠 스피드센서 에어 갭",
+      "score": 100,
+      "images": 2
+    },
+    {
+      "listId": "chassis-27",
+      "listTitle": "작동 시 변속기 클러치 압력 및 솔레노이드 저항",
+      "answerTitle": "작동 시 변속기 클러치 압력 및 솔레노이드 저항",
+      "score": 100,
+      "images": 2
+    }
+  ],
+  "unmatchedAnswer": [],
+  "missingListImages": []
+}

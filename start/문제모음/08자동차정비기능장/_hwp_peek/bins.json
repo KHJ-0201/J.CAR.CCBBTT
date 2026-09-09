@@ -1,0 +1,777 @@
+[
+  {
+    "name": "BIN0001.png",
+    "outName": "BIN0001.bin",
+    "size": 102524
+  },
+  {
+    "name": "BIN0002.png",
+    "outName": "BIN0002.bin",
+    "size": 128664
+  },
+  {
+    "name": "BIN0003.png",
+    "outName": "BIN0003.bin",
+    "size": 421128
+  },
+  {
+    "name": "BIN0004.png",
+    "outName": "BIN0004.bin",
+    "size": 237786
+  },
+  {
+    "name": "BIN0005.png",
+    "outName": "BIN0005.bin",
+    "size": 310281
+  },
+  {
+    "name": "BIN0006.png",
+    "outName": "BIN0006.bin",
+    "size": 136931
+  },
+  {
+    "name": "BIN0007.png",
+    "outName": "BIN0007.bin",
+    "size": 291053
+  },
+  {
+    "name": "BIN0008.png",
+    "outName": "BIN0008.bin",
+    "size": 126081
+  },
+  {
+    "name": "BIN0009.png",
+    "outName": "BIN0009.bin",
+    "size": 343638
+  },
+  {
+    "name": "BIN000A.png",
+    "outName": "BIN000A.bin",
+    "size": 51826
+  },
+  {
+    "name": "BIN000B.png",
+    "outName": "BIN000B.bin",
+    "size": 391378
+  },
+  {
+    "name": "BIN000C.png",
+    "outName": "BIN000C.bin",
+    "size": 118276
+  },
+  {
+    "name": "BIN000D.png",
+    "outName": "BIN000D.bin",
+    "size": 353873
+  },
+  {
+    "name": "BIN000E.png",
+    "outName": "BIN000E.bin",
+    "size": 90966
+  },
+  {
+    "name": "BIN000F.png",
+    "outName": "BIN000F.bin",
+    "size": 120481
+  },
+  {
+    "name": "BIN0010.png",
+    "outName": "BIN0010.bin",
+    "size": 466847
+  },
+  {
+    "name": "BIN0011.png",
+    "outName": "BIN0011.bin",
+    "size": 158518
+  },
+  {
+    "name": "BIN0012.png",
+    "outName": "BIN0012.bin",
+    "size": 421292
+  },
+  {
+    "name": "BIN0013.png",
+    "outName": "BIN0013.bin",
+    "size": 118733
+  },
+  {
+    "name": "BIN0014.png",
+    "outName": "BIN0014.bin",
+    "size": 518419
+  },
+  {
+    "name": "BIN0015.png",
+    "outName": "BIN0015.bin",
+    "size": 105625
+  },
+  {
+    "name": "BIN0016.png",
+    "outName": "BIN0016.bin",
+    "size": 346646
+  },
+  {
+    "name": "BIN0017.png",
+    "outName": "BIN0017.bin",
+    "size": 145847
+  },
+  {
+    "name": "BIN0018.png",
+    "outName": "BIN0018.bin",
+    "size": 143229
+  },
+  {
+    "name": "BIN0019.png",
+    "outName": "BIN0019.bin",
+    "size": 121944
+  },
+  {
+    "name": "BIN001A.png",
+    "outName": "BIN001A.bin",
+    "size": 104519
+  },
+  {
+    "name": "BIN001B.png",
+    "outName": "BIN001B.bin",
+    "size": 111377
+  },
+  {
+    "name": "BIN001C.png",
+    "outName": "BIN001C.bin",
+    "size": 99201
+  },
+  {
+    "name": "BIN001D.png",
+    "outName": "BIN001D.bin",
+    "size": 284993
+  },
+  {
+    "name": "BIN001E.png",
+    "outName": "BIN001E.bin",
+    "size": 426285
+  },
+  {
+    "name": "BIN001F.png",
+    "outName": "BIN001F.bin",
+    "size": 329559
+  },
+  {
+    "name": "BIN0020.png",
+    "outName": "BIN0020.bin",
+    "size": 291442
+  },
+  {
+    "name": "BIN0021.png",
+    "outName": "BIN0021.bin",
+    "size": 254593
+  },
+  {
+    "name": "BIN0022.png",
+    "outName": "BIN0022.bin",
+    "size": 274325
+  },
+  {
+    "name": "BIN0023.png",
+    "outName": "BIN0023.bin",
+    "size": 255354
+  },
+  {
+    "name": "BIN0024.png",
+    "outName": "BIN0024.bin",
+    "size": 116838
+  },
+  {
+    "name": "BIN0025.png",
+    "outName": "BIN0025.bin",
+    "size": 426854
+  },
+  {
+    "name": "BIN0026.png",
+    "outName": "BIN0026.bin",
+    "size": 271747
+  },
+  {
+    "name": "BIN0027.png",
+    "outName": "BIN0027.bin",
+    "size": 305491
+  },
+  {
+    "name": "BIN0028.png",
+    "outName": "BIN0028.bin",
+    "size": 254448
+  },
+  {
+    "name": "BIN0029.png",
+    "outName": "BIN0029.bin",
+    "size": 96303
+  },
+  {
+    "name": "BIN002A.png",
+    "outName": "BIN002A.bin",
+    "size": 274969
+  },
+  {
+    "name": "BIN002B.png",
+    "outName": "BIN002B.bin",
+    "size": 403640
+  },
+  {
+    "name": "BIN002C.png",
+    "outName": "BIN002C.bin",
+    "size": 103460
+  },
+  {
+    "name": "BIN002D.png",
+    "outName": "BIN002D.bin",
+    "size": 303489
+  },
+  {
+    "name": "BIN002E.png",
+    "outName": "BIN002E.bin",
+    "size": 313471
+  },
+  {
+    "name": "BIN002F.png",
+    "outName": "BIN002F.bin",
+    "size": 101697
+  },
+  {
+    "name": "BIN0030.png",
+    "outName": "BIN0030.bin",
+    "size": 352274
+  },
+  {
+    "name": "BIN0031.png",
+    "outName": "BIN0031.bin",
+    "size": 274020
+  },
+  {
+    "name": "BIN0032.png",
+    "outName": "BIN0032.bin",
+    "size": 441713
+  },
+  {
+    "name": "BIN0033.png",
+    "outName": "BIN0033.bin",
+    "size": 179039
+  },
+  {
+    "name": "BIN0034.png",
+    "outName": "BIN0034.bin",
+    "size": 286980
+  },
+  {
+    "name": "BIN0035.png",
+    "outName": "BIN0035.bin",
+    "size": 100768
+  },
+  {
+    "name": "BIN0036.png",
+    "outName": "BIN0036.bin",
+    "size": 357908
+  },
+  {
+    "name": "BIN0037.png",
+    "outName": "BIN0037.bin",
+    "size": 128495
+  },
+  {
+    "name": "BIN0038.png",
+    "outName": "BIN0038.bin",
+    "size": 337539
+  },
+  {
+    "name": "BIN0039.png",
+    "outName": "BIN0039.bin",
+    "size": 253506
+  },
+  {
+    "name": "BIN003A.png",
+    "outName": "BIN003A.bin",
+    "size": 171719
+  },
+  {
+    "name": "BIN003B.png",
+    "outName": "BIN003B.bin",
+    "size": 386564
+  },
+  {
+    "name": "BIN003C.png",
+    "outName": "BIN003C.bin",
+    "size": 173203
+  },
+  {
+    "name": "BIN003D.png",
+    "outName": "BIN003D.bin",
+    "size": 298149
+  },
+  {
+    "name": "BIN003E.png",
+    "outName": "BIN003E.bin",
+    "size": 98030
+  },
+  {
+    "name": "BIN003F.png",
+    "outName": "BIN003F.bin",
+    "size": 128121
+  },
+  {
+    "name": "BIN0040.png",
+    "outName": "BIN0040.bin",
+    "size": 434497
+  },
+  {
+    "name": "BIN0041.png",
+    "outName": "BIN0041.bin",
+    "size": 160883
+  },
+  {
+    "name": "BIN0042.png",
+    "outName": "BIN0042.bin",
+    "size": 99609
+  },
+  {
+    "name": "BIN0043.png",
+    "outName": "BIN0043.bin",
+    "size": 102866
+  },
+  {
+    "name": "BIN0044.png",
+    "outName": "BIN0044.bin",
+    "size": 174714
+  },
+  {
+    "name": "BIN0045.png",
+    "outName": "BIN0045.bin",
+    "size": 120300
+  },
+  {
+    "name": "BIN0046.png",
+    "outName": "BIN0046.bin",
+    "size": 100277
+  },
+  {
+    "name": "BIN0047.png",
+    "outName": "BIN0047.bin",
+    "size": 190855
+  },
+  {
+    "name": "BIN0048.png",
+    "outName": "BIN0048.bin",
+    "size": 88437
+  },
+  {
+    "name": "BIN0049.png",
+    "outName": "BIN0049.bin",
+    "size": 206793
+  },
+  {
+    "name": "BIN004A.png",
+    "outName": "BIN004A.bin",
+    "size": 205666
+  },
+  {
+    "name": "BIN004B.png",
+    "outName": "BIN004B.bin",
+    "size": 84931
+  },
+  {
+    "name": "BIN004C.png",
+    "outName": "BIN004C.bin",
+    "size": 196065
+  },
+  {
+    "name": "BIN004D.png",
+    "outName": "BIN004D.bin",
+    "size": 197143
+  },
+  {
+    "name": "BIN004E.png",
+    "outName": "BIN004E.bin",
+    "size": 122649
+  },
+  {
+    "name": "BIN004F.png",
+    "outName": "BIN004F.bin",
+    "size": 169695
+  },
+  {
+    "name": "BIN0050.png",
+    "outName": "BIN0050.bin",
+    "size": 97377
+  },
+  {
+    "name": "BIN0051.png",
+    "outName": "BIN0051.bin",
+    "size": 97710
+  },
+  {
+    "name": "BIN0052.png",
+    "outName": "BIN0052.bin",
+    "size": 61100
+  },
+  {
+    "name": "BIN0053.png",
+    "outName": "BIN0053.bin",
+    "size": 188589
+  },
+  {
+    "name": "BIN0054.png",
+    "outName": "BIN0054.bin",
+    "size": 136899
+  },
+  {
+    "name": "BIN0055.png",
+    "outName": "BIN0055.bin",
+    "size": 191564
+  },
+  {
+    "name": "BIN0056.png",
+    "outName": "BIN0056.bin",
+    "size": 80192
+  },
+  {
+    "name": "BIN0057.png",
+    "outName": "BIN0057.bin",
+    "size": 225339
+  },
+  {
+    "name": "BIN0058.png",
+    "outName": "BIN0058.bin",
+    "size": 245188
+  },
+  {
+    "name": "BIN0059.png",
+    "outName": "BIN0059.bin",
+    "size": 83108
+  },
+  {
+    "name": "BIN005A.png",
+    "outName": "BIN005A.bin",
+    "size": 220458
+  },
+  {
+    "name": "BIN005B.png",
+    "outName": "BIN005B.bin",
+    "size": 236794
+  },
+  {
+    "name": "BIN005C.png",
+    "outName": "BIN005C.bin",
+    "size": 65814
+  },
+  {
+    "name": "BIN005D.png",
+    "outName": "BIN005D.bin",
+    "size": 261140
+  },
+  {
+    "name": "BIN005E.png",
+    "outName": "BIN005E.bin",
+    "size": 207772
+  },
+  {
+    "name": "BIN005F.png",
+    "outName": "BIN005F.bin",
+    "size": 104162
+  },
+  {
+    "name": "BIN0060.png",
+    "outName": "BIN0060.bin",
+    "size": 168641
+  },
+  {
+    "name": "BIN0061.png",
+    "outName": "BIN0061.bin",
+    "size": 137175
+  },
+  {
+    "name": "BIN0062.png",
+    "outName": "BIN0062.bin",
+    "size": 208258
+  },
+  {
+    "name": "BIN0063.png",
+    "outName": "BIN0063.bin",
+    "size": 189745
+  },
+  {
+    "name": "BIN0064.png",
+    "outName": "BIN0064.bin",
+    "size": 247203
+  },
+  {
+    "name": "BIN0065.png",
+    "outName": "BIN0065.bin",
+    "size": 265663
+  },
+  {
+    "name": "BIN0066.png",
+    "outName": "BIN0066.bin",
+    "size": 340285
+  },
+  {
+    "name": "BIN0067.png",
+    "outName": "BIN0067.bin",
+    "size": 120980
+  },
+  {
+    "name": "BIN0068.png",
+    "outName": "BIN0068.bin",
+    "size": 222840
+  },
+  {
+    "name": "BIN0069.png",
+    "outName": "BIN0069.bin",
+    "size": 104519
+  },
+  {
+    "name": "BIN006A.png",
+    "outName": "BIN006A.bin",
+    "size": 88719
+  },
+  {
+    "name": "BIN006B.png",
+    "outName": "BIN006B.bin",
+    "size": 151324
+  },
+  {
+    "name": "BIN006C.png",
+    "outName": "BIN006C.bin",
+    "size": 230736
+  },
+  {
+    "name": "BIN006D.png",
+    "outName": "BIN006D.bin",
+    "size": 279289
+  },
+  {
+    "name": "BIN006E.png",
+    "outName": "BIN006E.bin",
+    "size": 272009
+  },
+  {
+    "name": "BIN006F.png",
+    "outName": "BIN006F.bin",
+    "size": 98098
+  },
+  {
+    "name": "BIN0070.png",
+    "outName": "BIN0070.bin",
+    "size": 277893
+  },
+  {
+    "name": "BIN0071.png",
+    "outName": "BIN0071.bin",
+    "size": 333620
+  },
+  {
+    "name": "BIN0072.png",
+    "outName": "BIN0072.bin",
+    "size": 88006
+  },
+  {
+    "name": "BIN0073.png",
+    "outName": "BIN0073.bin",
+    "size": 84743
+  },
+  {
+    "name": "BIN0074.png",
+    "outName": "BIN0074.bin",
+    "size": 75210
+  },
+  {
+    "name": "BIN0075.png",
+    "outName": "BIN0075.bin",
+    "size": 234499
+  },
+  {
+    "name": "BIN0076.png",
+    "outName": "BIN0076.bin",
+    "size": 382620
+  },
+  {
+    "name": "BIN0077.png",
+    "outName": "BIN0077.bin",
+    "size": 221300
+  },
+  {
+    "name": "BIN0078.png",
+    "outName": "BIN0078.bin",
+    "size": 68244
+  },
+  {
+    "name": "BIN0079.png",
+    "outName": "BIN0079.bin",
+    "size": 238707
+  },
+  {
+    "name": "BIN007A.png",
+    "outName": "BIN007A.bin",
+    "size": 273093
+  },
+  {
+    "name": "BIN007B.png",
+    "outName": "BIN007B.bin",
+    "size": 108034
+  },
+  {
+    "name": "BIN007C.png",
+    "outName": "BIN007C.bin",
+    "size": 90178
+  },
+  {
+    "name": "BIN007D.png",
+    "outName": "BIN007D.bin",
+    "size": 295396
+  },
+  {
+    "name": "BIN007E.png",
+    "outName": "BIN007E.bin",
+    "size": 310633
+  },
+  {
+    "name": "BIN007F.png",
+    "outName": "BIN007F.bin",
+    "size": 290247
+  },
+  {
+    "name": "BIN0080.png",
+    "outName": "BIN0080.bin",
+    "size": 270943
+  },
+  {
+    "name": "BIN0081.png",
+    "outName": "BIN0081.bin",
+    "size": 241111
+  },
+  {
+    "name": "BIN0082.png",
+    "outName": "BIN0082.bin",
+    "size": 80730
+  },
+  {
+    "name": "BIN0083.png",
+    "outName": "BIN0083.bin",
+    "size": 241154
+  },
+  {
+    "name": "BIN0084.png",
+    "outName": "BIN0084.bin",
+    "size": 290930
+  },
+  {
+    "name": "BIN0085.png",
+    "outName": "BIN0085.bin",
+    "size": 230192
+  },
+  {
+    "name": "BIN0086.png",
+    "outName": "BIN0086.bin",
+    "size": 93718
+  },
+  {
+    "name": "BIN0087.png",
+    "outName": "BIN0087.bin",
+    "size": 204907
+  },
+  {
+    "name": "BIN0088.png",
+    "outName": "BIN0088.bin",
+    "size": 105520
+  },
+  {
+    "name": "BIN0089.png",
+    "outName": "BIN0089.bin",
+    "size": 415336
+  },
+  {
+    "name": "BIN008A.png",
+    "outName": "BIN008A.bin",
+    "size": 575345
+  },
+  {
+    "name": "BIN008B.png",
+    "outName": "BIN008B.bin",
+    "size": 447842
+  },
+  {
+    "name": "BIN008C.png",
+    "outName": "BIN008C.bin",
+    "size": 89684
+  },
+  {
+    "name": "BIN008D.png",
+    "outName": "BIN008D.bin",
+    "size": 197554
+  },
+  {
+    "name": "BIN008E.png",
+    "outName": "BIN008E.bin",
+    "size": 120863
+  },
+  {
+    "name": "BIN008F.png",
+    "outName": "BIN008F.bin",
+    "size": 196583
+  },
+  {
+    "name": "BIN0090.png",
+    "outName": "BIN0090.bin",
+    "size": 173666
+  },
+  {
+    "name": "BIN0091.png",
+    "outName": "BIN0091.bin",
+    "size": 178580
+  },
+  {
+    "name": "BIN0092.png",
+    "outName": "BIN0092.bin",
+    "size": 153866
+  },
+  {
+    "name": "BIN0093.png",
+    "outName": "BIN0093.bin",
+    "size": 97411
+  },
+  {
+    "name": "BIN0094.png",
+    "outName": "BIN0094.bin",
+    "size": 68408
+  },
+  {
+    "name": "BIN0095.png",
+    "outName": "BIN0095.bin",
+    "size": 122151
+  },
+  {
+    "name": "BIN0096.png",
+    "outName": "BIN0096.bin",
+    "size": 168451
+  },
+  {
+    "name": "BIN0097.png",
+    "outName": "BIN0097.bin",
+    "size": 359455
+  },
+  {
+    "name": "BIN0098.png",
+    "outName": "BIN0098.bin",
+    "size": 164858
+  },
+  {
+    "name": "BIN0099.png",
+    "outName": "BIN0099.bin",
+    "size": 151006
+  },
+  {
+    "name": "BIN009A.png",
+    "outName": "BIN009A.bin",
+    "size": 228228
+  },
+  {
+    "name": "BIN009B.png",
+    "outName": "BIN009B.bin",
+    "size": 138903
+  }
+]

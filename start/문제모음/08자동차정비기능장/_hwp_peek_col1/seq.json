@@ -1,0 +1,846 @@
+[
+  {
+    "type": "text",
+    "text": "자동차 정비 기능장 실기 시험 답안지"
+  },
+  {
+    "type": "text",
+    "text": "기관"
+  },
+  {
+    "type": "text",
+    "text": "흡기 매니폴드 진공도 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "연료펌프 작동전류 및 공급 압력 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "캠 양정 및 오일컨트롤 밸브 저항 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "공기흐름센서 출력 전압 및 산소센서 출력전압 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "엔진오일 압력 및 오일압력 스위치 전압 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "연료탱크 압력센서 및 연료펌프 구동 전류 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "MLA 밸브 간극 및 OCV 유량조절밸브 저항 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "점화파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "디젤 인젝터 전압 및 전류파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "가솔린 인젝터 전압 및 전류파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "가변밸브 타이밍기구 파형측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "배기가스 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "연료압력조절밸브 듀티값 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "공기유량센서 및 TPS 출력전압 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "시동 및 부조"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "전기"
+  },
+  {
+    "type": "text",
+    "text": "부하시험 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "냉매 압력과 토출온도 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "블로어 모터 전압/전류 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "암전류 및 발전전류 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "라디에이터 팬 모터 전압/전류 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "충전전압 및 전류 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "와이퍼 작동 시 전압 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "도어 액추에이터 작동 시 전압 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "파워윈도/전조등/와이퍼 회로점검"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "에어컨 및 공조/방향지시등/블로어모터 회로점검"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "정지등/실내등/사이드 미러 회로점검"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "도난방지/경음기/뒷유리열선 회로점검"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "안전벨트/에어백/미등 회로점거"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "CAN통신파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "LIN통신파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "파워윈도 전압과 전류파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "안전벨트 차임밸 타이머 파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "감광식 룸램프 작동파형 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "유해가스감지센서(AQS) 출력전압/핀 서모센서 저항 및 출력전압 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "도어 S/W 및 도어록 액추에이터 작동전압 시 전압"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "CAN라인 저항 및 경음기 소음 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "전조등 광도 및 진폭"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "외기온도센서 저항/출력전압 및 에어컨 냉매 압력"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "섀시"
+  },
+  {
+    "type": "text",
+    "text": "제동력 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "사이드 슬립량 측정 및 타이어 점검"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "변속기오일 온도센서 저항 및 인히비터 스위치 점검"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "회전반경 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "파워스티어링 펌프 압력 및 핸들 유격 측정"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "MDPS 모터 전류파형"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "ABS 휠 스피드센서 파형"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "자동변속기 입(출)력 센서 파형"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "레인지 변환 시(N-D) 유압제어 솔레노이드 파형"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "EPS 솔레노이드 밸브 파형"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "오일펌프 배출압력 및 유량제어 솔레노이드 저항"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "후륜 토 및 캠버"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "브레이크 디스크 런 아웃 및 휠 스피드센서 에어 갭"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "text",
+    "text": "작동 시 변속기 클러치 압력 및 솔레노이드 저항"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  },
+  {
+    "type": "imgPlaceholder",
+    "text": "漠杳"
+  }
+]

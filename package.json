@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "cfb": "^1.2.2"
+  }
+}
