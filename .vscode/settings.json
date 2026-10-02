@@ -1,3 +1,4 @@
 {
-  "editor.showFoldingControls": "always"
+  "editor.showFoldingControls": "always",
+  "liveServer.settings.port": 5501
 }
