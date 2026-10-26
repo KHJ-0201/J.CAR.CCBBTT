@@ -27,6 +27,16 @@
         .measure-box.selected { outline: 3px solid #1e90ff; }
         .measure-box.correct { background-color: #d4f8e0; border-color: #27ae60; }
         .measure-box.wrong { background-color: #ffe0e3; border-color: #ff4757; }
+        .measure-box.highlight-focus {
+            border-color: #ff0000 !important;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.4), 0 0 8px rgba(255, 0, 0, 0.8) !important;
+            animation: pulse-red 1s infinite alternate !important;
+            z-index: 10 !important;
+        }
+        @keyframes pulse-red {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.35); }
+        }
         .mark-arrow { color: #ff4757; font-weight: 900; font-size: 15px; line-height: 1; }
         .mark-circle { box-sizing: border-box; width: 13px; height: 13px; border: 3px solid #ff4757; border-radius: 50%; }
         .mark-circle.black { border-color: black; }
@@ -44,6 +54,24 @@
         #markPicker button:hover { background: #ffeaa7; }
         #markPicker button.clear-btn { color: #2f3542; font-size: 12px; width: 44px; }
         #markPicker .picker-circle { width: 16px; height: 16px; border: 3px solid #ff4757; border-radius: 50%; box-sizing: border-box; }
+
+        /* 다시하기 선택 모달 */
+        #resetModal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 10005;
+            display: none; justify-content: center; align-items: center; padding: 16px; box-sizing: border-box;
+        }
+        .reset-modal-content {
+            background: white; border-radius: 12px; padding: 20px 18px; max-width: 320px; width: 100%;
+            text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 10px;
+        }
+        .reset-modal-title { font-size: 1.1rem; font-weight: 900; color: #2f3542; margin-bottom: 4px; }
+        .reset-modal-desc { font-size: 0.85rem; color: #57606f; margin-bottom: 8px; line-height: 1.4; }
+        .btn-reset-option {
+            padding: 12px 10px; font-size: 0.95rem; font-weight: 900; color: white; border: none; border-radius: 8px; cursor: pointer;
+        }
+        .btn-reset-std { background: #e67e22; }
+        .btn-reset-all { background: #c0392b; }
+        .btn-reset-cancel { background: #747d8c; }
 
         /* 상단 */
         .top-zone-engine { grid-column: 11 / 41; grid-row: 1 / 4; background-color: white; display: flex; flex-direction: column; justify-content: space-evenly; box-sizing: border-box; z-index: 10; padding: 0 10px; }
@@ -97,6 +125,17 @@
         .guide-display { font-size: 0.75rem; text-align: left; background: white; padding: 6px 8px; border-radius: 4px; border: 2px solid #1e90ff; font-weight: bold; color: #2f3542; line-height: 1.5; }
 
         .mobile-top-bar { display: none; }
+
+/* 버튼 주목 강조 애니메이션 (공통) */
+        .btn-highlight-ready {
+            box-shadow: 0 0 0 3px #ffffff, 0 0 14px #2ed573 !important;
+            animation: btn-glow 0.8s infinite alternate !important;
+        }
+        @keyframes btn-glow {
+            0% { transform: scale(1); filter: brightness(1); }
+            100% { transform: scale(1.06); filter: brightness(1.25); }
+        }
+
 
         /* PC: 제목 아래 [그림(왼쪽 90° 회전) 8 : 측정값 입력표 2] 좌우 배치 */
         @media screen and (min-width: 769px) {
@@ -157,4 +196,4 @@
                 width: 130vh !important; height: 127vh !important;
                 transform: translateX(-50%) translateY(var(--kb-shift, 0px)) scale(var(--m-scale)) !important; transform-origin: top center;                margin: 0 !important; z-index: 1; overflow: hidden !important;
             }
-        } </style> </head> <body> <div class="mobile-top-bar"> <button class="m-btn m-btn-back" onclick="goBackToMeasure()">◀ 목록</button> <button class="m-btn m-btn-reveal" id="m-btn-reveal" onclick="revealStandards()">기준값 보기</button> <button class="m-btn m-btn-check" id="m-btn-check" onclick="checkAnswers()" disabled="disabled">정답 확인</button> <button class="m-btn m-btn-reset" onclick="resetPractice()">다시 하기</button> <span class="m-score" id="m-score"></span> </div> <div class="master-grid" id="gridContainer"> <div class="top-zone-engine"> <div class="top-row-1"> <div style="grid-column: 1 / 2;"> <div class="left-control-panel"> <button class="btn-back" onclick="goBackToMeasure()">◀ 실기 목록</button> </div> </div> <div class="top-col-merged">[계측 연습]</div> <div class="top-col-status status-input" id="statusDisplay">측정값 입력</div> </div> <div class="top-row-2"> <table class="top-info-table"> <tr> <th>자격종목</th><td>자동차차체수리기능사</td> <th>작품명</th><td>자동차차체수리작업</td> </tr> </table> </div> </div> <div class="drawing-area" id="drawingArea"> <div class="drawing-layer" id="drawingLayer"></div> </div> <div class="bottom-zone-engine"> <div class="dashboard-container"> <div id="wheelCards" style="display: flex; gap: 8px; flex: 1;"></div> </div> <div class="right-control-panel"> <div class="guide-display" id="guideDisplay"></div> <button class="btn-reveal" id="btn-reveal" onclick="revealStandards()">👁 기준값 보기</button> <button class="btn-check" id="btn-check" onclick="checkAnswers()" disabled="disabled">✅ 정답 확인</button> <div class="score-display" id="scoreDisplay"></div> <button class="btn-reset" onclick="resetPractice()">🔄 다시 하기</button> </div> </div> </div> <button type="button" id="kbRevealBtn" class="kb-reveal-btn">👁 기준값 보기</button> <div id="markPicker"> <button type="button" onclick="setMark('←')">←</button> <button type="button" onclick="setMark('→')">→</button> <button type="button" onclick="setMark('↑')">↑</button> <button type="button" onclick="setMark('↓')">↓</button> <button type="button" onclick="setMark('○')"><span class="picker-circle"></span></button> <button type="button" class="clear-btn" onclick="setMark('')">지우기</button> </div> <script src="../문제모음/03자동차차체수리기능사/실기/차체수리기록.js?v=20261002a"></script> <script src="계측연습.js?v=20261002j"></script> </body> </html> 
+        } </style> </head> <body> <div class="mobile-top-bar"> <button class="m-btn m-btn-back" onclick="goBackToMeasure()">◀ 목록</button> <button class="m-btn m-btn-reveal" id="m-btn-reveal" onclick="revealStandards()">기준값 보기</button> <button class="m-btn m-btn-check" id="m-btn-check" onclick="checkAnswers()" disabled="disabled">정답 확인</button> <button class="m-btn m-btn-reset" onclick="resetPractice()">다시 하기</button> <span class="m-score" id="m-score"></span> </div> <div class="master-grid" id="gridContainer"> <div class="top-zone-engine"> <div class="top-row-1"> <div style="grid-column: 1 / 2;"> <div class="left-control-panel"> <button class="btn-back" onclick="goBackToMeasure()">◀ 실기 목록</button> </div> </div> <div class="top-col-merged">[계측 연습]</div> <div class="top-col-status status-input" id="statusDisplay">측정값 입력</div> </div> <div class="top-row-2"> <table class="top-info-table"> <tr> <th>자격종목</th><td>자동차차체수리기능사</td> <th>작품명</th><td>자동차차체수리작업</td> </tr> </table> </div> </div> <div class="drawing-area" id="drawingArea"> <div class="drawing-layer" id="drawingLayer"></div> </div> <div class="bottom-zone-engine"> <div class="dashboard-container"> <div id="wheelCards" style="display: flex; gap: 8px; flex: 1;"></div> </div> <div class="right-control-panel"> <div class="guide-display" id="guideDisplay"></div> <button class="btn-reveal" id="btn-reveal" onclick="revealStandards()">👁 기준값 보기</button> <button class="btn-check" id="btn-check" onclick="checkAnswers()" disabled="disabled">✅ 정답 확인</button> <div class="score-display" id="scoreDisplay"></div> <button class="btn-reset" onclick="resetPractice()">🔄 다시 하기</button> </div> </div> </div> <button type="button" id="kbRevealBtn" class="kb-reveal-btn">👁 기준값 보기</button> <div id="resetModal"> <div class="reset-modal-content"> <div class="reset-modal-title">다시 하기 선택</div> <div class="reset-modal-desc">원하시는 방식을 선택해 주세요.</div> <button type="button" class="btn-reset-option btn-reset-std" onclick="executeResetOnlyStandard()">🎲 기준값만 다르게 하기</button> <button type="button" class="btn-reset-option btn-reset-all" onclick="executeResetAll()">🔄 전체 다시 측정하기</button> <button type="button" class="btn-reset-option btn-reset-cancel" onclick="closeResetModal()">취소</button> </div> </div> <div id="markPicker"> <button type="button" onclick="setMark('←')">←</button> <button type="button" onclick="setMark('→')">→</button> <button type="button" onclick="setMark('↑')">↑</button> <button type="button" onclick="setMark('↓')">↓</button> <button type="button" onclick="setMark('○')"><span class="picker-circle"></span></button> <button type="button" class="clear-btn" onclick="setMark('')">지우기</button> </div> <script src="../문제모음/03자동차차체수리기능사/실기/차체수리기록.js?v=20261002a"></script> <script src="계측연습.js?v=20261002j"></script> </body> </html> 
