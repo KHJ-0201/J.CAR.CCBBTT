@@ -264,18 +264,86 @@ def parse_block(raw: str, source: str):
         stem = stem_body.strip()
         # strip accidental option lines if any
         stem = re.sub(r"(?m)^[①②③④]\s+.+$", "", stem).strip()
-        ans_clean = ans.strip()
-        # accept alternate answers separated by / or ,
-        answers = [a.strip() for a in re.split(r"[/／]", ans_clean) if a.strip()]
+        answers = expand_short_answers(ans)
         if not answers:
             return None
         item["question"] = stem
         item["answer"] = answers[0]
-        if len(answers) > 1:
-            item["answers"] = answers
+        item["answers"] = answers
         return item
 
     return None
+
+
+def expand_short_answers(ans: str) -> list[str]:
+    """주관식 정답 + 채점용 동의어. '/'는 수식에 쓰이므로 동의어 분리에 쓰지 않음."""
+    raw = (ans or "").strip()
+    raw = re.sub(r"^\[답\]\s*:?\s*", "", raw).strip()
+    raw = re.sub(r"^정답\s*:?\s*", "", raw).strip()
+    if not raw:
+        return []
+
+    variants: list[str] = [raw]
+
+    # 수식형: 마지막 '=' 뒤 결과만 추가 (R = 1/(...) = 60Ω → 60Ω)
+    if "=" in raw and re.search(r"\d", raw):
+        tail = raw.split("=")[-1].strip()
+        tail = re.sub(r"\s*\([^)]*\)\s*$", "", tail).strip()
+        if tail:
+            variants.append(tail)
+
+    # 0.5 [A] / 26.4 [%]
+    m = re.match(r"^([\d.]+)\s*\[([^\]]+)\]\s*$", raw)
+    if m:
+        num, unit = m.group(1), m.group(2).strip()
+        variants.extend([f"{num}{unit}", f"{num} {unit}", num])
+        if unit in ("%", "％"):
+            variants.append(f"{num}%")
+
+    # 60Ω, 9Ω, 5mm 이상, 10%, 1.1 A
+    m2 = re.match(r"^([\d.]+)\s*([%％°A-Za-zΩΩ]+)\s*(.*)$", raw)
+    if m2:
+        num, unit, rest = m2.group(1), m2.group(2), (m2.group(3) or "").strip()
+        variants.append(num)
+        variants.append(f"{num}{unit}")
+        if rest:
+            variants.append(f"{num}{unit}{rest}")
+            # '5mm 이상' → '5mm', '5'
+            variants.append(f"{num}{unit}")
+
+    # 단일 A: 값 (다중 A/B 채움은 원문 유지)
+    if re.match(r"^A\s*[:：]", raw, re.I) and not re.search(r"\bB\s*[:：]", raw, re.I):
+        only = re.sub(r"^A\s*[:：]\s*", "", raw, flags=re.I).strip()
+        # A: -(마이너스) → 마이너스, -
+        only_plain = re.sub(r"[()（）]", "", only).strip()
+        if only:
+            variants.append(only)
+        if only_plain and only_plain != only:
+            variants.append(only_plain)
+        if "마이너스" in only or only.strip() in ("-", "−"):
+            variants.extend(["-", "−", "마이너스", "음극"])
+
+    # CVVT 등 영문 약어만 따로
+    m3 = re.match(r"^([A-Za-z]{2,10})\s*[\(（]", raw)
+    if m3:
+        variants.append(m3.group(1))
+
+    # 공백·표기 변형
+    extra = []
+    for v in variants:
+        extra.append(re.sub(r"\s+", "", v))
+        extra.append(v.replace("Ω", "Ω"))
+    variants.extend(extra)
+
+    out: list[str] = []
+    seen = set()
+    for v in variants:
+        v = v.strip()
+        if not v or v in seen:
+            continue
+        seen.add(v)
+        out.append(v)
+    return out
 
 
 def load_all():
