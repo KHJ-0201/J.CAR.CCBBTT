@@ -7,6 +7,13 @@
  */
 
 export const SHORT_AI_SYN_ROOT = 'ranking_totals/__group_feedback__/__short_ai_synonym__';
+/** AI 요청 실패·복구(과거 오류) 로그 — Code.gs 수정 없이 프론트만 기록 */
+export const SHORT_AI_ERR_ROOT = 'ranking_totals/__group_feedback__/__short_ai_request_errors__';
+/**
+ * 현재 정상 확인된 AI 런타임 핀 (관리자 오류 기록·재미니 모델 대조용)
+ * Code.gs / 배포 URL / 모델 폴백을 바꿀 때만 갱신.
+ */
+export const SHORT_AI_RUNTIME_PIN = '2026-11-05|gemini-3.x(3.5-flash-lite우선)|exec…IId8Ag|client-syn5';
 /** 이 횟수 이상이면 관리자 목록에서 우선 표시 */
 export const SHORT_AI_SYN_PRIORITY_COUNT = 3;
 /** 문항당 승인 동의어 최대 */
@@ -18,6 +25,10 @@ export const SHORT_AI_SYN_MAX_PENDING = 60;
 /** 학생 답·문항 저장 길이 상한 */
 export const SHORT_AI_SYN_MAX_TEXT = 80;
 export const SHORT_AI_SYN_MAX_QUESTION = 400;
+/** 현재(활성) AI 요청 오류 최대 */
+export const SHORT_AI_ERR_MAX_ACTIVE = 80;
+/** 과거(복구 후) AI 요청 오류 최대 */
+export const SHORT_AI_ERR_MAX_PAST = 120;
 
 export function normalizeQuestionStem(question) {
     return String(question || '')
