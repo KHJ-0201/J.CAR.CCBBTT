@@ -1,1 +1,110 @@
-const a0_0x39f1b4=a0_0x4df5;(function(_0x418763,_0x38112c){const _0x2d444b=a0_0x4df5,_0xb4de86=_0x418763();while(!![]){try{const _0x27608d=-parseInt(_0x2d444b(0x110))/0x1+parseInt(_0x2d444b(0x11b))/0x2+-parseInt(_0x2d444b(0x111))/0x3+parseInt(_0x2d444b(0x115))/0x4*(parseInt(_0x2d444b(0x120))/0x5)+parseInt(_0x2d444b(0x12a))/0x6+-parseInt(_0x2d444b(0x125))/0x7+parseInt(_0x2d444b(0x12c))/0x8;if(_0x27608d===_0x38112c)break;else _0xb4de86['push'](_0xb4de86['shift']());}catch(_0x282d6c){_0xb4de86['push'](_0xb4de86['shift']());}}}(a0_0x27ad,0x37b37));const a0_0x165cfe=(function(){let _0x1c1539=!![];return function(_0x392152,_0x3a82c9){const _0x99812b=_0x1c1539?function(){if(_0x3a82c9){const _0x1c9191=_0x3a82c9['apply'](_0x392152,arguments);return _0x3a82c9=null,_0x1c9191;}}:function(){};return _0x1c1539=![],_0x99812b;};}()),a0_0x34bc91=a0_0x165cfe(this,function(){const _0x2a38cf=a0_0x4df5;return a0_0x34bc91['toString']()[_0x2a38cf(0x119)]('(((.+)+)+)+$')[_0x2a38cf(0x11f)]()['constructor'](a0_0x34bc91)[_0x2a38cf(0x119)](_0x2a38cf(0x122));});a0_0x34bc91();export const SHORT_AI_SYN_ROOT=a0_0x39f1b4(0x129);export const SHORT_AI_SYN_PRIORITY_COUNT=0x3;function a0_0x4df5(_0x53168c,_0x2d4f07){_0x53168c=_0x53168c-0x110;const _0x3e9429=a0_0x27ad();let _0x34bc91=_0x3e9429[_0x53168c];if(a0_0x4df5['EvEEJl']===undefined){var _0x165cfe=function(_0x4c9dff){const _0x3ad049='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0xb0134b='',_0xbf805c='',_0xdfcbd2=_0xb0134b+_0x165cfe;for(let _0x1c1539=0x0,_0x392152,_0x3a82c9,_0x99812b=0x0;_0x3a82c9=_0x4c9dff['charAt'](_0x99812b++);~_0x3a82c9&&(_0x392152=_0x1c1539%0x4?_0x392152*0x40+_0x3a82c9:_0x3a82c9,_0x1c1539++%0x4)?_0xb0134b+=_0xdfcbd2['charCodeAt'](_0x99812b+0xa)-0xa!==0x0?String['fromCharCode'](0xff&_0x392152>>(-0x2*_0x1c1539&0x6)):_0x1c1539:0x0){_0x3a82c9=_0x3ad049['indexOf'](_0x3a82c9);}for(let _0x1c9191=0x0,_0x271b8e=_0xb0134b['length'];_0x1c9191<_0x271b8e;_0x1c9191++){_0xbf805c+='%'+('00'+_0xb0134b['charCodeAt'](_0x1c9191)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0xbf805c);};a0_0x4df5['mSqEBF']=_0x165cfe,a0_0x4df5['eewBzb']={},a0_0x4df5['EvEEJl']=!![];}const _0x27ad65=_0x3e9429[0x0],_0x4df5dd=_0x53168c+_0x27ad65,_0x4771a2=a0_0x4df5['eewBzb'][_0x4df5dd];if(!_0x4771a2){const _0x5d96c1=function(_0x465da6){this['OSnMDV']=_0x465da6,this['nEsvYe']=[0x1,0x0,0x0],this['qPItgx']=function(){return'newState';},this['yrTYxq']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['tuYwBm']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x5d96c1['prototype']['kdBXEv']=function(){const _0x5f2631=new RegExp(this['yrTYxq']+this['tuYwBm']),_0x52d023=_0x5f2631['test'](this['qPItgx']['toString']())?--this['nEsvYe'][0x1]:--this['nEsvYe'][0x0];return this['GXXYGl'](_0x52d023);},_0x5d96c1['prototype']['GXXYGl']=function(_0x450848){if(!Boolean(~_0x450848))return _0x450848;return this['akrlut'](this['OSnMDV']);},_0x5d96c1['prototype']['akrlut']=function(_0x421f2e){for(let _0x5e913b=0x0,_0x394aa1=this['nEsvYe']['length'];_0x5e913b<_0x394aa1;_0x5e913b++){this['nEsvYe']['push'](Math['round'](Math['random']())),_0x394aa1=this['nEsvYe']['length'];}return _0x421f2e(this['nEsvYe'][0x0]);},new _0x5d96c1(a0_0x4df5)['kdBXEv'](),_0x34bc91=a0_0x4df5['mSqEBF'](_0x34bc91),a0_0x4df5['eewBzb'][_0x4df5dd]=_0x34bc91;}else _0x34bc91=_0x4771a2;return _0x34bc91;}export const SHORT_AI_SYN_MAX_APPROVED=0x28;export const SHORT_AI_SYN_MAX_APPROVED_WRONG=0x28;export const SHORT_AI_SYN_MAX_PENDING=0x3c;export const SHORT_AI_SYN_MAX_TEXT=0x50;function a0_0x27ad(){const _0x341dbd=['kcGOlISPkYKRksSK','CMvWBgfJzq','C3rHDhvZ','mtC3mZiXovHSDwrWra','C2XPy2u','CgvUzgLUzW','y291BNq','CMfUA2LUz190B3rHBhmVx19NCM91Cf9MzwvKyMfJA19Fl19FC2HVCNrFywLFC3LUB255Bv9F','mJi3nta2oezMtuDWAW','DhjPBq','mtG3mta3mLDowe1XtG','mZi1nZy0DKHiDeTu','mJm5odyYq2ncC3Dt','C29Tzq','BgvUz3rO','BgfZDef0','ntK0nJG0tMLeELDQ','zw1WDhK','B2jQzwn0','A2v5CW','C2vHCMnO','zM9YrwfJAa','mJuWota2rM1cqKzN','zMLSDgvY','C29YDa','BwfW','Dg9tDhjPBMC','nunnzLnVtq','Dg9mB3DLCKnHC2u'];a0_0x27ad=function(){return _0x341dbd;};return a0_0x27ad();}export const SHORT_AI_SYN_MAX_QUESTION=0x190;export function normalizeQuestionStem(_0x271b8e){const _0x255e2f=a0_0x39f1b4;return String(_0x271b8e||'')[_0x255e2f(0x123)](/\r\n/g,'\x0a')[_0x255e2f(0x123)](/\s+/g,'\x20')[_0x255e2f(0x12b)]()['slice'](0x0,SHORT_AI_SYN_MAX_QUESTION);}export function shortQuestionHash(_0x5d96c1){const _0xc1f384=a0_0x39f1b4,_0x465da6=normalizeQuestionStem(_0x5d96c1)[_0xc1f384(0x121)]();let _0x5f2631=0x1505;for(let _0x52d023=0x0;_0x52d023<_0x465da6[_0xc1f384(0x113)];_0x52d023++){_0x5f2631=(_0x5f2631<<0x5)+_0x5f2631+_0x465da6['charCodeAt'](_0x52d023);}return'q'+(_0x5f2631>>>0x0)[_0xc1f384(0x11f)](0x24);}export function shortSynonymCandidateKey(_0x450848){const _0x2e8916=a0_0x39f1b4;return String(_0x450848??'')['trim']()['replace'](/\s+/g,'')[_0x2e8916(0x121)]()[_0x2e8916(0x123)](/[()（）[\]{}·・.,，。:：;；'"“”‘’\-_/\\～~]/g,'')[_0x2e8916(0x123)](/[％%]/g,'%')[_0x2e8916(0x123)](/[ΩΩ]/g,'ω')[_0x2e8916(0x126)](0x0,0x50)||_0x2e8916(0x116);}export function encodeFbKey(_0x421f2e){const _0x5136ec=a0_0x39f1b4;return String(_0x421f2e||'')[_0x5136ec(0x123)](/[.#$/[\]]/g,'_');}export function isAlreadyOfficialAnswer(_0x5e913b,_0x394aa1,_0xe3193){const _0x1cb72c=a0_0x39f1b4,_0x154f44=_0xe3193?_0xe3193(_0x394aa1):shortSynonymCandidateKey(_0x394aa1);if(!_0x154f44)return!![];const _0x510f6e=Array['isArray'](_0x5e913b)?_0x5e913b:[];return _0x510f6e[_0x1cb72c(0x112)](_0x15fc9d=>{const _0x4cac86=_0xe3193?_0xe3193(_0x15fc9d):shortSynonymCandidateKey(_0x15fc9d);return _0x4cac86&&_0x4cac86===_0x154f44;});}export function countPendingCandidates(_0x2131b0){const _0x42a4d9=a0_0x39f1b4,_0xb8c780=_0x2131b0&&typeof _0x2131b0===_0x42a4d9(0x117)?_0x2131b0:{};let _0x48cc3f=0x0;return Object[_0x42a4d9(0x118)](_0xb8c780)[_0x42a4d9(0x11a)](_0x120bf3=>{const _0x39b54e=_0x42a4d9,_0x3d74fc=String(_0xb8c780[_0x120bf3]?.[_0x39b54e(0x124)]||_0x39b54e(0x127));if(_0x3d74fc===_0x39b54e(0x127))_0x48cc3f+=0x1;}),_0x48cc3f;}export function prunePendingCandidates(_0xe0c58f,_0x3e37dc,_0xb12d68){const _0x2ecde5=a0_0x39f1b4,_0x18e9a8={..._0xe0c58f||{}},_0x5c178d=Object[_0x2ecde5(0x118)](_0x18e9a8)['filter'](_0x376c28=>{const _0x647d23=_0x2ecde5,_0x1d2126=String(_0x18e9a8[_0x376c28]?.[_0x647d23(0x124)]||_0x647d23(0x127));return _0x1d2126===_0x647d23(0x127);});if(_0x5c178d[_0x2ecde5(0x113)]<=_0x3e37dc)return _0x18e9a8;_0x5c178d[_0x2ecde5(0x11d)]((_0x5539c4,_0x2ff08b)=>{const _0x50ed80=_0x2ecde5,_0x339556=Number(_0x18e9a8[_0x5539c4]?.[_0x50ed80(0x128)])||0x0,_0x43b429=Number(_0x18e9a8[_0x2ff08b]?.['count'])||0x0;if(_0x339556!==_0x43b429)return _0x339556-_0x43b429;return(Number(_0x18e9a8[_0x5539c4]?.[_0x50ed80(0x114)])||0x0)-(Number(_0x18e9a8[_0x2ff08b]?.[_0x50ed80(0x114)])||0x0);});let _0x4748aa=_0x5c178d[_0x2ecde5(0x113)]-_0x3e37dc;for(let _0x386124=0x0;_0x386124<_0x5c178d[_0x2ecde5(0x113)]&&_0x4748aa>0x0;_0x386124++){const _0x286a69=_0x5c178d[_0x386124];if(_0xb12d68&&_0x286a69===_0xb12d68)continue;delete _0x18e9a8[_0x286a69],_0x4748aa-=0x1;}return _0x18e9a8;}export function trimStringList(_0x5f3774,_0x5ac9af){const _0x227a93=a0_0x39f1b4,_0x34b4dc=Array['isArray'](_0x5f3774)?_0x5f3774[_0x227a93(0x11e)](_0x172cac=>String(_0x172cac||'')[_0x227a93(0x12b)]())[_0x227a93(0x11c)](Boolean):[];if(_0x34b4dc['length']<=_0x5ac9af)return _0x34b4dc;return _0x34b4dc[_0x227a93(0x126)](0x0,_0x5ac9af);}
+/**
+ * 주관식 AI 정답/오답 → Firebase 후보
+ * 학생: 후보 기록 + 승인된 동의어·오답 병합
+ * 관리자: 후보 확인 후 승인/거절
+ *
+ * 용량 안전장치: 문항당 승인·대기 후보 상한 (초과 시 신규 후보 정리 / 신규 승인 거부)
+ */
+
+export const SHORT_AI_SYN_ROOT = 'ranking_totals/__group_feedback__/__short_ai_synonym__';
+/** 이 횟수 이상이면 관리자 목록에서 우선 표시 */
+export const SHORT_AI_SYN_PRIORITY_COUNT = 3;
+/** 문항당 승인 동의어 최대 */
+export const SHORT_AI_SYN_MAX_APPROVED = 40;
+/** 문항당 승인 오답 최대 */
+export const SHORT_AI_SYN_MAX_APPROVED_WRONG = 40;
+/** 문항당 대기 후보(정답/오답 각각) 최대 — 초과 시 횟수 적은 pending 정리 */
+export const SHORT_AI_SYN_MAX_PENDING = 60;
+/** 학생 답·문항 저장 길이 상한 */
+export const SHORT_AI_SYN_MAX_TEXT = 80;
+export const SHORT_AI_SYN_MAX_QUESTION = 400;
+
+export function normalizeQuestionStem(question) {
+    return String(question || '')
+        .replace(/\r\n/g, '\n')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, SHORT_AI_SYN_MAX_QUESTION);
+}
+
+/** 문항 식별용 짧은 해시 (회차·번호와 무관) */
+export function shortQuestionHash(question) {
+    const s = normalizeQuestionStem(question).toLowerCase();
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) {
+        h = ((h << 5) + h) + s.charCodeAt(i);
+    }
+    return `q${(h >>> 0).toString(36)}`;
+}
+
+/** 후보 키 — 띄어쓰기·기호 무시 비교용 */
+export function shortSynonymCandidateKey(text) {
+    return String(text ?? '')
+        .trim()
+        .replace(/\s+/g, '')
+        .toLowerCase()
+        .replace(/[()（）[\]{}·・.,，。:：;；'"“”‘’\-_/\\～~]/g, '')
+        .replace(/[％%]/g, '%')
+        .replace(/[ΩΩ]/g, 'ω')
+        .slice(0, 80) || 'empty';
+}
+
+export function encodeFbKey(str) {
+    return String(str || '').replace(/[.#$/[\]]/g, '_');
+}
+
+export function isAlreadyOfficialAnswer(officialList, studentAnswer, normalizeFn) {
+    const key = normalizeFn
+        ? normalizeFn(studentAnswer)
+        : shortSynonymCandidateKey(studentAnswer);
+    if (!key) return true;
+    const list = Array.isArray(officialList) ? officialList : [];
+    return list.some((a) => {
+        const ak = normalizeFn ? normalizeFn(a) : shortSynonymCandidateKey(a);
+        return ak && ak === key;
+    });
+}
+
+export function countPendingCandidates(candsObj) {
+    const cands = candsObj && typeof candsObj === 'object' ? candsObj : {};
+    let n = 0;
+    Object.keys(cands).forEach((k) => {
+        const st = String(cands[k]?.status || 'pending');
+        if (st === 'pending') n += 1;
+    });
+    return n;
+}
+
+/**
+ * pending 이 maxPending 초과면 count 낮은 것부터 제거 (keepKey 는 유지)
+ */
+export function prunePendingCandidates(candsObj, maxPending, keepKey) {
+    const cands = { ...(candsObj || {}) };
+    const pendingKeys = Object.keys(cands).filter((k) => {
+        const st = String(cands[k]?.status || 'pending');
+        return st === 'pending';
+    });
+    if (pendingKeys.length <= maxPending) return cands;
+
+    pendingKeys.sort((a, b) => {
+        const ca = Number(cands[a]?.count) || 0;
+        const cb = Number(cands[b]?.count) || 0;
+        if (ca !== cb) return ca - cb;
+        return (Number(cands[a]?.lastAt) || 0) - (Number(cands[b]?.lastAt) || 0);
+    });
+
+    let over = pendingKeys.length - maxPending;
+    for (let i = 0; i < pendingKeys.length && over > 0; i++) {
+        const k = pendingKeys[i];
+        if (keepKey && k === keepKey) continue;
+        delete cands[k];
+        over -= 1;
+    }
+    return cands;
+}
+
+export function trimStringList(list, maxLen) {
+    const arr = Array.isArray(list) ? list.map((a) => String(a || '').trim()).filter(Boolean) : [];
+    if (arr.length <= maxLen) return arr;
+    return arr.slice(0, maxLen);
+}

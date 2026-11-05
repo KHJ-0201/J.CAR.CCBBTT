@@ -1,10 +1,9 @@
 /**
- * 주관식 AI 채점 — 브라우저 전송층 (난독화 제외 권장)
+ * 주관식 AI 채점 — 브라우저 전송층 (auto.bat 난독화 제외)
  *
- * 모바일에서 JSONP GET URL이 길어지거나 Apps Script 리다이렉트가 막히는 경우를 대비:
- * 1) fetch POST (text/plain)
- * 2) 숨은 iframe + form POST + postMessage  (긴 문항·모바일 주력)
- * 3) JSONP GET 폴백 (ping/usage·짧은 요청)
+ * URL·gate 를 여기에 둠 → 난독화된 통합랜덤.js 와 무관하게 폰/배포본에서도 동일 동작.
+ * 전송 순서(채점): JSONP → fetch → iframe
+ *  (github.io 모바일에서 iframe(HtmlService)이 막히는 경우가 있어 JSONP를 먼저)
  */
 (function (global) {
   'use strict';
@@ -12,6 +11,12 @@
   var MSG_SOURCE = 'codevCBT-short-answer-grade';
   var DEFAULT_TIMEOUT_MS = 22000;
   var PING_TIMEOUT_MS = 10000;
+  /** 배포·Go Live 공통 (난독화 파일에 의존하지 않음) */
+  var CONFIG = {
+    url: 'https://script.google.com/macros/s/AKfycbwTb3Al6dJw4u5Xyjxk9At97aeA76L1f1B28xK9JzwVGo6GDVC7kG5e1768Vy30IId8Ag/exec',
+    gate: 'khjGradeLock915',
+  };
+  var JSONP_SAFE_LEN = 1800;
 
   function trimUrl(url) {
     return String(url || '').trim();
@@ -217,21 +222,30 @@
 
     var attempt = 0;
     var last = null;
-    // grade: iframe(긴 문항·모바일) → fetch → JSONP
-    // auto: 짧은 요청은 JSONP 우선, 나머지는 fetch → iframe → JSONP
+    // 배포(모바일) 안정: JSONP 먼저. 긴 문항만 iframe.
+    // iframe-first 는 github.io 폰에서 HtmlService 가 막혀 22초 낭비하는 경우가 많음.
+    var qsLen = 0;
+    try {
+      qsLen = new URLSearchParams(flattenQuery(payload)).toString().length;
+    } catch (_) {
+      qsLen = 9999;
+    }
     var order;
-    if (prefer === 'grade' || prefer === 'iframe') {
-      // 재배포(embed) 서버: iframe 주력
+    if (prefer === 'grade' || prefer === 'mobile') {
+      // 짧은 요청: JSONP 먼저. 긴 문항: fetch 먼저 (iframe은 github.io 폰에서 자주 막힘)
+      order = qsLen <= JSONP_SAFE_LEN
+        ? ['jsonp', 'fetch', 'iframe']
+        : ['fetch', 'jsonp', 'iframe'];
+    } else if (prefer === 'iframe') {
       order = ['iframe', 'fetch', 'jsonp'];
     } else if (prefer === 'fetch') {
-      // 구버전 서버: iframe 대기 금지 (postMessage 없음)
-      order = ['fetch', 'jsonp'];
+      order = ['fetch', 'jsonp', 'iframe'];
     } else if (prefer === 'jsonp') {
-      order = ['jsonp'];
+      order = ['jsonp', 'fetch'];
     } else if (isShort) {
       order = ['jsonp', 'fetch'];
     } else {
-      order = ['fetch', 'jsonp'];
+      order = ['jsonp', 'fetch', 'iframe'];
     }
 
     while (attempt <= retries) {
@@ -239,14 +253,14 @@
       try {
         for (var i = 0; i < order.length; i++) {
           var mode = order[i];
-          // 채널마다 독립 예산 — iframe 타임아웃이 fetch/jsonp를 굶기지 않게
           var channelMs;
           if (mode === 'iframe') {
-            channelMs = Math.max(14000, timeoutMs);
+            // iframe 은 막히면 빨리 포기하고 다음 채널로
+            channelMs = Math.min(timeoutMs, attempt === 1 ? 12000 : 16000);
           } else if (isShort) {
             channelMs = PING_TIMEOUT_MS;
           } else {
-            channelMs = Math.min(12000, Math.max(8000, Math.floor(timeoutMs * 0.55)));
+            channelMs = Math.min(14000, Math.max(9000, timeoutMs));
           }
           try {
             if (mode === 'jsonp') {
@@ -306,12 +320,30 @@
   }
 
   function grade(url, payload, timeoutMs, prefer) {
-    return request(url, payload, {
+    return request(url || CONFIG.url, payload, {
       timeoutMs: timeoutMs || DEFAULT_TIMEOUT_MS,
-      // 연속 2번째 채점 끊김 완화 (채널 실패 시 1회 재시도)
       retries: 1,
-      prefer: prefer || 'grade',
+      prefer: prefer || 'mobile',
     });
+  }
+
+  /** 통합랜덤/난독화 코드에서 URL 몰라도 호출 가능 */
+  function gradeExam(parts, timeoutMs, prefer) {
+    var p = parts || {};
+    return grade(CONFIG.url, {
+      gate: CONFIG.gate,
+      question: p.question,
+      answers: p.answers,
+      studentAnswer: p.studentAnswer,
+    }, timeoutMs, prefer || 'mobile');
+  }
+
+  function pingService(timeoutMs) {
+    return ping(CONFIG.url, timeoutMs);
+  }
+
+  function usageService(timeoutMs) {
+    return usage(CONFIG.url, CONFIG.gate, timeoutMs);
   }
 
   function supportsEmbed(pingData) {
@@ -328,6 +360,11 @@
     ping: ping,
     usage: usage,
     grade: grade,
+    gradeExam: gradeExam,
+    pingService: pingService,
+    usageService: usageService,
+    getUrl: function () { return CONFIG.url; },
+    getGate: function () { return CONFIG.gate; },
     supportsEmbed: supportsEmbed,
     DEFAULT_TIMEOUT_MS: DEFAULT_TIMEOUT_MS,
     PING_TIMEOUT_MS: PING_TIMEOUT_MS,

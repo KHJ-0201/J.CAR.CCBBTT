@@ -24,8 +24,9 @@
    - 모델별 무료 일일·분당 한도와 **사용량**을 볼 수 있습니다  
    - Flash-Lite 무료 RPD는 대략 하루 수백~1000회대(시점에 따라 변동) → **화면 수치가 기준**
 
-사용할 모델: `gemini-3.5-flash-lite` (채팅의「3.5 Flash-Lite」대응, 스크립트 기본 후보).  
-모델 ID가 바뀌면 스크립트 속성 `GEMINI_MODEL`로 덮어쓰면 됩니다.
+권장 모델 (2026-11): `gemini-3.5-flash-lite` 또는 `gemini-flash-latest`.  
+신규 API 키에서는 `gemini-2.0-flash` / `2.5-flash` 가 **404** 나는 경우가 많습니다.  
+에디터에서 `probeGeminiModels` 실행 → 로그의 `OK …` 이름이 자동으로 `GEMINI_MODEL`에 저장됩니다.
 
 ---
 
@@ -52,6 +53,14 @@
 
 편집기에서 함수 `showTodayAiCallCount` 선택 → 실행 → **실행 로그**에 오늘 호출 횟수가 나옵니다.  
 (AI Studio Usage와 별도로, 이 웹앱이 Gemini를 부른 횟수입니다.)
+
+### 모델 캐시 초기화 (연결 실패·bad_model / 404 연속 시)
+
+1. `Code.gs` 최신본 붙여넣기 → 저장  
+2. 함수 `probeGeminiModels` 실행 → 실행 로그에 `OK gemini-…` 확인  
+3. (선택) `clearGeminiModelCache` 후 다시 probe  
+4. **배포 → 배포 관리 → 새 버전** (웹앱 URL은 그대로여도 됨)  
+※ 속성 `GEMINI_MODEL`이 `gemini-2.5-flash-lite` 등으로 고정돼 있으면 404만 5번 돌고 끝날 수 있음 → probe가 바꿔 줌
 
 ### CBT 관리자 화면
 
