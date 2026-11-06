@@ -5,9 +5,11 @@
  * API 키는 스크립트 속성에만 두고, 이 파일·깃·프론트에 넣지 말 것.
  *
  * 스크립트 속성:
- *   GEMINI_API_KEY  — AI Studio API 키
- *   GATE_SECRET     — 프론트 SHORT_AI_GATE 와 동일
- *   GEMINI_MODEL    — (선택) 예: gemini-3.5-flash-lite
+ *   GEMINI_API_KEY   — AI Studio API 키 (지금 쓰는 계정)
+ *   GEMINI_API_KEY_2 — (선택) 다른 구글 계정의 예비 키. 비어 있으면 전혀 사용하지 않음.
+ *                      기본 키가 429(무료 한도)일 때만 사용. 주소·gate·프론트는 그대로.
+ *   GATE_SECRET      — 프론트 SHORT_AI_GATE 와 동일
+ *   GEMINI_MODEL     — (선택) 예: gemini-3.5-flash-lite
  *
  * 브라우저:
  *   - doGet + JSONP (짧은 ping/usage)
@@ -145,21 +147,33 @@ function gradePayload_(body) {
   }
 
   var preferred = String(props.getProperty('GEMINI_MODEL') || '').trim();
+  var spareKey = spareApiKey_();
+  // 예비 키가 있을 때만 429에서 모델 순회를 멈춤. 없으면 기존과 동일.
+  var stopOnQuota = !!spareKey;
   var verdict = null;
   var gradeErr = '';
   try {
-    verdict = callGeminiWithFallback_(apiKey, preferred, question, answers, studentAnswer);
+    verdict = callGeminiWithFallback_(apiKey, preferred, question, answers, studentAnswer, stopOnQuota);
   } catch (err1) {
     gradeErr = String(err1 && err1.message || err1);
   }
-  // 간헐적 빈 응답/429 → 짧게 쉬고 1회 재호출
+  // 간헐적 빈 응답/429 → 짧게 쉬고 기본 키로 1회 재호출
   if (!verdict || typeof verdict.correct !== 'boolean') {
     Utilities.sleep(450);
     try {
-      verdict = callGeminiWithFallback_(apiKey, preferred, question, answers, studentAnswer);
+      verdict = callGeminiWithFallback_(apiKey, preferred, question, answers, studentAnswer, stopOnQuota);
       gradeErr = '';
     } catch (err2) {
       gradeErr = String(err2 && err2.message || err2);
+    }
+  }
+  // 기본 키가 한도(429)일 때만 예비 키. 다른 오류는 예비 키를 쓰지 않음.
+  if ((!verdict || typeof verdict.correct !== 'boolean') && spareKey && isQuotaError_(gradeErr)) {
+    try {
+      verdict = callGeminiWithFallback_(spareKey, preferred, question, answers, studentAnswer, true);
+      gradeErr = '';
+    } catch (err3) {
+      gradeErr = String(err3 && err3.message || err3);
     }
   }
   bumpDailyCounter_();
@@ -333,7 +347,20 @@ function shouldTryNextModel_(errMsg) {
     || s.indexOf('gemini_parse_') !== -1;
 }
 
-function callGeminiWithFallback_(apiKey, preferred, question, answers, studentAnswer) {
+function isQuotaError_(errMsg) {
+  return String(errMsg || '').indexOf('gemini_http_429') !== -1;
+}
+
+/** 다른 계정 예비 키. 없거나 기본 키와 같으면 빈 문자열. */
+function spareApiKey_() {
+  var props = PropertiesService.getScriptProperties();
+  var primary = String(props.getProperty('GEMINI_API_KEY') || '').trim();
+  var spare = String(props.getProperty('GEMINI_API_KEY_2') || '').trim();
+  if (!spare || spare === primary) return '';
+  return spare;
+}
+
+function callGeminiWithFallback_(apiKey, preferred, question, answers, studentAnswer, stopOnQuota) {
   var models = modelCandidates_(preferred);
   var lastErr = '';
   var tried = [];
@@ -354,6 +381,7 @@ function callGeminiWithFallback_(apiKey, preferred, question, answers, studentAn
       if (lastErr.indexOf('gemini_http_404') !== -1 || lastErr.indexOf('gemini_http_400') !== -1) {
         clearCachedModelIf_(models[i]);
       }
+      if (stopOnQuota && isQuotaError_(lastErr)) throw err;
       if (!shouldTryNextModel_(lastErr)) throw err;
     }
   }
