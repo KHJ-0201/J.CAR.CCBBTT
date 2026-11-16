@@ -87,7 +87,10 @@
         .top-info-table td { border: 1px solid #2f3542; padding: 4px; font-size: 0.95rem; font-weight: bold; color: #2f3542; width: 35%; }
 
         /* 하단 입력표 */
+        .page-shell { width: 100%; height: 100%; }
+        .page-layout { width: 100%; height: 100%; }
         .bottom-zone-engine { grid-column: 11 / 41; grid-row: 34 / 41; margin: 2px 0; background-color: white; border-radius: 8px; padding: 10px; box-sizing: border-box; z-index: 10; display: flex; flex-direction: column; justify-content: center; }
+        .m-sheet-bar, .m-sheet-toggle, .m-sheet-backdrop, .m-measure-hold, .m-measure-peek { display: none; }
         .dashboard-container { display: flex; justify-content: center; gap: 8px; align-items: stretch; width: 100%; }
         .wheel-card { background-color: #f1f2f6; color: #2f3542; border-radius: 6px; padding: 8px; flex: 1; }
         .wheel-card table { width: 100%; border-collapse: collapse; }
@@ -139,9 +142,20 @@
 
         /* PC: 제목 아래 [그림(왼쪽 90° 회전) 8 : 측정값 입력표 2] 좌우 배치 */
         @media screen and (min-width: 769px) {
+            .page-shell {
+                display: grid;
+                grid-template-columns: 8fr 2fr;
+                grid-template-rows: auto minmax(0, 1fr);
+                width: calc(100vw - 16px);
+                height: 100vh;
+            }
+            .page-layout,
             .master-grid {
-                grid-template-columns: 8fr 2fr; grid-template-rows: auto minmax(0, 1fr);
-                aspect-ratio: auto; width: calc(100vw - 16px);
+                display: contents;
+                visibility: visible !important;
+                aspect-ratio: auto;
+                width: auto;
+                height: auto !important;
             }
             .left-control-panel { position: static; }
             .btn-back { padding: 6px 12px; font-size: 0.9rem; }
@@ -169,7 +183,7 @@
 
         /* 모바일 숫자 자판이 떠 있을 때 입력표 아래(또는 자판 바로 위)에 뜨는 버튼 */
         .kb-reveal-btn {
-            position: fixed; display: none; z-index: 10002; left: 50%; transform: translateX(-50%);
+            position: fixed; display: none; z-index: 10004; left: 50%; transform: translateX(-50%);
             padding: 10px 22px; font-size: 15px; font-weight: 900; color: white; background: #e67e22;
             border: 2px solid #f39c12; border-radius: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); white-space: nowrap;
         }
@@ -177,10 +191,13 @@
         @media screen and (max-width: 768px) {
             html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden !important; overscroll-behavior: none; position: fixed; }
             .left-control-panel, .right-control-panel { display: none !important; }
-            :root { --m-scale: 0.65; --m-top-bar: 50px; }
+            :root { --m-scale: 0.65; --m-top-bar: 50px; --m-sheet-btn: 48px; }
+            .page-shell { position: static; width: 100vw; height: 100vh; }
+            /* 그림만 fixed — 입력 시트는 형제라 backdrop 위에 클릭됨 */
+            .page-layout { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; }
             .mobile-top-bar {
                 display: flex !important; position: fixed !important; top: 0 !important; left: 0 !important;
-                width: 100% !important; height: var(--m-top-bar); background-color: #2f3542; z-index: 10001;
+                width: 100% !important; height: var(--m-top-bar); background-color: #2f3542; z-index: 10005;
                 align-items: center; padding: 0 6px; gap: 4px; box-sizing: border-box; overflow-x: auto;
             }
             .m-btn { flex: 0 0 auto; height: 34px; padding: 0 8px; font-size: 12px; font-weight: 900; color: white; background: #57606f; border: none; border-radius: 5px; }
@@ -194,6 +211,138 @@
                 display: grid !important; visibility: visible !important; position: absolute !important;
                 top: var(--m-top-bar) !important; left: 50%;
                 width: 130vh !important; height: 127vh !important;
-                transform: translateX(-50%) translateY(var(--kb-shift, 0px)) scale(var(--m-scale)) !important; transform-origin: top center;                margin: 0 !important; z-index: 1; overflow: hidden !important;
+                transform: translateX(-50%) translateY(var(--kb-shift, 0px)) scale(var(--m-scale)) !important; transform-origin: top center;
+                margin: 0 !important; z-index: 1; overflow: hidden !important;
             }
-        } </style> <script src="../pageBusy.global.js?v=20261104a"></script> <script>if (window.PageBusy) PageBusy.bootHold('로딩중');</script> </head> <body> <div class="mobile-top-bar"> <button class="m-btn m-btn-back" onclick="goBackToMeasure()">◀ 목록</button> <button class="m-btn m-btn-reveal" id="m-btn-reveal" onclick="revealStandards()">기준값 보기</button> <button class="m-btn m-btn-check" id="m-btn-check" onclick="checkAnswers()" disabled>정답 확인</button> <button class="m-btn m-btn-reset" onclick="resetPractice()">다시 하기</button> <span class="m-score" id="m-score"></span> </div> <div class="master-grid" id="gridContainer"> <div class="top-zone-engine"> <div class="top-row-1"> <div style="grid-column: 1 / 2;"> <div class="left-control-panel"> <button class="btn-back" onclick="goBackToMeasure()">◀ 실기 목록</button> </div> </div> <div class="top-col-merged">[계측 연습]</div> <div class="top-col-status status-input" id="statusDisplay">측정값 입력</div> </div> <div class="top-row-2"> <table class="top-info-table"> <tr> <th>자격종목</th><td>자동차차체수리기능사</td> <th>작품명</th><td>자동차차체수리작업</td> </tr> </table> </div> </div> <div class="drawing-area" id="drawingArea"> <div class="drawing-layer" id="drawingLayer"></div> </div> <div class="bottom-zone-engine"> <div class="dashboard-container"> <div id="wheelCards" style="display: flex; gap: 8px; flex: 1;"></div> </div> <div class="right-control-panel"> <div class="guide-display" id="guideDisplay"></div> <button class="btn-reveal" id="btn-reveal" onclick="revealStandards()">👁 기준값 보기</button> <button class="btn-check" id="btn-check" onclick="checkAnswers()" disabled>✅ 정답 확인</button> <div class="score-display" id="scoreDisplay"></div> <button class="btn-reset" onclick="resetPractice()">🔄 다시 하기</button> </div> </div> </div> <button type="button" id="kbRevealBtn" class="kb-reveal-btn">👁 기준값 보기</button> <div id="resetModal"> <div class="reset-modal-content"> <div class="reset-modal-title">다시 하기 선택</div> <div class="reset-modal-desc">원하시는 방식을 선택해 주세요.</div> <button type="button" class="btn-reset-option btn-reset-std" onclick="executeResetOnlyStandard()">🎲 기준값만 다르게 하기</button> <button type="button" class="btn-reset-option btn-reset-all" onclick="executeResetAll()">🔄 전체 다시 측정하기</button> <button type="button" class="btn-reset-option btn-reset-cancel" onclick="closeResetModal()">취소</button> </div> </div> <div id="markPicker"> <button type="button" onclick="setMark('←')">←</button> <button type="button" onclick="setMark('→')">→</button> <button type="button" onclick="setMark('↑')">↑</button> <button type="button" onclick="setMark('↓')">↓</button> <button type="button" onclick="setMark('○')"><span class="picker-circle"></span></button> <button type="button" class="clear-btn" onclick="setMark('')">지우기</button> </div> <script src="../문제모음/03자동차차체수리기능사/실기/차체수리기록.js?v=20261002a"></script> <script src="계측연습.js?v=20261002j"></script> </body> </html> 
+            /* 하단 입력표는 그리드에서 빼고 그림 영역을 아래로 확장 */
+            .drawing-area { grid-row: 4 / 41 !important; }
+            .bottom-zone-engine {
+                position: fixed !important;
+                left: 0 !important; right: 0 !important; bottom: 0 !important;
+                grid-column: auto !important; grid-row: auto !important;
+                width: 100% !important; max-height: min(78vh, 620px);
+                margin: 0 !important; padding: 0 8px 10px !important;
+                border-radius: 14px 14px 0 0 !important;
+                box-shadow: 0 -6px 22px rgba(0,0,0,0.28);
+                z-index: 10003 !important;
+                transform: translateY(110%);
+                transition: transform 0.22s ease, bottom 0.15s ease, max-height 0.15s ease;
+                pointer-events: none;
+                overflow: hidden;
+                justify-content: flex-start !important;
+            }
+            body.m-sheet-open .bottom-zone-engine {
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+            .m-sheet-backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 10002;
+                background: rgba(0, 0, 0, 0.28);
+                border: none;
+                padding: 0;
+                cursor: pointer;
+            }
+            body.m-sheet-open .m-sheet-backdrop { display: block !important; }
+            .m-sheet-bar {
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 10px 4px 8px;
+                flex: 0 0 auto;
+            }
+            .m-sheet-title {
+                font-size: 14px; font-weight: 900; color: #2f3542;
+            }
+            .m-sheet-close {
+                height: 34px; padding: 0 12px; border: none; border-radius: 8px;
+                background: #57606f; color: white; font-size: 13px; font-weight: 900; cursor: pointer;
+            }
+            .bottom-zone-engine .dashboard-container {
+                flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            }
+            #wheelCards { flex-direction: column !important; gap: 6px !important; }
+            .wheel-card { padding: 6px !important; }
+            .m-sheet-toggle {
+                display: flex !important;
+                align-items: center; justify-content: center;
+                position: fixed;
+                left: 50%;
+                bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+                transform: translateX(-50%);
+                z-index: 10002;
+                min-width: 168px; height: var(--m-sheet-btn);
+                padding: 0 18px;
+                border: none; border-radius: 24px;
+                background: #1e90ff; color: white;
+                font-size: 15px; font-weight: 900;
+                box-shadow: 0 4px 14px rgba(30, 144, 255, 0.45);
+                cursor: pointer;
+            }
+            body.m-sheet-open .m-sheet-toggle { display: none !important; }
+            /* 기준값 공개 후: 누르고 있을 때만 측정값 표시 */
+            .m-measure-hold {
+                display: none;
+                align-items: center; justify-content: center;
+                position: fixed;
+                left: 50%;
+                bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+                transform: translateX(-50%);
+                z-index: 10002;
+                min-width: 220px; height: var(--m-sheet-btn);
+                padding: 0 16px;
+                border: none; border-radius: 24px;
+                background: #1e90ff; color: white;
+                font-size: 14px; font-weight: 900;
+                box-shadow: 0 4px 14px rgba(30, 144, 255, 0.45);
+                cursor: pointer;
+                touch-action: none;
+                user-select: none;
+                -webkit-user-select: none;
+            }
+            body.m-hold-mode .m-sheet-toggle { display: none !important; }
+            body.m-hold-mode .m-measure-hold { display: flex !important; }
+            body.m-hold-mode.m-sheet-open .m-measure-hold { display: none !important; }
+            .m-measure-hold.is-pressing {
+                background: #0c6fd1;
+                transform: translateX(-50%) scale(0.97);
+            }
+            .m-measure-peek {
+                display: none;
+                position: fixed;
+                left: 8px; right: 8px;
+                bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+                z-index: 10003;
+                max-height: min(70vh, 520px);
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+                padding: 10px 8px;
+                pointer-events: none;
+            }
+            body.m-peek-show .m-measure-peek { display: block !important; }
+            .m-measure-peek .peek-title {
+                text-align: center; font-size: 13px; font-weight: 900; color: #2f3542; margin-bottom: 8px;
+            }
+            .m-measure-peek .peek-card {
+                background: #f1f2f6; border-radius: 8px; padding: 6px; margin-bottom: 6px;
+            }
+            .m-measure-peek table { width: 100%; border-collapse: collapse; }
+            .m-measure-peek th, .m-measure-peek td {
+                text-align: center; padding: 4px 2px; font-size: 12px; font-weight: 900; color: #2f3542;
+            }
+            .m-measure-peek th { border-bottom: 2px solid #2f3542; font-size: 11px; }
+            .m-measure-peek .peek-val {
+                display: inline-block; min-width: 42px; padding: 2px 4px;
+                border: 1px solid #1e90ff; border-radius: 4px; background: #eef7ff; color: #000;
+            }
+            .m-measure-peek .peek-std {
+                display: inline-block; min-width: 42px; padding: 2px 4px;
+                border: 1px dashed #ff4757; border-radius: 4px; background: #fff5f5; color: #ff0000;
+            }
+        } </style> <script src="../pageBusy.global.js?v=20261104a"></script> <script>if (window.PageBusy) PageBusy.bootHold('로딩중');</script> </head> <body> <div class="mobile-top-bar"> <button class="m-btn m-btn-back" onclick="goBackToMeasure()">◀ 목록</button> <button class="m-btn m-btn-reveal" id="m-btn-reveal" onclick="revealStandards()">기준값 보기</button> <button class="m-btn m-btn-check" id="m-btn-check" onclick="checkAnswers()" disabled="disabled">정답 확인</button> <button class="m-btn m-btn-reset" onclick="resetPractice()">다시 하기</button> <span class="m-score" id="m-score"></span> </div> <div class="page-shell"> <div class="page-layout" id="pageLayout"> <div class="master-grid" id="gridContainer"> <div class="top-zone-engine"> <div class="top-row-1"> <div style="grid-column: 1 / 2;"> <div class="left-control-panel"> <button class="btn-back" onclick="goBackToMeasure()">◀ 실기 목록</button> </div> </div> <div class="top-col-merged">[계측 연습]</div> <div class="top-col-status status-input" id="statusDisplay">측정값 입력</div> </div> <div class="top-row-2"> <table class="top-info-table"> <tr> <th>자격종목</th><td>자동차차체수리기능사</td> <th>작품명</th><td>자동차차체수리작업</td> </tr> </table> </div> </div> <div class="drawing-area" id="drawingArea"> <div class="drawing-layer" id="drawingLayer"></div> </div> </div> </div> <div class="bottom-zone-engine" id="measureSheet"> <div class="m-sheet-bar"> <span class="m-sheet-title" id="mSheetTitle">측정값 / 기준값</span> <button type="button" class="m-sheet-close" id="mSheetClose">접기 ▼</button> </div> <div class="dashboard-container"> <div id="wheelCards" style="display: flex; gap: 8px; flex: 1;"></div> </div> <div class="right-control-panel"> <div class="guide-display" id="guideDisplay"></div> <button class="btn-reveal" id="btn-reveal" onclick="revealStandards()">👁 기준값 보기</button> <button class="btn-check" id="btn-check" onclick="checkAnswers()" disabled="disabled">✅ 정답 확인</button> <div class="score-display" id="scoreDisplay"></div> <button class="btn-reset" onclick="resetPractice()">🔄 다시 하기</button> </div> </div> </div> <button type="button" id="mSheetBackdrop" class="m-sheet-backdrop" aria-label="측정값 창 닫기"></button> <button type="button" id="mSheetToggle" class="m-sheet-toggle">측정값 입력 ▲</button> <button type="button" id="mMeasureHoldBtn" class="m-measure-hold">측정값 보기(누르고 있기)</button> <div id="mMeasurePeek" class="m-measure-peek" aria-hidden="true"></div> <button type="button" id="kbRevealBtn" class="kb-reveal-btn">👁 기준값 보기</button> <div id="resetModal"> <div class="reset-modal-content"> <div class="reset-modal-title">다시 하기 선택</div> <div class="reset-modal-desc">원하시는 방식을 선택해 주세요.</div> <button type="button" class="btn-reset-option btn-reset-std" onclick="executeResetOnlyStandard()">🎲 기준값만 다르게 하기</button> <button type="button" class="btn-reset-option btn-reset-all" onclick="executeResetAll()">🔄 전체 다시 측정하기</button> <button type="button" class="btn-reset-option btn-reset-cancel" onclick="closeResetModal()">취소</button> </div> </div> <div id="markPicker"> <button type="button" onclick="setMark('←')">←</button> <button type="button" onclick="setMark('→')">→</button> <button type="button" onclick="setMark('↑')">↑</button> <button type="button" onclick="setMark('↓')">↓</button> <button type="button" onclick="setMark('○')"><span class="picker-circle"></span></button> <button type="button" class="clear-btn" onclick="setMark('')">지우기</button> </div> <script src="../문제모음/03자동차차체수리기능사/실기/차체수리기록.js?v=20261002a"></script> <script src="계측연습.js?v=20261116c"></script> </body> </html> 
